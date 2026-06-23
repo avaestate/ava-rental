@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AVA Concierge · Icon Set Chooser (6 variants)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#2c3638; --slate:#515b5d; --muted:#75878b; --accent:#624e40;
+    --bg:#f0e7df; --cream-3:#fcf5ef; --line:rgba(44,54,56,.12);
+    --card-w:300px; --card-h:628px;   /* iframe scaled box */
+    --scale:.70;                       /* 430x900 -> ~300x630 */
+  }
+  *{box-sizing:border-box}
+  body{margin:0; font-family:"Manrope",system-ui,-apple-system,sans-serif; color:var(--ink);
+    background:radial-gradient(120% 60% at 50% -10%, #faf4ee, transparent 60%), linear-gradient(180deg,#ece2d8,#e6dbcf);
+    -webkit-font-smoothing:antialiased; line-height:1.5; min-height:100dvh;}
+  header{padding:34px 24px 8px; text-align:center}
+  header .eyebrow{font-size:11px; letter-spacing:.26em; text-transform:uppercase; color:var(--accent); font-weight:600}
+  header h1{font-weight:300; font-size:30px; letter-spacing:-.02em; margin:10px 0 6px}
+  header h1 em{font-style:normal; font-weight:600; color:var(--accent)}
+  header p{color:var(--muted); font-size:14px; max-width:640px; margin:6px auto 0}
+
+  .grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(var(--card-w), 1fr));
+    gap:30px 22px; max-width:1180px; margin:30px auto 60px; padding:0 22px; justify-items:center;}
+
+  .card{display:flex; flex-direction:column; align-items:center; gap:14px; width:var(--card-w)}
+  .meta{display:flex; flex-direction:column; align-items:center; gap:7px; text-align:center}
+  .meta .n{font-size:12px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--accent)}
+  .meta .name{font-size:16px; font-weight:600; color:var(--ink)}
+  .tags{display:flex; gap:7px}
+  .tag{font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:4px 10px; border-radius:999px;
+    border:1px solid var(--line); background:var(--cream-3); color:var(--slate)}
+  .tag.color{color:#9a564f; border-color:rgba(154,86,79,.3); background:rgba(204,147,136,.14)}
+  .tag.mono{color:#2c3638; border-color:rgba(44,54,56,.3); background:rgba(44,54,56,.06)}
+
+  .frame-wrap{position:relative; width:var(--card-w); height:var(--card-h); border-radius:34px; overflow:hidden;
+    box-shadow:0 34px 64px -28px rgba(44,54,56,.5), 0 0 0 1px rgba(44,54,56,.06); background:var(--bg);}
+  .frame-wrap iframe{position:absolute; top:0; left:0; width:430px; height:900px; border:0;
+    transform:scale(var(--scale)); transform-origin:top left;}
+
+  .open{display:inline-flex; align-items:center; gap:7px; text-decoration:none; font-size:13px; font-weight:700;
+    color:#fff; background:var(--ink); padding:10px 18px; border-radius:999px; box-shadow:0 8px 18px -8px rgba(44,54,56,.5);
+    transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s}
+  .open:hover{transform:translateY(-2px); box-shadow:0 12px 24px -8px rgba(44,54,56,.55)}
+  .open svg{width:14px;height:14px}
+
+  footer{text-align:center; color:var(--muted); font-size:12.5px; padding:0 24px 50px}
+  footer b{color:var(--slate); font-weight:600}
+
+  @media (max-width:680px){
+    :root{--card-w:88vw; --card-h:calc(88vw * 2.09); --scale:calc(88vw / 430)}
+    .grid{gap:34px 0}
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">AVA Concierge · Home Icons</div>
+    <h1>Choose the <em>icon set</em></h1>
+    <p>Six variants of the App Store “Browse” home — identical earthy gradient tiles &amp; white labels.
+       Only the <b>icon set</b> changes. Tap “Open full screen” to view any variant on its own.</p>
+  </header>
+
+  <div class="grid" id="grid"></div>
+
+  <footer>All icons via the Iconify CDN. 12 services per variant · same layout, palette &amp; labels throughout.<br/>
+    Curated by <b>AVA ESTATE</b> · Koh Phangan.</footer>
+
+<script>
+  var VARIANTS = [
+    { f:"i1.html", n:"01", name:"Solar — Bold Duotone", tag:"white two-tone", kind:"mono", note:"Premium two-tone white on gradient" },
+    { f:"i2.html", n:"02", name:"Phosphor — Fill",      tag:"glyph in white chip", kind:"chip", note:"Clean bold glyph, App-Store chip" },
+    { f:"i3.html", n:"03", name:"Material Symbols — Rounded", tag:"glyph in white chip", kind:"chip", note:"Google, crisp, in white chips" },
+    { f:"i4.html", n:"04", name:"Hugeicons — Line",     tag:"glyph in white chip", kind:"chip", note:"Premium detailed line, in chips" },
+    { f:"i5.html", n:"05", name:"Lucide — Mono White",  tag:"mono · white", kind:"mono", note:"Elegant single-colour white line" },
+    { f:"i6.html", n:"06", name:"Noto — Color",         tag:"full color", kind:"color", note:"Vivid colourful flat, in white chips" }
+  ];
+  document.getElementById("grid").innerHTML = VARIANTS.map(function(v){
+    var cls = v.kind === "color" ? "color" : "mono";
+    var tag = '<span class="tag '+cls+'">'+v.tag+'</span>';
+    return ''+
+      '<div class="card">'+
+        '<div class="meta">'+
+          '<span class="n">Variant '+v.n+'</span>'+
+          '<span class="name">'+v.name+'</span>'+
+          '<div class="tags">'+tag+'</div>'+
+        '</div>'+
+        '<div class="frame-wrap"><iframe loading="lazy" src="'+v.f+'" title="'+v.name+'"></iframe></div>'+
+        '<a class="open" href="'+v.f+'" target="_blank" rel="noopener">Open full screen '+
+          '<svg viewBox="0 0 24 24" fill="none"><path d="M14 4h6v6M20 4l-9 9M10 6H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
+        '</a>'+
+      '</div>';
+  }).join("");
+</script>
+</body>
+</html>
