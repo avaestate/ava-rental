@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>AVA Concierge · Choose a Photo Set (1–5)</title>
+<meta name="theme-color" content="#2c3638" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css" />
+<style>
+  :root{
+    --ink:#2c3638; --slate:#515b5d; --muted:#75878b; --accent:#624e40;
+    --bg:#f0e7df; --cream-3:#fcf5ef; --white:#fff;
+    --line:rgba(44,54,56,.12); --line-strong:rgba(44,54,56,.18);
+    --shadow-md:0 10px 28px -14px rgba(44,54,56,.22), 0 4px 12px rgba(44,54,56,.05);
+    --shadow-lg:0 26px 54px -24px rgba(44,54,56,.30), 0 8px 18px rgba(44,54,56,.07);
+    --ease:cubic-bezier(.2,.8,.2,1);
+    /* phone preview geometry */
+    --pw:390px; --ph:844px; --scale:.52;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{font-family:"Manrope",system-ui,sans-serif; color:var(--ink); line-height:1.5;
+    background:radial-gradient(120% 70% at 50% -8%, #faf4ee, transparent 60%), linear-gradient(180deg,#ece2d8,#e6dbcf);
+    -webkit-font-smoothing:antialiased; min-height:100vh; padding:34px 18px 60px;}
+  h1,h2,h3{margin:0; font-weight:400; letter-spacing:-.015em}
+  .head{max-width:1180px; margin:0 auto 30px; text-align:center}
+  .head .kick{display:inline-flex; align-items:center; gap:9px; font-size:11px; letter-spacing:.24em;
+    text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:12px}
+  .head .kick .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(98,78,64,.14)}
+  .head h1{font-size:30px; font-weight:300; letter-spacing:-.02em}
+  .head h1 em{font-style:normal; font-weight:600; color:var(--accent)}
+  .head p{margin:10px auto 0; max-width:60ch; color:var(--slate); font-size:14px}
+  .head .note{margin-top:8px; font-size:12px; color:var(--muted)}
+
+  .grid{max-width:1180px; margin:0 auto; display:grid; gap:26px;
+    grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); align-items:start;}
+
+  .card{background:var(--white); border:1px solid var(--line); border-radius:24px;
+    box-shadow:var(--shadow-md); padding:16px 16px 18px; transition:transform .35s var(--ease), box-shadow .35s var(--ease)}
+  .card:hover{transform:translateY(-4px); box-shadow:var(--shadow-lg)}
+  .card .meta{display:flex; align-items:baseline; gap:8px; margin:2px 4px 12px}
+  .card .meta .b{font-size:13px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--ink)}
+  .card .meta .n{margin-left:auto; font-size:11px; color:var(--muted); font-weight:600}
+  .card .desc{margin:0 4px 14px; font-size:12.5px; color:var(--slate); line-height:1.45; min-height:2.6em}
+
+  /* scaled live preview window */
+  .frame{position:relative; width:100%; border-radius:18px; overflow:hidden;
+    border:1px solid var(--line-strong); background:#e6dbcf; box-shadow:inset 0 0 0 1px rgba(255,255,255,.4);
+    /* height = phone height * scale */
+    height:calc(var(--ph) * var(--scale));}
+  .frame iframe{position:absolute; top:0; left:0; width:var(--pw); height:var(--ph); border:0;
+    transform:scale(var(--scale)); transform-origin:top left;}
+  /* the scaled iframe occupies pw*scale wide; center it */
+  .frame .holder{position:absolute; top:0; left:50%; width:calc(var(--pw) * var(--scale));
+    height:calc(var(--ph) * var(--scale)); transform:translateX(-50%);}
+  .frame .holder iframe{transform:scale(var(--scale)); transform-origin:top left}
+  .frame .veil{position:absolute; inset:0; z-index:2; cursor:pointer; background:transparent}
+
+  .open{display:flex; align-items:center; justify-content:center; gap:8px; margin-top:14px;
+    width:100%; text-decoration:none; background:var(--ink); color:var(--bg); font-weight:600; font-size:13px;
+    padding:11px 14px; border-radius:999px; box-shadow:var(--shadow-md); transition:.25s var(--ease)}
+  .open:hover{filter:brightness(1.08)}
+  .open i{font-size:16px}
+
+  .foot{max-width:1180px; margin:40px auto 0; text-align:center; color:var(--muted); font-size:12px}
+  .foot b{color:var(--slate); font-weight:600}
+
+  @media (max-width:560px){
+    :root{--scale:.62}
+    .grid{grid-template-columns:1fr 1fr; gap:16px}
+    .card{padding:11px 11px 14px; border-radius:18px}
+    .card .desc{font-size:11.5px; min-height:3.4em}
+    .head h1{font-size:23px}
+    .open{font-size:12px; padding:10px 10px}
+  }
+  @media (max-width:380px){ .grid{grid-template-columns:1fr} :root{--scale:.7} }
+</style>
+</head>
+<body>
+  <div class="head">
+    <span class="kick"><span class="dot"></span> AVA Concierge · Home design</span>
+    <h1>Choose the <em>photo set</em></h1>
+    <p>Same H-in-color layout and AVA brand in all five — only the 12 service photos differ. Each set is one cohesive aesthetic, the way leading hotel &amp; concierge apps keep a single look.</p>
+    <p class="note">Tap a preview or “Open full screen”. Best viewed on the phone the app will live on.</p>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="foot">5 sets · 12 services each · 60 photos, all live from Unsplash · by <b>AVA ESTATE</b></div>
+
+<script>
+  var SETS = [
+    {n:1, file:"p1.html", badge:"Set 1", desc:"Bright &amp; airy lifestyle — light, sunny, high-key and clean."},
+    {n:2, file:"p2.html", badge:"Set 2", desc:"Warm tropical / golden hour — warm tones, island-resort feel."},
+    {n:3, file:"p3.html", badge:"Set 3", desc:"Minimal editorial on light — simple, calm, premium, lots of light."},
+    {n:4, file:"p4.html", badge:"Set 4", desc:"Moody premium / deep tones — richer, darker, luxe mood."},
+    {n:5, file:"p5.html", badge:"Set 5", desc:"People &amp; experience — candid humans enjoying each service."}
+  ];
+  var grid = document.getElementById("grid");
+  grid.innerHTML = SETS.map(function(s){
+    return ''+
+      '<div class="card">'+
+        '<div class="meta"><span class="b">'+s.badge+'</span><span class="n">12 services</span></div>'+
+        '<div class="desc">'+s.desc+'</div>'+
+        '<div class="frame">'+
+          '<div class="holder"><iframe loading="lazy" scrolling="no" src="'+s.file+'" title="'+s.badge+' preview"></iframe></div>'+
+          '<a class="veil" href="'+s.file+'" target="_blank" rel="noopener" aria-label="Open '+s.badge+'"></a>'+
+        '</div>'+
+        '<a class="open" href="'+s.file+'" target="_blank" rel="noopener">Open full screen <i class="ph ph-arrow-up-right"></i></a>'+
+      '</div>';
+  }).join("");
+</script>
+</body>
+</html>
