@@ -146,53 +146,39 @@
   .sec-label .t{font-size:11.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); font-weight:600}
   .sec-label .c{font-size:11.5px; color:var(--muted)}
 
-  /* ===== V3: FEATURED HERO CARD ===== */
+  /* ===== V3 + H-IN-COLOR: FEATURED HERO CARD (inset color photo, dark label on white card) ===== */
   .hero-card{
-    position:relative; cursor:pointer; width:100%; text-align:left; border:0; overflow:hidden;
-    border-radius:24px; box-shadow:var(--shadow-lg); padding:0; min-height:200px; display:block;
-    background:linear-gradient(135deg,#3a474a,#2c3638 55%,#473a30);
+    position:relative; cursor:pointer; width:100%; text-align:left; border:1px solid var(--line); overflow:hidden;
+    border-radius:24px; box-shadow:var(--shadow-lg); padding:14px 14px 18px; display:block; background:var(--white);
     transition:transform .4s var(--ease), box-shadow .4s var(--ease); -webkit-tap-highlight-color:transparent;
   }
-  .hero-card:active{transform:scale(.985)}
+  .hero-card:active{transform:scale(.99)}
   .hero-card:hover{transform:translateY(-3px)}
-  .hero-card .photo{
-    position:absolute; inset:0; opacity:.5; background-size:cover; background-position:center;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='260'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23556' /%3E%3Cstop offset='1' stop-color='%23332b22'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url(%23g)'/%3E%3Cpath d='M0 200 Q100 150 200 190 T400 180 V260 H0 Z' fill='%23000' opacity='.25'/%3E%3Ccircle cx='320' cy='60' r='40' fill='%23fff' opacity='.12'/%3E%3C/svg%3E");
-  }
-  .hero-card::after{content:""; position:absolute; inset:0; background:linear-gradient(120deg,rgba(44,54,56,.82),rgba(44,54,56,.35) 60%,rgba(71,58,48,.5))}
-  .hero-inner{position:relative; z-index:2; padding:24px 22px 22px; min-height:200px; display:flex; flex-direction:column}
-  .hero-inner .k{font-size:10.5px; letter-spacing:.24em; text-transform:uppercase; color:rgba(240,231,223,.78); font-weight:600}
-  .hero-ic{
-    width:66px;height:66px;border-radius:18px; background:rgba(255,255,255,.14);
-    -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); border:1px solid rgba(255,255,255,.2);
-    display:grid; place-items:center; margin:6px 0 auto;
-  }
-  .hero-ic i{font-size:38px; color:#f0e7df; line-height:1}
-  .hero-inner h2{font-size:26px; font-weight:500; color:#fff; margin:14px 0 0; letter-spacing:-.01em}
-  .hero-inner p{margin:7px 0 0; font-size:13.5px; color:#dfe4e3; max-width:32ch; line-height:1.5}
+  .hero-inset{position:relative; height:150px; border-radius:16px; overflow:hidden; background:var(--ink); box-shadow:inset 0 0 0 1px var(--line)}
+  .hero-inset img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+  .hero-body{padding:16px 8px 0}
+  .hero-body .k{font-size:10.5px; letter-spacing:.24em; text-transform:uppercase; color:var(--accent); font-weight:600}
+  .hero-body h2{font-size:24px; font-weight:500; color:var(--ink); margin:7px 0 0; letter-spacing:-.01em}
+  .hero-body p{margin:6px 0 0; font-size:13px; color:var(--slate); max-width:34ch; line-height:1.5}
   .hero-cta{
-    display:inline-flex; align-items:center; gap:7px; margin-top:14px; align-self:flex-start;
-    background:var(--bg); color:var(--ink); font-weight:600; font-size:13px; padding:10px 16px; border-radius:999px; box-shadow:var(--shadow-md);
+    display:inline-flex; align-items:center; gap:7px; margin-top:14px;
+    background:var(--ink); color:var(--bg); font-weight:600; font-size:13px; padding:10px 16px; border-radius:999px; box-shadow:var(--shadow-md);
   }
   .hero-cta i{font-size:16px; line-height:1}
 
-  /* ===== V3: 3-COLUMN LARGE-ICON GRID ===== */
+  /* ===== V3 + H-IN-COLOR: 3-COLUMN GRID (inset color photo + dark label beneath, white card) ===== */
   .mini-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:11px}
   .mini{
     position:relative; cursor:pointer; text-align:center; background:var(--white); border:1px solid var(--line);
-    border-radius:18px; box-shadow:var(--shadow-sm); padding:16px 8px 14px; display:flex; flex-direction:column; align-items:center; gap:10px;
-    min-height:118px; transition:transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease); -webkit-tap-highlight-color:transparent;
+    border-radius:18px; box-shadow:var(--shadow-sm); padding:9px 9px 12px; display:flex; flex-direction:column; gap:9px;
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease); -webkit-tap-highlight-color:transparent;
   }
   .mini:active{transform:scale(.96)}
   .mini:hover{transform:translateY(-3px); box-shadow:var(--shadow-md); border-color:var(--line-strong)}
-  .mini .ic{
-    width:56px;height:56px;border-radius:16px; background:linear-gradient(160deg,var(--cream-3),var(--cream-2)); border:1px solid var(--line);
-    display:grid; place-items:center; transition:.35s var(--ease);
-  }
-  .mini .ic i{font-size:32px; color:var(--accent); transition:.35s var(--ease); line-height:1}
-  .mini:hover .ic{background:var(--ink); border-color:transparent}
-  .mini:hover .ic i{color:var(--bg)}
-  .mini h3{font-size:12px; font-weight:600; color:var(--ink); line-height:1.2}
+  .mini .inset{position:relative; height:66px; border-radius:12px; overflow:hidden; background:var(--ink); box-shadow:inset 0 0 0 1px var(--line)}
+  .mini .inset img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .5s var(--ease)}
+  .mini:hover .inset img{transform:scale(1.07)}
+  .mini h3{font-size:11.5px; font-weight:600; color:var(--ink); line-height:1.18; padding:0 2px}
 
   .home-foot{margin:26px 4px 6px; text-align:center; color:var(--muted); font-size:11.5px; line-height:1.5}
   .home-foot b{font-weight:600; color:var(--slate)}
@@ -208,6 +194,13 @@
   .detail-hero .k{position:relative; font-size:10.5px; letter-spacing:.24em; text-transform:uppercase; opacity:.72}
   .detail-hero h2{position:relative; font-weight:400; font-size:26px; margin:7px 0 0; color:#fff; letter-spacing:-.01em}
   .detail-hero p{position:relative; margin:11px 0 0; font-size:14px; color:#d6dcdc; line-height:1.55; max-width:38ch}
+  /* H-in-color photo header for service detail */
+  .detail-photo{position:relative; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow-md); margin-bottom:14px; height:170px; background:var(--ink)}
+  .detail-photo img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+  .detail-photo::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(44,54,56,0) 40%, rgba(44,54,56,.72) 100%)}
+  .detail-photo .cap{position:absolute; left:18px; right:18px; bottom:14px; z-index:2}
+  .detail-photo .cap .k{font-size:10px; letter-spacing:.24em; text-transform:uppercase; color:rgba(240,231,223,.85); font-weight:600}
+  .detail-photo .cap h2{font-weight:500; font-size:24px; margin:5px 0 0; color:#fff; letter-spacing:-.01em}
 
   .panel{background:var(--white); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-sm); padding:20px 20px; margin-bottom:16px}
   .panel h4{font-size:11.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); font-weight:600; margin-bottom:14px}
@@ -529,42 +522,61 @@
   "use strict";
 
   /* ===================== DATA ===================== */
+  // Set 4 (premium / deep-tone) photos — exact Unsplash IDs carried over from designs/photos/p4.html
+  var IMG_BASE = "https://images.unsplash.com/photo-";
+  var IMG_Q = "?w=400&q=80&auto=format&fit=crop";       // grid thumbnails
+  var IMG_Q_LG = "?w=860&q=80&auto=format&fit=crop";    // hero / detail header
+  function gridImg(p){ return IMG_BASE + p + IMG_Q; }
+  function heroImg(p){ return IMG_BASE + p + IMG_Q_LG; }
+
   var SERVICES = [
     { id:"bikes",   icon:"🛵", phicon:"motorcycle", featured:true, title:"Bikes & Cars",        desc:"Scooters & cars to your door",
+      photo:"1568772585407-9361f9bf3a87",
       blurb:"A serviced, insured rental fleet — from nimble city scooters to seven-seat SUVs — delivered straight to your villa.",
       includes:["Delivery & pickup at your villa","Helmets, insurance & full service","Daily, weekly & monthly rates"],
       link:{label:"Browse our rental catalog", sub:"Full fleet, live pricing", href:"../", icon:"📖", phicon:"book-open"} },
     { id:"tea",     icon:"🍵", phicon:"coffee", title:"Tea Ceremony",         desc:"A calm, guided ritual",
+      photo:"1558160074-4d7d8bdf4256",
       blurb:"A serene, guided tea ceremony at your villa — premium leaves, an experienced host, and a moment of stillness.",
       includes:["Private host & full tea set","Premium artisanal tea selection","60–90 min, up to your group"] },
     { id:"nanny",   icon:"🧸", phicon:"baby", title:"Nanny / Babysitter",  desc:"Trusted childcare",
+      photo:"1607453998774-d533f65dac99",
       blurb:"Vetted, English-speaking nannies so you can enjoy an evening out — caring, reliable, and background-checked.",
       includes:["Experienced, vetted carers","Hourly or full-day cover","Games, meals & bedtime help"] },
     { id:"ferry",   icon:"⛴️", phicon:"boat", title:"Ferry & Boat Tickets", desc:"Island hops, sorted",
+      photo:"1593351415075-3bac9f45c877",
       blurb:"Ferry and speedboat tickets to Samui, Tao and the mainland — booked, confirmed and timed to your transfer.",
       includes:["All routes & operators","E-tickets to your phone","Pier transfer coordinated"] },
     { id:"transfer",icon:"🚐", phicon:"taxi", title:"Transfer & Taxi",      desc:"Airport & pier rides",
+      photo:"1485463611174-f302f6a5c1c9",
       blurb:"Private, air-conditioned transfers to the airport, pier or anywhere on the island — on time, every time.",
       includes:["Airport & pier pickups","Private car, van or minibus","Meet & greet with name sign"] },
     { id:"chef",    icon:"👨‍🍳", phicon:"chef-hat", title:"Private Chef",        desc:"Dining in your villa",
+      photo:"1466637574441-749b8f19452f",
       blurb:"A private chef cooks a bespoke menu in your villa — Thai, seafood or international, shopping and cleanup included.",
       includes:["Custom menu & dietary needs","Groceries, cooking & cleanup","Thai, seafood or international"] },
     { id:"spa",     icon:"💆", phicon:"flower-lotus", title:"Spa & Massage",        desc:"In-villa treatments",
+      photo:"1696841212541-449ca29397cc",
       blurb:"Professional therapists bring the spa to you — Thai, oil or deep-tissue massage on your terrace or by the pool.",
       includes:["Therapist & table to your villa","Thai, oil, aroma or deep-tissue","Single, couples or group sessions"] },
     { id:"tours",   icon:"🌴", phicon:"map-trifold", title:"Tours & Excursions",   desc:"Island adventures",
+      photo:"1469854523086-cc02fe5d8800",
       blurb:"Hand-picked island experiences — snorkelling, waterfalls, viewpoints and sunset boat trips, with a private guide.",
       includes:["Private or small-group tours","Snorkel, waterfall & sunset trips","Transport & guide included"] },
     { id:"grocery", icon:"🛒", phicon:"shopping-bag", title:"Groceries & Delivery", desc:"Water, alcohol & more",
+      photo:"1604719312566-8912e9227c6a",
       blurb:"Stock your villa before you arrive or top up anytime — drinking water, groceries, wine and beer delivered.",
       includes:["Drinking water & essentials","Wine, beer & spirits","Pre-arrival villa stocking"] },
     { id:"laundry", icon:"🧺", phicon:"t-shirt", title:"Laundry",              desc:"Wash, fold, return",
+      photo:"1604335399105-a0c585fd81a1",
       blurb:"Pickup, professional wash, fold and return — fresh laundry back at your villa, often same day.",
       includes:["Pickup & return at your villa","Wash, dry, fold & press","Often same-day turnaround"] },
     { id:"yoga",    icon:"🧘", phicon:"barbell", title:"Yoga & Trainer",       desc:"Private sessions",
+      photo:"1599901860904-17e6ed7083a0",
       blurb:"Private yoga or a personal trainer at your villa — sunrise flow on the terrace or a focused workout, your choice.",
       includes:["Certified instructors","Yoga, mobility or strength","Mats & equipment provided"] },
     { id:"checkout",icon:"🕓", phicon:"clock", title:"Late Checkout",        desc:"Early in / late out",
+      photo:"1611892440504-42a792e24d32",
       blurb:"Need a few more hours? Request a late checkout or early check-in and we'll confirm based on the day's schedule.",
       includes:["Late checkout request","Early check-in request","Subject to availability"] }
   ];
@@ -679,25 +691,24 @@
     SERVICES.forEach(function(s){ if(s.featured && !featured) featured = s; else rest.push(s); });
     if(!featured){ featured = SERVICES[0]; rest = SERVICES.slice(1); }
 
-    // ---- featured hero card ----
+    // ---- featured hero card (inset color photo + dark label on white card) ----
     els.heroSlot.innerHTML = ''+
       '<button class="hero-card" type="button" data-svc="'+featured.id+'">'+
-        '<span class="photo"></span>'+
-        '<span class="hero-inner">'+
+        '<span class="hero-inset"><img alt="'+esc(featured.title)+'" loading="eager" referrerpolicy="no-referrer" src="'+heroImg(featured.photo)+'" /></span>'+
+        '<span class="hero-body">'+
           '<span class="k">Most requested</span>'+
-          '<span class="hero-ic">'+phi(featured.phicon)+'</span>'+
           '<h2>'+esc(featured.title)+'</h2>'+
           '<p>'+esc(featured.desc.charAt(0).toUpperCase()+featured.desc.slice(1))+', delivered to your villa door.</p>'+
           '<span class="hero-cta">Browse the fleet '+phi("arrow-right","regular")+'</span>'+
         '</span>'+
       '</button>';
 
-    // ---- 3-column large-icon grid ----
+    // ---- 3-column grid (inset color photo + dark label beneath) ----
     els.svcCount.textContent = rest.length + " more";
     els.svcGrid.innerHTML = rest.map(function(s){
       return ''+
         '<button class="mini" type="button" data-svc="'+s.id+'">'+
-          '<span class="ic">'+phi(s.phicon)+'</span>'+
+          '<span class="inset"><img alt="'+esc(s.title)+'" loading="lazy" referrerpolicy="no-referrer" src="'+gridImg(s.photo)+'" /></span>'+
           '<h3>'+esc(s.title)+'</h3>'+
         '</button>';
     }).join("");
@@ -716,7 +727,14 @@
         '<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M9 7h8v8" stroke="#624e40" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
       '</button>'
     ) : '';
+    var photoHeader = s.photo ? (
+      '<div class="detail-photo">'+
+        '<img alt="'+esc(s.title)+'" loading="eager" referrerpolicy="no-referrer" src="'+heroImg(s.photo)+'" />'+
+        '<div class="cap"><div class="k">AVA Concierge</div><h2>'+esc(s.title)+'</h2></div>'+
+      '</div>'
+    ) : '';
     els.detail.innerHTML = ''+
+      photoHeader+
       '<div class="detail-hero">'+
         '<div class="ic" aria-hidden="true">'+phi(s.phicon)+'</div>'+
         '<div class="k">AVA Concierge</div>'+
