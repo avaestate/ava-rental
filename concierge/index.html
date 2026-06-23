@@ -19,6 +19,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<!-- ===== Phosphor icons (V3 premium icon set) ===== -->
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css" />
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css" />
 <style>
   :root{
     /* ava.estate brand tokens — warm, calm, understated luxury */
@@ -141,29 +146,53 @@
   .sec-label .t{font-size:11.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); font-weight:600}
   .sec-label .c{font-size:11.5px; color:var(--muted)}
 
-  .svc-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px}
-  .svc-card{
-    position:relative; text-align:left; cursor:pointer;
-    background:var(--white); border:1px solid var(--line); border-radius:var(--radius);
-    box-shadow:var(--shadow-sm); padding:16px 15px 17px;
-    display:flex; flex-direction:column; gap:11px; min-height:128px;
-    transition:transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
-    -webkit-tap-highlight-color:transparent;
+  /* ===== V3: FEATURED HERO CARD ===== */
+  .hero-card{
+    position:relative; cursor:pointer; width:100%; text-align:left; border:0; overflow:hidden;
+    border-radius:24px; box-shadow:var(--shadow-lg); padding:0; min-height:200px; display:block;
+    background:linear-gradient(135deg,#3a474a,#2c3638 55%,#473a30);
+    transition:transform .4s var(--ease), box-shadow .4s var(--ease); -webkit-tap-highlight-color:transparent;
   }
-  .svc-card:active{transform:scale(.975)}
-  .svc-card:hover{transform:translateY(-3px); box-shadow:var(--shadow-md); border-color:var(--line-strong)}
-  .svc-ic{
-    width:46px;height:46px;border-radius:13px; background:var(--cream-2); border:1px solid var(--line);
-    display:grid; place-items:center; font-size:22px; line-height:1;
+  .hero-card:active{transform:scale(.985)}
+  .hero-card:hover{transform:translateY(-3px)}
+  .hero-card .photo{
+    position:absolute; inset:0; opacity:.5; background-size:cover; background-position:center;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='260'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23556' /%3E%3Cstop offset='1' stop-color='%23332b22'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='260' fill='url(%23g)'/%3E%3Cpath d='M0 200 Q100 150 200 190 T400 180 V260 H0 Z' fill='%23000' opacity='.25'/%3E%3Ccircle cx='320' cy='60' r='40' fill='%23fff' opacity='.12'/%3E%3C/svg%3E");
   }
-  .svc-card h3{font-weight:600; font-size:14.5px; letter-spacing:-.005em; color:var(--ink); line-height:1.2}
-  .svc-card p{margin:0; font-size:11.8px; color:var(--muted); line-height:1.4}
-  .svc-card .arrow{position:absolute; top:16px; right:14px; color:var(--line-strong); transition:.3s var(--ease)}
-  .svc-card:hover .arrow{color:var(--accent); transform:translateX(2px)}
-  .svc-card .tag{
-    margin-top:auto; align-self:flex-start; font-size:9.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
-    color:var(--accent); background:var(--cream-3); border:1px solid var(--line); padding:4px 9px; border-radius:999px;
+  .hero-card::after{content:""; position:absolute; inset:0; background:linear-gradient(120deg,rgba(44,54,56,.82),rgba(44,54,56,.35) 60%,rgba(71,58,48,.5))}
+  .hero-inner{position:relative; z-index:2; padding:24px 22px 22px; min-height:200px; display:flex; flex-direction:column}
+  .hero-inner .k{font-size:10.5px; letter-spacing:.24em; text-transform:uppercase; color:rgba(240,231,223,.78); font-weight:600}
+  .hero-ic{
+    width:66px;height:66px;border-radius:18px; background:rgba(255,255,255,.14);
+    -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); border:1px solid rgba(255,255,255,.2);
+    display:grid; place-items:center; margin:6px 0 auto;
   }
+  .hero-ic i{font-size:38px; color:#f0e7df; line-height:1}
+  .hero-inner h2{font-size:26px; font-weight:500; color:#fff; margin:14px 0 0; letter-spacing:-.01em}
+  .hero-inner p{margin:7px 0 0; font-size:13.5px; color:#dfe4e3; max-width:32ch; line-height:1.5}
+  .hero-cta{
+    display:inline-flex; align-items:center; gap:7px; margin-top:14px; align-self:flex-start;
+    background:var(--bg); color:var(--ink); font-weight:600; font-size:13px; padding:10px 16px; border-radius:999px; box-shadow:var(--shadow-md);
+  }
+  .hero-cta i{font-size:16px; line-height:1}
+
+  /* ===== V3: 3-COLUMN LARGE-ICON GRID ===== */
+  .mini-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:11px}
+  .mini{
+    position:relative; cursor:pointer; text-align:center; background:var(--white); border:1px solid var(--line);
+    border-radius:18px; box-shadow:var(--shadow-sm); padding:16px 8px 14px; display:flex; flex-direction:column; align-items:center; gap:10px;
+    min-height:118px; transition:transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease); -webkit-tap-highlight-color:transparent;
+  }
+  .mini:active{transform:scale(.96)}
+  .mini:hover{transform:translateY(-3px); box-shadow:var(--shadow-md); border-color:var(--line-strong)}
+  .mini .ic{
+    width:56px;height:56px;border-radius:16px; background:linear-gradient(160deg,var(--cream-3),var(--cream-2)); border:1px solid var(--line);
+    display:grid; place-items:center; transition:.35s var(--ease);
+  }
+  .mini .ic i{font-size:32px; color:var(--accent); transition:.35s var(--ease); line-height:1}
+  .mini:hover .ic{background:var(--ink); border-color:transparent}
+  .mini:hover .ic i{color:var(--bg)}
+  .mini h3{font-size:12px; font-weight:600; color:var(--ink); line-height:1.2}
 
   .home-foot{margin:26px 4px 6px; text-align:center; color:var(--muted); font-size:11.5px; line-height:1.5}
   .home-foot b{font-weight:600; color:var(--slate)}
@@ -174,7 +203,8 @@
     padding:26px 22px 24px; overflow:hidden; box-shadow:var(--shadow-md); margin-bottom:18px;
   }
   .detail-hero::before{content:""; position:absolute; inset:0; background:radial-gradient(120% 120% at 100% 0%, rgba(98,78,64,.55), transparent 60%); opacity:.6}
-  .detail-hero .ic{position:relative; font-size:40px; line-height:1; margin-bottom:14px}
+  .detail-hero .ic{position:relative; line-height:1; margin-bottom:14px; font-size:46px}
+  .detail-hero .ic i{font-size:1em; color:var(--bg); line-height:1}
   .detail-hero .k{position:relative; font-size:10.5px; letter-spacing:.24em; text-transform:uppercase; opacity:.72}
   .detail-hero h2{position:relative; font-weight:400; font-size:26px; margin:7px 0 0; color:#fff; letter-spacing:-.01em}
   .detail-hero p{position:relative; margin:11px 0 0; font-size:14px; color:#d6dcdc; line-height:1.55; max-width:38ch}
@@ -191,7 +221,8 @@
     transition:.3s var(--ease);
   }
   .linkout:hover{box-shadow:var(--shadow-sm); transform:translateY(-2px)}
-  .linkout .lic{width:40px;height:40px;border-radius:11px; background:var(--white); border:1px solid var(--line); display:grid; place-items:center; font-size:20px; flex:0 0 auto}
+  .linkout .lic{width:40px;height:40px;border-radius:11px; background:var(--white); border:1px solid var(--line); display:grid; place-items:center; flex:0 0 auto}
+  .linkout .lic i{font-size:22px; color:var(--accent); line-height:1}
   .linkout .lt{flex:1}
   .linkout .lt b{display:block; font-weight:600; font-size:14px}
   .linkout .lt span{font-size:12px; color:var(--muted)}
@@ -237,6 +268,8 @@
     display:flex; align-items:center; gap:10px; transition:.28s var(--ease); -webkit-tap-highlight-color:transparent;
   }
   .pay-opt .pic{font-size:20px}
+  .pay-opt .pic i{font-size:22px; color:var(--accent); line-height:1}
+  .pay-opt.active .pic i{color:var(--bg)}
   .pay-opt .pt b{display:block; font-size:13px; font-weight:600}
   .pay-opt .pt span{font-size:10.5px; color:var(--muted)}
   .pay-opt.active{background:var(--ink); border-color:transparent; box-shadow:var(--shadow-md)}
@@ -325,7 +358,8 @@
     background:var(--white); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-sm);
     padding:16px 17px; display:flex; gap:14px; align-items:flex-start; animation:viewIn .4s var(--ease);
   }
-  .rq-card .ric{width:46px;height:46px;border-radius:13px; background:var(--cream-2); border:1px solid var(--line); display:grid; place-items:center; font-size:22px; flex:0 0 auto}
+  .rq-card .ric{width:46px;height:46px;border-radius:13px; background:linear-gradient(160deg,var(--cream-3),var(--cream-2)); border:1px solid var(--line); display:grid; place-items:center; flex:0 0 auto}
+  .rq-card .ric i{font-size:26px; color:var(--accent); line-height:1}
   .rq-card .rmain{flex:1; min-width:0}
   .rq-card .rmain h3{font-size:15px; font-weight:600; letter-spacing:-.005em}
   .rq-card .meta{margin-top:6px; font-size:12.5px; color:var(--muted); line-height:1.5}
@@ -335,6 +369,8 @@
   .status-pill.pending .d{width:6px;height:6px;border-radius:50%; background:#caa244}
   .empty{text-align:center; padding:60px 24px}
   .empty .eic{width:74px;height:74px;border-radius:20px; margin:0 auto 20px; background:var(--white); border:1px solid var(--line); box-shadow:var(--shadow-sm); display:grid; place-items:center; font-size:32px}
+  .empty .eic i{font-size:1em; color:var(--accent); line-height:1}
+  .confirm .recap .v i{font-size:17px; color:var(--accent); line-height:1}
   .empty h3{font-size:19px; font-weight:400; color:var(--ink)}
   .empty p{color:var(--muted); font-size:13.5px; line-height:1.55; max-width:28ch; margin:10px auto 22px}
   .empty .btn-primary{max-width:240px; margin:0 auto}
@@ -353,9 +389,11 @@
     -webkit-tap-highlight-color:transparent;
   }
   .tab svg{width:23px;height:23px; transition:.28s var(--ease)}
+  .tab i{font-size:24px; line-height:1; transition:.28s var(--ease)}
   .tab .lbl{font-size:10.5px; font-weight:600; letter-spacing:.02em}
   .tab.active{color:var(--ink)}
   .tab.active svg{transform:translateY(-1px)}
+  .tab.active i{transform:translateY(-1px)}
   .tab:active{transform:scale(.94)}
   .tab .badge-n{
     position:absolute; top:3px; right:calc(50% - 24px); min-width:17px; height:17px; padding:0 4px;
@@ -405,19 +443,23 @@
     <!-- ===== SCROLLABLE BODY ===== -->
     <main class="scroll" id="scroll">
 
-      <!-- ===== HOME ===== -->
+      <!-- ===== HOME (V3 — Featured + Grid) ===== -->
       <section class="view active" id="view-home">
         <div class="greeting">
           <span class="hi"><span class="dot"></span> Welcome to AVA</span>
           <h1>Your villa <em>concierge</em>,<br/>at your fingertips.</h1>
-          <p>Welcome to AVA — your villa concierge. Anything you need on Koh Phangan, arranged with care.</p>
         </div>
 
+        <!-- Featured hero card (injected) -->
+        <div id="heroSlot"><!-- hero card injected --></div>
+
         <div class="sec-label">
-          <span class="t">Services</span>
+          <span class="t">More services</span>
           <span class="c" id="svcCount"></span>
         </div>
-        <div class="svc-grid" id="svcGrid"><!-- service cards injected --></div>
+
+        <!-- 3-column large-icon grid (injected) -->
+        <div class="mini-grid" id="svcGrid"><!-- service icons injected --></div>
 
         <div class="home-foot">
           Curated &amp; delivered to your door by <b>AVA ESTATE</b>.<br/>Tap any service to request it.
@@ -464,15 +506,15 @@
     <!-- ===== BOTTOM NAV ===== -->
     <nav class="tabbar" id="tabbar">
       <button class="tab active" data-tab="home">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M3 10.5l9-7 9 7V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1v-9.5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        <i class="ph-fill ph-house" aria-hidden="true"></i>
         <span class="lbl">Home</span>
       </button>
       <button class="tab" data-tab="chat">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9A1.5 1.5 0 0 1 18.5 16H9l-4 4v-4H5.5A1.5 1.5 0 0 1 4 14.5v-9z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        <i class="ph ph-chat-circle-dots" aria-hidden="true"></i>
         <span class="lbl">Concierge</span>
       </button>
       <button class="tab" data-tab="requests">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M9 5h10M9 12h10M9 19h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M4.5 5l1 1 1.5-2M4.5 12l1 1 1.5-2M4.5 19l1 1 1.5-2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <i class="ph ph-list-checks" aria-hidden="true"></i>
         <span class="lbl">Requests</span>
         <span class="badge-n" id="reqBadge"></span>
       </button>
@@ -488,41 +530,41 @@
 
   /* ===================== DATA ===================== */
   var SERVICES = [
-    { id:"bikes",   icon:"🛵", title:"Bikes & Cars",        desc:"Scooters & cars to your door",
+    { id:"bikes",   icon:"🛵", phicon:"motorcycle", featured:true, title:"Bikes & Cars",        desc:"Scooters & cars to your door",
       blurb:"A serviced, insured rental fleet — from nimble city scooters to seven-seat SUVs — delivered straight to your villa.",
       includes:["Delivery & pickup at your villa","Helmets, insurance & full service","Daily, weekly & monthly rates"],
-      link:{label:"Browse our rental catalog", sub:"Full fleet, live pricing", href:"../", icon:"📖"} },
-    { id:"tea",     icon:"🍵", title:"Tea Ceremony",         desc:"A calm, guided ritual",
+      link:{label:"Browse our rental catalog", sub:"Full fleet, live pricing", href:"../", icon:"📖", phicon:"book-open"} },
+    { id:"tea",     icon:"🍵", phicon:"coffee", title:"Tea Ceremony",         desc:"A calm, guided ritual",
       blurb:"A serene, guided tea ceremony at your villa — premium leaves, an experienced host, and a moment of stillness.",
       includes:["Private host & full tea set","Premium artisanal tea selection","60–90 min, up to your group"] },
-    { id:"nanny",   icon:"🧸", title:"Nanny / Babysitter",  desc:"Trusted childcare",
+    { id:"nanny",   icon:"🧸", phicon:"baby", title:"Nanny / Babysitter",  desc:"Trusted childcare",
       blurb:"Vetted, English-speaking nannies so you can enjoy an evening out — caring, reliable, and background-checked.",
       includes:["Experienced, vetted carers","Hourly or full-day cover","Games, meals & bedtime help"] },
-    { id:"ferry",   icon:"⛴️", title:"Ferry & Boat Tickets", desc:"Island hops, sorted",
+    { id:"ferry",   icon:"⛴️", phicon:"boat", title:"Ferry & Boat Tickets", desc:"Island hops, sorted",
       blurb:"Ferry and speedboat tickets to Samui, Tao and the mainland — booked, confirmed and timed to your transfer.",
       includes:["All routes & operators","E-tickets to your phone","Pier transfer coordinated"] },
-    { id:"transfer",icon:"🚐", title:"Transfer & Taxi",      desc:"Airport & pier rides",
+    { id:"transfer",icon:"🚐", phicon:"taxi", title:"Transfer & Taxi",      desc:"Airport & pier rides",
       blurb:"Private, air-conditioned transfers to the airport, pier or anywhere on the island — on time, every time.",
       includes:["Airport & pier pickups","Private car, van or minibus","Meet & greet with name sign"] },
-    { id:"chef",    icon:"👨‍🍳", title:"Private Chef",        desc:"Dining in your villa",
+    { id:"chef",    icon:"👨‍🍳", phicon:"chef-hat", title:"Private Chef",        desc:"Dining in your villa",
       blurb:"A private chef cooks a bespoke menu in your villa — Thai, seafood or international, shopping and cleanup included.",
       includes:["Custom menu & dietary needs","Groceries, cooking & cleanup","Thai, seafood or international"] },
-    { id:"spa",     icon:"💆", title:"Spa & Massage",        desc:"In-villa treatments",
+    { id:"spa",     icon:"💆", phicon:"flower-lotus", title:"Spa & Massage",        desc:"In-villa treatments",
       blurb:"Professional therapists bring the spa to you — Thai, oil or deep-tissue massage on your terrace or by the pool.",
       includes:["Therapist & table to your villa","Thai, oil, aroma or deep-tissue","Single, couples or group sessions"] },
-    { id:"tours",   icon:"🌴", title:"Tours & Excursions",   desc:"Island adventures",
+    { id:"tours",   icon:"🌴", phicon:"map-trifold", title:"Tours & Excursions",   desc:"Island adventures",
       blurb:"Hand-picked island experiences — snorkelling, waterfalls, viewpoints and sunset boat trips, with a private guide.",
       includes:["Private or small-group tours","Snorkel, waterfall & sunset trips","Transport & guide included"] },
-    { id:"grocery", icon:"🛒", title:"Groceries & Delivery", desc:"Water, alcohol & more",
+    { id:"grocery", icon:"🛒", phicon:"shopping-bag", title:"Groceries & Delivery", desc:"Water, alcohol & more",
       blurb:"Stock your villa before you arrive or top up anytime — drinking water, groceries, wine and beer delivered.",
       includes:["Drinking water & essentials","Wine, beer & spirits","Pre-arrival villa stocking"] },
-    { id:"laundry", icon:"🧺", title:"Laundry",              desc:"Wash, fold, return",
+    { id:"laundry", icon:"🧺", phicon:"t-shirt", title:"Laundry",              desc:"Wash, fold, return",
       blurb:"Pickup, professional wash, fold and return — fresh laundry back at your villa, often same day.",
       includes:["Pickup & return at your villa","Wash, dry, fold & press","Often same-day turnaround"] },
-    { id:"yoga",    icon:"🧘", title:"Yoga & Trainer",       desc:"Private sessions",
+    { id:"yoga",    icon:"🧘", phicon:"barbell", title:"Yoga & Trainer",       desc:"Private sessions",
       blurb:"Private yoga or a personal trainer at your villa — sunrise flow on the terrace or a focused workout, your choice.",
       includes:["Certified instructors","Yoga, mobility or strength","Mats & equipment provided"] },
-    { id:"checkout",icon:"🕓", title:"Late Checkout",        desc:"Early in / late out",
+    { id:"checkout",icon:"🕓", phicon:"clock", title:"Late Checkout",        desc:"Early in / late out",
       blurb:"Need a few more hours? Request a late checkout or early check-in and we'll confirm based on the day's schedule.",
       includes:["Late checkout request","Early check-in request","Subject to availability"] }
   ];
@@ -536,6 +578,7 @@
     appbarTitle: document.getElementById("appbarTitle"),
     backBtn: document.getElementById("backBtn"),
     scroll: document.getElementById("scroll"),
+    heroSlot: document.getElementById("heroSlot"),
     svcGrid: document.getElementById("svcGrid"),
     svcCount: document.getElementById("svcCount"),
     detail: document.getElementById("view-detail"),
@@ -566,9 +609,20 @@
     else els.reqBadge.classList.remove("show");
   }
   function svcById(id){ for(var i=0;i<SERVICES.length;i++) if(SERVICES[i].id===id) return SERVICES[i]; return null; }
+  // Resolve a stored request to its Phosphor icon (handles older saved records).
+  function rqPhicon(rq){
+    if(rq && rq.phicon) return rq.phicon;
+    var s = rq && svcById(rq.serviceId);
+    return (s && s.phicon) || "sparkle";
+  }
 
   /* ===================== HELPERS ===================== */
   function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+  // Phosphor icon markup. weight: "duotone" (default), "regular" (ph), "fill".
+  function phi(name, weight){
+    var cls = weight==="regular" ? "ph" : weight==="fill" ? "ph-fill" : "ph-duotone";
+    return '<i class="'+cls+' ph-'+esc(name)+'" aria-hidden="true"></i>';
+  }
   var CHECK = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5 9-11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   function toast(msg){
     els.toast.textContent = msg;
@@ -618,21 +672,35 @@
     else if(tab==="requests"){ renderRequests(); showView("requests"); }
   }
 
-  /* ===================== HOME ===================== */
+  /* ===================== HOME (V3 — Featured + Grid) ===================== */
   function renderHome(){
-    els.svcCount.textContent = SERVICES.length + " available";
-    var html = SERVICES.map(function(s){
-      var tag = s.link ? '<span class="tag">'+esc(s.link.label.indexOf("catalog")>-1?"Catalog":"Link")+'</span>' : '';
+    // pick the featured service for the hero card; the rest fill the grid
+    var featured = null, rest = [];
+    SERVICES.forEach(function(s){ if(s.featured && !featured) featured = s; else rest.push(s); });
+    if(!featured){ featured = SERVICES[0]; rest = SERVICES.slice(1); }
+
+    // ---- featured hero card ----
+    els.heroSlot.innerHTML = ''+
+      '<button class="hero-card" type="button" data-svc="'+featured.id+'">'+
+        '<span class="photo"></span>'+
+        '<span class="hero-inner">'+
+          '<span class="k">Most requested</span>'+
+          '<span class="hero-ic">'+phi(featured.phicon)+'</span>'+
+          '<h2>'+esc(featured.title)+'</h2>'+
+          '<p>'+esc(featured.desc.charAt(0).toUpperCase()+featured.desc.slice(1))+', delivered to your villa door.</p>'+
+          '<span class="hero-cta">Browse the fleet '+phi("arrow-right","regular")+'</span>'+
+        '</span>'+
+      '</button>';
+
+    // ---- 3-column large-icon grid ----
+    els.svcCount.textContent = rest.length + " more";
+    els.svcGrid.innerHTML = rest.map(function(s){
       return ''+
-        '<button class="svc-card" data-svc="'+s.id+'">'+
-          '<span class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>'+
-          '<span class="svc-ic" aria-hidden="true">'+s.icon+'</span>'+
+        '<button class="mini" type="button" data-svc="'+s.id+'">'+
+          '<span class="ic">'+phi(s.phicon)+'</span>'+
           '<h3>'+esc(s.title)+'</h3>'+
-          '<p>'+esc(s.desc)+'</p>'+
-          tag+
         '</button>';
     }).join("");
-    els.svcGrid.innerHTML = html;
   }
 
   /* ===================== SERVICE DETAIL ===================== */
@@ -643,14 +711,14 @@
     var incl = s.includes.map(function(i){ return '<li>'+CHECK+'<span>'+esc(i)+'</span></li>'; }).join("");
     var linkBlock = s.link ? (
       '<button class="linkout" id="svcLink">'+
-        '<span class="lic">'+s.link.icon+'</span>'+
+        '<span class="lic">'+phi(s.link.phicon||"book-open")+'</span>'+
         '<span class="lt"><b>'+esc(s.link.label)+'</b><span>'+esc(s.link.sub)+'</span></span>'+
         '<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M9 7h8v8" stroke="#624e40" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
       '</button>'
     ) : '';
     els.detail.innerHTML = ''+
       '<div class="detail-hero">'+
-        '<div class="ic" aria-hidden="true">'+s.icon+'</div>'+
+        '<div class="ic" aria-hidden="true">'+phi(s.phicon)+'</div>'+
         '<div class="k">AVA Concierge</div>'+
         '<h2>'+esc(s.title)+'</h2>'+
         '<p>'+esc(s.blurb)+'</p>'+
@@ -667,7 +735,10 @@
     showView("detail", {title:s.title});
     document.getElementById("reqBtn").addEventListener("click", function(){ openForm(s); });
     var lk = document.getElementById("svcLink");
-    if(lk) lk.addEventListener("click", function(){ toast("Opening the AVA rental catalog…"); });
+    if(lk) lk.addEventListener("click", function(){
+      toast("Opening the AVA rental catalog…");
+      if(s.link && s.link.href) setTimeout(function(){ window.location.href = s.link.href; }, 250);
+    });
   }
 
   /* ===================== REQUEST FORM ===================== */
@@ -679,7 +750,7 @@
     var today = new Date().toISOString().slice(0,10);
     els.form.innerHTML = ''+
       '<div class="detail-hero" style="padding:20px 22px">'+
-        '<div class="ic" aria-hidden="true" style="font-size:30px;margin-bottom:10px">'+s.icon+'</div>'+
+        '<div class="ic" aria-hidden="true" style="margin-bottom:10px;font-size:34px">'+phi(s.phicon)+'</div>'+
         '<div class="k">Request</div>'+
         '<h2 style="font-size:23px">'+esc(s.title)+'</h2>'+
       '</div>'+
@@ -707,8 +778,8 @@
         '<div class="field">'+
           '<label>Payment</label>'+
           '<div class="pay-toggle" id="payToggle">'+
-            '<div class="pay-opt active" data-pay="card"><span class="pic">💳</span><span class="pt"><b>Card</b><span>Pay securely online</span></span></div>'+
-            '<div class="pay-opt" data-pay="cash"><span class="pic">💵</span><span class="pt"><b>Cash</b><span>On delivery</span></span></div>'+
+            '<div class="pay-opt active" data-pay="card"><span class="pic">'+phi("credit-card")+'</span><span class="pt"><b>Card</b><span>Pay securely online</span></span></div>'+
+            '<div class="pay-opt" data-pay="cash"><span class="pic">'+phi("money")+'</span><span class="pt"><b>Cash</b><span>On delivery</span></span></div>'+
           '</div>'+
         '</div>'+
         '<div class="err" id="formErr">Please fill in your name and villa.</div>'+
@@ -756,6 +827,7 @@
       service: s.title,
       serviceId: s.id,
       icon: s.icon,
+      phicon: s.phicon,
       name: name,
       villa: villa,
       date: f.date.value,
@@ -784,7 +856,7 @@
         '<h2>Request received</h2>'+
         '<p>Thank you, '+esc(rq.name.split(" ")[0])+'. Our concierge will confirm shortly.</p>'+
         '<div class="recap">'+
-          '<div class="r"><span class="l">Service</span><span class="v">'+rq.icon+' '+esc(rq.service)+'</span></div>'+
+          '<div class="r"><span class="l">Service</span><span class="v" style="display:inline-flex;align-items:center;gap:7px;justify-content:flex-end">'+phi(rqPhicon(rq))+esc(rq.service)+'</span></div>'+
           '<div class="r"><span class="l">Villa</span><span class="v">'+esc(rq.villa)+'</span></div>'+
           '<div class="r"><span class="l">When</span><span class="v">'+esc(fmtDate(rq.date))+(rq.time?' · '+esc(rq.time):'')+'</span></div>'+
           (rq.people?'<div class="r"><span class="l">Details</span><span class="v">'+esc(rq.people)+'</span></div>':'')+
@@ -808,7 +880,7 @@
     if(!list.length){
       els.rqContent.innerHTML = ''+
         '<div class="empty">'+
-          '<div class="eic">🗒️</div>'+
+          '<div class="eic">'+phi("list-checks")+'</div>'+
           '<h3>No requests yet</h3>'+
           '<p>Browse our services and your requests will appear here.</p>'+
           '<button class="btn-primary" id="emptyHome">Explore services</button>'+
@@ -822,7 +894,7 @@
       var payLabel = rq.pay==="cash" ? "Cash" : "Card";
       return ''+
         '<div class="rq-card">'+
-          '<div class="ric" aria-hidden="true">'+(rq.icon||"🌴")+'</div>'+
+          '<div class="ric" aria-hidden="true">'+phi(rqPhicon(rq))+'</div>'+
           '<div class="rmain">'+
             '<h3>'+esc(rq.service)+'</h3>'+
             '<div class="meta"><b>'+esc(rq.villa)+'</b> · '+esc(when)+'<br/>'+
@@ -900,6 +972,10 @@
 
   /* ===================== EVENTS ===================== */
   els.svcGrid.addEventListener("click", function(e){
+    var card = e.target.closest("[data-svc]"); if(!card) return;
+    openDetail(card.getAttribute("data-svc"));
+  });
+  els.heroSlot.addEventListener("click", function(e){
     var card = e.target.closest("[data-svc]"); if(!card) return;
     openDetail(card.getAttribute("data-svc"));
   });
