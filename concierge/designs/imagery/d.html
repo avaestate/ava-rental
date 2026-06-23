@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>AVA Concierge · Style D — 3D illustrated icons</title>
+<meta name="theme-color" content="#2c3638" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css" />
+<style>
+  :root{
+    --ink:#2c3638; --ink-soft:#3f4a4c; --slate:#515b5d; --muted:#75878b; --accent:#624e40;
+    --bg:#f0e7df; --cream-1:#f7f2ec; --cream-2:#f3ece5; --cream-3:#fcf5ef; --white:#fff;
+    --line:rgba(44,54,56,.12); --line-strong:rgba(44,54,56,.18);
+    --shadow-sm:0 1px 2px rgba(44,54,56,.05), 0 2px 8px rgba(44,54,56,.05);
+    --shadow-md:0 10px 28px -14px rgba(44,54,56,.22), 0 4px 12px rgba(44,54,56,.05);
+    --shadow-lg:0 26px 54px -24px rgba(44,54,56,.30), 0 8px 18px rgba(44,54,56,.07);
+    --radius:20px; --ease:cubic-bezier(.2,.8,.2,1); --phone:430px; --nav-h:76px;
+  }
+  *{box-sizing:border-box}
+  html{height:100%}
+  body{margin:0; font-family:"Manrope",system-ui,sans-serif; color:var(--ink);
+    background:radial-gradient(120% 80% at 50% -10%, #faf4ee, transparent 60%), linear-gradient(180deg,#ece2d8,#e6dbcf);
+    -webkit-font-smoothing:antialiased; line-height:1.5; min-height:100%;}
+  h1,h2,h3,h4{font-family:"Manrope",sans-serif; font-weight:400; letter-spacing:-.015em; color:var(--ink); margin:0}
+  button{font-family:inherit}
+  img{max-width:100%;display:block}
+  i.ph,i.ph-fill{display:inline-block; line-height:1}
+  .stage{min-height:100dvh; display:flex; align-items:center; justify-content:center; padding:24px 16px}
+  .app{position:relative; width:100%; max-width:var(--phone); height:min(900px, calc(100dvh - 48px));
+    background:var(--bg); border-radius:42px; box-shadow:0 50px 90px -30px rgba(44,54,56,.55), 0 0 0 1px rgba(44,54,56,.06);
+    overflow:hidden; display:flex; flex-direction:column; isolation:isolate;}
+  .app::after{content:""; position:absolute; inset:0; pointer-events:none; z-index:60; opacity:.025;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); mix-blend-mode:multiply;}
+  .appbar{position:relative; z-index:30; flex:0 0 auto; -webkit-backdrop-filter:saturate(120%) blur(14px); backdrop-filter:saturate(120%) blur(14px);
+    background:rgba(240,231,223,.82); border-bottom:1px solid var(--line);
+    padding:calc(env(safe-area-inset-top) + 14px) 18px 14px; display:flex; align-items:center; gap:12px; min-height:60px;}
+  .brand{display:flex; align-items:center; gap:11px; flex:1; min-width:0}
+  .mark{width:38px;height:38px;border-radius:11px; flex:0 0 auto; background:var(--ink); display:grid;place-items:center; box-shadow:var(--shadow-sm)}
+  .mark svg{width:21px;height:21px}
+  .brand .name{font-weight:600; font-size:14.5px; letter-spacing:.2em; line-height:1; color:var(--ink)}
+  .brand .sub{font-size:9.5px; letter-spacing:.26em; text-transform:uppercase; color:var(--muted); margin-top:5px}
+  .vbadge{font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); background:var(--cream-3); border:1px solid var(--line); padding:5px 10px; border-radius:999px}
+  .scroll{position:relative; z-index:10; flex:1 1 auto; overflow-y:auto; overflow-x:hidden}
+  .scroll::-webkit-scrollbar{width:0}
+  .view{padding:20px 18px calc(var(--nav-h) + 24px)}
+  .greeting{margin:6px 2px 18px}
+  .greeting .hi{display:inline-flex; align-items:center; gap:9px; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--accent); font-weight:600; margin-bottom:13px}
+  .greeting .hi .dot{width:6px;height:6px;border-radius:50%; background:var(--accent); box-shadow:0 0 0 4px rgba(98,78,64,.14)}
+  .greeting h1{font-size:28px; line-height:1.1; font-weight:300; letter-spacing:-.02em}
+  .greeting h1 em{font-style:normal; font-weight:500; color:var(--accent)}
+  .sec-label{display:flex; align-items:baseline; justify-content:space-between; margin:22px 2px 14px}
+  .sec-label .t{font-size:11.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); font-weight:600}
+  .sec-label .c{font-size:11.5px; color:var(--muted)}
+
+  /* ===== HERO ===== */
+  .hero-card{position:relative; cursor:pointer; width:100%; text-align:left; border:0; overflow:hidden;
+    border-radius:24px; box-shadow:var(--shadow-lg); padding:0; min-height:200px; display:block;
+    background:linear-gradient(135deg,#3a474a,#2c3638 55%,#473a30);
+    transition:transform .4s var(--ease), box-shadow .4s var(--ease); -webkit-tap-highlight-color:transparent;}
+  .hero-card:active{transform:scale(.985)}
+  .hero-card:hover{transform:translateY(-3px)}
+  .hero-card::after{content:""; position:absolute; inset:0; background:linear-gradient(120deg,rgba(44,54,56,.74),rgba(44,54,56,.30) 60%,rgba(71,58,48,.45))}
+  .hero-3d{position:absolute; right:8px; bottom:-6px; z-index:1; width:150px; height:150px; object-fit:contain; pointer-events:none;
+    filter:drop-shadow(0 14px 22px rgba(0,0,0,.35))}
+  .hero-inner{position:relative; z-index:2; padding:24px 22px 22px; min-height:200px; display:flex; flex-direction:column}
+  .hero-inner .k{font-size:10.5px; letter-spacing:.24em; text-transform:uppercase; color:rgba(240,231,223,.78); font-weight:600}
+  .hero-ic{width:74px;height:74px; margin:6px 0 auto; display:grid; place-items:center}
+  .hero-ic img{width:72px;height:72px;object-fit:contain; filter:drop-shadow(0 8px 14px rgba(0,0,0,.3))}
+  .hero-inner h2{font-size:26px; font-weight:500; color:#fff; margin:14px 0 0; letter-spacing:-.01em}
+  .hero-inner p{margin:7px 0 0; font-size:13.5px; color:#dfe4e3; max-width:30ch; line-height:1.5}
+  .hero-cta{display:inline-flex; align-items:center; gap:7px; margin-top:14px; align-self:flex-start;
+    background:var(--bg); color:var(--ink); font-weight:600; font-size:13px; padding:10px 16px; border-radius:999px; box-shadow:var(--shadow-md)}
+  .hero-cta i{font-size:16px}
+
+  /* ===== GRID — 3D icons ===== */
+  .mini-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:11px}
+  .mini{position:relative; cursor:pointer; text-align:center; background:var(--white); border:1px solid var(--line);
+    border-radius:18px; box-shadow:var(--shadow-sm); padding:14px 8px 13px; display:flex; flex-direction:column; align-items:center; gap:8px;
+    min-height:122px; transition:transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease); -webkit-tap-highlight-color:transparent}
+  .mini:active{transform:scale(.96)}
+  .mini:hover{transform:translateY(-3px); box-shadow:var(--shadow-md); border-color:var(--line-strong)}
+  .mini .ic{width:60px;height:60px; display:grid; place-items:center; transition:.35s var(--ease)}
+  .mini .ic img{width:56px;height:56px; object-fit:contain; filter:drop-shadow(0 6px 9px rgba(44,54,56,.18)); transition:.35s var(--ease)}
+  .mini:hover .ic img{transform:translateY(-2px) scale(1.06)}
+  .mini h3{font-size:12px; font-weight:600; color:var(--ink); line-height:1.2}
+  .mini.sel{border-color:var(--accent); box-shadow:0 0 0 2px rgba(98,78,64,.18), var(--shadow-md)}
+
+  .home-foot{margin:24px 4px 6px; text-align:center; color:var(--muted); font-size:11.5px; line-height:1.5}
+  .home-foot b{font-weight:600; color:var(--slate)}
+  .tabbar{position:absolute; left:0; right:0; bottom:0; z-index:40; display:grid; grid-template-columns:repeat(3,1fr);
+    background:rgba(247,242,236,.9); -webkit-backdrop-filter:saturate(120%) blur(16px); backdrop-filter:saturate(120%) blur(16px);
+    border-top:1px solid var(--line); padding:8px 8px calc(env(safe-area-inset-bottom) + 8px);}
+  .tab{border:0; background:transparent; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:4px;
+    padding:7px 4px 5px; border-radius:13px; color:var(--muted); transition:.28s var(--ease); -webkit-tap-highlight-color:transparent}
+  .tab i{font-size:24px}
+  .tab .lbl{font-size:10.5px; font-weight:600; letter-spacing:.02em}
+  .tab.active{color:var(--ink)}
+  .tab:active{transform:scale(.94)}
+  .toast{position:absolute; left:50%; bottom:calc(var(--nav-h) + 18px); transform:translate(-50%, 20px); z-index:70;
+    background:var(--ink); color:var(--bg); font-size:13px; font-weight:500; padding:11px 18px; border-radius:12px;
+    box-shadow:var(--shadow-lg); opacity:0; pointer-events:none; transition:.4s var(--ease); max-width:88%; text-align:center}
+  .toast.show{opacity:1; transform:translate(-50%,0)}
+  @media (prefers-reduced-motion: reduce){*{animation:none !important; transition:none !important}}
+  @media (max-width:480px){.stage{padding:0; align-items:stretch} .app{max-width:none; height:100dvh; border-radius:0; box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="app">
+    <header class="appbar">
+      <div class="brand">
+        <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M3 16c2.2 0 2.2-2 4.4-2s2.2 2 4.4 2 2.2-2 4.4-2 2.2 2 4.4 2" stroke="#f0e7df" stroke-width="1.7" stroke-linecap="round"/><path d="M12 3.5l3 5.5H9l3-5.5z" stroke="#f0e7df" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
+        <div><div class="name">AVA CONCIERGE</div><div class="sub">Koh Phangan</div></div>
+      </div>
+      <span class="vbadge">Style D</span>
+    </header>
+    <main class="scroll">
+      <section class="view">
+        <div class="greeting">
+          <span class="hi"><span class="dot"></span> Welcome to AVA</span>
+          <h1>Good morning. <em>Where to</em><br/>today?</h1>
+        </div>
+        <button class="hero-card" type="button" data-id="bikes">
+          <img class="hero-3d" alt="" referrerpolicy="no-referrer"
+               src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Motor%20scooter/3D/motor_scooter_3d.png" />
+          <span class="hero-inner">
+            <span class="k">Most requested</span>
+            <span class="hero-ic"><img alt="" referrerpolicy="no-referrer"
+              src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Motor%20scooter/3D/motor_scooter_3d.png" /></span>
+            <h2>Bikes &amp; Cars</h2>
+            <p>A serviced, insured fleet to your villa door.</p>
+            <span class="hero-cta">Browse the fleet <i class="ph ph-arrow-right"></i></span>
+          </span>
+        </button>
+        <div class="sec-label"><span class="t">More services</span><span class="c">11 more</span></div>
+        <div class="mini-grid" id="grid"></div>
+        <div class="home-foot">Curated &amp; delivered to your door by <b>AVA ESTATE</b>.</div>
+      </section>
+    </main>
+    <nav class="tabbar">
+      <button class="tab active" type="button"><i class="ph-fill ph-house"></i><span class="lbl">Home</span></button>
+      <button class="tab" type="button"><i class="ph ph-chat-circle-dots"></i><span class="lbl">Concierge</span></button>
+      <button class="tab" type="button"><i class="ph ph-list-checks"></i><span class="lbl">Requests</span></button>
+    </nav>
+    <div class="toast" id="toast"></div>
+  </div>
+</div>
+<script>
+  // Microsoft Fluent Emoji 3D (hosted via jsDelivr). Verified-loading paths.
+  var F = "https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/";
+  var SERVICES = [
+    {id:"tea",     img:"Teacup%20without%20handle/3D/teacup_without_handle_3d.png", title:"Tea Ceremony"},
+    {id:"nanny",   img:"Baby/Default/3D/baby_3d_default.png",                       title:"Nanny"},
+    {id:"ferry",   img:"Ferry/3D/ferry_3d.png",                                     title:"Ferry & Boat"},
+    {id:"transfer",img:"Taxi/3D/taxi_3d.png",                                       title:"Transfer & Taxi"},
+    {id:"chef",    img:"Cook/Default/3D/cook_3d_default.png",                        title:"Private Chef"},
+    {id:"spa",     img:"Person%20getting%20massage/Default/3D/person_getting_massage_3d_default.png", title:"Spa & Massage"},
+    {id:"tours",   img:"Desert%20island/3D/desert_island_3d.png",                   title:"Tours"},
+    {id:"grocery", img:"Shopping%20cart/3D/shopping_cart_3d.png",                   title:"Groceries"},
+    {id:"laundry", img:"Basket/3D/basket_3d.png",                                   title:"Laundry"},
+    {id:"yoga",    img:"Person%20in%20lotus%20position/Default/3D/person_in_lotus_position_3d_default.png", title:"Yoga & Trainer"},
+    {id:"checkout",img:"Alarm%20clock/3D/alarm_clock_3d.png",                        title:"Late Checkout"}
+  ];
+  var grid = document.getElementById("grid");
+  grid.innerHTML = SERVICES.map(function(s){
+    return '<button class="mini" type="button" data-id="'+s.id+'">'+
+      '<span class="ic"><img alt="" referrerpolicy="no-referrer" src="'+F+s.img+'" /></span>'+
+      '<h3>'+s.title+'</h3></button>';
+  }).join("");
+  var toast = document.getElementById("toast"), tt;
+  function showToast(m){ toast.textContent=m; toast.classList.add("show"); clearTimeout(tt); tt=setTimeout(function(){toast.classList.remove("show")},2200); }
+  grid.addEventListener("click", function(e){
+    var m = e.target.closest(".mini"); if(!m) return;
+    grid.querySelectorAll(".mini").forEach(function(x){x.classList.remove("sel")});
+    m.classList.add("sel");
+    showToast(m.querySelector("h3").textContent + " — tap to request");
+  });
+  document.querySelector(".hero-card").addEventListener("click", function(){ showToast("Bikes & Cars — opening the fleet"); });
+  document.querySelector(".tabbar").addEventListener("click",function(e){
+    var b=e.target.closest(".tab"); if(!b) return;
+    document.querySelectorAll(".tab").forEach(function(x){x.classList.remove("active")}); b.classList.add("active");
+  });
+</script>
+</body>
+</html>
