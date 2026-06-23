@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>AVA Concierge · Style J — Duotone photo + solid footer label</title>
+<meta name="theme-color" content="#2c3638" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css" />
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css" />
+<style>
+  :root{
+    --ink:#2c3638; --ink-soft:#3f4a4c; --slate:#515b5d; --muted:#75878b; --accent:#624e40;
+    --bg:#f0e7df; --cream-1:#f7f2ec; --cream-2:#f3ece5; --cream-3:#fcf5ef; --white:#fff;
+    --line:rgba(44,54,56,.12); --line-strong:rgba(44,54,56,.18);
+    --shadow-sm:0 1px 2px rgba(44,54,56,.05), 0 2px 8px rgba(44,54,56,.05);
+    --shadow-md:0 10px 28px -14px rgba(44,54,56,.22), 0 4px 12px rgba(44,54,56,.05);
+    --shadow-lg:0 26px 54px -24px rgba(44,54,56,.30), 0 8px 18px rgba(44,54,56,.07);
+    --radius:20px; --ease:cubic-bezier(.2,.8,.2,1); --phone:430px; --nav-h:76px;
+    --duo:grayscale(1) brightness(1.06) sepia(.5) hue-rotate(348deg) saturate(.7) contrast(.96);
+    --tint:linear-gradient(180deg, rgba(98,78,64,.30), rgba(44,54,56,.20));
+  }
+  *{box-sizing:border-box}
+  html{height:100%}
+  body{margin:0; font-family:"Manrope",system-ui,sans-serif; color:var(--ink);
+    background:radial-gradient(120% 80% at 50% -10%, #faf4ee, transparent 60%), linear-gradient(180deg,#ece2d8,#e6dbcf);
+    -webkit-font-smoothing:antialiased; line-height:1.5; min-height:100%;}
+  h1,h2,h3,h4{font-family:"Manrope",sans-serif; font-weight:400; letter-spacing:-.015em; color:var(--ink); margin:0}
+  button{font-family:inherit}
+  img{max-width:100%;display:block}
+  i.ph,i.ph-duotone,i.ph-fill{display:inline-block; line-height:1}
+  .stage{min-height:100dvh; display:flex; align-items:center; justify-content:center; padding:24px 16px}
+  .app{position:relative; width:100%; max-width:var(--phone); height:min(900px, calc(100dvh - 48px));
+    background:var(--bg); border-radius:42px; box-shadow:0 50px 90px -30px rgba(44,54,56,.55), 0 0 0 1px rgba(44,54,56,.06);
+    overflow:hidden; display:flex; flex-direction:column; isolation:isolate;}
+  .app::after{content:""; position:absolute; inset:0; pointer-events:none; z-index:60; opacity:.025;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); mix-blend-mode:multiply;}
+  .appbar{position:relative; z-index:30; flex:0 0 auto; -webkit-backdrop-filter:saturate(120%) blur(14px); backdrop-filter:saturate(120%) blur(14px);
+    background:rgba(240,231,223,.82); border-bottom:1px solid var(--line);
+    padding:calc(env(safe-area-inset-top) + 14px) 18px 14px; display:flex; align-items:center; gap:12px; min-height:60px;}
+  .brand{display:flex; align-items:center; gap:11px; flex:1; min-width:0}
+  .mark{width:38px;height:38px;border-radius:11px; flex:0 0 auto; background:var(--ink); display:grid;place-items:center; box-shadow:var(--shadow-sm)}
+  .mark svg{width:21px;height:21px}
+  .brand .name{font-weight:600; font-size:14.5px; letter-spacing:.2em; line-height:1; color:var(--ink)}
+  .brand .sub{font-size:9.5px; letter-spacing:.26em; text-transform:uppercase; color:var(--muted); margin-top:5px}
+  .vbadge{font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); background:var(--cream-3); border:1px solid var(--line); padding:5px 10px; border-radius:999px}
+  .scroll{position:relative; z-index:10; flex:1 1 auto; overflow-y:auto; overflow-x:hidden}
+  .scroll::-webkit-scrollbar{width:0}
+  .view{padding:20px 18px calc(var(--nav-h) + 24px)}
+  .greeting{margin:6px 2px 18px}
+  .greeting .hi{display:inline-flex; align-items:center; gap:9px; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--accent); font-weight:600; margin-bottom:13px}
+  .greeting .hi .dot{width:6px;height:6px;border-radius:50%; background:var(--accent); box-shadow:0 0 0 4px rgba(98,78,64,.14)}
+  .greeting h1{font-size:28px; line-height:1.1; font-weight:300; letter-spacing:-.02em}
+  .greeting h1 em{font-style:normal; font-weight:500; color:var(--accent)}
+  .sec-label{display:flex; align-items:baseline; justify-content:space-between; margin:22px 2px 14px}
+  .sec-label .t{font-size:11.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); font-weight:600}
+  .sec-label .c{font-size:11.5px; color:var(--muted)}
+
+  /* ===== HERO — duotone photo top, label on solid graphite footer ===== */
+  .hero-card{position:relative; cursor:pointer; width:100%; text-align:left; border:0; overflow:hidden;
+    border-radius:24px; box-shadow:var(--shadow-lg); padding:0; display:block; background:var(--ink);
+    transition:transform .4s var(--ease), box-shadow .4s var(--ease); -webkit-tap-highlight-color:transparent;}
+  .hero-card:active{transform:scale(.99)}
+  .hero-card:hover{transform:translateY(-3px)}
+  .hero-img{position:relative; height:160px; overflow:hidden; background:var(--ink)}
+  .hero-img img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:var(--duo)}
+  .hero-img::after{content:""; position:absolute; inset:0; background:var(--tint); mix-blend-mode:multiply}
+  .hero-foot{background:var(--ink); padding:18px 22px 20px}
+  .hero-foot .k{font-size:10.5px; letter-spacing:.24em; text-transform:uppercase; color:rgba(240,231,223,.7); font-weight:600}
+  .hero-foot h2{font-size:25px; font-weight:500; color:#fff; margin:7px 0 0; letter-spacing:-.01em}
+  .hero-foot p{margin:6px 0 0; font-size:13px; color:#cfd6d5; max-width:34ch; line-height:1.5}
+  .hero-cta{display:inline-flex; align-items:center; gap:7px; margin-top:14px;
+    background:var(--bg); color:var(--ink); font-weight:600; font-size:13px; padding:10px 16px; border-radius:999px; box-shadow:var(--shadow-md)}
+  .hero-cta i{font-size:16px}
+
+  /* ===== GRID — duotone photo + solid footer label block ===== */
+  .mini-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:11px}
+  .mini{position:relative; cursor:pointer; text-align:left; border:0; overflow:hidden; background:var(--ink);
+    border-radius:18px; box-shadow:var(--shadow-md); padding:0; display:flex; flex-direction:column;
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease); -webkit-tap-highlight-color:transparent}
+  .mini:active{transform:scale(.96)}
+  .mini:hover{transform:translateY(-3px); box-shadow:var(--shadow-lg)}
+  .mini .pic{position:relative; height:74px; overflow:hidden; background:var(--ink)}
+  .mini .pic img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:var(--duo); transition:transform .5s var(--ease)}
+  .mini:hover .pic img{transform:scale(1.07)}
+  .mini .pic::after{content:""; position:absolute; inset:0; background:var(--tint); mix-blend-mode:multiply}
+  .mini .foot{background:var(--ink); padding:10px 9px 12px; min-height:44px; display:flex; align-items:center}
+  .mini h3{font-size:11px; font-weight:600; color:#f0e7df; line-height:1.18}
+  .mini.sel{box-shadow:0 0 0 2px var(--accent), var(--shadow-lg)}
+
+  .home-foot{margin:24px 4px 6px; text-align:center; color:var(--muted); font-size:11.5px; line-height:1.5}
+  .home-foot b{font-weight:600; color:var(--slate)}
+  .tabbar{position:absolute; left:0; right:0; bottom:0; z-index:40; display:grid; grid-template-columns:repeat(3,1fr);
+    background:rgba(247,242,236,.9); -webkit-backdrop-filter:saturate(120%) blur(16px); backdrop-filter:saturate(120%) blur(16px);
+    border-top:1px solid var(--line); padding:8px 8px calc(env(safe-area-inset-bottom) + 8px);}
+  .tab{border:0; background:transparent; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:4px;
+    padding:7px 4px 5px; border-radius:13px; color:var(--muted); transition:.28s var(--ease); -webkit-tap-highlight-color:transparent}
+  .tab i{font-size:24px}
+  .tab .lbl{font-size:10.5px; font-weight:600; letter-spacing:.02em}
+  .tab.active{color:var(--ink)}
+  .tab:active{transform:scale(.94)}
+  .toast{position:absolute; left:50%; bottom:calc(var(--nav-h) + 18px); transform:translate(-50%, 20px); z-index:70;
+    background:var(--ink); color:var(--bg); font-size:13px; font-weight:500; padding:11px 18px; border-radius:12px;
+    box-shadow:var(--shadow-lg); opacity:0; pointer-events:none; transition:.4s var(--ease); max-width:88%; text-align:center}
+  .toast.show{opacity:1; transform:translate(-50%,0)}
+  @media (prefers-reduced-motion: reduce){*{animation:none !important; transition:none !important}}
+  @media (max-width:480px){.stage{padding:0; align-items:stretch} .app{max-width:none; height:100dvh; border-radius:0; box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="app">
+    <header class="appbar">
+      <div class="brand">
+        <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M3 16c2.2 0 2.2-2 4.4-2s2.2 2 4.4 2 2.2-2 4.4-2 2.2 2 4.4 2" stroke="#f0e7df" stroke-width="1.7" stroke-linecap="round"/><path d="M12 3.5l3 5.5H9l3-5.5z" stroke="#f0e7df" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
+        <div><div class="name">AVA CONCIERGE</div><div class="sub">Koh Phangan</div></div>
+      </div>
+      <span class="vbadge">Style J</span>
+    </header>
+    <main class="scroll">
+      <section class="view">
+        <div class="greeting">
+          <span class="hi"><span class="dot"></span> Welcome to AVA</span>
+          <h1>Good morning. <em>Where to</em><br/>today?</h1>
+        </div>
+        <button class="hero-card" type="button" data-id="bikes">
+          <span class="hero-img"><img alt="Bikes & Cars" loading="eager" referrerpolicy="no-referrer"
+               src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=860&q=75" /></span>
+          <span class="hero-foot">
+            <span class="k">Most requested</span>
+            <h2>Bikes &amp; Cars</h2>
+            <p>A serviced, insured fleet delivered straight to your villa door.</p>
+            <span class="hero-cta">Browse the fleet <i class="ph ph-arrow-right"></i></span>
+          </span>
+        </button>
+        <div class="sec-label"><span class="t">More services</span><span class="c">11 more</span></div>
+        <div class="mini-grid" id="grid"></div>
+        <div class="home-foot">Curated &amp; delivered to your door by <b>AVA ESTATE</b>.</div>
+      </section>
+    </main>
+    <nav class="tabbar">
+      <button class="tab active" type="button"><i class="ph-fill ph-house"></i><span class="lbl">Home</span></button>
+      <button class="tab" type="button"><i class="ph ph-chat-circle-dots"></i><span class="lbl">Concierge</span></button>
+      <button class="tab" type="button"><i class="ph ph-list-checks"></i><span class="lbl">Requests</span></button>
+    </nav>
+    <div class="toast" id="toast"></div>
+  </div>
+</div>
+<script>
+  var U = "https://images.unsplash.com/photo-";
+  var Q = "?auto=format&fit=crop&w=320&q=70";
+  var SERVICES = [
+    {id:"tea",     img:"1564890369478-c89ca6d9cde9", title:"Tea Ceremony"},
+    {id:"nanny",   img:"1476703993599-0035a21b17a9", title:"Nanny"},
+    {id:"ferry",   img:"1593351415075-3bac9f45c877", title:"Ferry & Boat"},
+    {id:"transfer",img:"1449965408869-eaa3f722e40d", title:"Transfer & Taxi"},
+    {id:"chef",    img:"1414235077428-338989a2e8c0", title:"Private Chef"},
+    {id:"spa",     img:"1544161515-4ab6ce6db874",    title:"Spa & Massage"},
+    {id:"tours",   img:"1505228395891-9a51e7e86bf6", title:"Tours"},
+    {id:"grocery", img:"1542838132-92c53300491e",    title:"Groceries"},
+    {id:"laundry", img:"1545173168-9f1947eebb7f",    title:"Laundry"},
+    {id:"yoga",    img:"1506126613408-eca07ce68773", title:"Yoga & Trainer"},
+    {id:"checkout",img:"1501139083538-0139583c060f", title:"Late Checkout"}
+  ];
+  var grid = document.getElementById("grid");
+  grid.innerHTML = SERVICES.map(function(s){
+    return '<button class="mini" type="button" data-id="'+s.id+'">'+
+      '<span class="pic"><img alt="'+s.title+'" loading="lazy" referrerpolicy="no-referrer" src="'+U+s.img+Q+'" /></span>'+
+      '<span class="foot"><h3>'+s.title+'</h3></span></button>';
+  }).join("");
+  var toast = document.getElementById("toast"), tt;
+  function showToast(m){ toast.textContent=m; toast.classList.add("show"); clearTimeout(tt); tt=setTimeout(function(){toast.classList.remove("show")},2200); }
+  grid.addEventListener("click", function(e){
+    var m = e.target.closest(".mini"); if(!m) return;
+    grid.querySelectorAll(".mini").forEach(function(x){x.classList.remove("sel")});
+    m.classList.add("sel");
+    showToast(m.querySelector("h3").textContent + " — tap to request");
+  });
+  document.querySelector(".hero-card").addEventListener("click", function(){ showToast("Bikes & Cars — opening the fleet"); });
+  document.querySelector(".tabbar").addEventListener("click",function(e){
+    var b=e.target.closest(".tab"); if(!b) return;
+    document.querySelectorAll(".tab").forEach(function(x){x.classList.remove("active")}); b.classList.add("active");
+  });
+</script>
+</body>
+</html>

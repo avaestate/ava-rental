@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>AVA Concierge — V3 Imagery · Round 2 (Harmonized)</title>
+<meta name="theme-color" content="#2c3638" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+<style>
+  :root{
+    --ink:#2c3638; --ink-soft:#3f4a4c; --slate:#515b5d; --muted:#75878b; --accent:#624e40;
+    --bg:#f0e7df; --cream-1:#f7f2ec; --cream-2:#f3ece5; --cream-3:#fcf5ef; --white:#fff;
+    --line:rgba(44,54,56,.12); --line-strong:rgba(44,54,56,.18);
+    --shadow-sm:0 1px 2px rgba(44,54,56,.05), 0 2px 8px rgba(44,54,56,.05);
+    --shadow-md:0 10px 28px -14px rgba(44,54,56,.22), 0 4px 12px rgba(44,54,56,.05);
+    --shadow-lg:0 26px 54px -24px rgba(44,54,56,.30), 0 8px 18px rgba(44,54,56,.07);
+    --ease:cubic-bezier(.2,.8,.2,1);
+  }
+  *{box-sizing:border-box}
+  body{margin:0; font-family:"Manrope",system-ui,sans-serif; color:var(--ink);
+    background:radial-gradient(120% 60% at 50% -10%, #faf4ee, transparent 60%), linear-gradient(180deg,#ece2d8,#e6dbcf);
+    -webkit-font-smoothing:antialiased; line-height:1.5; min-height:100vh;}
+  h1,h2,h3{font-family:"Manrope",sans-serif; font-weight:400; letter-spacing:-.015em; margin:0}
+  a{color:inherit; text-decoration:none}
+  i.ph{line-height:1}
+
+  .top{position:sticky; top:0; z-index:50; -webkit-backdrop-filter:saturate(120%) blur(14px); backdrop-filter:saturate(120%) blur(14px);
+    background:rgba(240,231,223,.8); border-bottom:1px solid var(--line)}
+  .top .in{max-width:1500px; margin:0 auto; padding:16px 24px; display:flex; align-items:center; gap:14px}
+  .mark{width:40px;height:40px;border-radius:11px; background:var(--ink); display:grid; place-items:center; box-shadow:var(--shadow-sm); flex:0 0 auto}
+  .mark svg{width:22px;height:22px}
+  .top .name{font-weight:600; font-size:15px; letter-spacing:.2em}
+  .top .sub{font-size:10px; letter-spacing:.26em; text-transform:uppercase; color:var(--muted); margin-top:4px}
+  .top .pill{margin-left:auto; font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); background:var(--cream-3); border:1px solid var(--line); padding:7px 13px; border-radius:999px}
+
+  .hero{max-width:1500px; margin:0 auto; padding:40px 24px 8px}
+  .hero .eyebrow{display:inline-flex; align-items:center; gap:9px; font-size:11.5px; letter-spacing:.24em; text-transform:uppercase; color:var(--accent); font-weight:600; margin-bottom:16px}
+  .hero .eyebrow .dot{width:6px;height:6px;border-radius:50%; background:var(--accent); box-shadow:0 0 0 4px rgba(98,78,64,.14)}
+  .hero h1{font-size:clamp(28px,5vw,44px); font-weight:300; letter-spacing:-.02em; line-height:1.06; max-width:22ch}
+  .hero h1 em{font-style:normal; font-weight:500; color:var(--accent)}
+  .hero p{margin:16px 0 0; color:var(--muted); font-size:15.5px; max-width:70ch; line-height:1.6}
+  .hero .chips{margin-top:18px; display:flex; flex-wrap:wrap; gap:8px}
+  .hero .chip{font-size:12px; font-weight:600; color:var(--slate); background:var(--white); border:1px solid var(--line); padding:7px 13px; border-radius:999px; box-shadow:var(--shadow-sm); display:inline-flex; align-items:center; gap:7px}
+  .hero .chip i{font-size:15px; color:var(--accent)}
+
+  .gallery{max-width:1500px; margin:0 auto; padding:28px 24px 70px;
+    display:grid; grid-template-columns:repeat(5, 1fr); gap:22px; align-items:start}
+  @media(max-width:1340px){.gallery{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:920px){.gallery{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:600px){.gallery{grid-template-columns:1fr; gap:30px}}
+
+  .variant{display:flex; flex-direction:column}
+  .v-head{display:flex; align-items:flex-start; gap:11px; margin-bottom:14px}
+  .v-num{width:34px;height:34px;border-radius:10px; background:var(--ink); color:var(--bg); display:grid; place-items:center;
+    font-weight:700; font-size:15px; flex:0 0 auto; box-shadow:var(--shadow-sm)}
+  .v-head h3{font-size:16px; font-weight:600; letter-spacing:-.01em; line-height:1.15}
+  .v-head p{margin:4px 0 0; font-size:12px; color:var(--muted); line-height:1.4}
+
+  .frame{position:relative; border-radius:34px; overflow:hidden; background:var(--bg);
+    box-shadow:var(--shadow-lg), 0 0 0 1px rgba(44,54,56,.06); aspect-ratio:430/900;}
+  .frame .scale{position:absolute; top:0; left:0; width:430px; height:900px; transform-origin:top left;}
+  .frame iframe{width:430px; height:900px; border:0; display:block;}
+
+  .v-open{margin-top:14px; display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    background:var(--ink); color:var(--bg); font-weight:600; font-size:13.5px; padding:12px 14px; border-radius:12px;
+    box-shadow:var(--shadow-md); transition:.3s var(--ease)}
+  .v-open:hover{background:var(--ink-soft); transform:translateY(-2px)}
+  .v-open i{font-size:16px}
+
+  footer{max-width:1500px; margin:0 auto; padding:0 24px 50px; color:var(--muted); font-size:12.5px; line-height:1.6}
+  footer b{color:var(--slate); font-weight:600}
+</style>
+</head>
+<body>
+  <header class="top">
+    <div class="in">
+      <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M3 16c2.2 0 2.2-2 4.4-2s2.2 2 4.4 2 2.2-2 4.4-2 2.2 2 4.4 2" stroke="#f0e7df" stroke-width="1.7" stroke-linecap="round"/><path d="M12 3.5l3 5.5H9l3-5.5z" stroke="#f0e7df" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
+      <div><div class="name">AVA CONCIERGE</div><div class="sub">V3 · Imagery round 2</div></div>
+      <span class="pill">Round 2 · Harmonized</span>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow"><span class="dot"></span> Design review · Koh Phangan</div>
+    <h1>Photos kept — but <em>one palette, calmer</em>.<br/>Five new takes.</h1>
+    <p>You liked photos but round 1 felt <b>too busy / пёстро</b>. Fixed: every image now shares <b>one warm graphite-cream duotone</b> (same CSS treatment everywhere), the photo is a <b>smaller element</b> (strip, circle, inset or chip) — never a full-bleed background — and the <b>label always sits on the solid card surface</b>, never on top of a photo. Same V3 layout &amp; 12 services across all five. Tap a tile to highlight; tap “Open full screen” to feel it.</p>
+    <div class="chips">
+      <span class="chip"><i class="ph ph-drop-half"></i> One harmonized duotone</span>
+      <span class="chip"><i class="ph ph-text-aa"></i> Label on card, not on photo</span>
+      <span class="chip"><i class="ph ph-frame-corners"></i> Photo not full-bleed</span>
+      <span class="chip"><i class="ph ph-device-mobile"></i> Mobile · 430px frame</span>
+    </div>
+  </section>
+
+  <main class="gallery" id="gallery"></main>
+
+  <footer>
+    Built for <b>AVA ESTATE</b> · Koh Phangan. All five reuse the verified round-1 Unsplash photos, run through one shared CSS duotone (<b>grayscale + warm sepia tint + graphite/cream overlay</b>) so the whole set reads as one palette. In every variant the text label sits on a solid cream / white / graphite surface — never over the image. External dependencies: Google Fonts, Phosphor CDN, Unsplash.
+  </footer>
+
+<script>
+  var VARIANTS = [
+    {n:"F", file:"f.html", title:"Photo strip + cream body",     desc:"Two-part card: a short harmonized photo band on top, label (+ icon) on the solid cream body below."},
+    {n:"G", file:"g.html", title:"Circular photo avatars",       desc:"A small round duotone photo centered on a cream card, label underneath on the card. Boutique & airy."},
+    {n:"H", file:"h.html", title:"Inset rounded photo",          desc:"Photo is a smaller rounded rectangle inset inside a padded white card, label on the card beneath."},
+    {n:"I", file:"i.html", title:"Icon-led + photo chip",        desc:"Phosphor icon leads on cream; a tiny harmonized photo chip sits in the corner. Text stays prominent."},
+    {n:"J", file:"j.html", title:"Duotone photo + footer label", desc:"Editorial: duotone-graphite photo on top, label on a solid graphite footer block (text on solid colour)."}
+  ];
+  var g = document.getElementById("gallery");
+  g.innerHTML = VARIANTS.map(function(v){
+    return '<div class="variant">'+
+      '<div class="v-head"><span class="v-num">'+v.n+'</span>'+
+        '<div><h3>Style '+v.n+' — '+v.title+'</h3><p>'+v.desc+'</p></div></div>'+
+      '<div class="frame" data-frame><div class="scale"><iframe src="'+v.file+'" loading="lazy" title="Style '+v.n+'"></iframe></div></div>'+
+      '<a class="v-open" href="'+v.file+'" target="_blank" rel="noopener">Open full screen <i class="ph ph-arrow-up-right"></i></a>'+
+    '</div>';
+  }).join("");
+
+  function fit(){
+    document.querySelectorAll("[data-frame]").forEach(function(fr){
+      var w = fr.clientWidth;
+      var scale = w / 430;
+      fr.querySelector(".scale").style.transform = "scale("+scale+")";
+    });
+  }
+  window.addEventListener("resize", fit);
+  window.addEventListener("load", fit);
+  fit();
+</script>
+</body>
+</html>
