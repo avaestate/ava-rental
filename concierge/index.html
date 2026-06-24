@@ -46,6 +46,7 @@
     --shadow-lg:0 26px 54px -24px rgba(44,54,56,.30), 0 8px 18px rgba(44,54,56,.07);
     --radius:18px;
     --radius-sm:12px;
+    --tile-shadow:0 14px 30px -16px rgba(44,54,56,.40), 0 3px 10px rgba(44,54,56,.08);
     --ease:cubic-bezier(.2,.8,.2,1);
     --phone:430px;
     --nav-h:74px;
@@ -146,39 +147,45 @@
   .sec-label .t{font-size:11.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); font-weight:600}
   .sec-label .c{font-size:11.5px; color:var(--muted)}
 
-  /* ===== V3 + H-IN-COLOR: FEATURED HERO CARD (inset color photo, dark label on white card) ===== */
-  .hero-card{
-    position:relative; cursor:pointer; width:100%; text-align:left; border:1px solid var(--line); overflow:hidden;
-    border-radius:24px; box-shadow:var(--shadow-lg); padding:14px 14px 18px; display:block; background:var(--white);
-    transition:transform .4s var(--ease), box-shadow .4s var(--ease); -webkit-tap-highlight-color:transparent;
+  /* ===== APP STORE BROWSE: gradient landscape tiles, 3D icon top-right, white label bottom-left ===== */
+  .tile-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:13px}
+  .tile{
+    position:relative; cursor:pointer; text-align:left; border:0; overflow:hidden;
+    border-radius:22px; box-shadow:var(--tile-shadow); padding:0; -webkit-tap-highlight-color:transparent;
+    transition:transform .38s var(--ease), box-shadow .38s var(--ease); display:block;
+    aspect-ratio:165 / 92; /* App Store landscape tile (wider than tall) */
   }
-  .hero-card:active{transform:scale(.99)}
-  .hero-card:hover{transform:translateY(-3px)}
-  .hero-inset{position:relative; height:150px; border-radius:16px; overflow:hidden; background:var(--ink); box-shadow:inset 0 0 0 1px var(--line)}
-  .hero-inset img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
-  .hero-body{padding:16px 8px 0}
-  .hero-body .k{font-size:10.5px; letter-spacing:.24em; text-transform:uppercase; color:var(--accent); font-weight:600}
-  .hero-body h2{font-size:24px; font-weight:500; color:var(--ink); margin:7px 0 0; letter-spacing:-.01em}
-  .hero-body p{margin:6px 0 0; font-size:13px; color:var(--slate); max-width:34ch; line-height:1.5}
-  .hero-cta{
-    display:inline-flex; align-items:center; gap:7px; margin-top:14px;
-    background:var(--ink); color:var(--bg); font-weight:600; font-size:13px; padding:10px 16px; border-radius:999px; box-shadow:var(--shadow-md);
-  }
-  .hero-cta i{font-size:16px; line-height:1}
+  .tile.hero{grid-column:1 / -1; aspect-ratio:auto; min-height:150px}
+  .tile::before{content:""; position:absolute; inset:0; background:
+    radial-gradient(120% 80% at 85% 8%, rgba(255,255,255,.30), transparent 46%),
+    linear-gradient(180deg, rgba(255,255,255,.10), rgba(0,0,0,.10));
+    mix-blend-mode:soft-light; pointer-events:none;}
+  .tile::after{content:""; position:absolute; left:0; right:0; bottom:0; height:64%; pointer-events:none;
+    background:linear-gradient(180deg, transparent, rgba(20,18,16,.30));}
+  .tile:hover{transform:translateY(-4px); box-shadow:0 22px 44px -18px rgba(44,54,56,.5), 0 6px 14px rgba(44,54,56,.1)}
+  .tile:active{transform:scale(.975)}
 
-  /* ===== V3 + H-IN-COLOR: 3-COLUMN GRID (inset color photo + dark label beneath, white card) ===== */
-  .mini-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:11px}
-  .mini{
-    position:relative; cursor:pointer; text-align:center; background:var(--white); border:1px solid var(--line);
-    border-radius:18px; box-shadow:var(--shadow-sm); padding:9px 9px 12px; display:flex; flex-direction:column; gap:9px;
-    transition:transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease); -webkit-tap-highlight-color:transparent;
-  }
-  .mini:active{transform:scale(.96)}
-  .mini:hover{transform:translateY(-3px); box-shadow:var(--shadow-md); border-color:var(--line-strong)}
-  .mini .inset{position:relative; height:66px; border-radius:12px; overflow:hidden; background:var(--ink); box-shadow:inset 0 0 0 1px var(--line)}
-  .mini .inset img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .5s var(--ease)}
-  .mini:hover .inset img{transform:scale(1.07)}
-  .mini h3{font-size:11.5px; font-weight:600; color:var(--ink); line-height:1.18; padding:0 2px}
+  /* 3D icon — top-right (App-Store sizing: ~38% of tile height) */
+  .tile .ico{position:absolute; top:10px; right:10px; z-index:3; width:52px; height:52px; pointer-events:none;
+    filter:drop-shadow(0 8px 14px rgba(20,16,12,.32)); transition:transform .4s var(--ease);}
+  .tile.hero .ico{width:78px; height:78px; top:16px; right:18px}
+  .tile:hover .ico{transform:translateY(-2px) scale(1.05) rotate(-2deg)}
+  .tile .ico img{width:100%; height:100%; object-fit:contain}
+
+  /* label — bottom-left, white, may wrap to 2 lines */
+  .tile .lab{position:absolute; left:14px; right:62px; bottom:12px; z-index:3}
+  .tile .lab h3{font-size:15px; font-weight:600; color:#fff; line-height:1.14; letter-spacing:-.01em;
+    text-shadow:0 1px 8px rgba(0,0,0,.32);}
+  .tile.hero .lab{left:18px; right:96px; bottom:16px}
+  .tile.hero .lab .kicker{display:block; font-size:9.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+    color:rgba(255,255,255,.82); margin-bottom:5px; text-shadow:0 1px 6px rgba(0,0,0,.3)}
+  .tile.hero .lab h3{font-size:23px; font-weight:600; max-width:11ch}
+  .tile.hero .lab .sub{display:block; margin-top:5px; font-size:12.5px; font-weight:500; color:rgba(255,255,255,.92);
+    text-shadow:0 1px 6px rgba(0,0,0,.3); max-width:30ch}
+  .tile.hero .lab .cta{display:inline-flex; align-items:center; gap:6px; margin-top:11px;
+    background:rgba(255,255,255,.94); color:#2c3638; font-weight:700; font-size:12px; padding:8px 14px; border-radius:999px;
+    box-shadow:0 6px 14px rgba(0,0,0,.18)}
+  .tile.hero .lab .cta i{font-size:14px; line-height:1}
 
   .home-foot{margin:26px 4px 6px; text-align:center; color:var(--muted); font-size:11.5px; line-height:1.5}
   .home-foot b{font-weight:600; color:var(--slate)}
@@ -191,6 +198,11 @@
   .detail-hero::before{content:""; position:absolute; inset:0; background:radial-gradient(120% 120% at 100% 0%, rgba(98,78,64,.55), transparent 60%); opacity:.6}
   .detail-hero .ic{position:relative; line-height:1; margin-bottom:14px; font-size:46px}
   .detail-hero .ic i{font-size:1em; color:var(--bg); line-height:1}
+  /* large Icons8 3D icon at top of detail view (App-Store category-detail prominence) */
+  .detail-hero.has-grad{background:var(--ink)}
+  .detail-hero .ic3d{position:relative; z-index:2; width:96px; height:96px; margin-bottom:12px;
+    filter:drop-shadow(0 12px 22px rgba(20,16,12,.42))}
+  .detail-hero .ic3d img{width:100%; height:100%; object-fit:contain}
   .detail-hero .k{position:relative; font-size:10.5px; letter-spacing:.24em; text-transform:uppercase; opacity:.72}
   .detail-hero h2{position:relative; font-weight:400; font-size:26px; margin:7px 0 0; color:#fff; letter-spacing:-.01em}
   .detail-hero p{position:relative; margin:11px 0 0; font-size:14px; color:#d6dcdc; line-height:1.55; max-width:38ch}
@@ -447,12 +459,12 @@
         <div id="heroSlot"><!-- hero card injected --></div>
 
         <div class="sec-label">
-          <span class="t">More services</span>
+          <span class="t">Browse services</span>
           <span class="c" id="svcCount"></span>
         </div>
 
-        <!-- 3-column large-icon grid (injected) -->
-        <div class="mini-grid" id="svcGrid"><!-- service icons injected --></div>
+        <!-- 2-column App Store gradient tiles (injected) -->
+        <div class="tile-grid" id="svcGrid"><!-- service tiles injected --></div>
 
         <div class="home-foot">
           Curated &amp; delivered to your door by <b>AVA ESTATE</b>.<br/>Tap any service to request it.
@@ -534,7 +546,7 @@
       photo:"1568772585407-9361f9bf3a87",
       blurb:"A serviced, insured rental fleet — from nimble city scooters to seven-seat SUVs — delivered straight to your villa.",
       includes:["Delivery & pickup at your villa","Helmets, insurance & full service","Daily, weekly & monthly rates"],
-      link:{label:"Browse our rental catalog", sub:"Full fleet, live pricing", href:"../", icon:"📖", phicon:"book-open"} },
+      link:{label:"Browse our rental catalog", sub:"Full fleet, live pricing", href:"../transport/catalog.html", icon:"📖", phicon:"book-open"} },
     { id:"tea",     icon:"🍵", phicon:"coffee", title:"Tea Ceremony",         desc:"A calm, guided ritual",
       photo:"1558160074-4d7d8bdf4256",
       blurb:"A serene, guided tea ceremony at your villa — premium leaves, an experienced host, and a moment of stillness.",
@@ -580,6 +592,31 @@
       blurb:"Need a few more hours? Request a late checkout or early check-in and we'll confirm based on the day's schedule.",
       includes:["Late checkout request","Early check-in request","Subject to availability"] }
   ];
+
+  /* App Store "Browse" presentation: harmonized gradient + local Icons8 3D icon per service.
+     Gradients grouped by hue family, all kept at similar softness so the wall reads as ONE coordinated tone:
+       Mobility (warm sand / terracotta): bikes, ferry, transfer
+       Wellness & calm (sage / eucalyptus): tea, spa, yoga
+       Food & care (muted rose / clay-pink): chef, nanny, laundry
+       Experiences & essentials (dusty teal / slate): tours, grocery, checkout  */
+  var TILE = {
+    bikes:   { grad:"linear-gradient(140deg,#c98a5e,#b06a44 58%,#8f5234)", kicker:"Most requested",
+               sub:"Serviced, insured fleet delivered to your villa door." },
+    tea:     { grad:"linear-gradient(150deg,#8fae8b,#6f9472 60%,#577b5e)" },
+    nanny:   { grad:"linear-gradient(150deg,#cf9a92,#bb7d77 60%,#9c5f5b)" },
+    ferry:   { grad:"linear-gradient(150deg,#c89870,#b27a52 60%,#925d3a)" },
+    transfer:{ grad:"linear-gradient(150deg,#d2a878,#bf8a55 60%,#a06d3c)" },
+    chef:    { grad:"linear-gradient(150deg,#cc9388,#b9756c 60%,#9a564f)" },
+    spa:     { grad:"linear-gradient(150deg,#96b29a,#769680 60%,#5b7c68)" },
+    tours:   { grad:"linear-gradient(150deg,#7fa6a8,#5f878c 60%,#456b72)" },
+    grocery: { grad:"linear-gradient(150deg,#85a3ac,#637f8e 60%,#4b6473)" },
+    laundry: { grad:"linear-gradient(150deg,#cba39a,#b58178 60%,#96625b)" },
+    yoga:    { grad:"linear-gradient(150deg,#9bb38c,#7d9870 60%,#627d57)" },
+    checkout:{ grad:"linear-gradient(150deg,#8ba0ad,#6b8492 60%,#516a78)" }
+  };
+  // service id -> local Icons8 3D PNG (relative path; works on GitHub Pages)
+  function tileIcon(id){ return "assets/icons/" + id + ".png"; }
+  function tileGrad(id){ return (TILE[id] && TILE[id].grad) || "linear-gradient(150deg,#c89870,#925d3a)"; }
 
   var VILLAS = ["Aurora","Radharani","Twin Palms","Bunny","Four Moons","Altair","Deneb","Other / not sure"];
 
@@ -684,32 +721,37 @@
     else if(tab==="requests"){ renderRequests(); showView("requests"); }
   }
 
-  /* ===================== HOME (V3 — Featured + Grid) ===================== */
+  /* ===================== HOME (App Store "Browse" — gradient tiles + Icons8 3D) ===================== */
   function renderHome(){
-    // pick the featured service for the hero card; the rest fill the grid
+    // pick the featured service for the wide hero tile; the rest fill the 2-col grid
     var featured = null, rest = [];
     SERVICES.forEach(function(s){ if(s.featured && !featured) featured = s; else rest.push(s); });
     if(!featured){ featured = SERVICES[0]; rest = SERVICES.slice(1); }
 
-    // ---- featured hero card (inset color photo + dark label on white card) ----
-    els.heroSlot.innerHTML = ''+
-      '<button class="hero-card" type="button" data-svc="'+featured.id+'">'+
-        '<span class="hero-inset"><img alt="'+esc(featured.title)+'" loading="eager" referrerpolicy="no-referrer" src="'+heroImg(featured.photo)+'" /></span>'+
-        '<span class="hero-body">'+
-          '<span class="k">Most requested</span>'+
-          '<h2>'+esc(featured.title)+'</h2>'+
-          '<p>'+esc(featured.desc.charAt(0).toUpperCase()+featured.desc.slice(1))+', delivered to your villa door.</p>'+
-          '<span class="hero-cta">Browse the fleet '+phi("arrow-right","regular")+'</span>'+
-        '</span>'+
-      '</button>';
+    function ico(s){ return '<span class="ico"><img alt="" loading="eager" src="'+tileIcon(s.id)+'" /></span>'; }
 
-    // ---- 3-column grid (inset color photo + dark label beneath) ----
-    els.svcCount.textContent = rest.length + " more";
+    // ---- featured wide hero tile (gradient + 3D icon top-right + white label bottom-left) ----
+    var ht = TILE[featured.id] || {};
+    els.heroSlot.innerHTML = ''+
+      '<div class="tile-grid">'+
+      '<button class="tile hero" type="button" data-svc="'+featured.id+'" style="background:'+tileGrad(featured.id)+'">'+
+        ico(featured)+
+        '<span class="lab">'+
+          '<span class="kicker">'+esc(ht.kicker||"Most requested")+'</span>'+
+          '<h3>'+esc(featured.title)+'</h3>'+
+          '<span class="sub">'+esc(ht.sub||(featured.desc+", delivered to your villa door."))+'</span>'+
+          '<span class="cta">Browse the fleet '+phi("arrow-right","regular")+'</span>'+
+        '</span>'+
+      '</button>'+
+      '</div>';
+
+    // ---- 2-column landscape gradient tiles (icon top-right, white label bottom-left) ----
+    els.svcCount.textContent = SERVICES.length + " services";
     els.svcGrid.innerHTML = rest.map(function(s){
       return ''+
-        '<button class="mini" type="button" data-svc="'+s.id+'">'+
-          '<span class="inset"><img alt="'+esc(s.title)+'" loading="lazy" referrerpolicy="no-referrer" src="'+gridImg(s.photo)+'" /></span>'+
-          '<h3>'+esc(s.title)+'</h3>'+
+        '<button class="tile" type="button" data-svc="'+s.id+'" style="background:'+tileGrad(s.id)+'">'+
+          ico(s)+
+          '<span class="lab"><h3>'+esc(s.title)+'</h3></span>'+
         '</button>';
     }).join("");
   }
@@ -727,16 +769,10 @@
         '<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M9 7h8v8" stroke="#624e40" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
       '</button>'
     ) : '';
-    var photoHeader = s.photo ? (
-      '<div class="detail-photo">'+
-        '<img alt="'+esc(s.title)+'" loading="eager" referrerpolicy="no-referrer" src="'+heroImg(s.photo)+'" />'+
-        '<div class="cap"><div class="k">AVA Concierge</div><h2>'+esc(s.title)+'</h2></div>'+
-      '</div>'
-    ) : '';
+    // App-Store category-detail header: large Icons8 3D icon at top on the service's gradient
     els.detail.innerHTML = ''+
-      photoHeader+
-      '<div class="detail-hero">'+
-        '<div class="ic" aria-hidden="true">'+phi(s.phicon)+'</div>'+
+      '<div class="detail-hero has-grad" style="background:'+tileGrad(s.id)+'">'+
+        '<div class="ic3d" aria-hidden="true"><img alt="" src="'+tileIcon(s.id)+'" /></div>'+
         '<div class="k">AVA Concierge</div>'+
         '<h2>'+esc(s.title)+'</h2>'+
         '<p>'+esc(s.blurb)+'</p>'+
@@ -767,8 +803,8 @@
       VILLAS.map(function(v){ return '<option>'+esc(v)+'</option>'; }).join("");
     var today = new Date().toISOString().slice(0,10);
     els.form.innerHTML = ''+
-      '<div class="detail-hero" style="padding:20px 22px">'+
-        '<div class="ic" aria-hidden="true" style="margin-bottom:10px;font-size:34px">'+phi(s.phicon)+'</div>'+
+      '<div class="detail-hero has-grad" style="padding:20px 22px; background:'+tileGrad(s.id)+'">'+
+        '<div class="ic3d" aria-hidden="true" style="width:62px;height:62px;margin-bottom:8px"><img alt="" src="'+tileIcon(s.id)+'" /></div>'+
         '<div class="k">Request</div>'+
         '<h2 style="font-size:23px">'+esc(s.title)+'</h2>'+
       '</div>'+
@@ -1015,6 +1051,12 @@
   seedChat();
   updateBadge();
   showView("home");
+
+  // optional deep-link: index.html?open=<serviceId> opens that service detail directly
+  try{
+    var qp = new URLSearchParams(window.location.search).get("open");
+    if(qp && svcById(qp)) openDetail(qp);
+  }catch(e){}
 
   /* lightweight inline service worker for installability (offline shell) */
   if("serviceWorker" in navigator){
