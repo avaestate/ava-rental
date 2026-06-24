@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>AVA Concierge · Variant 3 — Refined duotone / minimal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css" />
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css" />
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+<style>
+  :root{
+    --ink:#2c3638; --slate:#515b5d; --muted:#75878b; --accent:#624e40;
+    --bg:#f0e7df; --cream-1:#f7f2ec; --cream-3:#fcf5ef; --white:#fff;
+    --line:rgba(44,54,56,.09); --phone:430px;
+    /* duotone tint: warm clay accent */
+    --duo:#7a6450;
+  }
+  *{box-sizing:border-box}
+  /* Phosphor duotone: secondary layer opacity (the "fill") tinted to brand clay */
+  .ph-duotone{ --ph-duotone-fill-color:var(--duo); }
+  /* phosphor uses the ::before (line) at full color + ::after fill at opacity — we color whole glyph clay and let duotone weight provide the 2 tones */
+  body{margin:0; font-family:"Manrope",system-ui,sans-serif; color:var(--ink);
+    background:radial-gradient(120% 80% at 50% -10%,#faf4ee,transparent 60%),linear-gradient(180deg,#ece2d8,#e6dbcf);
+    -webkit-font-smoothing:antialiased; line-height:1.5;}
+  .stage{min-height:100dvh; display:flex; align-items:flex-start; justify-content:center; padding:30px 18px}
+  .app{position:relative; width:100%; max-width:var(--phone); height:920px; background:var(--bg);
+    border-radius:42px; box-shadow:0 50px 90px -30px rgba(44,54,56,.55),0 0 0 1px rgba(44,54,56,.06);
+    overflow:hidden; display:flex; flex-direction:column;}
+
+  .appbar{flex:0 0 auto; background:rgba(240,231,223,.85); -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line); padding:24px 22px 16px; display:flex; align-items:center; gap:13px;}
+  .mark{width:40px; height:40px; border-radius:12px; flex:0 0 auto; background:var(--ink); display:grid; place-items:center}
+  .mark svg{width:22px; height:22px}
+  .brand .name{font-weight:600; font-size:15px; letter-spacing:.22em; color:var(--ink)}
+  .brand .sub{font-size:9.5px; letter-spacing:.28em; text-transform:uppercase; color:var(--muted); margin-top:5px}
+
+  .scroll{flex:1 1 auto; overflow-y:auto; padding:24px 22px 30px}
+  .scroll::-webkit-scrollbar{width:0}
+
+  .greeting{margin:8px 2px 28px}
+  .greeting .hi{display:inline-flex; align-items:center; gap:9px; font-size:11px; letter-spacing:.24em;
+    text-transform:uppercase; color:var(--accent); font-weight:600; margin-bottom:16px}
+  .greeting .hi .dot{width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 4px rgba(98,78,64,.14)}
+  .greeting h1{font-size:31px; line-height:1.12; font-weight:300; letter-spacing:-.02em; margin:0}
+  .greeting h1 em{font-style:normal; font-weight:500; color:var(--accent)}
+
+  .sec-label{display:flex; align-items:baseline; justify-content:space-between; margin:30px 2px 18px}
+  .sec-label .t{font-size:11.5px; letter-spacing:.22em; text-transform:uppercase; color:var(--muted); font-weight:600}
+  .sec-label .c{font-size:11.5px; color:var(--muted)}
+
+  /* ===== REFINED DUOTONE — soft cream cards, two-tone clay icon in a tinted disc, airy ===== */
+  .tile-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px}
+  .tile{position:relative; cursor:pointer; text-align:left; overflow:hidden; border-radius:22px;
+    padding:20px 18px 18px; display:flex; flex-direction:column; justify-content:space-between;
+    aspect-ratio:165/130; background:var(--white); border:1px solid var(--line);
+    box-shadow:0 1px 2px rgba(44,54,56,.04); transition:transform .3s,box-shadow .3s;}
+  .tile:hover{transform:translateY(-3px); box-shadow:0 16px 32px -18px rgba(44,54,56,.3)}
+  .tile.hero{grid-column:1/-1; aspect-ratio:auto; min-height:156px; padding:26px 24px}
+  .tile .ico.disc{width:54px; height:54px; border-radius:16px; display:grid; place-items:center;
+    background:linear-gradient(155deg,#f6efe7,#f0e6da); border:1px solid rgba(122,100,80,.14); margin-bottom:auto;}
+  .tile.hero .ico.disc{width:70px; height:70px; border-radius:20px}
+  .tile .ico.disc i{font-size:30px; line-height:1; color:var(--duo)}
+  .tile.hero .ico.disc i{font-size:40px}
+  .tile .lab h3{font-size:15.5px; font-weight:600; color:var(--ink); line-height:1.15; letter-spacing:-.01em; margin:16px 0 0}
+  .tile .lab .sub{display:block; font-size:11.5px; color:var(--muted); margin-top:3px}
+  .tile.hero .lab{margin-top:16px}
+  .tile.hero .lab .kicker{display:block; font-size:9.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); margin-bottom:7px}
+  .tile.hero .lab h3{font-size:23px; font-weight:500}
+  .tile.hero .lab .sub{font-size:13px; margin-top:7px; max-width:34ch}
+
+  .note{text-align:center; color:var(--muted); font-size:11.5px; padding:22px 12px 4px}
+  .cap{max-width:430px; text-align:center; margin:14px auto 0}
+  .cap b{font-size:14px; font-weight:600; color:var(--ink)}
+  .cap span{display:block; font-size:12.5px; color:var(--muted); margin-top:4px; line-height:1.5}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div>
+    <div class="app">
+      <header class="appbar">
+        <span class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M3 16c2.2 0 2.2-2 4.4-2s2.2 2 4.4 2 2.2-2 4.4-2 2.2 2 4.4 2" stroke="#f0e7df" stroke-width="1.5" stroke-linecap="round"/><path d="M12 3.5l3 5.5H9l3-5.5z" stroke="#f0e7df" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
+        <div class="brand"><div class="name">AVA CONCIERGE</div><div class="sub">Koh Phangan</div></div>
+      </header>
+      <main class="scroll">
+        <div class="greeting">
+          <span class="hi"><span class="dot"></span> Welcome to AVA</span>
+          <h1>Your villa <em>concierge</em>,<br/>at your fingertips.</h1>
+        </div>
+        <div class="sec-label"><span class="t">Browse services</span><span class="c" id="svcCount"></span></div>
+        <div id="heroSlot"></div>
+        <div class="tile-grid" id="svcGrid"></div>
+        <div class="note">Two-tone clay icons in soft tinted discs — restrained &amp; sophisticated.</div>
+      </main>
+    </div>
+    <div class="cap"><b>3 · Refined duotone / minimal</b>
+      <span>Phosphor Duotone in muted clay (#7A6450) inside soft cream discs. Whitespace-forward, Aesop-calm.</span></div>
+  </div>
+</div>
+<script>window.AVA_VARIANT={weight:"duotone", showSub:true, disc:true};</script>
+<script src="_shared.js"></script>
+<script>
+/* this variant wraps icons in a .disc — post-process the shared output */
+document.addEventListener("DOMContentLoaded", function(){
+  setTimeout(function(){
+    document.querySelectorAll(".tile .ico").forEach(function(ico){
+      ico.classList.add("disc");
+    });
+  }, 30);
+});
+</script>
+</body>
+</html>

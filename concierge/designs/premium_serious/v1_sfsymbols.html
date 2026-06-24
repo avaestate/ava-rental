@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>AVA Concierge · Variant 1 — SF Symbols style (Apple-like)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<!-- Phosphor light + thin = closest legal web approximation of Apple SF Symbols -->
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css" />
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/thin/style.css" />
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+<style>
+  :root{
+    --ink:#2c3638; --slate:#515b5d; --muted:#75878b; --accent:#624e40;
+    --bg:#f0e7df; --cream-1:#f7f2ec; --cream-2:#f3ece5; --white:#fff;
+    --line:rgba(44,54,56,.10); --line-strong:rgba(44,54,56,.16);
+    --phone:430px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; font-family:"Manrope",system-ui,sans-serif; color:var(--ink);
+    background:radial-gradient(120% 80% at 50% -10%,#faf4ee,transparent 60%),linear-gradient(180deg,#ece2d8,#e6dbcf);
+    -webkit-font-smoothing:antialiased; line-height:1.5;}
+  .stage{min-height:100dvh; display:flex; align-items:flex-start; justify-content:center; gap:30px; padding:30px 18px; flex-wrap:wrap}
+  .app{position:relative; width:100%; max-width:var(--phone); height:920px; background:var(--bg);
+    border-radius:42px; box-shadow:0 50px 90px -30px rgba(44,54,56,.55),0 0 0 1px rgba(44,54,56,.06);
+    overflow:hidden; display:flex; flex-direction:column;}
+  .app.dark{background:#21292b}
+
+  /* header */
+  .appbar{flex:0 0 auto; background:rgba(240,231,223,.85); -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line); padding:24px 20px 14px; display:flex; align-items:center; gap:12px;}
+  .app.dark .appbar{background:rgba(33,41,43,.85); border-bottom-color:rgba(255,255,255,.08)}
+  .mark{width:38px; height:38px; border-radius:11px; flex:0 0 auto; background:var(--ink); display:grid; place-items:center}
+  .app.dark .mark{background:#f0e7df}
+  .mark svg{width:21px; height:21px}
+  .brand .name{font-weight:600; font-size:14.5px; letter-spacing:.2em; color:var(--ink)}
+  .brand .sub{font-size:9.5px; letter-spacing:.26em; text-transform:uppercase; color:var(--muted); margin-top:5px}
+  .app.dark .brand .name{color:#f3ece5}
+  .app.dark .brand .sub{color:#9aa9ab}
+
+  .scroll{flex:1 1 auto; overflow-y:auto; padding:20px 18px 30px}
+  .scroll::-webkit-scrollbar{width:0}
+
+  .greeting{margin:6px 2px 22px}
+  .greeting .hi{display:inline-flex; align-items:center; gap:9px; font-size:11px; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--accent); font-weight:600; margin-bottom:14px}
+  .greeting .hi .dot{width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 4px rgba(98,78,64,.14)}
+  .greeting h1{font-size:30px; line-height:1.1; font-weight:300; letter-spacing:-.02em; margin:0}
+  .greeting h1 em{font-style:normal; font-weight:500; color:var(--accent)}
+  .app.dark .greeting h1{color:#f3ece5}
+  .app.dark .greeting h1 em{color:#cbb79f}
+  .app.dark .greeting .hi{color:#cbb79f}
+
+  .sec-label{display:flex; align-items:baseline; justify-content:space-between; margin:26px 2px 14px}
+  .sec-label .t{font-size:11.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); font-weight:600}
+  .sec-label .c{font-size:11.5px; color:var(--muted)}
+
+  /* ===== SF-SYMBOLS STYLE TILES — flat cream cards, thin graphite icon, refined ===== */
+  .tile-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:13px}
+  .tile{position:relative; cursor:pointer; text-align:left; border:1px solid var(--line); overflow:hidden;
+    border-radius:20px; padding:18px 16px 16px; background:var(--white); display:flex; flex-direction:column;
+    justify-content:space-between; aspect-ratio:165/118; box-shadow:0 1px 2px rgba(44,54,56,.04);
+    transition:transform .3s,box-shadow .3s;}
+  .tile:hover{transform:translateY(-3px); box-shadow:0 14px 30px -16px rgba(44,54,56,.32)}
+  .tile.hero{grid-column:1/-1; aspect-ratio:auto; min-height:150px; padding:24px 22px}
+  .tile .ico{font-size:30px; color:var(--ink); line-height:1; margin-bottom:auto}
+  .tile.hero .ico{font-size:46px}
+  .tile .ico i{font-weight:inherit}
+  .tile .lab h3{font-size:15.5px; font-weight:600; color:var(--ink); line-height:1.15; letter-spacing:-.01em; margin:14px 0 0}
+  .tile .lab .sub{display:block; font-size:11.5px; color:var(--muted); margin-top:3px}
+  .tile.hero .lab{margin-top:14px}
+  .tile.hero .lab .kicker{display:block; font-size:9.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); margin-bottom:6px}
+  .tile.hero .lab h3{font-size:23px; font-weight:500}
+  .tile.hero .lab .sub{font-size:13px; margin-top:6px; max-width:34ch}
+
+  /* dark variant of tiles: white hairline icon on graphite tile */
+  .app.dark .tile{background:#2c3638; border-color:rgba(255,255,255,.07); box-shadow:none}
+  .app.dark .tile:hover{box-shadow:0 14px 30px -16px rgba(0,0,0,.5)}
+  .app.dark .tile .ico{color:#f0e7df}
+  .app.dark .tile .lab h3{color:#f3ece5}
+  .app.dark .tile .lab .sub{color:#9aa9ab}
+  .app.dark .tile.hero{background:linear-gradient(155deg,#39474a,#222a2c)}
+  .app.dark .tile.hero .lab .kicker{color:#cbb79f}
+
+  .note{margin-top:auto; text-align:center; color:var(--muted); font-size:11.5px; padding:18px 12px 4px}
+  .app.dark .note{color:#8595a0}
+
+  /* caption under each phone */
+  .cap{max-width:430px; text-align:center; margin:14px auto 0}
+  .cap b{font-size:14px; font-weight:600; color:var(--ink)}
+  .cap span{display:block; font-size:12.5px; color:var(--muted); margin-top:4px; line-height:1.5}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- ===== Phone A: graphite SF-symbol-style icons on cream tiles ===== -->
+  <div>
+    <div class="app">
+      <header class="appbar">
+        <span class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M3 16c2.2 0 2.2-2 4.4-2s2.2 2 4.4 2 2.2-2 4.4-2 2.2 2 4.4 2" stroke="#f0e7df" stroke-width="1.5" stroke-linecap="round"/><path d="M12 3.5l3 5.5H9l3-5.5z" stroke="#f0e7df" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
+        <div class="brand"><div class="name">AVA CONCIERGE</div><div class="sub">Koh Phangan</div></div>
+      </header>
+      <main class="scroll">
+        <div class="greeting">
+          <span class="hi"><span class="dot"></span> Welcome to AVA</span>
+          <h1>Your villa <em>concierge</em>,<br/>at your fingertips.</h1>
+        </div>
+        <div class="sec-label"><span class="t">Browse services</span><span class="c" id="svcCount"></span></div>
+        <div id="heroSlot"></div>
+        <div class="tile-grid" id="svcGrid"></div>
+        <div class="note">Refined hairline icons — the Apple SF Symbols feel, monochrome.</div>
+      </main>
+    </div>
+    <div class="cap"><b>1A · SF-Symbols style — graphite on cream</b>
+      <span>Phosphor Light weight. Quiet, premium, monochrome. (Native iOS would use real SF Symbols.)</span></div>
+  </div>
+
+  <!-- ===== Phone B: white hairline icons on dark graphite tiles ===== -->
+  <div>
+    <div class="app dark">
+      <header class="appbar">
+        <span class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M3 16c2.2 0 2.2-2 4.4-2s2.2 2 4.4 2 2.2-2 4.4-2 2.2 2 4.4 2" stroke="#2c3638" stroke-width="1.5" stroke-linecap="round"/><path d="M12 3.5l3 5.5H9l3-5.5z" stroke="#2c3638" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
+        <div class="brand"><div class="name">AVA CONCIERGE</div><div class="sub">Koh Phangan</div></div>
+      </header>
+      <main class="scroll">
+        <div class="greeting">
+          <span class="hi"><span class="dot"></span> Welcome to AVA</span>
+          <h1>Your villa <em>concierge</em>,<br/>at your fingertips.</h1>
+        </div>
+        <div class="sec-label"><span class="t" style="color:#9aa9ab">Browse services</span><span class="c" style="color:#9aa9ab" id="svcCount2"></span></div>
+        <div id="heroSlot2"></div>
+        <div class="tile-grid" id="svcGrid2"></div>
+        <div class="note">Same icons, white on graphite — the App Store "category" dark feel.</div>
+      </main>
+    </div>
+    <div class="cap"><b>1B · SF-Symbols style — white on dark</b>
+      <span>Identical thin icons, reversed. Reads serious &amp; expensive, like a dark hotel app.</span></div>
+  </div>
+
+</div>
+
+<script>window.AVA_VARIANT={weight:"light", showSub:false};</script>
+<script src="_shared.js"></script>
+<script>
+/* clone rendered home into the second (dark) phone */
+document.addEventListener("DOMContentLoaded", function(){
+  setTimeout(function(){
+    document.getElementById("heroSlot2").innerHTML = document.getElementById("heroSlot").innerHTML;
+    document.getElementById("svcGrid2").innerHTML  = document.getElementById("svcGrid").innerHTML;
+    document.getElementById("svcCount2").textContent = document.getElementById("svcCount").textContent;
+  }, 30);
+});
+</script>
+</body>
+</html>

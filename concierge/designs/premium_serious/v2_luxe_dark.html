@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>AVA Concierge · Variant 2 — Luxury thin-line on dark (gold)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/thin/style.css" />
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css" />
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+<style>
+  :root{
+    --gold:#c8a96a; --gold-soft:#d9c193; --cream:#efe6da; --muted:#9aa3a5;
+    --d1:#222a2c; --d2:#1a2122; --line:rgba(200,169,106,.18); --phone:430px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; font-family:"Manrope",system-ui,sans-serif; color:var(--cream);
+    background:radial-gradient(120% 80% at 50% -10%,#2e3739,transparent 60%),linear-gradient(180deg,#171d1e,#0f1314);
+    -webkit-font-smoothing:antialiased; line-height:1.5;}
+  .stage{min-height:100dvh; display:flex; align-items:flex-start; justify-content:center; padding:30px 18px}
+  .app{position:relative; width:100%; max-width:var(--phone); height:920px;
+    background:linear-gradient(180deg,#202829,#161b1c);
+    border-radius:42px; box-shadow:0 50px 90px -30px rgba(0,0,0,.7),0 0 0 1px rgba(200,169,106,.10);
+    overflow:hidden; display:flex; flex-direction:column;}
+
+  .appbar{flex:0 0 auto; background:rgba(26,33,34,.7); -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line); padding:24px 22px 16px; display:flex; align-items:center; gap:13px;}
+  .mark{width:40px; height:40px; border-radius:12px; flex:0 0 auto; display:grid; place-items:center;
+    background:linear-gradient(150deg,#2e3739,#1d2425); border:1px solid var(--line)}
+  .mark svg{width:22px; height:22px}
+  .brand .name{font-weight:600; font-size:15px; letter-spacing:.22em; color:var(--cream)}
+  .brand .sub{font-size:9.5px; letter-spacing:.28em; text-transform:uppercase; color:var(--gold); margin-top:5px}
+
+  .scroll{flex:1 1 auto; overflow-y:auto; padding:24px 20px 30px}
+  .scroll::-webkit-scrollbar{width:0}
+
+  .greeting{margin:8px 2px 26px}
+  .greeting .hi{display:inline-flex; align-items:center; gap:9px; font-size:11px; letter-spacing:.24em;
+    text-transform:uppercase; color:var(--gold); font-weight:600; margin-bottom:16px}
+  .greeting .hi .dot{width:6px; height:6px; border-radius:50%; background:var(--gold); box-shadow:0 0 0 4px rgba(200,169,106,.16)}
+  .greeting h1{font-size:31px; line-height:1.12; font-weight:300; letter-spacing:-.02em; margin:0; color:#f3ece1}
+  .greeting h1 em{font-style:normal; font-weight:400; color:var(--gold-soft)}
+
+  .sec-label{display:flex; align-items:baseline; justify-content:space-between; margin:30px 2px 16px}
+  .sec-label .t{font-size:11.5px; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); font-weight:600}
+  .sec-label .c{font-size:11.5px; color:var(--muted)}
+
+  /* ===== LUXURY thin-line gold-on-dark tiles, generous spacing ===== */
+  .tile-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:15px}
+  .tile{position:relative; cursor:pointer; text-align:left; overflow:hidden; border-radius:20px;
+    padding:22px 18px 18px; display:flex; flex-direction:column; justify-content:space-between;
+    aspect-ratio:165/128; background:linear-gradient(160deg,#283133,#1b2123);
+    border:1px solid var(--line); transition:transform .35s,border-color .35s,box-shadow .35s;}
+  .tile::before{content:""; position:absolute; inset:0; border-radius:20px; pointer-events:none;
+    background:radial-gradient(110% 80% at 80% 0%,rgba(200,169,106,.10),transparent 55%)}
+  .tile:hover{transform:translateY(-3px); border-color:rgba(200,169,106,.4); box-shadow:0 18px 36px -20px rgba(0,0,0,.7)}
+  .tile.hero{grid-column:1/-1; aspect-ratio:auto; min-height:158px; padding:28px 26px;
+    background:linear-gradient(150deg,#2f3a3c,#1a2122)}
+  .tile .ico{font-size:32px; color:var(--gold); line-height:1; margin-bottom:auto}
+  .tile.hero .ico{font-size:50px; color:var(--gold-soft)}
+  .tile .lab h3{font-size:16px; font-weight:500; color:#f3ece1; line-height:1.15; letter-spacing:-.005em; margin:16px 0 0}
+  .tile .lab .sub{display:block; font-size:11.5px; color:var(--muted); margin-top:4px}
+  .tile.hero .lab{margin-top:16px}
+  .tile.hero .lab .kicker{display:block; font-size:9.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:7px}
+  .tile.hero .lab h3{font-size:24px; font-weight:400}
+  .tile.hero .lab .sub{font-size:13px; margin-top:7px; max-width:34ch; color:#c2cccd}
+
+  .note{text-align:center; color:var(--muted); font-size:11.5px; padding:22px 12px 4px; letter-spacing:.02em}
+  .cap{max-width:430px; text-align:center; margin:14px auto 0}
+  .cap b{font-size:14px; font-weight:600; color:#f3ece1}
+  .cap span{display:block; font-size:12.5px; color:var(--muted); margin-top:4px; line-height:1.5}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div>
+    <div class="app">
+      <header class="appbar">
+        <span class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M3 16c2.2 0 2.2-2 4.4-2s2.2 2 4.4 2 2.2-2 4.4-2 2.2 2 4.4 2" stroke="#c8a96a" stroke-width="1.4" stroke-linecap="round"/><path d="M12 3.5l3 5.5H9l3-5.5z" stroke="#c8a96a" stroke-width="1.3" stroke-linejoin="round"/></svg></span>
+        <div class="brand"><div class="name">AVA CONCIERGE</div><div class="sub">Koh Phangan</div></div>
+      </header>
+      <main class="scroll">
+        <div class="greeting">
+          <span class="hi"><span class="dot"></span> Welcome to AVA</span>
+          <h1>Your villa <em>concierge</em>,<br/>at your fingertips.</h1>
+        </div>
+        <div class="sec-label"><span class="t">Browse services</span><span class="c" id="svcCount"></span></div>
+        <div id="heroSlot"></div>
+        <div class="tile-grid" id="svcGrid"></div>
+        <div class="note">Hairline icons in soft gold on graphite — the luxury-hotel feel.</div>
+      </main>
+    </div>
+    <div class="cap"><b>2 · Luxury thin-line on dark — soft gold</b>
+      <span>Phosphor Thin in #C8A96A on graphite gradient tiles, generous spacing. Aman / Ritz energy.</span></div>
+  </div>
+</div>
+<script>window.AVA_VARIANT={weight:"thin", showSub:true};</script>
+<script src="_shared.js"></script>
+</body>
+</html>
