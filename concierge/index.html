@@ -177,6 +177,18 @@
   .tile:hover{transform:translateY(-3px); border-color:rgba(200,169,106,.4); box-shadow:0 18px 36px -20px rgba(0,0,0,.7)}
   .tile:active{transform:scale(.985)}
 
+  /* ----- PHOTO tiles: real cover image + dark blend so label/icon stay readable ----- */
+  .tile.has-photo{background:#1b2123}
+  .tile.has-photo .tphoto{position:absolute; inset:0; z-index:0; width:100%; height:100%; object-fit:cover; transition:transform .5s var(--ease)}
+  .tile.has-photo:hover .tphoto{transform:scale(1.05)}
+  .tile.has-photo .tscrim{position:absolute; inset:0; z-index:1; pointer-events:none;
+    background:linear-gradient(180deg, rgba(15,19,20,.18) 0%, rgba(15,19,20,.05) 34%, rgba(15,19,20,.55) 78%, rgba(15,19,20,.82) 100%)}
+  .tile.has-photo::before{display:none}
+  .tile.has-photo .ico{font-size:24px; color:#fff; filter:drop-shadow(0 2px 6px rgba(0,0,0,.55)); margin-bottom:auto}
+  .tile.has-photo .ico i{color:#fff}
+  .tile.has-photo .lab h3{color:#fff; text-shadow:0 1px 6px rgba(0,0,0,.6)}
+  .tile.has-photo .lab .sub{color:rgba(239,230,218,.92); text-shadow:0 1px 5px rgba(0,0,0,.55)}
+
   /* ----- HERO (full width, slightly shorter, NO overlap) ----- */
   .tile.hero{
     width:100%; aspect-ratio:auto;
@@ -224,6 +236,16 @@
     font-size:12.5px; font-weight:600; letter-spacing:.01em; color:var(--gold-soft);
     background:rgba(200,169,106,.1); border:1px solid var(--line-strong); border-radius:999px; padding:8px 14px}
   .detail-hero .por i{font-size:16px; color:var(--gold); line-height:1}
+  /* detail header with a real photo behind a dark blend */
+  .detail-hero.has-photo{background:#1a2122; min-height:210px; display:flex; flex-direction:column; justify-content:flex-end}
+  .detail-hero.has-photo .dphoto{position:absolute; inset:0; z-index:0; width:100%; height:100%; object-fit:cover}
+  .detail-hero.has-photo .dscrim{position:absolute; inset:0; z-index:1; pointer-events:none;
+    background:linear-gradient(180deg, rgba(15,19,20,.22) 0%, rgba(15,19,20,.12) 38%, rgba(15,19,20,.62) 80%, rgba(15,19,20,.86) 100%)}
+  .detail-hero.has-photo::before{display:none}
+  .detail-hero.has-photo .ic3d{font-size:40px; color:#fff; filter:drop-shadow(0 2px 8px rgba(0,0,0,.6)); margin-bottom:10px}
+  .detail-hero.has-photo .ic3d i{color:#fff}
+  .detail-hero.has-photo h2{color:#fff; text-shadow:0 1px 8px rgba(0,0,0,.55)}
+  .detail-hero.has-photo p{color:#eef1f1; text-shadow:0 1px 6px rgba(0,0,0,.5)}
 
   .panel{background:linear-gradient(160deg,#222a2c,#1a2021); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-sm); padding:20px 20px; margin-bottom:16px}
   .panel h4{font-size:11.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); font-weight:600; margin-bottom:14px}
@@ -628,19 +650,19 @@
       blurb:"Hand-picked island experiences — snorkelling, waterfalls, viewpoints and sunset boat trips, with a private guide.",
       includes:["Private or small-group tours","Snorkel, waterfall & sunset trips","Transport & guide included"] },
     { id:"jetski",  icon:"🛥", phicon:"wave-triangle", title:"Jet Ski Rental",      desc:"Ride the bay",
-      priceNote:"Price on request — book via concierge",
+      priceNote:"Price on request — book via concierge", photoLocal:"img/jetski.jpg",
       blurb:"Hop on a jet ski and explore the bay — your AVA concierge arranges the model, time slot and safety brief. Prices confirmed on request.",
       includes:["15 minutes — price on request","30 minutes — price on request","1 hour — price on request","Half-day — price on request","Full-day — price on request"] },
     { id:"speedboat", icon:"🚤", phicon:"anchor", title:"Speedboat Charter",     desc:"Order anytime",
-      priceNote:"Price on request — book via concierge",
+      priceNote:"Price on request — book via concierge", photoLocal:"img/speedboat.jpg",
       blurb:"A private speedboat at your schedule — island hops, secluded beaches or a sunset cruise. Order anytime; your concierge confirms the boat, route and price.",
       includes:["Private speedboat & skipper","Flexible route & timing","Order anytime — price on request"] },
     { id:"excursions", icon:"⛵", phicon:"sailboat", title:"Boat Excursions",     desc:"Islands & Ang Thong",
-      priceNote:"Price on request — book via concierge",
+      priceNote:"Price on request — book via concierge", photoLocal:"img/excursions.jpg",
       blurb:"Day trips by boat to nearby islands and the Ang Thong National Marine Park — snorkelling, lagoons and viewpoints, arranged end to end.",
       includes:["Nearby-island day trips","Ang Thong National Park day trip","Snorkelling & lagoons — price on request"] },
     { id:"tickets", icon:"🎟", phicon:"ticket", title:"Tickets",                desc:"Ferry · park · events",
-      priceNote:"Ask the concierge — booking via AVA",
+      priceNote:"Ask the concierge — booking via AVA", photoLocal:"img/tickets.jpg",
       blurb:"Ferry, national-park and event tickets — just tell your AVA concierge what you need and we'll sort it. Booking options confirmed on request.",
       includes:["Ferry & transfer tickets","National-park entry tickets","Event & activity tickets — ask the concierge"] },
     { id:"grocery", icon:"🛒", phicon:"shopping-bag", title:"Groceries & Delivery", desc:"Water, alcohol & more",
@@ -822,8 +844,12 @@
     // ---- 2-column graphite tiles (gold line icon top, white label + muted subtitle below) ----
     els.svcCount.textContent = SERVICES.length + " services";
     els.svcGrid.innerHTML = rest.map(function(s){
+      var photo = s.photoLocal
+        ? '<img class="tphoto" src="'+esc(s.photoLocal)+'" alt="'+esc(s.title)+'" loading="lazy" onerror="this.closest(\'.tile\').classList.remove(\'has-photo\');this.remove()"/><span class="tscrim"></span>'
+        : '';
       return ''+
-        '<button class="tile" type="button" data-svc="'+s.id+'">'+
+        '<button class="tile'+(s.photoLocal?' has-photo':'')+'" type="button" data-svc="'+s.id+'">'+
+          photo+
           ico(s)+
           '<span class="lab"><h3>'+esc(s.title)+'</h3>'+
             '<span class="sub">'+esc(s.desc)+'</span>'+
@@ -845,9 +871,13 @@
         '<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M9 7h8v8" stroke="#c8a96a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
       '</button>'
     ) : '';
-    // Luxe category-detail header: large gold thin-line icon on graphite
+    // Luxe category-detail header: real photo (when available) behind a dark blend, else gold thin-line icon
+    var dphoto = s.photoLocal
+      ? '<img class="dphoto" src="'+esc(s.photoLocal)+'" alt="'+esc(s.title)+'" onerror="this.closest(\'.detail-hero\').classList.remove(\'has-photo\');this.remove()"/><span class="dscrim"></span>'
+      : '';
     els.detail.innerHTML = ''+
-      '<div class="detail-hero">'+
+      '<div class="detail-hero'+(s.photoLocal?' has-photo':'')+'">'+
+        dphoto+
         '<div class="ic3d" aria-hidden="true">'+phi(s.phicon,"thin")+'</div>'+
         '<div class="k">AVA Concierge</div>'+
         '<h2>'+esc(s.title)+'</h2>'+
