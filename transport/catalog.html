@@ -127,6 +127,25 @@
   .usp i{font-size:24px; color:var(--gold); line-height:1}
   .usp b{display:block; font-size:11.5px; font-weight:600; color:var(--cream); margin-top:7px; line-height:1.25}
 
+  /* ---- filter tabs (segmented control) ---- */
+  .tabs{
+    display:flex; gap:6px; margin:0 0 20px; padding:5px;
+    background:linear-gradient(160deg,#1c2324,#171d1e); border:1px solid var(--line);
+    border-radius:14px; box-shadow:inset 0 1px 2px rgba(0,0,0,.25);
+  }
+  .tab{
+    flex:1 1 0; min-width:0; cursor:pointer; border:1px solid transparent; background:transparent;
+    color:var(--slate); font-weight:600; font-size:13.5px; letter-spacing:.01em;
+    padding:11px 8px; border-radius:10px; transition:.28s var(--ease);
+    display:flex; align-items:center; justify-content:center; gap:6px; white-space:nowrap;
+  }
+  .tab:hover{color:var(--cream); background:rgba(200,169,106,.06)}
+  .tab.active{
+    color:#1a2122; background:linear-gradient(150deg,var(--gold-soft),var(--gold));
+    border-color:var(--line-strong); box-shadow:var(--shadow-sm);
+  }
+  .tab.active:hover{filter:brightness(1.03); background:linear-gradient(150deg,var(--gold-soft),var(--gold))}
+
   /* ---- section label ---- */
   .sec-label{display:flex; align-items:baseline; justify-content:space-between; margin:6px 2px 14px}
   .sec-label .t{font-size:11.5px; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); font-weight:600}
@@ -342,7 +361,7 @@
       <div class="intro">
         <span class="hi"><span class="dot"></span> Transport · Koh Phangan</span>
         <h1>Scooters &amp; cars,<br/><em>delivered</em> to your villa.</h1>
-        <p>A serviced, automatic fleet — choose a category and we bring it to your door. Tell us the dates; your AVA concierge handles the rest.</p>
+        <p>A serviced, automatic fleet — pick a model and we bring it to your door. Tell us the dates; your AVA concierge handles the rest.</p>
       </div>
 
       <div class="usps">
@@ -351,12 +370,19 @@
         <div class="usp"><i class="ph-light ph-wallet"></i><b>Pay on delivery</b></div>
       </div>
 
+      <!-- filter tabs: Bikes / Cars -->
+      <div class="tabs" id="tabs" role="tablist" aria-label="Filter vehicles">
+        <button class="tab active" type="button" role="tab" data-kind="bike" aria-selected="true">🛵 Bikes</button>
+        <button class="tab" type="button" role="tab" data-kind="car" aria-selected="false">🚗 Cars</button>
+        <button class="tab" type="button" role="tab" data-kind="all" aria-selected="false">All</button>
+      </div>
+
       <div class="sec-label">
-        <span class="t">Choose your ride</span>
+        <span class="t" id="secLabel">Choose your ride</span>
         <span class="c" id="catCount"></span>
       </div>
 
-      <!-- category cards injected -->
+      <!-- model cards injected -->
       <div class="cats" id="cats"></div>
 
       <!-- ===== TERMS ===== -->
@@ -467,50 +493,81 @@
   var AVA_WA_NUMBER = "66922927490";   // AVA Concierge WhatsApp (…7490), monitored via Baileys API
 
   /* ---------- DATA (source of truth: data/bikes_catalog.md, partner Nico) ---------- */
-  var CATS = [
-    { id:"b125",  group:"bike",
-      name:"Bike · 125cc", phicon:"moped",
+  /* Flat list — one entry per individual model. kind:'bike'|'car' drives the filter tabs. */
+  var MODELS = [
+    /* ===== BIKES ===== */
+    { id:"scoopy", kind:"bike", phicon:"moped",
+      name:"Honda Scoopy", type:"125cc · automatic",
       grad:"linear-gradient(150deg,#c98a5e,#9a5836)", ribbon:"Most popular",
-      photoTag:"Honda Scoopy · Yamaha Filano",
-      hero:"./img/scoopy.jpg",
-      thumbs:[["./img/scoopy.jpg","Scoopy"],["./img/filano.jpg","Filano"],["./img/click.jpg","Click"]],
-      price:"฿150–300", priceSub:"/ day",
-      models:"Honda Scoopy · Yamaha Filano Hybrid · Honda Click (2022–2026)",
-      blurb:"Light, automatic, easy to ride — perfect for town and the beaches.",
-      tags:[["lightning","Automatic"],["leaf","Light & nimble"],["calendar-check","From ฿150/day monthly"]] },
+      hero:"./img/scoopy.jpg", price:"฿150–300", priceSub:"/ day",
+      specs:[["lightning","Automatic"],["leaf","Light & nimble"],["engine","125cc"]] },
 
-    { id:"b160",  group:"bike",
-      name:"Bike · 160cc", phicon:"moped-front",
+    { id:"filano", kind:"bike", phicon:"moped",
+      name:"Yamaha Filano Hybrid", type:"125cc · automatic",
+      grad:"linear-gradient(150deg,#c98a5e,#9a5836)",
+      hero:"./img/filano.jpg", price:"฿150–300", priceSub:"/ day",
+      specs:[["lightning","Automatic"],["leaf","Hybrid · economical"],["engine","125cc"]] },
+
+    { id:"click", kind:"bike", phicon:"moped",
+      name:"Honda Click", type:"125cc · automatic",
+      grad:"linear-gradient(150deg,#c98a5e,#9a5836)",
+      hero:"./img/click.jpg", price:"฿150–300", priceSub:"/ day",
+      specs:[["lightning","Automatic"],["leaf","Light & nimble"],["engine","125cc"]] },
+
+    { id:"nmax", kind:"bike", phicon:"moped-front",
+      name:"Yamaha NMAX 155", type:"160cc · automatic",
       grad:"linear-gradient(150deg,#b27a52,#8a5530)",
-      photoTag:"Yamaha NMAX · Honda PCX",
-      hero:"./img/nmax.jpg",
-      thumbs:[["./img/nmax.jpg","NMAX 155"],["./img/pcx.jpg","PCX"],["./img/click.jpg","Click"]],
-      price:"฿200–350", priceSub:"/ day",
-      models:"Yamaha NMAX 155 · Honda PCX · Honda Click",
-      blurb:"More power and comfort — great for two and for the island's hills.",
-      tags:[["lightning","Automatic"],["users-three","Comfy for 2"],["gauge","Extra power"]] },
+      hero:"./img/nmax.jpg", price:"฿200–350", priceSub:"/ day",
+      specs:[["lightning","Automatic"],["users-three","Comfy for 2"],["engine","160cc"]] },
 
-    { id:"b300",  group:"bike",
-      name:"Bike · 300/350cc", phicon:"motorcycle",
+    { id:"pcx", kind:"bike", phicon:"moped-front",
+      name:"Honda PCX", type:"160cc · automatic",
+      grad:"linear-gradient(150deg,#b27a52,#8a5530)",
+      hero:"./img/pcx.jpg", price:"฿200–350", priceSub:"/ day",
+      specs:[["lightning","Automatic"],["users-three","Comfy for 2"],["engine","160cc"]] },
+
+    { id:"forza", kind:"bike", phicon:"motorcycle",
+      name:"Honda Forza", type:"350cc · automatic",
       grad:"linear-gradient(150deg,#7fa6a8,#456b72)",
-      photoTag:"Honda Forza · Yamaha XMAX",
-      hero:"./img/forza.jpg",
-      thumbs:[["./img/forza.jpg","Forza"],["./img/xmax.jpg","XMAX"]],
-      price:"฿550–900", priceSub:"/ day",
-      models:"Honda Forza · Yamaha XMAX",
-      blurb:"Maxi-scooters — maximum comfort, storage and power for touring.",
-      tags:[["lightning","Automatic"],["seat","Maxi comfort"],["gauge","Top power"]] },
+      hero:"./img/forza.jpg", price:"฿550–900", priceSub:"/ day",
+      specs:[["lightning","Automatic"],["seat","Maxi comfort"],["engine","350cc"]] },
 
-    { id:"car",   group:"car",
-      name:"Cars", phicon:"car",
+    { id:"xmax", kind:"bike", phicon:"motorcycle",
+      name:"Yamaha XMAX", type:"300cc · automatic",
+      grad:"linear-gradient(150deg,#7fa6a8,#456b72)",
+      hero:"./img/xmax.jpg", price:"฿550–900", priceSub:"/ day",
+      specs:[["lightning","Automatic"],["seat","Maxi comfort"],["engine","300cc"]] },
+
+    /* ===== CARS  (all ฿500–1000/day, automatic, insurance included) ===== */
+    { id:"mazda2", kind:"car", phicon:"car",
+      name:"Mazda 2", type:"Automatic · insured",
       grad:"linear-gradient(150deg,#8ba0ad,#516a78)",
-      photoTag:"Mazda 2 · Honda City · Toyota Yaris",
-      hero:"./img/yaris-cross.jpg",
-      thumbs:[["./img/mazda2.jpg","Mazda 2"],["./img/city.jpg","City"],["./img/yaris-ativ.jpg","Yaris Ativ"],["./img/yaris-cross.jpg","Yaris Cross"],["./img/hrv.jpg","HR-V"]],
-      price:"฿500–1000", priceSub:"/ day",
-      models:"Mazda 2 · Honda City Turbo/RS · Toyota Yaris Ativ · Yaris Cross · Honda CHR (2022–2026)",
-      blurb:"Automatic, air-conditioned and insured — comfortable for the whole stay.",
-      tags:[["lightning","Automatic"],["shield-check","Insured"],["snowflake","Air-con"]] }
+      hero:"./img/mazda2.jpg", price:"฿500–1000", priceSub:"/ day",
+      specs:[["lightning","Automatic"],["shield-check","Insured"],["snowflake","Air-con"]] },
+
+    { id:"city", kind:"car", phicon:"car",
+      name:"Honda City", type:"Automatic · insured",
+      grad:"linear-gradient(150deg,#8ba0ad,#516a78)",
+      hero:"./img/city.jpg", price:"฿500–1000", priceSub:"/ day",
+      specs:[["lightning","Automatic"],["shield-check","Insured"],["snowflake","Air-con"]] },
+
+    { id:"yaris-ativ", kind:"car", phicon:"car",
+      name:"Toyota Yaris Ativ", type:"Automatic · insured",
+      grad:"linear-gradient(150deg,#8ba0ad,#516a78)",
+      hero:"./img/yaris-ativ.jpg", price:"฿500–1000", priceSub:"/ day",
+      specs:[["lightning","Automatic"],["shield-check","Insured"],["snowflake","Air-con"]] },
+
+    { id:"yaris-cross", kind:"car", phicon:"car",
+      name:"Toyota Yaris Cross", type:"Automatic · insured",
+      grad:"linear-gradient(150deg,#8ba0ad,#516a78)",
+      hero:"./img/yaris-cross.jpg", price:"฿500–1000", priceSub:"/ day",
+      specs:[["lightning","Automatic"],["shield-check","Insured"],["snowflake","Air-con"]] },
+
+    { id:"hrv", kind:"car", phicon:"car",
+      name:"Honda HR-V", type:"Automatic · insured",
+      grad:"linear-gradient(150deg,#8ba0ad,#516a78)",
+      hero:"./img/hrv.jpg", price:"฿500–1000", priceSub:"/ day",
+      specs:[["lightning","Automatic"],["shield-check","Insured"],["snowflake","Air-con"]] }
   ];
 
   var VILLAS = ["Aurora","Radharani","Twin Palms","Bunny","Four Moons","Altair","Deneb","Other / not sure"];
@@ -521,48 +578,69 @@
     var cls = weight==="thin"?"ph-thin":weight==="light"?"ph-light":weight==="fill"?"ph-fill":"ph";
     return '<i class="'+cls+' ph-'+esc(name)+'" aria-hidden="true"></i>';
   }
-  function catById(id){ for(var i=0;i<CATS.length;i++) if(CATS[i].id===id) return CATS[i]; return null; }
+  function modelById(id){ for(var i=0;i<MODELS.length;i++) if(MODELS[i].id===id) return MODELS[i]; return null; }
   var toastEl = document.getElementById("toast");
   function toast(msg){ toastEl.textContent = msg; toastEl.classList.add("show"); clearTimeout(toast._t); toast._t = setTimeout(function(){ toastEl.classList.remove("show"); }, 2600); }
   function fmtDate(iso){ if(!iso) return ""; var d=new Date(iso+"T00:00:00"); return isNaN(d)?iso:d.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}); }
 
-  /* ---------- render category cards ---------- */
+  /* ---------- render model cards (filtered by active tab) ---------- */
   var catsEl = document.getElementById("cats");
-  document.getElementById("catCount").textContent = CATS.length + " categories";
-  catsEl.innerHTML = CATS.map(function(c){
-    var tags = c.tags.map(function(t){ return '<span class="tag">'+phi(t[0],"light")+esc(t[1])+'</span>'; }).join("");
+  var catCountEl = document.getElementById("catCount");
+  var secLabelEl = document.getElementById("secLabel");
+  var activeKind = "bike";   // default tab
+
+  function cardHTML(m){
+    var tags = m.specs.map(function(t){ return '<span class="tag">'+phi(t[0],"light")+esc(t[1])+'</span>'; }).join("");
     // real model photo for the card (falls back to the gold line icon if it fails to load)
-    var hero = c.hero ? '<img class="hero" src="'+esc(c.hero)+'" alt="'+esc(c.name)+'" loading="lazy" onerror="this.remove()"/><span class="scrim"></span>' : "";
-    // per-model thumbnail strip
-    var thumbs = (c.thumbs && c.thumbs.length) ? '<div class="thumbs">'+c.thumbs.map(function(t){
-        return '<div class="thumb"><div class="pic"><img src="'+esc(t[0])+'" alt="'+esc(t[1])+'" loading="lazy" onerror="this.closest(\'.thumb\').style.display=\'none\'"/></div><span class="lbl">'+esc(t[1])+'</span></div>';
-      }).join("")+'</div>' : "";
+    var hero = m.hero ? '<img class="hero" src="'+esc(m.hero)+'" alt="'+esc(m.name)+'" loading="lazy" onerror="this.remove()"/><span class="scrim"></span>' : "";
     return ''+
-      '<article class="cat" data-cat="'+c.id+'" style="--cat-grad:'+c.grad+'">'+
+      '<article class="cat" data-cat="'+esc(m.id)+'" style="--cat-grad:'+m.grad+'">'+
         '<div class="media">'+
-          phi(c.phicon,"thin")+
+          phi(m.phicon,"thin")+
           hero+
-          (c.ribbon?'<span class="ribbon">'+esc(c.ribbon)+'</span>':'')+
-          '<span class="ph-tag">'+esc(c.photoTag)+'</span>'+
+          (m.ribbon?'<span class="ribbon">'+esc(m.ribbon)+'</span>':'')+
+          '<span class="ph-tag">'+esc(m.type)+'</span>'+
         '</div>'+
         '<div class="info">'+
           '<div class="top">'+
-            '<div class="nm">'+esc(c.name)+'</div>'+
-            '<div class="pr">'+esc(c.price)+'<small>'+esc(c.priceSub)+'</small></div>'+
+            '<div class="nm">'+esc(m.name)+'</div>'+
+            '<div class="pr">'+esc(m.price)+'<small>'+esc(m.priceSub)+'</small></div>'+
           '</div>'+
-          '<div class="mods"><b>Models:</b> '+esc(c.models)+'</div>'+
-          '<div class="mods" style="color:var(--muted);font-size:12px">'+esc(c.blurb)+'</div>'+
-          thumbs+
           '<div class="meta">'+tags+'</div>'+
           '<div class="req-row">'+
-            '<button class="req-btn" type="button" data-req="'+c.id+'">'+
+            '<button class="req-btn" type="button" data-req="'+esc(m.id)+'">'+
               '<svg viewBox="0 0 24 24" fill="none"><path d="M4 12l16-8-6 16-3-7-7-1z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>'+
-              'Request '+esc(c.name.split(" · ")[0]==="Cars"?"a car":c.name)+
+              'Request this'+
             '</button>'+
           '</div>'+
         '</div>'+
       '</article>';
-  }).join("");
+  }
+
+  function renderCards(){
+    var list = MODELS.filter(function(m){ return activeKind==="all" || m.kind===activeKind; });
+    catsEl.innerHTML = list.map(cardHTML).join("");
+    catCountEl.textContent = list.length + " " + (list.length===1 ? "model" : "models");
+    secLabelEl.textContent = activeKind==="bike" ? "Choose your scooter"
+                           : activeKind==="car"  ? "Choose your car"
+                           : "Choose your ride";
+  }
+  renderCards();
+
+  /* ---------- filter tabs ---------- */
+  var tabsEl = document.getElementById("tabs");
+  tabsEl.addEventListener("click", function(e){
+    var btn = e.target.closest("button[data-kind]");
+    if(!btn) return;
+    activeKind = btn.getAttribute("data-kind");
+    var all = tabsEl.querySelectorAll(".tab");
+    for(var i=0;i<all.length;i++){
+      var on = all[i]===btn;
+      all[i].classList.toggle("active", on);
+      all[i].setAttribute("aria-selected", on ? "true" : "false");
+    }
+    renderCards();
+  });
 
   /* ---------- request sheet ---------- */
   var sheetBack = document.getElementById("sheetBack");
@@ -577,14 +655,20 @@
 
   // populate selects
   fVilla.innerHTML = '<option value="">Select your villa…</option>' + VILLAS.map(function(v){ return '<option>'+esc(v)+'</option>'; }).join("");
-  fVehicle.innerHTML = '<option value="">Select a category…</option>' + CATS.map(function(c){ return '<option value="'+c.id+'">'+esc(c.name)+' — '+esc(c.price)+esc(c.priceSub)+'</option>'; }).join("");
+  // grouped <optgroup> so guests can pick the exact model in the form
+  (function(){
+    function opts(kind){ return MODELS.filter(function(m){return m.kind===kind;}).map(function(m){ return '<option value="'+esc(m.id)+'">'+esc(m.name)+' — '+esc(m.price)+esc(m.priceSub)+'</option>'; }).join(""); }
+    fVehicle.innerHTML = '<option value="">Select a model…</option>' +
+      '<optgroup label="🛵 Bikes">' + opts("bike") + '</optgroup>' +
+      '<optgroup label="🚗 Cars">'  + opts("car")  + '</optgroup>';
+  })();
 
   var today = new Date().toISOString().slice(0,10);
   fFrom.min = today; fTo.min = today; fFrom.value = today;
 
-  function openSheet(catId){
+  function openSheet(modelId){
     lastFocus = document.activeElement;
-    var c = catId ? catById(catId) : null;
+    var c = modelId ? modelById(modelId) : null;
     document.getElementById("sheetTitle").textContent = c ? c.name : "Transport";
     document.getElementById("sheetIcon").className = "ph-light ph-" + (c ? c.phicon : "moped");
     fVehicle.value = c ? c.id : "";
@@ -618,7 +702,7 @@
 
   // build the WhatsApp message (this is what AVA receives, then brokers to Nico)
   function buildMessage(d){
-    var c = catById(d.vehicle);
+    var c = modelById(d.vehicle);
     var when = fmtDate(d.from) + (d.to ? " → " + fmtDate(d.to) : "");
     var lines = [
       "Hi AVA — I'd like to request transport 🛵",
