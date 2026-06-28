@@ -164,7 +164,7 @@
   .cat:active{transform:scale(.99)}
   /* representative image area: real model photo over a gradient panel (gold line icon = fallback) */
   .cat .media{
-    position:relative; height:150px; display:grid; place-items:center; overflow:hidden;
+    position:relative; height:172px; display:grid; place-items:center; overflow:hidden;
     background:var(--cat-grad, linear-gradient(150deg,#2f3a3c,#1a2122));
     border-bottom:1px solid var(--line);
   }
@@ -173,7 +173,7 @@
   /* the model photo sits above the gradient; covers the fallback icon when present */
   .cat .media .hero{
     position:absolute; inset:0; z-index:2; width:100%; height:100%;
-    object-fit:cover; object-position:center 58%;
+    object-fit:contain; object-position:center center; padding:12px 14px;
     transition:transform .5s var(--ease);
   }
   .cat:hover .media .hero{transform:scale(1.04)}
