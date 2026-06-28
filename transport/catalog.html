@@ -205,6 +205,8 @@
   .cat .pr small{display:block; text-align:right; font-size:10px; font-weight:500; color:var(--muted); margin-top:2px}
   .cat .mods{margin-top:9px; font-size:12.5px; color:var(--slate); line-height:1.5}
   .cat .mods b{color:var(--cream); font-weight:600}
+  .cat .note{margin-top:9px; display:flex; gap:7px; align-items:flex-start; font-size:11.5px; color:var(--muted); line-height:1.45}
+  .cat .note i{flex:0 0 auto; font-size:14px; color:var(--gold); line-height:1; margin-top:1px}
   .cat .meta{margin-top:11px; display:flex; flex-wrap:wrap; gap:7px}
   .cat .tag{
     display:inline-flex; align-items:center; gap:6px; font-size:11px; color:var(--cream);
@@ -391,6 +393,7 @@
         <h4>Good to know</h4>
         <ul>
           <li><i class="ph-light ph-truck"></i><span><b>Delivery</b> to anywhere on the island — from <b>฿300</b> one-way per vehicle.</span></li>
+          <li><i class="ph-light ph-van"></i><span><b>Airport / pier transfer</b> (Thong Sala pier → your villa) — <b>฿1,200</b> per car.</span></li>
           <li><i class="ph-light ph-key"></i><span><b>Deposit:</b> bikes from <b>฿5,000</b> or passport + valid visa · cars from <b>฿20,000</b> or passport.</span></li>
           <li><i class="ph-light ph-shield-check"></i><span><b>Insurance</b> is included on cars only (no insurance on bikes). Manual bikes on request.</span></li>
           <li><i class="ph-light ph-credit-card"></i><span><b>To confirm your booking:</b> a small booking fee by card (we'll send you a secure payment link). The balance is paid in cash on delivery, at your villa.</span></li>
@@ -406,6 +409,10 @@
           <svg viewBox="0 0 24 24" fill="none"><path d="M4 12l16-8-6 16-3-7-7-1z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
           Request / Book
         </button>
+        <a class="btn-wa" id="waDirect" href="https://wa.me/66922927490?text=Hi%20AVA%2C%20I'd%20like%20to%20book%20transport" target="_blank" rel="noopener" style="margin-top:10px;text-decoration:none">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.97L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.13c-.24.68-1.42 1.32-1.95 1.36-.5.04-.5.4-3.15-.66-2.66-1.06-4.3-3.78-4.43-3.96-.13-.18-1.05-1.4-1.05-2.66 0-1.26.66-1.88.9-2.14.24-.26.52-.32.7-.32.18 0 .35 0 .5.01.16.01.38-.06.59.45.24.58.81 2 .88 2.14.07.14.12.31.02.49-.09.18-.14.29-.27.45-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.15.26.66 1.09 1.42 1.77.97.87 1.79 1.14 2.05 1.27.26.13.41.11.56-.07.15-.18.65-.76.82-1.02.17-.26.35-.21.59-.13.24.09 1.52.72 1.78.85.26.13.43.2.5.31.06.11.06.66-.18 1.34z"/></svg>
+          Chat on WhatsApp
+        </a>
       </div>
 
       <div class="foot">
@@ -500,74 +507,86 @@
     { id:"scoopy", kind:"bike", phicon:"moped",
       name:"Honda Scoopy", type:"125cc · automatic",
       grad:"linear-gradient(150deg,#c98a5e,#9a5836)", ribbon:"Most popular",
-      hero:"./img/scoopy.jpg", price:"฿150–300", priceSub:"/ day",
+      hero:"./img/scoopy.jpg", price:"฿360", priceSub:"/ day",
+      note:"฿2,290 / week · ฿6,600 / month — longer = cheaper per day",
       specs:[["lightning","Automatic"],["leaf","Light & nimble"],["engine","125cc"]] },
 
     { id:"filano", kind:"bike", phicon:"moped",
       name:"Yamaha Filano Hybrid", type:"125cc · automatic",
       grad:"linear-gradient(150deg,#c98a5e,#9a5836)",
-      hero:"./img/filano.jpg", price:"฿150–300", priceSub:"/ day",
+      hero:"./img/filano.jpg", price:"฿360", priceSub:"/ day",
+      note:"฿2,290 / week · ฿6,600 / month — longer = cheaper per day",
       specs:[["lightning","Automatic"],["leaf","Hybrid · economical"],["engine","125cc"]] },
 
     { id:"click", kind:"bike", phicon:"moped",
       name:"Honda Click", type:"125cc · automatic",
       grad:"linear-gradient(150deg,#c98a5e,#9a5836)",
-      hero:"./img/click.jpg", price:"฿150–300", priceSub:"/ day",
+      hero:"./img/click.jpg", price:"฿360", priceSub:"/ day",
+      note:"฿2,290 / week · ฿6,600 / month — longer = cheaper per day",
       specs:[["lightning","Automatic"],["leaf","Light & nimble"],["engine","125cc"]] },
 
     { id:"nmax", kind:"bike", phicon:"moped-front",
       name:"Yamaha NMAX 155", type:"160cc · automatic",
       grad:"linear-gradient(150deg,#b27a52,#8a5530)",
-      hero:"./img/nmax.jpg", price:"฿200–350", priceSub:"/ day",
+      hero:"./img/nmax.jpg", price:"฿420", priceSub:"/ day",
+      note:"฿2,650 / week · ฿7,700 / month — longer = cheaper per day",
       specs:[["lightning","Automatic"],["users-three","Comfy for 2"],["engine","160cc"]] },
 
     { id:"pcx", kind:"bike", phicon:"moped-front",
       name:"Honda PCX", type:"160cc · automatic",
       grad:"linear-gradient(150deg,#b27a52,#8a5530)",
-      hero:"./img/pcx.jpg", price:"฿200–350", priceSub:"/ day",
+      hero:"./img/pcx.jpg", price:"฿420", priceSub:"/ day",
+      note:"฿2,650 / week · ฿7,700 / month — longer = cheaper per day",
       specs:[["lightning","Automatic"],["users-three","Comfy for 2"],["engine","160cc"]] },
 
     { id:"forza", kind:"bike", phicon:"motorcycle",
       name:"Honda Forza", type:"350cc · automatic",
       grad:"linear-gradient(150deg,#7fa6a8,#456b72)",
-      hero:"./img/forza.jpg", price:"฿550–900", priceSub:"/ day",
+      hero:"./img/forza.jpg", price:"฿1,080", priceSub:"/ day",
+      note:"฿6,800 / week · ฿19,800 / month — longer = cheaper per day",
       specs:[["lightning","Automatic"],["seat","Maxi comfort"],["engine","350cc"]] },
 
     { id:"xmax", kind:"bike", phicon:"motorcycle",
       name:"Yamaha XMAX", type:"300cc · automatic",
       grad:"linear-gradient(150deg,#7fa6a8,#456b72)",
-      hero:"./img/xmax.jpg", price:"฿550–900", priceSub:"/ day",
+      hero:"./img/xmax.jpg", price:"฿1,080", priceSub:"/ day",
+      note:"฿6,800 / week · ฿19,800 / month — longer = cheaper per day",
       specs:[["lightning","Automatic"],["seat","Maxi comfort"],["engine","300cc"]] },
 
-    /* ===== CARS  (all ฿500–1000/day, automatic, insurance included) ===== */
+    /* ===== CARS  (automatic, insurance included; from–to depends on model + duration) ===== */
     { id:"mazda2", kind:"car", phicon:"car",
       name:"Mazda 2", type:"Automatic · insured",
       grad:"linear-gradient(150deg,#8ba0ad,#516a78)",
-      hero:"./img/mazda2.jpg", price:"฿600–1500", priceSub:"/ day",
+      hero:"./img/mazda2.jpg", price:"฿720–1,800", priceSub:"/ day",
+      note:"Exact price depends on model & rental length — longer = cheaper per day",
       specs:[["lightning","Automatic"],["shield-check","Insured"],["snowflake","Air-con"]] },
 
     { id:"city", kind:"car", phicon:"car",
       name:"Honda City", type:"Automatic · insured",
       grad:"linear-gradient(150deg,#8ba0ad,#516a78)",
-      hero:"./img/city.jpg", price:"฿600–1500", priceSub:"/ day",
+      hero:"./img/city.jpg", price:"฿720–1,800", priceSub:"/ day",
+      note:"Exact price depends on model & rental length — longer = cheaper per day",
       specs:[["lightning","Automatic"],["shield-check","Insured"],["snowflake","Air-con"]] },
 
     { id:"yaris-ativ", kind:"car", phicon:"car",
       name:"Toyota Yaris Ativ", type:"Automatic · insured",
       grad:"linear-gradient(150deg,#8ba0ad,#516a78)",
-      hero:"./img/yaris-ativ.jpg", price:"฿600–1500", priceSub:"/ day",
+      hero:"./img/yaris-ativ.jpg", price:"฿720–1,800", priceSub:"/ day",
+      note:"Exact price depends on model & rental length — longer = cheaper per day",
       specs:[["lightning","Automatic"],["shield-check","Insured"],["snowflake","Air-con"]] },
 
     { id:"yaris-cross", kind:"car", phicon:"car",
       name:"Toyota Yaris Cross", type:"Automatic · insured",
       grad:"linear-gradient(150deg,#8ba0ad,#516a78)",
-      hero:"./img/yaris-cross.jpg", price:"฿990–2500", priceSub:"/ day",
+      hero:"./img/yaris-cross.jpg", price:"฿1,190–3,000", priceSub:"/ day",
+      note:"Exact price depends on model & rental length — longer = cheaper per day",
       specs:[["lightning","Automatic"],["shield-check","Insured"],["snowflake","Air-con"]] },
 
     { id:"hrv", kind:"car", phicon:"car",
       name:"Honda HR-V", type:"Automatic · insured",
       grad:"linear-gradient(150deg,#8ba0ad,#516a78)",
-      hero:"./img/hrv.jpg", price:"฿990–2500", priceSub:"/ day",
+      hero:"./img/hrv.jpg", price:"฿1,190–3,000", priceSub:"/ day",
+      note:"Exact price depends on model & rental length — longer = cheaper per day",
       specs:[["lightning","Automatic"],["shield-check","Insured"],["snowflake","Air-con"]] }
   ];
 
@@ -608,6 +627,7 @@
             '<div class="pr">'+esc(m.price)+'<small>'+esc(m.priceSub)+'</small></div>'+
           '</div>'+
           '<div class="meta">'+tags+'</div>'+
+          (m.note?'<div class="note">'+phi("tag","light")+'<span>'+esc(m.note)+'</span></div>':'')+
           '<div class="req-row">'+
             '<button class="req-btn" type="button" data-req="'+esc(m.id)+'">'+
               '<svg viewBox="0 0 24 24" fill="none"><path d="M4 12l16-8-6 16-3-7-7-1z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>'+

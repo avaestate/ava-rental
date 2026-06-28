@@ -257,6 +257,20 @@
   }
   .btn-ghost:hover{background:rgba(200,169,106,.12); border-color:var(--gold)}
 
+  /* WhatsApp button on Home — premium graphite card with WhatsApp-green icon + hairline */
+  .btn-wa-home{
+    display:flex; align-items:center; justify-content:center; gap:11px; width:100%;
+    margin:0 0 18px; padding:15px 16px; border-radius:14px; cursor:pointer; text-decoration:none;
+    color:var(--cream); font-weight:600; font-size:14.5px; letter-spacing:.01em;
+    background:linear-gradient(150deg,#23302b,#1a2421);
+    border:1px solid rgba(31,170,85,.42);
+    box-shadow:0 12px 30px -18px rgba(31,170,85,.55), var(--shadow-sm);
+    transition:.3s var(--ease); -webkit-tap-highlight-color:transparent;
+  }
+  .btn-wa-home:hover{transform:translateY(-2px); border-color:rgba(31,170,85,.7); box-shadow:0 16px 34px -16px rgba(31,170,85,.65)}
+  .btn-wa-home:active{transform:translateY(0) scale(.99)}
+  .btn-wa-home svg{width:21px;height:21px; color:#25d366; flex:0 0 auto}
+
   /* ============ FORM ============ */
   .field{margin-bottom:15px}
   .field label{display:block; font-size:12px; font-weight:600; letter-spacing:.04em; color:var(--gold-soft); margin-bottom:7px}
@@ -465,6 +479,12 @@
           <h1>Your villa <em>concierge</em>,<br/>at your fingertips.</h1>
         </div>
 
+        <!-- Direct WhatsApp to the AVA concierge -->
+        <a class="btn-wa-home" id="homeWa" href="https://wa.me/66922927490?text=Hi%20AVA%2C%20I'd%20like%20to%20chat%20with%20the%20concierge" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.97L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.13c-.24.68-1.42 1.32-1.95 1.36-.5.04-.5.4-3.15-.66-2.66-1.06-4.3-3.78-4.43-3.96-.13-.18-1.05-1.4-1.05-2.66 0-1.26.66-1.88.9-2.14.24-.26.52-.32.7-.32.18 0 .35 0 .5.01.16.01.38-.06.59.45.24.58.81 2 .88 2.14.07.14.12.31.02.49-.09.18-.14.29-.27.45-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.15.26.66 1.09 1.42 1.77.97.87 1.79 1.14 2.05 1.27.26.13.41.11.56-.07.15-.18.65-.76.82-1.02.17-.26.35-.21.59-.13.24.09 1.52.72 1.78.85.26.13.43.2.5.31.06.11.06.66-.18 1.34z"/></svg>
+          <span>Chat with us on WhatsApp</span>
+        </a>
+
         <!-- Featured hero card (injected) -->
         <div id="heroSlot"><!-- hero card injected --></div>
 
@@ -542,6 +562,13 @@
 <script>
 (function(){
   "use strict";
+
+  /* ===================== AVA CONTACT ===================== */
+  // AVA Concierge WhatsApp (international format, digits only, no "+")
+  var AVA_WA_NUMBER = "66922927490";
+  function AVA_WA_URL(text){
+    return "https://wa.me/" + AVA_WA_NUMBER + "?text=" + encodeURIComponent(text || "Hi AVA");
+  }
 
   /* ===================== DATA ===================== */
   // Set 4 (premium / deep-tone) photos — exact Unsplash IDs carried over from designs/photos/p4.html
@@ -753,7 +780,7 @@
           '<span class="kicker">'+esc(ht.kicker||"Most requested")+'</span>'+
           '<h3>'+esc(featured.title)+'</h3>'+
           '<span class="sub">'+esc(ht.sub||(featured.desc+", delivered to your villa door."))+'</span>'+
-          '<span class="cta">Browse the fleet '+phi("arrow-right","regular")+'</span>'+
+          '<span class="cta">Open bikes &amp; cars catalog '+phi("arrow-right","regular")+'</span>'+
         '</span>'+
       '</button>';
 
@@ -1033,9 +1060,8 @@
   });
   chatSend.addEventListener("click", sendChat);
   document.getElementById("waCta").addEventListener("click", function(){
-    toast("Opening WhatsApp… (demo link)");
-    // placeholder — real number wired later
-    window.open("https://wa.me/", "_blank");
+    toast("Opening WhatsApp…");
+    window.open(AVA_WA_URL("Hi AVA, I'd like to chat with the concierge"), "_blank");
   });
 
   /* ===================== EVENTS ===================== */
@@ -1045,7 +1071,15 @@
   });
   els.heroSlot.addEventListener("click", function(e){
     var card = e.target.closest("[data-svc]"); if(!card) return;
-    openDetail(card.getAttribute("data-svc"));
+    var id = card.getAttribute("data-svc");
+    var s = svcById(id);
+    // Featured Bikes & Cars goes STRAIGHT to the full rental catalog (bikes + cars)
+    if(s && s.link && s.link.href){
+      toast("Opening the AVA rental catalog…");
+      setTimeout(function(){ window.location.href = s.link.href; }, 220);
+      return;
+    }
+    openDetail(id);
   });
   els.backBtn.addEventListener("click", function(){
     if(current.view==="form"){ openDetail(current.service.id); }
