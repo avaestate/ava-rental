@@ -318,6 +318,21 @@
   .field-row .field{margin:0; min-width:0}
   .field-row .field input{width:100%; min-width:0}
 
+  /* ---- payment choice: Card (booking fee now) / Cash (on delivery) ---- */
+  .pay-toggle{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:4px}
+  .pay-opt{
+    cursor:pointer; border:1px solid var(--line); background:var(--cream-1); border-radius:13px; padding:13px 12px;
+    display:flex; align-items:center; gap:10px; transition:.28s var(--ease); -webkit-tap-highlight-color:transparent; min-width:0;
+  }
+  .pay-opt .pic i{font-size:22px; color:var(--gold); line-height:1}
+  .pay-opt .pt{min-width:0}
+  .pay-opt .pt b{display:block; font-size:13px; font-weight:600; color:var(--cream)}
+  .pay-opt .pt span{font-size:10.5px; color:var(--muted); line-height:1.3}
+  .pay-opt.active{background:linear-gradient(150deg,var(--gold-soft),var(--gold)); border-color:transparent; box-shadow:var(--shadow-md)}
+  .pay-opt.active .pic i{color:#1a2122}
+  .pay-opt.active .pt b{color:#1a2122}
+  .pay-opt.active .pt span{color:rgba(26,33,34,.72)}
+
   .form-note{display:flex; gap:10px; font-size:12px; color:var(--muted); line-height:1.5; margin:6px 2px 16px}
   .form-note i{flex:0 0 auto; font-size:17px; color:var(--gold); margin-top:0}
   .err{color:#e08a7a; font-size:12px; margin:-6px 2px 12px; display:none}
@@ -475,10 +490,18 @@
         <textarea name="notes" placeholder="Helmets, manual, pickup time, anything else…"></textarea>
       </div>
 
+      <div class="field">
+        <label>How you'd like to pay</label>
+        <div class="pay-toggle" id="payToggle">
+          <div class="pay-opt active" data-pay="card"><span class="pic"><i class="ph-light ph-credit-card"></i></span><span class="pt"><b>Card</b><span>Small booking fee now</span></span></div>
+          <div class="pay-opt" data-pay="cash"><span class="pic"><i class="ph-light ph-money"></i></span><span class="pt"><b>Cash</b><span>Pay on delivery</span></span></div>
+        </div>
+      </div>
+
       <div class="err" id="formErr">Please fill in the required fields.</div>
       <div class="form-note">
         <i class="ph-light ph-info"></i>
-        <span>This is a request — your AVA concierge confirms the vehicle, availability &amp; final price. <b>No payment now</b>; pay on delivery.</span>
+        <span>This is a request — your AVA concierge confirms the vehicle, availability &amp; final price. <b>Card:</b> a small booking fee via secure Stripe link to confirm; balance in cash on delivery. <b>Cash:</b> pay everything on delivery at your villa.</span>
       </div>
 
       <button type="submit" class="btn-wa" id="sendBtn">
@@ -517,50 +540,50 @@
     { id:"scoopy", kind:"bike", phicon:"moped",
       name:"Honda Scoopy", type:"125cc · automatic",
       grad:"linear-gradient(150deg,#c98a5e,#9a5836)", ribbon:"Most popular",
-      hero:"./img/scoopy.jpg", price:"฿330", priceSub:"/ day",
-      note:"฿2,080 / week · ฿6,050 / month — longer = cheaper per day",
+      hero:"./img/scoopy.jpg", price:"฿200–330", priceSub:"/ day",
+      note:"฿2,080 / week · ฿6,050 / month — longer rental = cheaper per day",
       specs:[["lightning","Automatic"],["leaf","Light & nimble"],["engine","125cc"]] },
 
     { id:"filano", kind:"bike", phicon:"moped",
       name:"Yamaha Filano Hybrid", type:"125cc · automatic",
       grad:"linear-gradient(150deg,#c98a5e,#9a5836)",
-      hero:"./img/filano.jpg", price:"฿330", priceSub:"/ day",
-      note:"฿2,080 / week · ฿6,050 / month — longer = cheaper per day",
+      hero:"./img/filano.jpg", price:"฿200–330", priceSub:"/ day",
+      note:"฿2,080 / week · ฿6,050 / month — longer rental = cheaper per day",
       specs:[["lightning","Automatic"],["leaf","Hybrid · economical"],["engine","125cc"]] },
 
     { id:"click", kind:"bike", phicon:"moped",
       name:"Honda Click", type:"125cc · automatic",
       grad:"linear-gradient(150deg,#c98a5e,#9a5836)",
-      hero:"./img/click.jpg", price:"฿330", priceSub:"/ day",
-      note:"฿2,080 / week · ฿6,050 / month — longer = cheaper per day",
+      hero:"./img/click.jpg", price:"฿200–330", priceSub:"/ day",
+      note:"฿2,080 / week · ฿6,050 / month — longer rental = cheaper per day",
       specs:[["lightning","Automatic"],["leaf","Light & nimble"],["engine","125cc"]] },
 
     { id:"nmax", kind:"bike", phicon:"moped-front",
       name:"Yamaha NMAX 155", type:"160cc · automatic",
       grad:"linear-gradient(150deg,#b27a52,#8a5530)",
-      hero:"./img/nmax.jpg", price:"฿220–390", priceSub:"/ day",
-      note:"Exact price depends on model & rental length — longer = cheaper per day",
+      hero:"./img/nmax.jpg", price:"฿240–390", priceSub:"/ day",
+      note:"฿2,400 / week · ฿7,200 / month — longer rental = cheaper per day",
       specs:[["lightning","Automatic"],["users-three","Comfy for 2"],["engine","160cc"]] },
 
     { id:"pcx", kind:"bike", phicon:"moped-front",
       name:"Honda PCX", type:"160cc · automatic",
       grad:"linear-gradient(150deg,#b27a52,#8a5530)",
-      hero:"./img/pcx.jpg", price:"฿220–390", priceSub:"/ day",
-      note:"Exact price depends on model & rental length — longer = cheaper per day",
+      hero:"./img/pcx.jpg", price:"฿240–390", priceSub:"/ day",
+      note:"฿2,400 / week · ฿7,200 / month — longer rental = cheaper per day",
       specs:[["lightning","Automatic"],["users-three","Comfy for 2"],["engine","160cc"]] },
 
     { id:"forza", kind:"bike", phicon:"motorcycle",
       name:"Honda Forza", type:"350cc · automatic",
       grad:"linear-gradient(150deg,#7fa6a8,#456b72)",
       hero:"./img/forza.jpg", price:"฿600–990", priceSub:"/ day",
-      note:"Exact price depends on model & rental length — longer = cheaper per day",
+      note:"฿6,000 / week · ฿18,000 / month — longer rental = cheaper per day",
       specs:[["lightning","Automatic"],["seat","Maxi comfort"],["engine","350cc"]] },
 
     { id:"xmax", kind:"bike", phicon:"motorcycle",
       name:"Yamaha XMAX", type:"300cc · automatic",
       grad:"linear-gradient(150deg,#7fa6a8,#456b72)",
       hero:"./img/xmax.jpg", price:"฿600–990", priceSub:"/ day",
-      note:"Exact price depends on model & rental length — longer = cheaper per day",
+      note:"฿6,000 / week · ฿18,000 / month — longer rental = cheaper per day",
       specs:[["lightning","Automatic"],["seat","Maxi comfort"],["engine","300cc"]] },
 
     /* ===== CARS  (automatic, insurance included; from–to depends on model + duration) ===== */
@@ -684,6 +707,20 @@
   var sendBtn = document.getElementById("sendBtn");
   var lastFocus = null;
 
+  /* ---------- payment choice (Card = booking fee now / Cash = on delivery) ---------- */
+  var payChoice = "card";
+  var payToggle = document.getElementById("payToggle");
+  function setPay(choice){
+    payChoice = choice;
+    payToggle.querySelectorAll(".pay-opt").forEach(function(o){
+      o.classList.toggle("active", o.getAttribute("data-pay")===choice);
+    });
+  }
+  payToggle.addEventListener("click", function(e){
+    var opt = e.target.closest(".pay-opt"); if(!opt) return;
+    setPay(opt.getAttribute("data-pay"));
+  });
+
   // populate selects
   fVilla.innerHTML = '<option value="">Select your villa…</option>' + VILLAS.map(function(v){ return '<option>'+esc(v)+'</option>'; }).join("");
   // grouped <optgroup> so guests can pick the exact model in the form
@@ -703,6 +740,7 @@
     document.getElementById("sheetTitle").textContent = c ? c.name : "Transport";
     document.getElementById("sheetIcon").className = "ph-light ph-" + (c ? c.phicon : "moped");
     fVehicle.value = c ? c.id : "";
+    setPay("card");
     document.getElementById("formErr").classList.remove("show");
     resetSendBtn();
     sheetBack.classList.add("open");
@@ -744,8 +782,11 @@
       "• Villa: " + d.villa,
       "• Phone: " + d.phone
     ];
+    lines.push("• Payment: " + (d.pay==="cash"
+      ? "Cash on delivery"
+      : "Card — booking fee now (secure Stripe link), balance on delivery"));
     if(d.notes) lines.push("• Notes: " + d.notes);
-    lines.push("", "Sent from the AVA Concierge app · pay on delivery");
+    lines.push("", "Sent from the AVA Concierge app");
     return lines.join("\n");
   }
 
@@ -759,6 +800,7 @@
       name: form.name.value.trim(),
       villa: fVilla.value.trim(),
       phone: form.phone.value.trim(),
+      pay: payChoice,
       notes: form.notes.value.trim()
     };
     if(!d.vehicle || !d.from || !d.name || !d.villa || !d.phone){
