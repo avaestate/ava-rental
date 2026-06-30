@@ -617,7 +617,7 @@
 
   var SERVICES = [
     { id:"bikes",   icon:"🛵", phicon:"motorcycle", featured:true, title:"Bikes & Cars",        desc:"Scooters & cars to your door",
-      photo:"1568772585407-9361f9bf3a87",
+      photo:"1568772585407-9361f9bf3a87", photoLocal:"img/bikes_hero.jpg",
       blurb:"A serviced, insured rental fleet — from nimble city scooters to seven-seat SUVs — delivered straight to your villa.",
       includes:["Delivery & pickup at your villa","Helmets, insurance & full service","Daily, weekly & monthly rates"],
       link:{label:"Browse our rental catalog", sub:"Full fleet, live pricing", href:"../transport/catalog.html", icon:"📖", phicon:"book-open"} },
@@ -645,10 +645,6 @@
       priceNote:"Ask the concierge — booking via AVA", photoLocal:"img/tickets.jpg",
       blurb:"Ferry, national-park and event tickets — just tell your AVA concierge what you need and we'll sort it. Booking options confirmed on request.",
       includes:["Ferry & transfer tickets","National-park entry tickets","Event & activity tickets — ask the concierge"] },
-    { id:"tours",   icon:"🌴", phicon:"map-trifold", title:"Tours & Excursions",   desc:"Island adventures",
-      photo:"1469854523086-cc02fe5d8800",
-      blurb:"Hand-picked island experiences — snorkelling, waterfalls, viewpoints and sunset boat trips, with a private guide.",
-      includes:["Private or small-group tours","Snorkel, waterfall & sunset trips","Transport & guide included"] },
     { id:"tea",     icon:"🍵", phicon:"coffee", title:"Tea Ceremony",         desc:"A calm, guided ritual",
       photo:"1558160074-4d7d8bdf4256",
       blurb:"A serene, guided tea ceremony at your villa — premium leaves, an experienced host, and a moment of stillness.",
@@ -657,10 +653,6 @@
       photo:"1607453998774-d533f65dac99",
       blurb:"Vetted, English-speaking nannies so you can enjoy an evening out — caring, reliable, and background-checked.",
       includes:["Experienced, vetted carers","Hourly or full-day cover","Games, meals & bedtime help"] },
-    { id:"ferry",   icon:"⛴️", phicon:"boat", title:"Ferry & Boat Tickets", desc:"Island hops, sorted",
-      photo:"1593351415075-3bac9f45c877",
-      blurb:"Ferry and speedboat tickets to Samui, Tao and the mainland — booked, confirmed and timed to your transfer.",
-      includes:["All routes & operators","E-tickets to your phone","Pier transfer coordinated"] },
     { id:"excursions", icon:"⛵", phicon:"sailboat", title:"Boat Excursions",     desc:"Islands & Ang Thong",
       priceNote:"Price on request — book via concierge", photoLocal:"img/excursions.jpg",
       blurb:"Day trips by boat to nearby islands and the Ang Thong National Marine Park — snorkelling, lagoons and viewpoints, arranged end to end.",
@@ -827,7 +819,8 @@
     // ---- featured "MOST REQUESTED" hero tile (full width, gold line icon on top, label below) ----
     var ht = TILE[featured.id] || {};
     els.heroSlot.innerHTML = ''+
-      '<button class="tile hero" type="button" data-svc="'+featured.id+'">'+
+      '<button class="tile hero'+((featured.photoLocal||featured.photo)?' has-photo':'')+'" type="button" data-svc="'+featured.id+'">'+
+        ((featured.photoLocal||featured.photo)?'<img class="tphoto" src="'+esc(featured.photoLocal||heroImg(featured.photo))+'" alt="'+esc(featured.title)+'" loading="lazy"/><span class="tscrim"></span>':'')+
         ico(featured)+
         '<span class="lab">'+
           '<span class="kicker">'+esc(ht.kicker||"Most requested")+'</span>'+
@@ -840,11 +833,12 @@
     // ---- 2-column graphite tiles (gold line icon top, white label + muted subtitle below) ----
     els.svcCount.textContent = SERVICES.length + " services";
     els.svcGrid.innerHTML = rest.map(function(s){
-      var photo = s.photoLocal
-        ? '<img class="tphoto" src="'+esc(s.photoLocal)+'" alt="'+esc(s.title)+'" loading="lazy" onerror="this.closest(\'.tile\').classList.remove(\'has-photo\');this.remove()"/><span class="tscrim"></span>'
+      var psrc = s.photoLocal ? esc(s.photoLocal) : (s.photo ? esc(gridImg(s.photo)) : '');
+      var photo = psrc
+        ? '<img class="tphoto" src="'+psrc+'" alt="'+esc(s.title)+'" loading="lazy" onerror="this.closest(\'.tile\').classList.remove(\'has-photo\');this.remove()"/><span class="tscrim"></span>'
         : '';
       return ''+
-        '<button class="tile'+(s.photoLocal?' has-photo':'')+'" type="button" data-svc="'+s.id+'">'+
+        '<button class="tile'+(psrc?' has-photo':'')+'" type="button" data-svc="'+s.id+'">'+
           photo+
           ico(s)+
           '<span class="lab"><h3>'+esc(s.title)+'</h3>'+
