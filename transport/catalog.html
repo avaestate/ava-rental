@@ -537,6 +537,34 @@
   /* Flat list — one entry per individual model. kind:'bike'|'car' drives the filter tabs. */
   var MODELS = [
     /* ===== BIKES ===== */
+    { id:"forza", kind:"bike", phicon:"motorcycle",
+      name:"Honda Forza", type:"350cc · automatic",
+      grad:"linear-gradient(150deg,#7fa6a8,#456b72)", ribbon:"Top of the range",
+      hero:"./img/forza.jpg", price:"฿600–990", priceSub:"/ day",
+      note:"฿6,000 / week · ฿18,000 / month — longer rental = cheaper per day",
+      specs:[["lightning","Automatic"],["seat","Maxi comfort"],["engine","350cc"]] },
+
+    { id:"xmax", kind:"bike", phicon:"motorcycle",
+      name:"Yamaha XMAX", type:"300cc · automatic",
+      grad:"linear-gradient(150deg,#7fa6a8,#456b72)",
+      hero:"./img/xmax.jpg", price:"฿600–990", priceSub:"/ day",
+      note:"฿6,000 / week · ฿18,000 / month — longer rental = cheaper per day",
+      specs:[["lightning","Automatic"],["seat","Maxi comfort"],["engine","300cc"]] },
+
+    { id:"nmax", kind:"bike", phicon:"moped-front",
+      name:"Yamaha NMAX 155", type:"160cc · automatic",
+      grad:"linear-gradient(150deg,#b27a52,#8a5530)",
+      hero:"./img/nmax.jpg", price:"฿240–390", priceSub:"/ day",
+      note:"฿2,400 / week · ฿7,200 / month — longer rental = cheaper per day",
+      specs:[["lightning","Automatic"],["users-three","Comfy for 2"],["engine","160cc"]] },
+
+    { id:"pcx", kind:"bike", phicon:"moped-front",
+      name:"Honda PCX", type:"160cc · automatic",
+      grad:"linear-gradient(150deg,#b27a52,#8a5530)",
+      hero:"./img/pcx.jpg", price:"฿240–390", priceSub:"/ day",
+      note:"฿2,400 / week · ฿7,200 / month — longer rental = cheaper per day",
+      specs:[["lightning","Automatic"],["users-three","Comfy for 2"],["engine","160cc"]] },
+
     { id:"scoopy", kind:"bike", phicon:"moped",
       name:"Honda Scoopy", type:"125cc · automatic",
       grad:"linear-gradient(150deg,#c98a5e,#9a5836)", ribbon:"Most popular",
@@ -557,34 +585,6 @@
       hero:"./img/click.jpg", price:"฿200–330", priceSub:"/ day",
       note:"฿2,080 / week · ฿6,050 / month — longer rental = cheaper per day",
       specs:[["lightning","Automatic"],["leaf","Light & nimble"],["engine","125cc"]] },
-
-    { id:"nmax", kind:"bike", phicon:"moped-front",
-      name:"Yamaha NMAX 155", type:"160cc · automatic",
-      grad:"linear-gradient(150deg,#b27a52,#8a5530)",
-      hero:"./img/nmax.jpg", price:"฿240–390", priceSub:"/ day",
-      note:"฿2,400 / week · ฿7,200 / month — longer rental = cheaper per day",
-      specs:[["lightning","Automatic"],["users-three","Comfy for 2"],["engine","160cc"]] },
-
-    { id:"pcx", kind:"bike", phicon:"moped-front",
-      name:"Honda PCX", type:"160cc · automatic",
-      grad:"linear-gradient(150deg,#b27a52,#8a5530)",
-      hero:"./img/pcx.jpg", price:"฿240–390", priceSub:"/ day",
-      note:"฿2,400 / week · ฿7,200 / month — longer rental = cheaper per day",
-      specs:[["lightning","Automatic"],["users-three","Comfy for 2"],["engine","160cc"]] },
-
-    { id:"forza", kind:"bike", phicon:"motorcycle",
-      name:"Honda Forza", type:"350cc · automatic",
-      grad:"linear-gradient(150deg,#7fa6a8,#456b72)",
-      hero:"./img/forza.jpg", price:"฿600–990", priceSub:"/ day",
-      note:"฿6,000 / week · ฿18,000 / month — longer rental = cheaper per day",
-      specs:[["lightning","Automatic"],["seat","Maxi comfort"],["engine","350cc"]] },
-
-    { id:"xmax", kind:"bike", phicon:"motorcycle",
-      name:"Yamaha XMAX", type:"300cc · automatic",
-      grad:"linear-gradient(150deg,#7fa6a8,#456b72)",
-      hero:"./img/xmax.jpg", price:"฿600–990", priceSub:"/ day",
-      note:"฿6,000 / week · ฿18,000 / month — longer rental = cheaper per day",
-      specs:[["lightning","Automatic"],["seat","Maxi comfort"],["engine","300cc"]] },
 
     /* ===== CARS  (automatic, insurance included; from–to depends on model + duration) ===== */
     { id:"mazda2", kind:"car", phicon:"car",
