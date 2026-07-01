@@ -478,8 +478,16 @@
         <input type="text" name="name" autocomplete="name" placeholder="Full name" />
       </div>
       <div class="field">
-        <label for="fVilla">Villa <span class="req-star">*</span></label>
-        <select name="villa" id="fVilla" aria-label="Your villa"></select>
+        <label for="fVilla">Deliver to <span class="req-star">*</span></label>
+        <select name="villa" id="fVilla" aria-label="Where to deliver"></select>
+      </div>
+      <div class="field" id="locField" style="display:none">
+        <label for="fLoc">Delivery location <span class="req-star">*</span></label>
+        <div style="display:flex; gap:8px; align-items:stretch">
+          <input type="text" id="fLoc" name="loc" placeholder="Paste a Google Maps link / address" style="flex:1 1 0; min-width:0" />
+          <button type="button" id="btnGeo" title="Share my current location" style="flex:0 0 auto; width:48px; border:1px solid var(--line-strong); background:rgba(200,169,106,.12); color:var(--gold); border-radius:10px; cursor:pointer; font-size:19px">📍</button>
+        </div>
+        <div id="geoHint" style="font-size:11px; color:var(--muted); margin-top:6px">Tap 📍 to share your current location, or paste a Google Maps link.</div>
       </div>
       <div class="field">
         <label>Phone / WhatsApp <span class="req-star">*</span></label>
@@ -722,7 +730,26 @@
   });
 
   // populate selects
-  fVilla.innerHTML = '<option value="">Select your villa…</option>' + VILLAS.map(function(v){ return '<option>'+esc(v)+'</option>'; }).join("");
+  fVilla.innerHTML = '<option value="">Select your villa…</option>' + VILLAS.map(function(v){ return '<option>'+esc(v)+'</option>'; }).join("") + '<option value="__other__">📍 Other location — I\'ll send a pin</option>';
+
+  /* ---------- delivery location (villa not listed / other place) ---------- */
+  var fLoc = document.getElementById("fLoc");
+  var locField = document.getElementById("locField");
+  var geoHint = document.getElementById("geoHint");
+  fVilla.addEventListener("change", function(){
+    locField.style.display = (fVilla.value === "__other__") ? "" : "none";
+  });
+  document.getElementById("btnGeo").addEventListener("click", function(){
+    if(!navigator.geolocation){ geoHint.textContent = "Location not supported on this device — please paste a Google Maps link."; return; }
+    geoHint.textContent = "Getting your location…";
+    navigator.geolocation.getCurrentPosition(function(pos){
+      var lat = pos.coords.latitude.toFixed(6), lng = pos.coords.longitude.toFixed(6);
+      fLoc.value = "https://maps.google.com/?q=" + lat + "," + lng;
+      geoHint.textContent = "✓ Location captured — you can send the request now.";
+    }, function(){
+      geoHint.textContent = "Couldn't get your location — please paste a Google Maps link instead.";
+    }, {enableHighAccuracy:true, timeout:10000});
+  });
   // grouped <optgroup> so guests can pick the exact model in the form
   (function(){
     function opts(kind){ return MODELS.filter(function(m){return m.kind===kind;}).map(function(m){ return '<option value="'+esc(m.id)+'">'+esc(m.name)+' — '+esc(m.price)+esc(m.priceSub)+'</option>'; }).join(""); }
@@ -779,7 +806,7 @@
       "• Vehicle: " + (c ? c.name + " (" + c.price + c.priceSub + ")" : d.vehicle),
       "• Dates: " + when,
       "• Name: " + d.name,
-      "• Villa: " + d.villa,
+      (d.villa==="__other__" ? "• Deliver to (pin): " + d.loc : "• Villa: " + d.villa),
       "• Phone: " + d.phone
     ];
     lines.push("• Payment: " + (d.pay==="cash"
@@ -799,12 +826,15 @@
       to: fTo.value,
       name: form.name.value.trim(),
       villa: fVilla.value.trim(),
+      loc: fLoc.value.trim(),
       phone: form.phone.value.trim(),
       pay: payChoice,
       notes: form.notes.value.trim()
     };
-    if(!d.vehicle || !d.from || !d.name || !d.villa || !d.phone){
-      err.textContent = "Please choose a vehicle, dates, your name, villa and phone.";
+    if(!d.vehicle || !d.from || !d.name || !d.villa || !d.phone || (d.villa==="__other__" && !d.loc)){
+      err.textContent = (d.villa==="__other__" && !d.loc)
+        ? "Please add the delivery location — tap 📍 to share it or paste a Google Maps link."
+        : "Please choose a vehicle, dates, your name, delivery place and phone.";
       err.classList.add("show");
       sheet.scrollTo({top:0, behavior:"smooth"});
       return;
