@@ -29,33 +29,33 @@
 <style>
   :root{
     /* ===== ava.estate — warm cream + charcoal + muted teal ===== */
-    --gold:#624e40;            /* "accent" token kept; now = muted teal (site) */
-    --gold-soft:#7a6353;
-    --cream:#2c3638;           /* primary readable text = charcoal (dark on light) */
+    --gold:#c9b39a;            /* "accent" token kept; now = muted teal (site) */
+    --gold-soft:#dcc9b3;
+    --cream:#f0e7df;           /* primary readable text = charcoal (dark on light) */
 
     /* mapped brand tokens (names kept so every component inherits the site theme) */
-    --ink:#2c3638;             /* dark text on light surfaces */
-    --ink-soft:#3f4a4c;
-    --slate:#5c6d70;
-    --muted:#8a9698;
-    --accent:#624e40;          /* muted teal accent everywhere */
+    --ink:#f0e7df;             /* dark text on light surfaces */
+    --ink-soft:#f5efe6;
+    --slate:#b8c0c0;
+    --muted:#939e9e;
+    --accent:#c9b39a;          /* muted teal accent everywhere */
     --brown:#624e40;           /* warm brown secondary accent */
 
     /* light warm surfaces (ava.estate) */
-    --bg:#e9f0fb;              /* app background = warm cream */
-    --d1:#e3ecf9;
-    --d2:#dbe6f6;
-    --cream-1:#ffffff;        /* input / subtle panel surface = white */
-    --cream-2:#eff4fc;
-    --cream-3:#eff4fc;        /* recap / linkout surface */
-    --white:#ffffff;          /* "card" surface = white */
+    --bg:#2b3639;              /* app background = warm cream */
+    --d1:#33403f;
+    --d2:#26302f;
+    --cream-1:#33403f;        /* input / subtle panel surface = white */
+    --cream-2:#2f3b3b;
+    --cream-3:#2f3b3b;        /* recap / linkout surface */
+    --white:#33403f;          /* "card" surface = white */
 
-    --line:rgba(44,54,56,.12);
-    --line-strong:rgba(44,54,56,.20);
-    --shadow-sm:0 1px 2px rgba(44,54,56,.06), 0 2px 8px rgba(44,54,56,.05);
-    --shadow-md:0 12px 30px -16px rgba(44,54,56,.14), 0 4px 12px rgba(44,54,56,.08);
-    --shadow-lg:0 30px 60px -26px rgba(44,54,56,.18), 0 8px 18px rgba(44,54,56,.10);
-    --tile-shadow:0 16px 34px -18px rgba(44,54,56,.14), 0 3px 10px rgba(44,54,56,.07);
+    --line:rgba(240,231,223,.12);
+    --line-strong:rgba(240,231,223,.22);
+    --shadow-sm:0 1px 2px rgba(0,0,0,.30), 0 2px 8px rgba(0,0,0,.26);
+    --shadow-md:0 12px 30px -16px rgba(0,0,0,.5), 0 4px 12px rgba(0,0,0,.3);
+    --shadow-lg:0 30px 60px -26px rgba(0,0,0,.6), 0 8px 18px rgba(0,0,0,.35);
+    --tile-shadow:0 16px 34px -18px rgba(0,0,0,.5), 0 3px 10px rgba(0,0,0,.3);
     --radius:18px;
     --radius-sm:12px;
     --ease:cubic-bezier(.2,.8,.2,1);
@@ -71,8 +71,8 @@
     color:var(--cream);
     /* desktop: dark graphite stage behind the phone */
     background:
-      radial-gradient(120% 80% at 50% -10%, #f4efe7, transparent 60%),
-      linear-gradient(180deg,#eef4fd,#e3ecf9);
+      radial-gradient(120% 80% at 50% -10%, #3a4749, transparent 60%),
+      linear-gradient(180deg,#2b3639,#222b2c);
     -webkit-font-smoothing:antialiased;
     text-rendering:optimizeLegibility;
     line-height:1.5;
@@ -89,7 +89,7 @@
     position:relative;
     width:100%; max-width:var(--phone);
     height:min(900px, calc(100dvh - 48px));
-    background:linear-gradient(180deg,#ffffff,#f4efe7);
+    background:linear-gradient(180deg,#313d3c,#2b3639);
     border-radius:42px;
     box-shadow:0 50px 90px -30px rgba(0,0,0,.7), 0 0 0 1px rgba(98,78,64,.10);
     overflow:hidden;
@@ -108,7 +108,7 @@
     position:relative; z-index:30; flex:0 0 auto;
     backdrop-filter:saturate(120%) blur(14px);
     -webkit-backdrop-filter:saturate(120%) blur(14px);
-    background:rgba(233,240,251,.85);
+    background:rgba(43,54,57,.85);
     border-bottom:1px solid var(--line);
     padding:calc(env(safe-area-inset-top) + 14px) 18px 14px;
     display:flex; align-items:center; gap:12px; min-height:60px;
@@ -153,7 +153,7 @@
   .greeting .hi{display:inline-flex; align-items:center; gap:9px; font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:var(--gold); font-weight:600; margin-bottom:16px}
   .greeting .hi .dot{width:6px;height:6px;border-radius:50%; background:var(--gold); box-shadow:0 0 0 4px rgba(98,78,64,.16); animation:pulse 2.6s var(--ease) infinite}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
-  .greeting h1{font-size:31px; line-height:1.12; font-weight:300; letter-spacing:-.02em; color:#2c3638}
+  .greeting h1{font-size:31px; line-height:1.12; font-weight:300; letter-spacing:-.02em; color:#f0e7df}
   .greeting h1 em{font-style:normal; font-weight:400; color:var(--gold-soft)}
   .greeting p{margin:11px 0 0; color:var(--muted); font-size:14.5px; line-height:1.55; max-width:34ch}
 
@@ -183,7 +183,7 @@
     width:100%; aspect-ratio:auto;
     min-height:0; height:auto;            /* slightly shorter — content-sized, tight padding */
     padding:20px 24px 20px;
-    background:linear-gradient(150deg,#f4f8ff,#ffffff);
+    background:linear-gradient(150deg,#33403f,#2b3639);
   }
 
   /* thin-line gold icon */
@@ -194,15 +194,15 @@
   /* photo tiles (ava.estate: photo inset + label below) */
   .tile.photo{ padding:12px 12px 16px; }
   .tile.photo .ph{ display:block; width:100%; aspect-ratio:16/10; border-radius:12px;
-    background-size:cover; background-position:center; background-color:#dbe6f6;
-    box-shadow:inset 0 0 0 1px rgba(44,54,56,.06); }
+    background-size:cover; background-position:center; background-color:#26302f;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.30); }
   .tile.photo .lab{ padding:0 4px; }
   .tile.photo .lab h3{ margin:12px 0 0; }
   .tile.hero.photo{ padding:14px 14px 18px; }
   .tile.hero.photo .ph{ aspect-ratio:16/7; margin-bottom:6px; }
 
   .tile .lab{position:relative; z-index:2}
-  .tile .lab h3{font-size:16px; font-weight:500; color:#2c3638; line-height:1.15; letter-spacing:-.005em; margin:16px 0 0}
+  .tile .lab h3{font-size:16px; font-weight:500; color:#f0e7df; line-height:1.15; letter-spacing:-.005em; margin:16px 0 0}
   .tile .lab .sub{display:block; font-size:11.5px; color:var(--muted); margin-top:4px}
   .tile.hero .lab{margin-top:10px}
   .tile.hero .lab .kicker{display:block; font-size:9.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:6px}
@@ -218,7 +218,7 @@
 
   /* ============ SERVICE DETAIL (V2 luxe dark + large gold line icon) ============ */
   .detail-hero{
-    position:relative; background:linear-gradient(150deg,#f4f8ff,#ffffff); color:var(--cream);
+    position:relative; background:linear-gradient(150deg,#33403f,#2b3639); color:var(--cream);
     border:1px solid var(--line); border-radius:var(--radius);
     padding:28px 24px 26px; overflow:hidden; box-shadow:var(--shadow-md); margin-bottom:18px;
   }
@@ -228,7 +228,7 @@
   .detail-hero .ic3d{position:relative; z-index:2; line-height:1; margin-bottom:14px; font-size:62px; color:var(--gold-soft)}
   .detail-hero .ic3d i{font-size:1em; line-height:1; color:var(--gold-soft)}
   .detail-hero .k{position:relative; z-index:2; font-size:10.5px; letter-spacing:.24em; text-transform:uppercase; color:var(--gold); font-weight:600}
-  .detail-hero h2{position:relative; z-index:2; font-weight:400; font-size:26px; margin:7px 0 0; color:#2c3638; letter-spacing:-.01em}
+  .detail-hero h2{position:relative; z-index:2; font-weight:400; font-size:26px; margin:7px 0 0; color:#f0e7df; letter-spacing:-.01em}
   .detail-hero p{position:relative; z-index:2; margin:11px 0 0; font-size:14px; color:#c2cccd; line-height:1.55; max-width:38ch}
 
   .panel{background:linear-gradient(160deg,#f4efe7,#ffffff); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-sm); padding:20px 20px; margin-bottom:16px}
@@ -259,7 +259,7 @@
   }
   .btn-primary:hover{filter:brightness(1.05); transform:translateY(-2px)}
   .btn-primary:active{transform:translateY(0) scale(.99)}
-  .btn-primary.sent{background:linear-gradient(150deg,#8fa0a3,#75878b); color:#2c3638}
+  .btn-primary.sent{background:linear-gradient(150deg,#8fa0a3,#75878b); color:#f0e7df}
   .btn-primary svg{width:17px;height:17px}
   .btn-ghost{
     width:100%; border:1px solid var(--line-strong); cursor:pointer; font-weight:600; font-size:14px; color:var(--cream);
@@ -310,11 +310,11 @@
   .confirm{text-align:center; padding:30px 14px 10px; animation:viewIn .5s var(--ease)}
   .confirm .badge{
     width:88px;height:88px;border-radius:50%; margin:0 auto 22px; display:grid; place-items:center;
-    background:linear-gradient(150deg,#f4f8ff,#ffffff); border:1px solid var(--line-strong); box-shadow:var(--shadow-md); color:var(--gold);
+    background:linear-gradient(150deg,#33403f,#2b3639); border:1px solid var(--line-strong); box-shadow:var(--shadow-md); color:var(--gold);
     animation:pop .55s var(--ease);
   }
   @keyframes pop{0%{transform:scale(.5); opacity:0} 60%{transform:scale(1.08)} 100%{transform:scale(1); opacity:1}}
-  .confirm h2{font-size:24px; font-weight:400; letter-spacing:-.01em; color:#2c3638}
+  .confirm h2{font-size:24px; font-weight:400; letter-spacing:-.01em; color:#f0e7df}
   .confirm p{color:var(--muted); font-size:14px; line-height:1.6; max-width:32ch; margin:12px auto 24px}
   .confirm .recap{
     text-align:left; background:var(--cream-3); border:1px solid var(--line); border-radius:14px; padding:16px 18px; margin:0 0 24px;
@@ -358,7 +358,7 @@
   @keyframes blink{0%,60%,100%{opacity:.3; transform:translateY(0)} 30%{opacity:1; transform:translateY(-3px)}}
   .chat-input{
     flex:0 0 auto; display:flex; gap:9px; align-items:flex-end; padding:12px 14px calc(env(safe-area-inset-bottom) + 12px);
-    background:rgba(255,255,255,.94); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border-top:1px solid var(--line);
+    background:rgba(38,48,49,.94); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border-top:1px solid var(--line);
   }
   .chat-input textarea{
     flex:1; font-family:inherit; font-size:14.5px; color:var(--cream); background:var(--cream-1);
@@ -377,7 +377,7 @@
 
   /* ============ MY REQUESTS ============ */
   .rq-head{margin:4px 2px 18px}
-  .rq-head h2{font-size:26px; font-weight:300; letter-spacing:-.02em; color:#2c3638}
+  .rq-head h2{font-size:26px; font-weight:300; letter-spacing:-.02em; color:#f0e7df}
   .rq-head p{margin:9px 0 0; color:var(--muted); font-size:14px; line-height:1.5}
   .rq-list{display:flex; flex-direction:column; gap:12px}
   .rq-card{
@@ -397,7 +397,7 @@
   .empty .eic{width:74px;height:74px;border-radius:20px; margin:0 auto 20px; background:linear-gradient(150deg,#f4efe7,#ffffff); border:1px solid var(--line); box-shadow:var(--shadow-sm); display:grid; place-items:center; font-size:32px}
   .empty .eic i{font-size:1em; color:var(--gold); line-height:1}
   .confirm .recap .v i{font-size:17px; color:var(--gold); line-height:1}
-  .empty h3{font-size:19px; font-weight:400; color:#2c3638}
+  .empty h3{font-size:19px; font-weight:400; color:#f0e7df}
   .empty p{color:var(--muted); font-size:13.5px; line-height:1.55; max-width:28ch; margin:10px auto 22px}
   .empty .btn-primary{max-width:240px; margin:0 auto}
 
@@ -405,7 +405,7 @@
   .tabbar{
     position:absolute; left:0; right:0; bottom:0; z-index:40;
     display:grid; grid-template-columns:repeat(3,1fr);
-    background:rgba(233,240,251,.92); backdrop-filter:saturate(120%) blur(16px); -webkit-backdrop-filter:saturate(120%) blur(16px);
+    background:rgba(43,54,57,.92); backdrop-filter:saturate(120%) blur(16px); -webkit-backdrop-filter:saturate(120%) blur(16px);
     border-top:1px solid var(--line);
     padding:8px 8px calc(env(safe-area-inset-bottom) + 8px);
   }
@@ -441,7 +441,7 @@
   /* phone-size screens: fill the viewport, drop the frame chrome */
   @media (max-width:480px){
     .stage{padding:0; align-items:stretch}
-    .app{max-width:none; height:100dvh; border-radius:0; box-shadow:none; background:linear-gradient(180deg,#ffffff,#ece3d6)}
+    .app{max-width:none; height:100dvh; border-radius:0; box-shadow:none; background:linear-gradient(180deg,#2b3639,#222b2c)}
   }
 </style>
 </head>
