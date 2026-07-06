@@ -8,7 +8,7 @@
 
 <!-- ===== PWA ===== -->
 <link rel="manifest" href="manifest.json" />
-<meta name="theme-color" content="#161b1c" />
+<meta name="theme-color" content="#f4efe7" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -28,33 +28,34 @@
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css" />
 <style>
   :root{
-    /* ===== V2 LUXE — dark graphite + soft gold (Aman / Ritz) ===== */
-    --gold:#c8a96a;
-    --gold-soft:#d9c193;
-    --cream:#efe6da;            /* primary readable text on dark */
+    /* ===== ava.estate — warm cream + charcoal + muted teal ===== */
+    --gold:#75878b;            /* "accent" token kept; now = muted teal (site) */
+    --gold-soft:#8fa0a3;
+    --cream:#2c3638;           /* primary readable text = charcoal (dark on light) */
 
-    /* mapped brand tokens (names kept so every component inherits the luxe theme) */
-    --ink:#efe6da;             /* "ink" now = light text on dark surfaces */
-    --ink-soft:#f3ece1;
-    --slate:#c2cccd;
-    --muted:#9aa3a5;
-    --accent:#c8a96a;          /* gold accent everywhere */
+    /* mapped brand tokens (names kept so every component inherits the site theme) */
+    --ink:#2c3638;             /* dark text on light surfaces */
+    --ink-soft:#3f4a4c;
+    --slate:#5c6d70;
+    --muted:#8a9698;
+    --accent:#75878b;          /* muted teal accent everywhere */
+    --brown:#624e40;           /* warm brown secondary accent */
 
-    /* dark surfaces (replacing cream stack) */
-    --bg:#161b1c;              /* app background */
-    --d1:#283133;
-    --d2:#1b2123;
-    --cream-1:#1e2526;        /* input / subtle panel surface */
-    --cream-2:#222a2c;
-    --cream-3:#1d2425;        /* recap / linkout surface */
-    --white:#202829;          /* "card" surface on dark */
+    /* light warm surfaces (ava.estate) */
+    --bg:#f4efe7;              /* app background = warm cream */
+    --d1:#efe7db;
+    --d2:#e9e0d3;
+    --cream-1:#ffffff;        /* input / subtle panel surface = white */
+    --cream-2:#f7f2ec;
+    --cream-3:#f7f2ec;        /* recap / linkout surface */
+    --white:#ffffff;          /* "card" surface = white */
 
-    --line:rgba(200,169,106,.18);
-    --line-strong:rgba(200,169,106,.34);
-    --shadow-sm:0 1px 2px rgba(0,0,0,.30), 0 2px 8px rgba(0,0,0,.28);
-    --shadow-md:0 12px 30px -16px rgba(0,0,0,.6), 0 4px 12px rgba(0,0,0,.3);
-    --shadow-lg:0 30px 60px -26px rgba(0,0,0,.7), 0 8px 18px rgba(0,0,0,.35);
-    --tile-shadow:0 16px 34px -18px rgba(0,0,0,.6), 0 3px 10px rgba(0,0,0,.3);
+    --line:rgba(44,54,56,.12);
+    --line-strong:rgba(44,54,56,.20);
+    --shadow-sm:0 1px 2px rgba(44,54,56,.06), 0 2px 8px rgba(44,54,56,.05);
+    --shadow-md:0 12px 30px -16px rgba(44,54,56,.14), 0 4px 12px rgba(44,54,56,.08);
+    --shadow-lg:0 30px 60px -26px rgba(44,54,56,.18), 0 8px 18px rgba(44,54,56,.10);
+    --tile-shadow:0 16px 34px -18px rgba(44,54,56,.14), 0 3px 10px rgba(44,54,56,.07);
     --radius:18px;
     --radius-sm:12px;
     --ease:cubic-bezier(.2,.8,.2,1);
@@ -70,8 +71,8 @@
     color:var(--cream);
     /* desktop: dark graphite stage behind the phone */
     background:
-      radial-gradient(120% 80% at 50% -10%, #2e3739, transparent 60%),
-      linear-gradient(180deg,#171d1e,#0f1314);
+      radial-gradient(120% 80% at 50% -10%, #f4efe7, transparent 60%),
+      linear-gradient(180deg,#f4efe7,#ece3d6);
     -webkit-font-smoothing:antialiased;
     text-rendering:optimizeLegibility;
     line-height:1.5;
@@ -88,9 +89,9 @@
     position:relative;
     width:100%; max-width:var(--phone);
     height:min(900px, calc(100dvh - 48px));
-    background:linear-gradient(180deg,#202829,#161b1c);
+    background:linear-gradient(180deg,#ffffff,#f4efe7);
     border-radius:42px;
-    box-shadow:0 50px 90px -30px rgba(0,0,0,.7), 0 0 0 1px rgba(200,169,106,.10);
+    box-shadow:0 50px 90px -30px rgba(0,0,0,.7), 0 0 0 1px rgba(117,135,139,.10);
     overflow:hidden;
     display:flex; flex-direction:column;
     isolation:isolate;
@@ -107,7 +108,7 @@
     position:relative; z-index:30; flex:0 0 auto;
     backdrop-filter:saturate(120%) blur(14px);
     -webkit-backdrop-filter:saturate(120%) blur(14px);
-    background:rgba(26,33,34,.7);
+    background:rgba(247,242,236,.85);
     border-bottom:1px solid var(--line);
     padding:calc(env(safe-area-inset-top) + 14px) 18px 14px;
     display:flex; align-items:center; gap:12px; min-height:60px;
@@ -115,16 +116,16 @@
   }
   .appbar.scrolled{box-shadow:0 8px 22px -16px rgba(0,0,0,.6)}
   .back-btn{
-    border:0; background:rgba(200,169,106,.08); border:1px solid var(--line); cursor:pointer;
+    border:0; background:rgba(117,135,139,.08); border:1px solid var(--line); cursor:pointer;
     width:38px;height:38px;border-radius:11px; display:none; place-items:center; color:var(--gold);
     flex:0 0 auto; transition:.3s var(--ease);
   }
-  .back-btn:hover{background:rgba(200,169,106,.16); border-color:var(--line-strong)}
+  .back-btn:hover{background:rgba(117,135,139,.16); border-color:var(--line-strong)}
   .back-btn.show{display:grid}
   .brand{display:flex; align-items:center; gap:11px; flex:1; min-width:0}
   .mark{
     width:40px;height:40px;border-radius:12px; flex:0 0 auto;
-    background:linear-gradient(150deg,#2e3739,#1d2425); border:1px solid var(--line);
+    background:linear-gradient(150deg,#f4efe7,#f7f2ec); border:1px solid var(--line);
     display:grid;place-items:center; box-shadow:var(--shadow-sm);
   }
   .mark svg{width:22px;height:22px}
@@ -150,9 +151,9 @@
   /* ============ HOME ============ */
   .greeting{margin:8px 2px 24px}
   .greeting .hi{display:inline-flex; align-items:center; gap:9px; font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:var(--gold); font-weight:600; margin-bottom:16px}
-  .greeting .hi .dot{width:6px;height:6px;border-radius:50%; background:var(--gold); box-shadow:0 0 0 4px rgba(200,169,106,.16); animation:pulse 2.6s var(--ease) infinite}
+  .greeting .hi .dot{width:6px;height:6px;border-radius:50%; background:var(--gold); box-shadow:0 0 0 4px rgba(117,135,139,.16); animation:pulse 2.6s var(--ease) infinite}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
-  .greeting h1{font-size:31px; line-height:1.12; font-weight:300; letter-spacing:-.02em; color:#f3ece1}
+  .greeting h1{font-size:31px; line-height:1.12; font-weight:300; letter-spacing:-.02em; color:#2c3638}
   .greeting h1 em{font-style:normal; font-weight:400; color:var(--gold-soft)}
   .greeting p{margin:11px 0 0; color:var(--muted); font-size:14.5px; line-height:1.55; max-width:34ch}
 
@@ -168,39 +169,22 @@
     position:relative; cursor:pointer; text-align:left; overflow:hidden;
     border-radius:20px; padding:22px 18px 18px; -webkit-tap-highlight-color:transparent;
     display:flex; flex-direction:column; justify-content:space-between;
-    aspect-ratio:165/128; background:linear-gradient(160deg,#283133,#1b2123);
+    aspect-ratio:165/128; background:linear-gradient(160deg,#f7f2ec,#f7f2ec);
     border:1px solid var(--line);
     transition:transform .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease);
   }
   .tile::before{content:""; position:absolute; inset:0; border-radius:20px; pointer-events:none;
-    background:radial-gradient(110% 80% at 80% 0%, rgba(200,169,106,.10), transparent 55%)}
-  .tile:hover{transform:translateY(-3px); border-color:rgba(200,169,106,.4); box-shadow:0 18px 36px -20px rgba(0,0,0,.7)}
+    background:radial-gradient(110% 80% at 80% 0%, rgba(117,135,139,.10), transparent 55%)}
+  .tile:hover{transform:translateY(-3px); border-color:rgba(117,135,139,.4); box-shadow:0 18px 36px -20px rgba(0,0,0,.7)}
   .tile:active{transform:scale(.985)}
-
-  /* ----- PHOTO tiles: real cover image + dark blend so label/icon stay readable ----- */
-  .tile.has-photo{background:#1b2123}
-  .tile.has-photo .tphoto{position:absolute; inset:0; z-index:0; width:100%; height:100%; object-fit:cover; transition:transform .5s var(--ease)}
-  .tile.has-photo:hover .tphoto{transform:scale(1.05)}
-  .tile.has-photo .tscrim{position:absolute; inset:0; z-index:1; pointer-events:none;
-    background:linear-gradient(180deg, rgba(12,15,16,.20) 0%, rgba(12,15,16,.08) 42%, rgba(12,15,16,.50) 82%, rgba(12,15,16,.70) 100%)}
-  .tile.has-photo::before{display:none}
-  .tile.has-photo .ico{font-size:24px; color:#fff; filter:drop-shadow(0 2px 6px rgba(0,0,0,.55)); margin-bottom:auto}
-  .tile.has-photo .ico i{color:#fff}
-  .tile.has-photo .lab h3{color:#fff; text-shadow:0 1px 6px rgba(0,0,0,.6)}
-  .tile.has-photo .lab .sub{color:rgba(239,230,218,.92); text-shadow:0 1px 5px rgba(0,0,0,.55)}
 
   /* ----- HERO (full width, slightly shorter, NO overlap) ----- */
   .tile.hero{
     width:100%; aspect-ratio:auto;
     min-height:0; height:auto;            /* slightly shorter — content-sized, tight padding */
     padding:20px 24px 20px;
-    background:linear-gradient(150deg,#2f3a3c,#1a2122);
+    background:linear-gradient(150deg,#f7f2ec,#ffffff);
   }
-  /* stronger scrim on hero so the text stays readable over the photo */
-  .tile.hero.has-photo .tscrim{background:
-    linear-gradient(180deg, rgba(12,15,16,.28) 0%, rgba(12,15,16,.16) 40%, rgba(12,15,16,.60) 86%, rgba(12,15,16,.74) 100%),
-    linear-gradient(90deg, rgba(12,15,16,.44) 0%, rgba(12,15,16,.14) 52%, rgba(12,15,16,0) 100%)}
-  .tile.hero.has-photo .lab .sub{color:#eef3f4}
 
   /* thin-line gold icon */
   .tile .ico{position:relative; z-index:2; font-size:32px; color:var(--gold); line-height:1; margin-bottom:auto}
@@ -208,7 +192,7 @@
   .tile.hero .ico{font-size:44px; color:var(--gold-soft); margin-bottom:0}
 
   .tile .lab{position:relative; z-index:2}
-  .tile .lab h3{font-size:16px; font-weight:500; color:#f3ece1; line-height:1.15; letter-spacing:-.005em; margin:16px 0 0}
+  .tile .lab h3{font-size:16px; font-weight:500; color:#2c3638; line-height:1.15; letter-spacing:-.005em; margin:16px 0 0}
   .tile .lab .sub{display:block; font-size:11.5px; color:var(--muted); margin-top:4px}
   .tile.hero .lab{margin-top:10px}
   .tile.hero .lab .kicker{display:block; font-size:9.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:6px}
@@ -216,7 +200,7 @@
   .tile.hero .lab .sub{font-size:12.5px; margin-top:6px; max-width:36ch; color:#c2cccd}
   .tile.hero .lab .cta{display:inline-flex; align-items:center; gap:7px; margin-top:12px;
     color:var(--gold); font-weight:600; font-size:12.5px; letter-spacing:.02em;
-    padding:8px 15px; border-radius:999px; border:1px solid var(--line-strong); background:rgba(200,169,106,.06)}
+    padding:8px 15px; border-radius:999px; border:1px solid var(--line-strong); background:rgba(117,135,139,.06)}
   .tile.hero .lab .cta i{font-size:15px; line-height:1; color:var(--gold)}
 
   .home-foot{margin:28px 4px 6px; text-align:center; color:var(--muted); font-size:11.5px; line-height:1.5}
@@ -224,35 +208,20 @@
 
   /* ============ SERVICE DETAIL (V2 luxe dark + large gold line icon) ============ */
   .detail-hero{
-    position:relative; background:linear-gradient(150deg,#2f3a3c,#1a2122); color:var(--cream);
+    position:relative; background:linear-gradient(150deg,#f7f2ec,#ffffff); color:var(--cream);
     border:1px solid var(--line); border-radius:var(--radius);
     padding:28px 24px 26px; overflow:hidden; box-shadow:var(--shadow-md); margin-bottom:18px;
   }
   .detail-hero::before{content:""; position:absolute; inset:0; border-radius:var(--radius); pointer-events:none;
-    background:radial-gradient(110% 90% at 82% 0%, rgba(200,169,106,.14), transparent 58%)}
+    background:radial-gradient(110% 90% at 82% 0%, rgba(117,135,139,.14), transparent 58%)}
   /* large gold thin-line icon at top of detail view */
   .detail-hero .ic3d{position:relative; z-index:2; line-height:1; margin-bottom:14px; font-size:62px; color:var(--gold-soft)}
   .detail-hero .ic3d i{font-size:1em; line-height:1; color:var(--gold-soft)}
   .detail-hero .k{position:relative; z-index:2; font-size:10.5px; letter-spacing:.24em; text-transform:uppercase; color:var(--gold); font-weight:600}
-  .detail-hero h2{position:relative; z-index:2; font-weight:400; font-size:26px; margin:7px 0 0; color:#f3ece1; letter-spacing:-.01em}
+  .detail-hero h2{position:relative; z-index:2; font-weight:400; font-size:26px; margin:7px 0 0; color:#2c3638; letter-spacing:-.01em}
   .detail-hero p{position:relative; z-index:2; margin:11px 0 0; font-size:14px; color:#c2cccd; line-height:1.55; max-width:38ch}
-  /* "Price on request" badge for placeholder services (no invented prices) */
-  .detail-hero .por{position:relative; z-index:2; display:inline-flex; align-items:center; gap:8px; margin-top:15px;
-    font-size:12.5px; font-weight:600; letter-spacing:.01em; color:var(--gold-soft);
-    background:rgba(200,169,106,.1); border:1px solid var(--line-strong); border-radius:999px; padding:8px 14px}
-  .detail-hero .por i{font-size:16px; color:var(--gold); line-height:1}
-  /* detail header with a real photo behind a dark blend */
-  .detail-hero.has-photo{background:#1a2122; min-height:210px; display:flex; flex-direction:column; justify-content:flex-end}
-  .detail-hero.has-photo .dphoto{position:absolute; inset:0; z-index:0; width:100%; height:100%; object-fit:cover}
-  .detail-hero.has-photo .dscrim{position:absolute; inset:0; z-index:1; pointer-events:none;
-    background:linear-gradient(180deg, rgba(15,19,20,.14) 0%, rgba(15,19,20,.06) 40%, rgba(15,19,20,.46) 80%, rgba(15,19,20,.66) 100%)}
-  .detail-hero.has-photo::before{display:none}
-  .detail-hero.has-photo .ic3d{font-size:40px; color:#fff; filter:drop-shadow(0 2px 8px rgba(0,0,0,.6)); margin-bottom:10px}
-  .detail-hero.has-photo .ic3d i{color:#fff}
-  .detail-hero.has-photo h2{color:#fff; text-shadow:0 1px 8px rgba(0,0,0,.55)}
-  .detail-hero.has-photo p{color:#eef1f1; text-shadow:0 1px 6px rgba(0,0,0,.5)}
 
-  .panel{background:linear-gradient(160deg,#222a2c,#1a2021); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-sm); padding:20px 20px; margin-bottom:16px}
+  .panel{background:linear-gradient(160deg,#f4efe7,#ffffff); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-sm); padding:20px 20px; margin-bottom:16px}
   .panel h4{font-size:11.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); font-weight:600; margin-bottom:14px}
   .incl{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px}
   .incl li{display:flex; gap:11px; align-items:flex-start; font-size:14px; color:var(--cream); line-height:1.45}
@@ -264,7 +233,7 @@
     transition:.3s var(--ease);
   }
   .linkout:hover{box-shadow:var(--shadow-sm); transform:translateY(-2px); border-color:var(--line-strong)}
-  .linkout .lic{width:40px;height:40px;border-radius:11px; background:rgba(200,169,106,.08); border:1px solid var(--line); display:grid; place-items:center; flex:0 0 auto}
+  .linkout .lic{width:40px;height:40px;border-radius:11px; background:rgba(117,135,139,.08); border:1px solid var(--line); display:grid; place-items:center; flex:0 0 auto}
   .linkout .lic i{font-size:22px; color:var(--gold); line-height:1}
   .linkout .lt{flex:1}
   .linkout .lt b{display:block; font-weight:600; font-size:14px; color:var(--cream)}
@@ -272,7 +241,7 @@
 
   /* ============ BUTTONS ============ */
   .btn-primary{
-    width:100%; border:0; cursor:pointer; font-weight:700; font-size:15px; color:#1a2122;
+    width:100%; border:0; cursor:pointer; font-weight:700; font-size:15px; color:#ffffff;
     background:linear-gradient(150deg,var(--gold-soft),var(--gold)); padding:16px; border-radius:13px; letter-spacing:.02em;
     box-shadow:var(--shadow-md); transition:.3s var(--ease);
     display:flex; align-items:center; justify-content:center; gap:9px;
@@ -280,14 +249,14 @@
   }
   .btn-primary:hover{filter:brightness(1.05); transform:translateY(-2px)}
   .btn-primary:active{transform:translateY(0) scale(.99)}
-  .btn-primary.sent{background:linear-gradient(150deg,#9fb39a,#7d9870); color:#16201a}
+  .btn-primary.sent{background:linear-gradient(150deg,#8fa0a3,#75878b); color:#2c3638}
   .btn-primary svg{width:17px;height:17px}
   .btn-ghost{
     width:100%; border:1px solid var(--line-strong); cursor:pointer; font-weight:600; font-size:14px; color:var(--cream);
-    background:rgba(200,169,106,.05); padding:14px; border-radius:13px; transition:.3s var(--ease);
+    background:rgba(117,135,139,.05); padding:14px; border-radius:13px; transition:.3s var(--ease);
     display:flex; align-items:center; justify-content:center; gap:9px; margin-top:10px;
   }
-  .btn-ghost:hover{background:rgba(200,169,106,.12); border-color:var(--gold)}
+  .btn-ghost:hover{background:rgba(117,135,139,.12); border-color:var(--gold)}
 
   /* ============ FORM ============ */
   .field{margin-bottom:15px}
@@ -300,26 +269,13 @@
   }
   .field input::placeholder, .field textarea::placeholder{color:var(--muted); opacity:.8}
   .field input:focus, .field textarea:focus, .field select:focus{
-    outline:none; border-color:var(--gold); background:#222a2c; box-shadow:0 0 0 4px rgba(200,169,106,.14);
+    outline:none; border-color:var(--gold); background:#f4efe7; box-shadow:0 0 0 4px rgba(117,135,139,.14);
   }
-  /* native date/time inputs: behave like normal full-width fields (no intrinsic squish) */
-  .field input[type=date], .field input[type=time]{
-    color-scheme:dark; display:block; width:100%; min-width:0; min-height:48px;
-    line-height:1.2; text-align:left;
-  }
-  .field input[type=date]::-webkit-date-and-time-value,
-  .field input[type=time]::-webkit-date-and-time-value{text-align:left; margin:0}
-  .field input[type=date]::-webkit-calendar-picker-indicator,
-  .field input[type=time]::-webkit-calendar-picker-indicator{
-    filter:invert(74%) sepia(18%) saturate(560%) hue-rotate(2deg) brightness(92%); cursor:pointer; opacity:.9;
-  }
+  .field input[type=date], .field input[type=time]{color-scheme:dark}
   .field textarea{min-height:78px; resize:vertical; line-height:1.5}
   .field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%23c8a96a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:38px}
-  .field select option{background:#1b2123; color:var(--cream)}
-  /* two-up rows (date + time): evenly-sized columns that don't shrink-overflow on mobile */
-  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:11px; align-items:end}
-  .field-row .field{min-width:0}
-  .field-row .field input{width:100%; min-width:0}
+  .field select option{background:#f7f2ec; color:var(--cream)}
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:11px}
 
   .pay-toggle{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:4px}
   .pay-opt{
@@ -331,9 +287,9 @@
   .pay-opt .pt b{display:block; font-size:13px; font-weight:600; color:var(--cream)}
   .pay-opt .pt span{font-size:10.5px; color:var(--muted)}
   .pay-opt.active{background:linear-gradient(150deg,var(--gold-soft),var(--gold)); border-color:transparent; box-shadow:var(--shadow-md)}
-  .pay-opt.active .pic i{color:#1a2122}
-  .pay-opt.active .pt b{color:#1a2122}
-  .pay-opt.active .pt span{color:rgba(26,33,34,.7)}
+  .pay-opt.active .pic i{color:#ffffff}
+  .pay-opt.active .pt b{color:#ffffff}
+  .pay-opt.active .pt span{color:rgba(255,255,255,.85)}
 
   .form-note{display:flex; gap:10px; font-size:12px; color:var(--muted); line-height:1.5; margin:4px 2px 18px}
   .form-note svg{flex:0 0 auto; color:var(--gold); margin-top:1px}
@@ -344,11 +300,11 @@
   .confirm{text-align:center; padding:30px 14px 10px; animation:viewIn .5s var(--ease)}
   .confirm .badge{
     width:88px;height:88px;border-radius:50%; margin:0 auto 22px; display:grid; place-items:center;
-    background:linear-gradient(150deg,#2f3a3c,#1a2122); border:1px solid var(--line-strong); box-shadow:var(--shadow-md); color:var(--gold);
+    background:linear-gradient(150deg,#f7f2ec,#ffffff); border:1px solid var(--line-strong); box-shadow:var(--shadow-md); color:var(--gold);
     animation:pop .55s var(--ease);
   }
   @keyframes pop{0%{transform:scale(.5); opacity:0} 60%{transform:scale(1.08)} 100%{transform:scale(1); opacity:1}}
-  .confirm h2{font-size:24px; font-weight:400; letter-spacing:-.01em; color:#f3ece1}
+  .confirm h2{font-size:24px; font-weight:400; letter-spacing:-.01em; color:#2c3638}
   .confirm p{color:var(--muted); font-size:14px; line-height:1.6; max-width:32ch; margin:12px auto 24px}
   .confirm .recap{
     text-align:left; background:var(--cream-3); border:1px solid var(--line); border-radius:14px; padding:16px 18px; margin:0 0 24px;
@@ -363,24 +319,24 @@
   #view-chat.active{display:flex; flex-direction:column}
   .chat-scroll{flex:1; overflow-y:auto; padding:20px 16px 14px; display:flex; flex-direction:column; gap:14px}
   .chat-scroll::-webkit-scrollbar{width:0}
-  .chat-day{align-self:center; font-size:10.5px; letter-spacing:.06em; color:var(--muted); background:rgba(200,169,106,.08); border:1px solid var(--line); padding:4px 12px; border-radius:999px; margin-bottom:2px}
+  .chat-day{align-self:center; font-size:10.5px; letter-spacing:.06em; color:var(--muted); background:rgba(117,135,139,.08); border:1px solid var(--line); padding:4px 12px; border-radius:999px; margin-bottom:2px}
   .msg{display:flex; gap:9px; max-width:86%; animation:msgIn .35s var(--ease)}
   @keyframes msgIn{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none}}
-  .msg .av{width:30px;height:30px;border-radius:50%; flex:0 0 auto; display:grid; place-items:center; background:linear-gradient(150deg,#2e3739,#1d2425); border:1px solid var(--line); box-shadow:var(--shadow-sm)}
+  .msg .av{width:30px;height:30px;border-radius:50%; flex:0 0 auto; display:grid; place-items:center; background:linear-gradient(150deg,#f4efe7,#f7f2ec); border:1px solid var(--line); box-shadow:var(--shadow-sm)}
   .msg .av svg{width:16px;height:16px}
   .msg .stack{display:flex; flex-direction:column; gap:3px}
   .msg .who{font-size:10.5px; font-weight:600; letter-spacing:.04em; color:var(--gold); margin-left:3px}
   .bubble{padding:11px 14px; border-radius:16px; font-size:14px; line-height:1.5; box-shadow:var(--shadow-sm)}
-  .msg.in .bubble{background:linear-gradient(160deg,#222a2c,#1a2021); border:1px solid var(--line); border-top-left-radius:5px; color:var(--cream)}
+  .msg.in .bubble{background:linear-gradient(160deg,#f4efe7,#ffffff); border:1px solid var(--line); border-top-left-radius:5px; color:var(--cream)}
   .msg.in .time, .msg.out .time{font-size:9.5px; color:var(--muted); margin-top:1px}
   .msg.out{align-self:flex-end; flex-direction:row-reverse}
   .msg.out .stack{align-items:flex-end}
-  .msg.out .bubble{background:linear-gradient(150deg,var(--gold-soft),var(--gold)); color:#1a2122; border-top-right-radius:5px; font-weight:500}
+  .msg.out .bubble{background:linear-gradient(150deg,var(--gold-soft),var(--gold)); color:#ffffff; border-top-right-radius:5px; font-weight:500}
   .msg.out .time{margin-right:3px}
   .msg.in .time{margin-left:3px}
   .wa-cta{
     display:flex; align-items:center; justify-content:center; gap:9px; margin:4px 16px 2px;
-    background:#1faa55; color:#fff; border:0; cursor:pointer; font-weight:600; font-size:14px;
+    background:#3f4a4c; color:#fff; border:0; cursor:pointer; font-weight:600; font-size:14px;
     padding:14px; border-radius:13px; box-shadow:0 10px 24px -14px rgba(31,170,85,.8); transition:.3s var(--ease);
   }
   .wa-cta:hover{filter:brightness(1.05); transform:translateY(-2px)}
@@ -392,7 +348,7 @@
   @keyframes blink{0%,60%,100%{opacity:.3; transform:translateY(0)} 30%{opacity:1; transform:translateY(-3px)}}
   .chat-input{
     flex:0 0 auto; display:flex; gap:9px; align-items:flex-end; padding:12px 14px calc(env(safe-area-inset-bottom) + 12px);
-    background:rgba(22,27,28,.92); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border-top:1px solid var(--line);
+    background:rgba(255,255,255,.94); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border-top:1px solid var(--line);
   }
   .chat-input textarea{
     flex:1; font-family:inherit; font-size:14.5px; color:var(--cream); background:var(--cream-1);
@@ -400,9 +356,9 @@
     resize:none; line-height:1.4; transition:.25s var(--ease);
   }
   .chat-input textarea::placeholder{color:var(--muted); opacity:.8}
-  .chat-input textarea:focus{outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(200,169,106,.14)}
+  .chat-input textarea:focus{outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(117,135,139,.14)}
   .send-btn{
-    width:44px;height:44px;border-radius:50%; flex:0 0 auto; border:0; cursor:pointer; background:linear-gradient(150deg,var(--gold-soft),var(--gold)); color:#1a2122;
+    width:44px;height:44px;border-radius:50%; flex:0 0 auto; border:0; cursor:pointer; background:linear-gradient(150deg,var(--gold-soft),var(--gold)); color:#ffffff;
     display:grid; place-items:center; box-shadow:var(--shadow-md); transition:.25s var(--ease);
   }
   .send-btn:hover{filter:brightness(1.05); transform:translateY(-1px)}
@@ -411,27 +367,27 @@
 
   /* ============ MY REQUESTS ============ */
   .rq-head{margin:4px 2px 18px}
-  .rq-head h2{font-size:26px; font-weight:300; letter-spacing:-.02em; color:#f3ece1}
+  .rq-head h2{font-size:26px; font-weight:300; letter-spacing:-.02em; color:#2c3638}
   .rq-head p{margin:9px 0 0; color:var(--muted); font-size:14px; line-height:1.5}
   .rq-list{display:flex; flex-direction:column; gap:12px}
   .rq-card{
-    background:linear-gradient(160deg,#222a2c,#1a2021); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-sm);
+    background:linear-gradient(160deg,#f4efe7,#ffffff); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-sm);
     padding:16px 17px; display:flex; gap:14px; align-items:flex-start; animation:viewIn .4s var(--ease);
   }
-  .rq-card .ric{width:46px;height:46px;border-radius:13px; background:linear-gradient(160deg,#2a3335,#1d2425); border:1px solid var(--line); display:grid; place-items:center; flex:0 0 auto}
+  .rq-card .ric{width:46px;height:46px;border-radius:13px; background:linear-gradient(160deg,#eee6da,#f7f2ec); border:1px solid var(--line); display:grid; place-items:center; flex:0 0 auto}
   .rq-card .ric i{font-size:26px; color:var(--gold); line-height:1}
   .rq-card .rmain{flex:1; min-width:0}
   .rq-card .rmain h3{font-size:15px; font-weight:600; letter-spacing:-.005em; color:var(--cream)}
   .rq-card .meta{margin-top:6px; font-size:12.5px; color:var(--muted); line-height:1.5}
   .rq-card .meta b{color:var(--gold-soft); font-weight:600}
   .status-pill{display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:5px 11px; border-radius:999px; margin-top:10px}
-  .status-pill.pending{color:var(--gold-soft); background:rgba(200,169,106,.12); border:1px solid var(--line-strong)}
+  .status-pill.pending{color:var(--gold-soft); background:rgba(117,135,139,.12); border:1px solid var(--line-strong)}
   .status-pill.pending .d{width:6px;height:6px;border-radius:50%; background:var(--gold)}
   .empty{text-align:center; padding:60px 24px}
-  .empty .eic{width:74px;height:74px;border-radius:20px; margin:0 auto 20px; background:linear-gradient(150deg,#2e3739,#1a2122); border:1px solid var(--line); box-shadow:var(--shadow-sm); display:grid; place-items:center; font-size:32px}
+  .empty .eic{width:74px;height:74px;border-radius:20px; margin:0 auto 20px; background:linear-gradient(150deg,#f4efe7,#ffffff); border:1px solid var(--line); box-shadow:var(--shadow-sm); display:grid; place-items:center; font-size:32px}
   .empty .eic i{font-size:1em; color:var(--gold); line-height:1}
   .confirm .recap .v i{font-size:17px; color:var(--gold); line-height:1}
-  .empty h3{font-size:19px; font-weight:400; color:#f3ece1}
+  .empty h3{font-size:19px; font-weight:400; color:#2c3638}
   .empty p{color:var(--muted); font-size:13.5px; line-height:1.55; max-width:28ch; margin:10px auto 22px}
   .empty .btn-primary{max-width:240px; margin:0 auto}
 
@@ -439,7 +395,7 @@
   .tabbar{
     position:absolute; left:0; right:0; bottom:0; z-index:40;
     display:grid; grid-template-columns:repeat(3,1fr);
-    background:rgba(20,25,26,.88); backdrop-filter:saturate(120%) blur(16px); -webkit-backdrop-filter:saturate(120%) blur(16px);
+    background:rgba(247,242,236,.92); backdrop-filter:saturate(120%) blur(16px); -webkit-backdrop-filter:saturate(120%) blur(16px);
     border-top:1px solid var(--line);
     padding:8px 8px calc(env(safe-area-inset-bottom) + 8px);
   }
@@ -457,7 +413,7 @@
   .tab:active{transform:scale(.94)}
   .tab .badge-n{
     position:absolute; top:3px; right:calc(50% - 24px); min-width:17px; height:17px; padding:0 4px;
-    background:var(--gold); color:#1a2122; font-size:10px; font-weight:700; border-radius:999px;
+    background:var(--gold); color:#ffffff; font-size:10px; font-weight:700; border-radius:999px;
     display:none; align-items:center; justify-content:center; box-shadow:var(--shadow-sm);
   }
   .tab .badge-n.show{display:flex}
@@ -465,7 +421,7 @@
   /* ============ TOAST ============ */
   .toast{
     position:absolute; left:50%; bottom:calc(var(--nav-h) + 18px); transform:translate(-50%, 20px); z-index:70;
-    background:linear-gradient(150deg,#2e3739,#1a2122); border:1px solid var(--line-strong); color:var(--cream); font-size:13px; font-weight:500; padding:11px 18px; border-radius:12px;
+    background:linear-gradient(150deg,#f4efe7,#ffffff); border:1px solid var(--line-strong); color:var(--cream); font-size:13px; font-weight:500; padding:11px 18px; border-radius:12px;
     box-shadow:var(--shadow-lg); opacity:0; pointer-events:none; transition:.4s var(--ease); max-width:88%; text-align:center;
   }
   .toast.show{opacity:1; transform:translate(-50%,0)}
@@ -475,7 +431,7 @@
   /* phone-size screens: fill the viewport, drop the frame chrome */
   @media (max-width:480px){
     .stage{padding:0; align-items:stretch}
-    .app{max-width:none; height:100dvh; border-radius:0; box-shadow:none; background:linear-gradient(180deg,#1a2122,#0f1314)}
+    .app{max-width:none; height:100dvh; border-radius:0; box-shadow:none; background:linear-gradient(180deg,#ffffff,#ece3d6)}
   }
 </style>
 </head>
@@ -588,30 +544,6 @@
 (function(){
   "use strict";
 
-  /* ===================== AVA CONTACT ===================== */
-  // AVA Concierge WhatsApp (international format, digits only, no "+")
-  var AVA_WA_NUMBER = "66922927490";
-  function AVA_WA_URL(text){
-    return "https://wa.me/" + AVA_WA_NUMBER + "?text=" + encodeURIComponent(text || "Hi AVA");
-  }
-  // Build a WhatsApp message from a saved request (routes the concierge request flow to AVA)
-  function requestWaUrl(rq){
-    var payLabel = rq.pay==="cash" ? "Cash on delivery" : "Card (booking fee online)";
-    var when = (rq.date ? rq.date : "") + (rq.time ? " · " + rq.time : "");
-    var lines = [
-      "Hi AVA — I'd like to request: " + rq.service,
-      "",
-      "• Villa: " + rq.villa,
-      "• Name: " + rq.name
-    ];
-    if(when.trim()) lines.push("• When: " + when);
-    if(rq.people) lines.push("• Details: " + rq.people);
-    lines.push("• Payment: " + payLabel);
-    if(rq.notes) lines.push("• Notes: " + rq.notes);
-    lines.push("• Ref: " + rq.id, "", "Sent from the AVA Concierge app");
-    return AVA_WA_URL(lines.join("\n"));
-  }
-
   /* ===================== DATA ===================== */
   // Set 4 (premium / deep-tone) photos — exact Unsplash IDs carried over from designs/photos/p4.html
   var IMG_BASE = "https://images.unsplash.com/photo-";
@@ -622,58 +554,54 @@
 
   var SERVICES = [
     { id:"bikes",   icon:"🛵", phicon:"motorcycle", featured:true, title:"Bikes & Cars",        desc:"Scooters & cars to your door",
-      photo:"1568772585407-9361f9bf3a87", photoLocal:"img/bikes_hero.jpg",
+      photo:"1568772585407-9361f9bf3a87",
       blurb:"A serviced, insured rental fleet — from nimble city scooters to seven-seat SUVs — delivered straight to your villa.",
       includes:["Delivery & pickup at your villa","Helmets, insurance & full service","Daily, weekly & monthly rates"],
       link:{label:"Browse our rental catalog", sub:"Full fleet, live pricing", href:"../transport/catalog.html", icon:"📖", phicon:"book-open"} },
-    { id:"transfer",icon:"🚗", phicon:"taxi", title:"Taxi driver",         desc:"Airport, pier & island rides",
-      photoLocal:"img/taxi.jpg",
-      blurb:"Your own private driver on Koh Phangan — airport and pier pickups, or on call for the day to take you anywhere on the island.",
-      includes:["Airport & pier pickups","Private car with driver","By the trip or full day"] },
-    { id:"speedboat", icon:"🚤", phicon:"anchor", title:"Speedboat Charter",     desc:"Order anytime",
-      priceNote:"Price on request — book via concierge", photoLocal:"img/speedboat.jpg",
-      blurb:"A private speedboat at your schedule — island hops, secluded beaches or a sunset cruise. Order anytime; your concierge confirms the boat, route and price.",
-      includes:["Private speedboat & skipper","Flexible route & timing","Order anytime — price on request"] },
-    { id:"jetski",  icon:"🛥", phicon:"wave-triangle", title:"Jet Ski Rental",      desc:"Ride the bay",
-      priceNote:"Price on request — book via concierge", photoLocal:"img/jetski.jpg",
-      blurb:"Hop on a jet ski and explore the bay — your AVA concierge arranges the model, time slot and safety brief. Prices confirmed on request.",
-      includes:["15 minutes — price on request","30 minutes — price on request","1 hour — price on request","Half-day — price on request","Full-day — price on request"] },
-    { id:"spa",     icon:"💆", phicon:"flower-lotus", title:"Spa & Massage",        desc:"In-villa treatments",
-      photoLocal:"img/massage.jpg",
-      blurb:"Professional therapists bring the spa to you — Thai, oil or deep-tissue massage on your terrace or by the pool.",
-      includes:["Therapist & table to your villa","Thai, oil, aroma or deep-tissue","Single, couples or group sessions"] },
-    { id:"chef",    icon:"👨‍🍳", phicon:"cooking-pot", title:"Private Chef",        desc:"Dining in your villa",
-      photo:"1466637574441-749b8f19452f",
-      blurb:"A private chef cooks a bespoke menu in your villa — Thai, seafood or international, shopping and cleanup included.",
-      includes:["Custom menu & dietary needs","Groceries, cooking & cleanup","Thai, seafood or international"] },
-    { id:"tickets", icon:"🎟", phicon:"ticket", title:"Tickets",                desc:"Ferry · park · events",
-      priceNote:"Ask the concierge — booking via AVA", photoLocal:"img/tickets.jpg",
-      blurb:"Ferry, national-park and event tickets — just tell your AVA concierge what you need and we'll sort it. Booking options confirmed on request.",
-      includes:["Ferry & transfer tickets","National-park entry tickets","Event & activity tickets — ask the concierge"] },
     { id:"tea",     icon:"🍵", phicon:"coffee", title:"Tea Ceremony",         desc:"A calm, guided ritual",
       photo:"1558160074-4d7d8bdf4256",
       blurb:"A serene, guided tea ceremony at your villa — premium leaves, an experienced host, and a moment of stillness.",
       includes:["Private host & full tea set","Premium artisanal tea selection","60–90 min, up to your group"] },
     { id:"nanny",   icon:"🧸", phicon:"baby", title:"Nanny / Babysitter",  desc:"Trusted childcare",
-      photoLocal:"img/nanny.jpg",
+      photo:"1607453998774-d533f65dac99",
       blurb:"Vetted, English-speaking nannies so you can enjoy an evening out — caring, reliable, and background-checked.",
       includes:["Experienced, vetted carers","Hourly or full-day cover","Games, meals & bedtime help"] },
-    { id:"excursions", icon:"⛵", phicon:"sailboat", title:"Boat Excursions",     desc:"Islands & Ang Thong",
-      priceNote:"Price on request — book via concierge", photoLocal:"img/excursions.jpg",
-      blurb:"Day trips by boat to nearby islands and the Ang Thong National Marine Park — snorkelling, lagoons and viewpoints, arranged end to end.",
-      includes:["Nearby-island day trips","Ang Thong National Park day trip","Snorkelling & lagoons — price on request"] },
+    { id:"ferry",   icon:"⛴️", phicon:"boat", title:"Ferry & Boat Tickets", desc:"Island hops, sorted",
+      photo:"1593351415075-3bac9f45c877",
+      blurb:"Ferry and speedboat tickets to Samui, Tao and the mainland — booked, confirmed and timed to your transfer.",
+      includes:["All routes & operators","E-tickets to your phone","Pier transfer coordinated"] },
+    { id:"transfer",icon:"🚐", phicon:"taxi", title:"Transfer & Taxi",      desc:"Airport & pier rides",
+      photo:"1485463611174-f302f6a5c1c9",
+      blurb:"Private, air-conditioned transfers to the airport, pier or anywhere on the island — on time, every time.",
+      includes:["Airport & pier pickups","Private car, van or minibus","Meet & greet with name sign"] },
+    { id:"chef",    icon:"👨‍🍳", phicon:"cooking-pot", title:"Private Chef",        desc:"Dining in your villa",
+      photo:"1466637574441-749b8f19452f",
+      blurb:"A private chef cooks a bespoke menu in your villa — Thai, seafood or international, shopping and cleanup included.",
+      includes:["Custom menu & dietary needs","Groceries, cooking & cleanup","Thai, seafood or international"] },
+    { id:"spa",     icon:"💆", phicon:"flower-lotus", title:"Spa & Massage",        desc:"In-villa treatments",
+      photo:"1696841212541-449ca29397cc",
+      blurb:"Professional therapists bring the spa to you — Thai, oil or deep-tissue massage on your terrace or by the pool.",
+      includes:["Therapist & table to your villa","Thai, oil, aroma or deep-tissue","Single, couples or group sessions"] },
+    { id:"tours",   icon:"🌴", phicon:"map-trifold", title:"Tours & Excursions",   desc:"Island adventures",
+      photo:"1469854523086-cc02fe5d8800",
+      blurb:"Hand-picked island experiences — snorkelling, waterfalls, viewpoints and sunset boat trips, with a private guide.",
+      includes:["Private or small-group tours","Snorkel, waterfall & sunset trips","Transport & guide included"] },
     { id:"grocery", icon:"🛒", phicon:"shopping-bag", title:"Groceries & Delivery", desc:"Water, alcohol & more",
-      photoLocal:"img/grocery.jpg",
+      photo:"1604719312566-8912e9227c6a",
       blurb:"Stock your villa before you arrive or top up anytime — drinking water, groceries, wine and beer delivered.",
       includes:["Drinking water & essentials","Wine, beer & spirits","Pre-arrival villa stocking"] },
     { id:"laundry", icon:"🧺", phicon:"t-shirt", title:"Laundry",              desc:"Wash, fold, return",
-      photoLocal:"img/laundry.jpg",
+      photo:"1604335399105-a0c585fd81a1",
       blurb:"Pickup, professional wash, fold and return — fresh laundry back at your villa, often same day.",
       includes:["Pickup & return at your villa","Wash, dry, fold & press","Often same-day turnaround"] },
     { id:"yoga",    icon:"🧘", phicon:"person-simple-tai-chi", title:"Yoga & Trainer",       desc:"Private sessions",
-      photoLocal:"img/yoga.jpg",
+      photo:"1599901860904-17e6ed7083a0",
       blurb:"Private yoga or a personal trainer at your villa — sunrise flow on the terrace or a focused workout, your choice.",
-      includes:["Certified instructors","Yoga, mobility or strength","Mats & equipment provided"] }
+      includes:["Certified instructors","Yoga, mobility or strength","Mats & equipment provided"] },
+    { id:"checkout",icon:"🕓", phicon:"clock", title:"Late Checkout",        desc:"Early in / late out",
+      photo:"1611892440504-42a792e24d32",
+      blurb:"Need a few more hours? Request a late checkout or early check-in and we'll confirm based on the day's schedule.",
+      includes:["Late checkout request","Early check-in request","Subject to availability"] }
   ];
 
   /* App Store "Browse" presentation: harmonized gradient + local Icons8 3D icon per service.
@@ -692,13 +620,9 @@
     chef:    { grad:"linear-gradient(150deg,#cc9388,#b9756c 60%,#9a564f)" },
     spa:     { grad:"linear-gradient(150deg,#96b29a,#769680 60%,#5b7c68)" },
     tours:   { grad:"linear-gradient(150deg,#7fa6a8,#5f878c 60%,#456b72)" },
-    jetski:  { grad:"linear-gradient(150deg,#79a9b3,#558996 60%,#3d7a86)" },
-    speedboat:{ grad:"linear-gradient(150deg,#7299a8,#527a8c 60%,#3a5f73)" },
-    excursions:{ grad:"linear-gradient(150deg,#84aab0,#5f8a92 60%,#456b72)" },
-    tickets: { grad:"linear-gradient(150deg,#8ba0ad,#6b8492 60%,#516a78)" },
     grocery: { grad:"linear-gradient(150deg,#85a3ac,#637f8e 60%,#4b6473)" },
     laundry: { grad:"linear-gradient(150deg,#cba39a,#b58178 60%,#96625b)" },
-    yoga:    { grad:"linear-gradient(150deg,#9bb38c,#7d9870 60%,#627d57)" },
+    yoga:    { grad:"linear-gradient(150deg,#9bb38c,#75878b 60%,#627d57)" },
     checkout:{ grad:"linear-gradient(150deg,#8ba0ad,#6b8492 60%,#516a78)" }
   };
   // service id -> local Icons8 3D PNG (relative path; works on GitHub Pages)
@@ -824,27 +748,21 @@
     // ---- featured "MOST REQUESTED" hero tile (full width, gold line icon on top, label below) ----
     var ht = TILE[featured.id] || {};
     els.heroSlot.innerHTML = ''+
-      '<button class="tile hero'+((featured.photoLocal||featured.photo)?' has-photo':'')+'" type="button" data-svc="'+featured.id+'">'+
-        ((featured.photoLocal||featured.photo)?'<img class="tphoto" src="'+esc(featured.photoLocal||heroImg(featured.photo))+'" alt="'+esc(featured.title)+'" loading="lazy"/><span class="tscrim"></span>':'')+
+      '<button class="tile hero" type="button" data-svc="'+featured.id+'">'+
         ico(featured)+
         '<span class="lab">'+
           '<span class="kicker">'+esc(ht.kicker||"Most requested")+'</span>'+
           '<h3>'+esc(featured.title)+'</h3>'+
           '<span class="sub">'+esc(ht.sub||(featured.desc+", delivered to your villa door."))+'</span>'+
-          '<span class="cta">Open bikes &amp; cars catalog '+phi("arrow-right","regular")+'</span>'+
+          '<span class="cta">Browse the fleet '+phi("arrow-right","regular")+'</span>'+
         '</span>'+
       '</button>';
 
     // ---- 2-column graphite tiles (gold line icon top, white label + muted subtitle below) ----
     els.svcCount.textContent = SERVICES.length + " services";
     els.svcGrid.innerHTML = rest.map(function(s){
-      var psrc = s.photoLocal ? esc(s.photoLocal) : (s.photo ? esc(gridImg(s.photo)) : '');
-      var photo = psrc
-        ? '<img class="tphoto" src="'+psrc+'" alt="'+esc(s.title)+'" loading="lazy" onerror="this.closest(\'.tile\').classList.remove(\'has-photo\');this.remove()"/><span class="tscrim"></span>'
-        : '';
       return ''+
-        '<button class="tile'+(psrc?' has-photo':'')+'" type="button" data-svc="'+s.id+'">'+
-          photo+
+        '<button class="tile" type="button" data-svc="'+s.id+'">'+
           ico(s)+
           '<span class="lab"><h3>'+esc(s.title)+'</h3>'+
             '<span class="sub">'+esc(s.desc)+'</span>'+
@@ -863,21 +781,16 @@
       '<button class="linkout" id="svcLink">'+
         '<span class="lic">'+phi(s.link.phicon||"book-open")+'</span>'+
         '<span class="lt"><b>'+esc(s.link.label)+'</b><span>'+esc(s.link.sub)+'</span></span>'+
-        '<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M9 7h8v8" stroke="#c8a96a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
+        '<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M9 7h8v8" stroke="#75878b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
       '</button>'
     ) : '';
-    // Luxe category-detail header: real photo (when available) behind a dark blend, else gold thin-line icon
-    var dphoto = s.photoLocal
-      ? '<img class="dphoto" src="'+esc(s.photoLocal)+'" alt="'+esc(s.title)+'" onerror="this.closest(\'.detail-hero\').classList.remove(\'has-photo\');this.remove()"/><span class="dscrim"></span>'
-      : '';
+    // Luxe category-detail header: large gold thin-line icon on graphite
     els.detail.innerHTML = ''+
-      '<div class="detail-hero'+(s.photoLocal?' has-photo':'')+'">'+
-        dphoto+
+      '<div class="detail-hero">'+
         '<div class="ic3d" aria-hidden="true">'+phi(s.phicon,"thin")+'</div>'+
         '<div class="k">AVA Concierge</div>'+
         '<h2>'+esc(s.title)+'</h2>'+
         '<p>'+esc(s.blurb)+'</p>'+
-        (s.priceNote ? '<div class="por">'+phi("tag","light")+'<span>'+esc(s.priceNote)+'</span></div>' : '')+
       '</div>'+
       '<div class="panel">'+
         '<h4>What\'s included</h4>'+
@@ -1019,11 +932,7 @@
           '<div class="r"><span class="l">Payment</span><span class="v">'+esc(payLabel)+'</span></div>'+
           '<div class="r"><span class="l">Reference</span><span class="v">'+esc(rq.id)+'</span></div>'+
         '</div>'+
-        '<a class="wa-cta" id="confWa" style="margin:4px 0 0" href="'+esc(requestWaUrl(rq))+'" target="_blank" rel="noopener">'+
-          '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.97L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.13c-.24.68-1.42 1.32-1.95 1.36-.5.04-.5.4-3.15-.66-2.66-1.06-4.3-3.78-4.43-3.96-.13-.18-1.05-1.4-1.05-2.66 0-1.26.66-1.88.9-2.14.24-.26.52-.32.7-.32.18 0 .35 0 .5.01.16.01.38-.06.59.45.24.58.81 2 .88 2.14.07.14.12.31.02.49-.09.18-.14.29-.27.45-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.15.26.66 1.09 1.42 1.77.97.87 1.79 1.14 2.05 1.27.26.13.41.11.56-.07.15-.18.65-.76.82-1.02.17-.26.35-.21.59-.13.24.09 1.52.72 1.78.85.26.13.43.2.5.31.06.11.06.66-.18 1.34z"/></svg>'+
-          'Send to concierge on WhatsApp'+
-        '</a>'+
-        '<button class="btn-ghost" id="confViewReq" style="margin-top:10px">'+
+        '<button class="btn-primary" id="confViewReq">'+
           '<svg viewBox="0 0 24 24" fill="none"><path d="M9 5h10M9 12h10M9 19h10M5 5h.01M5 12h.01M5 19h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'+
           'View my requests'+
         '</button>'+
@@ -1073,7 +982,7 @@
   var chatSeeded = false;
 
   function avatarSvg(){
-    return '<span class="av"><svg viewBox="0 0 24 24" fill="none"><path d="M3 16c2.2 0 2.2-2 4.4-2s2.2 2 4.4 2 2.2-2 4.4-2 2.2 2 4.4 2" stroke="#c8a96a" stroke-width="1.7" stroke-linecap="round"/><path d="M12 3.5l3 5.5H9l3-5.5z" stroke="#c8a96a" stroke-width="1.5" stroke-linejoin="round"/></svg></span>';
+    return '<span class="av"><svg viewBox="0 0 24 24" fill="none"><path d="M3 16c2.2 0 2.2-2 4.4-2s2.2 2 4.4 2 2.2-2 4.4-2 2.2 2 4.4 2" stroke="#75878b" stroke-width="1.7" stroke-linecap="round"/><path d="M12 3.5l3 5.5H9l3-5.5z" stroke="#75878b" stroke-width="1.5" stroke-linejoin="round"/></svg></span>';
   }
   function addMsg(text, dir, who){
     var wrap = document.createElement("div");
@@ -1125,8 +1034,9 @@
   });
   chatSend.addEventListener("click", sendChat);
   document.getElementById("waCta").addEventListener("click", function(){
-    toast("Opening WhatsApp…");
-    window.open(AVA_WA_URL("Hi AVA, I'd like to chat with the concierge"), "_blank");
+    toast("Opening WhatsApp… (demo link)");
+    // placeholder — real number wired later
+    window.open("https://wa.me/", "_blank");
   });
 
   /* ===================== EVENTS ===================== */
@@ -1136,15 +1046,7 @@
   });
   els.heroSlot.addEventListener("click", function(e){
     var card = e.target.closest("[data-svc]"); if(!card) return;
-    var id = card.getAttribute("data-svc");
-    var s = svcById(id);
-    // Featured Bikes & Cars goes STRAIGHT to the full rental catalog (bikes + cars)
-    if(s && s.link && s.link.href){
-      toast("Opening the AVA rental catalog…");
-      setTimeout(function(){ window.location.href = s.link.href; }, 220);
-      return;
-    }
-    openDetail(id);
+    openDetail(card.getAttribute("data-svc"));
   });
   els.backBtn.addEventListener("click", function(){
     if(current.view==="form"){ openDetail(current.service.id); }
