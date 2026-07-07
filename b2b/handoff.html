@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AVA · Investment Villas Widget — Integration Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{ --cream:#efe6db; --paper:#f6f1e9; --ink:#2b3838; --ink2:#333f3e; --muted:#6f7a76;
+         --hair:#ddd2c3; --gold:#c6a878; --code:#2b3230; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{ font-family:'Manrope',system-ui,sans-serif; color:var(--ink); background:var(--paper);
+        line-height:1.55; }
+  .wrap{ max-width:820px; margin:0 auto; padding:0 22px 80px; }
+  header{ background:var(--ink); color:#f2ebe1; padding:40px 22px 34px; margin-bottom:34px; }
+  header .in{ max-width:820px; margin:0 auto; }
+  .logo{ font-weight:800; font-size:30px; letter-spacing:1px; }
+  header h1{ font-size:27px; font-weight:800; margin-top:18px; letter-spacing:-.3px; line-height:1.15; }
+  header p{ color:#aab3ae; margin-top:10px; font-size:15px; max-width:620px; }
+  .tag{ display:inline-block; background:#3a4746; color:#e6ded2; font-size:12px; font-weight:700;
+        padding:5px 12px; border-radius:30px; margin-top:16px; letter-spacing:.3px; }
+  h2{ font-size:20px; font-weight:800; margin:38px 0 6px; letter-spacing:-.2px; }
+  h2 .n{ color:var(--gold); font-variant-numeric:tabular-nums; margin-right:8px; }
+  h3{ font-size:15px; font-weight:800; margin:22px 0 6px; }
+  p.lead{ color:#3c4644; font-size:15.5px; margin:8px 0; }
+  ul{ margin:8px 0 8px 2px; padding-left:20px; } li{ margin:5px 0; font-size:15px; }
+  a{ color:#8a6d45; font-weight:600; text-decoration:none; border-bottom:1px solid #d7c6a8; }
+  .card{ background:#fff; border:1px solid var(--hair); border-radius:16px; padding:20px 22px; margin:14px 0; }
+  .btn{ display:inline-block; background:var(--ink); color:#f2ebe1; font-weight:700; font-size:15px;
+        padding:12px 20px; border-radius:40px; border:none; margin:6px 0; }
+  pre{ background:var(--code); color:#e9e2d4; border-radius:12px; padding:16px 18px; overflow-x:auto;
+       font-family:'SF Mono',Menlo,Consolas,monospace; font-size:13px; line-height:1.5; margin:10px 0; }
+  pre .k{ color:#c6a878 } pre .s{ color:#a7c0a0 } pre .c{ color:#7d8a86 }
+  code{ background:#e7ddcd; padding:2px 6px; border-radius:5px; font-family:'SF Mono',Menlo,monospace; font-size:13px; }
+  table{ width:100%; border-collapse:collapse; margin:12px 0; font-size:13.5px; }
+  th,td{ border:1px solid var(--hair); padding:8px 10px; text-align:left; vertical-align:top; }
+  th{ background:#efe7d9; font-weight:700; } td code{ background:#f0e7d7; }
+  .step{ display:flex; gap:14px; margin:12px 0; }
+  .step .num{ flex:none; width:28px; height:28px; border-radius:50%; background:var(--gold); color:#2b2016;
+              font-weight:800; display:flex; align-items:center; justify-content:center; font-size:14px; }
+  .note{ background:#fbf7f0; border-left:3px solid var(--gold); padding:12px 16px; border-radius:0 10px 10px 0; margin:12px 0; font-size:14px; color:#4b5551; }
+  .demo{ display:flex; gap:16px; align-items:center; flex-wrap:wrap; }
+  iframe{ width:340px; height:620px; border:1px solid var(--hair); border-radius:22px; background:#ded7ca; }
+  .foot{ margin-top:44px; padding-top:20px; border-top:1px solid var(--hair); color:var(--muted); font-size:13px; }
+</style></head>
+<body>
+<header><div class="in">
+  <div class="logo">ΛVΛ</div>
+  <h1>Investment Villas — виджет для сайта</h1>
+  <p>Готовый блок «инвестиционный каталог вилл» для ava.estate: карточки в списке + развёрнутая страница с показателями доходности и графиками. Данные подключаются одним файлом и обновляются автоматически.</p>
+  <span class="tag">Инструкция по интеграции · для веб-разработчика</span>
+</div></header>
+
+<div class="wrap">
+
+  <h2><span class="n">01</span>Что это</h2>
+  <p class="lead">Самодостаточный виджет (HTML/CSS/JS, без внешних зависимостей): список карточек вилл → тап по вилле открывает детальную страницу с описанием, ценой и блоком «Investment performance» (доходность/год, чистыми в месяц, занятость, помесячный график, накопленная доходность). Дизайн уже в стиле ava.estate (тёмная плитка + кремовый + Manrope).</p>
+  <div class="card demo">
+    <iframe src="https://avaestate.github.io/ava-rental/b2b/" title="AVA Investment Villas — live"></iframe>
+    <div style="flex:1;min-width:220px">
+      <h3>Живое демо</h3>
+      <p style="font-size:14px;color:#3c4644">Кликабельно, с реальными данными.</p>
+      <p style="margin-top:10px"><a href="https://avaestate.github.io/ava-rental/b2b/">avaestate.github.io/ava-rental/b2b/</a></p>
+      <p style="font-size:13px;color:#6f7a76;margin-top:8px">Исходники (index.html + data.json): репозиторий <code>avaestate/ava-rental</code>, папка <code>/b2b/</code>.</p>
+    </div>
+  </div>
+
+  <h2><span class="n">02</span>Быстрая вставка (Tilda) — 5 минут</h2>
+  <p class="lead">Самый быстрый путь — встроить готовый виджет блоком <b>«HTML»</b> (T123 / Zero-block «Embed»). Вставьте этот код:</p>
+  <pre><span class="c">&lt;!-- AVA Investment Villas --&gt;</span>
+&lt;div style="max-width:480px;margin:0 auto"&gt;
+  &lt;iframe src=<span class="s">"https://avaestate.github.io/ava-rental/b2b/"</span>
+    style="width:100%;height:1400px;border:0;border-radius:24px"
+    loading="lazy" title="AVA Investment Villas"&gt;&lt;/iframe&gt;
+&lt;/div&gt;</pre>
+  <div class="note">Высоту <code>height</code> подстройте под число вилл (≈150px на карточку). Виджет адаптивный — на телефоне займёт всю ширину. Внутренняя навигация (список ↔ детальная) работает прямо внутри блока.</div>
+
+  <h2><span class="n">03</span>Данные — один редактируемый источник</h2>
+  <p class="lead">Виджет читает единственный файл <code>data.json</code> (лежит рядом: <code>/b2b/data.json</code>). Чтобы изменить цифры — правится только он, вёрстку трогать не нужно.</p>
+  <div class="step"><div class="num">A</div><div><b>Автообновление из Guesty.</b> Раз в день скрипт на нашей стороне пересчитывает реальные показатели по бронированиям и обновляет <code>data.json</code> сам. Разработчику здесь делать ничего не нужно.</div></div>
+  <div class="step"><div class="num">B</div><div><b>Ручные правки / витрина.</b> Значения в <code>data.json</code> можно переопределять вручную (какие виллы показывать, цена продажи, целевая доходность). Для нетехнической правки заведём Google-таблицу → она будет генерировать <code>data.json</code>.</div></div>
+
+  <h3>Схема одной виллы (объект в массиве <code>villas[]</code>)</h3>
+  <table>
+    <tr><th>Поле</th><th>Тип</th><th>Что это</th></tr>
+    <tr><td><code>id</code></td><td>string</td><td>Уникальный слаг (для ссылки/роутинга)</td></tr>
+    <tr><td><code>name</code></td><td>string</td><td>Название виллы</td></tr>
+    <tr><td><code>bd</code></td><td>number</td><td>Спален</td></tr>
+    <tr><td><code>city</code></td><td>string</td><td>Район</td></tr>
+    <tr><td><code>price</code></td><td>number</td><td>Цена продажи, THB</td></tr>
+    <tr><td><code>desc</code></td><td>string</td><td>Описание (абзац)</td></tr>
+    <tr><td><code>hero</code></td><td>url</td><td>Главное фото</td></tr>
+    <tr><td><code>gallery</code></td><td>url[]</td><td>Галерея (2–5 фото)</td></tr>
+    <tr><td><code>built / land / interior</code></td><td>number</td><td>Площади, м²</td></tr>
+    <tr><td><code>months</code></td><td>number</td><td>Месяцев в работе</td></tr>
+    <tr><td><code>occ</code></td><td>number</td><td>Занятость, %</td></tr>
+    <tr><td><code>adr</code></td><td>number</td><td>Средняя цена ночи, THB</td></tr>
+    <tr><td><code>net</code></td><td>number</td><td>Доход в месяц, THB (крупная цифра)</td></tr>
+    <tr><td><code>yld</code></td><td>number</td><td>Доходность/ROI в год, %</td></tr>
+    <tr><td><code>cum</code></td><td>number</td><td>Заработано с запуска, THB</td></tr>
+    <tr><td><code>since</code></td><td>string</td><td>Месяц запуска (напр. «Dec 2025»)</td></tr>
+    <tr><td><code>series</code></td><td>number[12]</td><td>Помесячный доход, THB (для графика)</td></tr>
+    <tr><td><code>labels</code></td><td>string[12]</td><td>Буквы месяцев для оси графика</td></tr>
+  </table>
+  <pre>{
+  <span class="k">"currency"</span>: <span class="s">"THB"</span>,
+  <span class="k">"villas"</span>: [
+    {
+      <span class="k">"id"</span>: <span class="s">"radharani"</span>, <span class="k">"name"</span>: <span class="s">"AVA Radharani Villa"</span>, <span class="k">"bd"</span>: 3,
+      <span class="k">"city"</span>: <span class="s">"Sri Thanu"</span>, <span class="k">"price"</span>: 12500000,
+      <span class="k">"hero"</span>: <span class="s">"https://…jpg"</span>, <span class="k">"gallery"</span>: [<span class="s">"…"</span>],
+      <span class="k">"months"</span>: 6, <span class="k">"occ"</span>: 68, <span class="k">"adr"</span>: 6821,
+      <span class="k">"net"</span>: 140940, <span class="k">"yld"</span>: 13.5, <span class="k">"cum"</span>: 879715,
+      <span class="k">"series"</span>: [0,0,0,0,0,58000,227000,212000,240000,62000,65000,94000],
+      <span class="k">"labels"</span>: [<span class="s">"J","A","S","O","N","D","J","F","M","A","M","J"</span>]
+    }
+  ]
+}</pre>
+
+  <h2><span class="n">04</span>Глубокая интеграция (по желанию)</h2>
+  <p class="lead">Если хотите не iframe, а нативные карточки Tilda в общем каталоге — возьмите готовый компонент (разметка карточки и детальной + CSS) из <code>/b2b/index.html</code> как эталон и рендерите те же поля из <code>data.json</code> в свою систему карточек. Логика графиков — чистый inline-SVG, без библиотек.</p>
+
+  <h2><span class="n">05</span>Что важно</h2>
+  <ul>
+    <li>Виджет полностью автономен: нет внешних скриптов/CDN, только шрифт Manrope (Google Fonts).</li>
+    <li>Адаптивный, страница по горизонтали не скроллится.</li>
+    <li>Данные и вёрстка разделены — контент меняется без правки кода.</li>
+    <li>Фото сейчас тянутся из нашей системы (Guesty CDN) — стабильные ссылки.</li>
+  </ul>
+
+  <div class="foot">
+    AVA ESTATE · вопросы по интеграции — через Дениса / команду AVA. Демо и файлы: avaestate.github.io/ava-rental/b2b/
+  </div>
+</div>
+</body></html>
