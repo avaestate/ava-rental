@@ -173,7 +173,6 @@ function catalog(){
       <div class="photo">
         <img src="${v.hero}" alt="" loading="lazy">
         <div class="pill">FOR SALE</div>
-        <div class="ybadge">Net yield <b>${v.yld}%</b>/yr</div>
       </div>
       <div class="cbody">
         <div class="cname">${v.name.replace('AVA ','')} — ${v.bd} BR</div>
@@ -182,7 +181,7 @@ function catalog(){
         <div class="strip">
           <div class="m"><div class="l">In operation</div><div class="v">${v.months} <small>mo</small></div></div>
           <div class="m"><div class="l">Net / month</div><div class="v"><span class="u">฿</span>${Math.round(v.net/1000)}k</div></div>
-          <div class="m"><div class="l">Occupancy</div><div class="v">${v.occ}<span class="u">%</span></div></div>
+          <div class="m"><div class="l">ROI / year</div><div class="v">${v.yld}<span class="u">%</span></div></div>
         </div>
         <div class="sparkrow">
           <svg id="sp-${v.id}" viewBox="0 0 200 30" preserveAspectRatio="none">${sparkSVG(v.id,v.net)}</svg>
@@ -234,9 +233,9 @@ function detail(v){
       <div class="kpis">
         <div class="kpi"><div class="lab">In operation</div><div class="num">${v.months} <small>mo</small></div></div>
         <div class="kpi"><div class="lab">Avg. net profit / mo</div><div class="num"><span class="u">฿</span><span id="d-net">${money(v.net)}</span></div></div>
-        <div class="kpi"><div class="lab">Net yield / year</div><div class="num"><span id="d-yld">${v.yld}</span><span class="u">%</span></div></div>
+        <div class="kpi"><div class="lab">ROI / year</div><div class="num"><span id="d-yld">${v.yld}</span><span class="u">%</span></div></div>
       </div>
-      <div class="yhint">Net yield = yearly profit after all costs ÷ villa price. ~10%/yr is strong for villas here — full payback in ≈ ${Math.round(100/v.yld)} years, then pure income (the villa itself stays yours).</div>
+      <div class="yhint">ROI / year = yearly net profit (after all costs) ÷ villa price. ~10%/yr is strong for villas here — full payback in ≈ ${Math.round(100/v.yld)} years, then pure income, and the villa itself stays yours (and keeps gaining value).</div>
       <div class="subrow"><div>Occupancy <b id="d-occ">${v.occ}%</b></div><div>ADR <b id="d-adr">฿${money(v.adr)}</b></div><div>Since <b>${v.since}</b></div></div>
       <div class="ctitle">Net monthly profit, ฿ <span class="hi">last 12 months</span></div>
       <svg id="d-bars" viewBox="0 0 400 150" preserveAspectRatio="none">${barsSVG(v.net)}</svg>
