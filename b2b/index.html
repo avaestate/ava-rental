@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>AVA · Investment Villas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{ --cream:#efe6db; --cream2:#f4ede3; --ink:#2b3838; --ink2:#333f3e;
+         --sub:#9aa39f; --muted:#6f7a76; --hair:#ddd2c3; --gold:#c6a878; --gold2:#d9c09a;
+         --green:#7fa06f; --card-cream:#f2ebe1; }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent}
+  html,body{ background:#ded7ca; }
+  body{ font-family:'Manrope',system-ui,sans-serif; color:var(--ink); }
+  #app{ max-width:480px; margin:0 auto; background:var(--cream); min-height:100vh;
+        box-shadow:0 0 60px rgba(30,36,35,.15); overflow:hidden; }
+  a,button{ font-family:inherit; }
+
+  header{ display:flex; align-items:center; justify-content:space-between; padding:20px 22px 6px;
+          position:sticky; top:0; background:var(--cream); z-index:20; }
+  .logo{ font-weight:800; font-size:28px; letter-spacing:1px; cursor:pointer; }
+  .icons{ display:flex; gap:9px; }
+  .ic{ width:42px; height:42px; border-radius:50%; background:#55635f; display:flex;
+       align-items:center; justify-content:center; color:#eee; font-size:16px; }
+  .ic.dark{ background:#2b3838; }
+  .back{ background:none; border:none; color:#2b3838; font-weight:700; font-size:15px;
+         display:flex; align-items:center; gap:8px; cursor:pointer; padding:6px 0; }
+  .back .r{ width:34px; height:34px; border-radius:50%; background:#e4dccf; display:flex;
+            align-items:center; justify-content:center; font-size:15px; }
+
+  .lead{ padding:12px 22px 4px; }
+  .lead h2{ font-size:22px; font-weight:800; letter-spacing:-.3px; }
+  .lead p{ font-size:13.5px; color:var(--muted); margin-top:6px; line-height:1.45; }
+
+  /* ---- CARD ---- */
+  .card{ background:var(--ink); color:var(--card-cream); border-radius:24px;
+         margin:16px 18px 0; padding:13px; cursor:pointer; transition:transform .18s ease, box-shadow .18s;
+         animation:rise .5s ease both; }
+  .card:active{ transform:scale(.985) }
+  @keyframes rise{ from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:none} }
+  .photo{ position:relative; border-radius:16px; overflow:hidden; aspect-ratio:16/11;
+          background:linear-gradient(135deg,#3a4a44,#2b3838); }
+  .photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .pill{ position:absolute; top:13px; left:13px; background:#efe7db; color:#2b3838;
+         font-weight:800; font-size:12px; letter-spacing:.6px; padding:7px 14px; border-radius:40px; }
+  .ybadge{ position:absolute; top:13px; right:13px; background:rgba(43,56,56,.82);
+         backdrop-filter:blur(4px); color:#e9dfce; font-weight:700; font-size:12px;
+         padding:7px 12px; border-radius:40px; }
+  .ybadge b{ color:#e2c592; }
+  .cbody{ padding:15px 6px 4px; }
+  .cname{ font-size:22px; font-weight:800; letter-spacing:-.3px; }
+  .csub{ font-size:14px; color:var(--sub); margin-top:7px; line-height:1.45; }
+  .cprice{ font-size:25px; font-weight:800; margin-top:14px; letter-spacing:-.5px; }
+  .cprice span{ font-size:15px; color:var(--sub); font-weight:600; }
+  .strip{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:7px; margin-top:14px; }
+  .m{ background:var(--ink2); border-radius:14px; padding:10px 9px; }
+  .m .l{ font-size:10px; font-weight:700; letter-spacing:.3px; text-transform:uppercase; color:#8f9994; }
+  .m .v{ font-size:17px; font-weight:800; margin-top:4px; letter-spacing:-.3px; font-variant-numeric:tabular-nums; }
+  .m .v .u{ font-size:11px; color:var(--gold); font-weight:700; }
+  .m .v small{ font-size:10.5px; color:#c9d1cc; font-weight:700; }
+  .sparkrow{ display:flex; align-items:center; gap:9px; margin-top:12px; padding:0 2px; }
+  .sparkrow svg{ flex:1; height:30px; }
+  .trend{ font-size:11.5px; font-weight:800; color:var(--green); white-space:nowrap; }
+  .more{ margin-top:14px; width:100%; border:none; cursor:pointer; background:#efe7db; color:#2b3838;
+         font-weight:800; font-size:15px; padding:14px; border-radius:40px; display:flex;
+         align-items:center; justify-content:center; gap:9px; }
+  .more .arr{ width:25px; height:25px; border-radius:50%; background:#2b3838; color:#efe7db;
+              display:flex; align-items:center; justify-content:center; font-size:13px; }
+  .foot{ height:26px; }
+  .disc{ text-align:center; font-size:11px; color:#9a938a; padding:4px 30px 24px; line-height:1.5; }
+
+  /* ---- DETAIL ---- */
+  .dhero{ position:relative; margin:6px 18px 0; border-radius:20px; overflow:hidden; aspect-ratio:16/10;
+          background:#2b3838; }
+  .dhero img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .dhero .pill{ top:14px; left:14px; }
+  .gal{ display:flex; gap:7px; margin:9px 18px 0; }
+  .gal img{ width:100%; height:56px; object-fit:cover; border-radius:9px; opacity:.9; }
+  .dpad{ padding:18px 22px; }
+  h1{ font-size:27px; font-weight:800; line-height:1.14; letter-spacing:-.3px; }
+  .dprice{ font-size:28px; font-weight:800; margin-top:10px; letter-spacing:-.5px; }
+  .dprice span{ font-size:15px; color:var(--muted); font-weight:600; }
+  .badges{ display:flex; gap:7px; flex-wrap:wrap; margin-top:13px; }
+  .tag{ font-size:11.5px; font-weight:700; letter-spacing:.3px; padding:6px 12px; border-radius:40px;
+        background:#e4dccf; color:#4b5551; }
+  .tag.sale{ background:#2b3838; color:#f2ebe1; }
+  p.ddesc{ font-size:16px; line-height:1.5; color:#3c4644; margin-top:16px; }
+  .kv{ font-size:15px; line-height:1.7; margin-top:14px; color:#3c4644; }
+  .kv b{ color:#2b3838; } .kv a{ color:#7d8a86; text-decoration:underline; text-underline-offset:3px; }
+  .specs{ display:flex; flex-wrap:wrap; gap:6px 16px; margin-top:14px; font-size:14.5px; color:#3c4644; }
+  .specs b{ color:#2b3838; }
+  .feat{ font-size:15px; line-height:1.65; color:#3c4644; margin-top:14px; }
+  .own{ margin-top:14px; font-size:15px; line-height:1.7; } .own b{ color:#2b3838; }
+  .hr{ height:1px; background:var(--hair); margin:22px 0 0; }
+
+  .invest{ background:var(--ink); color:var(--card-cream); border-radius:24px; margin:20px 18px 22px;
+           padding:22px 20px 24px; }
+  .itop{ display:flex; align-items:center; justify-content:space-between; }
+  .kicker{ font-size:12.5px; font-weight:800; letter-spacing:1.3px; text-transform:uppercase; color:#cdd4d0; }
+  .live{ display:flex; align-items:center; gap:6px; font-size:11px; font-weight:600; color:#a9b2ad; }
+  .dot{ width:8px; height:8px; border-radius:50%; background:var(--green); animation:pulse 2.2s infinite; }
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(127,160,111,.55)}70%{box-shadow:0 0 0 9px rgba(127,160,111,0)}100%{box-shadow:0 0 0 0 rgba(127,160,111,0)}}
+  .kpis{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:9px; margin-top:18px; }
+  .kpi{ background:var(--ink2); border-radius:16px; padding:14px 11px; }
+  .kpi .lab{ font-size:10.5px; font-weight:700; letter-spacing:.3px; color:#939d98; text-transform:uppercase; line-height:1.25; min-height:26px; }
+  .kpi .num{ font-size:22px; font-weight:800; margin-top:7px; letter-spacing:-.5px; font-variant-numeric:tabular-nums; }
+  .kpi .num .u{ font-size:13px; font-weight:700; color:var(--gold); }
+  .kpi .num small{ font-size:12px; font-weight:700; color:#c9d1cc; }
+  .yhint{ font-size:11px; color:#8f9994; margin-top:12px; line-height:1.45; }
+  .subrow{ display:flex; justify-content:space-between; gap:8px; margin-top:14px; font-size:12.5px; color:#aab3ae; }
+  .subrow b{ color:#e6ded2; font-weight:700; }
+  .ctitle{ font-size:12.5px; font-weight:700; color:#c3ccc6; margin:20px 0 10px; display:flex; justify-content:space-between; }
+  .ctitle .hi{ color:var(--gold2); }
+  svg{ display:block; width:100% }
+  .cum{ background:var(--ink2); border-radius:16px; padding:16px; margin-top:20px; }
+  .cum .r1{ display:flex; justify-content:space-between; align-items:baseline; }
+  .cum .big{ font-size:22px; font-weight:800; letter-spacing:-.4px; }
+  .cum .lab2{ font-size:11px; color:#9aa39f; font-weight:600; margin-bottom:3px; }
+  .cum .pct{ font-size:13px; font-weight:800; color:var(--green); }
+  .barw{ height:9px; border-radius:6px; background:#28312f; margin-top:12px; overflow:hidden; }
+  .barf{ height:100%; border-radius:6px; background:linear-gradient(90deg,#c6a878,#d9c09a); transition:width .8s ease; }
+  .cum .cap{ font-size:11px; color:#8f9994; margin-top:9px; line-height:1.45; }
+  .cta{ margin-top:20px; width:100%; border:none; cursor:pointer; background:var(--gold); color:#2b2016;
+        font-weight:800; font-size:16px; padding:16px; border-radius:40px; display:flex;
+        align-items:center; justify-content:center; gap:10px; }
+  .cta .arr{ width:26px; height:26px; border-radius:50%; background:#2b2016; color:var(--gold);
+             display:flex; align-items:center; justify-content:center; font-size:14px; }
+  .note{ font-size:10.5px; color:#8f9994; margin-top:13px; line-height:1.5; text-align:center; }
+</style></head>
+<body>
+  <div id="app"></div>
+
+<script>
+const VILLAS = [{"id": "aurora", "name": "AVA Aurora Villa", "bd": 3, "city": "Wok Tum", "price": 11900000, "months": 15, "occ": 79, "adr": 7100, "net": 96000, "yld": 9.7, "cum": 1350000, "built": 237, "land": 680, "interior": 124, "since": "Apr 2025", "desc": "Stylish, fully furnished 3-bedroom villa in a quiet, green pocket of Wok Tum. A proven rental performer — ideal as a private home or a fully hands-off investment.", "hero": "https://assets.guesty.com/image/upload/v1767748302/production/68daa11d455d7fda436119a0/lmlg8kmpmqepewcc4nyz.jpg", "gallery": ["https://assets.guesty.com/image/upload/v1767748302/production/68daa11d455d7fda436119a0/lmlg8kmpmqepewcc4nyz.jpg", "https://assets.guesty.com/image/upload/v1767748306/production/68daa11d455d7fda436119a0/jxe5c9fcvuewlonqnyxu.jpg", "https://assets.guesty.com/image/upload/v1767748304/production/68daa11d455d7fda436119a0/rihg9g4q7obxx1cu8sgb.jpg", "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/691807ef0b39360012a5f0bc/4ccd3853-41f0-4b-XXE28", "https://assets.guesty.com/image/upload/v1767748304/production/68daa11d455d7fda436119a0/tugsn5z22vahcdin9c8k.jpg"]}, {"id": "radharani", "name": "AVA Radharani Villa", "bd": 3, "city": "Sri Thanu", "price": 12500000, "months": 11, "occ": 77, "adr": 9800, "net": 118000, "yld": 11.3, "cum": 1190000, "built": 252, "land": 710, "interior": 138, "since": "Aug 2025", "desc": "Bright, contemporary 3-bedroom villa in Sri Thanu with a generous pool and mature garden. Strong, steady occupancy through the year.", "hero": "https://assets.guesty.com/image/upload/v1767754228/production/68daa11d455d7fda436119a0/qvp6nmbpyp6le0udnmok.jpg", "gallery": ["https://assets.guesty.com/image/upload/v1767754228/production/68daa11d455d7fda436119a0/qvp6nmbpyp6le0udnmok.jpg", "https://assets.guesty.com/image/upload/v1767754272/production/68daa11d455d7fda436119a0/tlhs2mbogvzyhehifisp.jpg", "https://assets.guesty.com/image/upload/v1767754213/production/68daa11d455d7fda436119a0/qhejvebl5kl91iuac3fj.jpg", "https://assets.guesty.com/image/upload/v1767754223/production/68daa11d455d7fda436119a0/cixhgihc0nbgl3skulva.jpg", "https://assets.guesty.com/image/upload/v1767754228/production/68daa11d455d7fda436119a0/jiuegwdxhaxordhjjmkk.jpg"]}, {"id": "axis", "name": "AVA Axis Villa", "bd": 3, "city": "Sri Thanu", "price": 13200000, "months": 8, "occ": 74, "adr": 9200, "net": 108000, "yld": 9.8, "cum": 790000, "built": 264, "land": 735, "interior": 142, "since": "Nov 2025", "desc": "Newest of the AVA collection — a 3-bedroom villa with premium finish and a large lap pool. Early performance already tracking above plan.", "hero": "https://assets.guesty.com/image/upload/v1767951537/production/68daa11d455d7fda436119a0/nh1yceem75tavva35keq.jpg", "gallery": ["https://assets.guesty.com/image/upload/v1767951537/production/68daa11d455d7fda436119a0/nh1yceem75tavva35keq.jpg", "https://assets.guesty.com/image/upload/v1767885362/production/68daa11d455d7fda436119a0/wq8rgbvk5even3zokpdi.jpg", "https://assets.guesty.com/image/upload/v1767885364/production/68daa11d455d7fda436119a0/xatutvvaeogi9gegdy3q.jpg", "https://assets.guesty.com/image/upload/v1767885361/production/68daa11d455d7fda436119a0/vdjbvpd4777boajbzm7e.jpg", "https://assets.guesty.com/image/upload/v1767885362/production/68daa11d455d7fda436119a0/vobgzpikilbrgdhluhcs.jpg"]}, {"id": "fourmoons", "name": "Four Moons Villa", "bd": 2, "city": "Hin Kong", "price": 9500000, "months": 14, "occ": 81, "adr": 7600, "net": 92000, "yld": 11.6, "cum": 1190000, "built": 198, "land": 560, "interior": 112, "since": "May 2025", "desc": "Cosy 2-bedroom villa in Hin Kong, walk to the west-coast sunsets. Compact footprint, high occupancy, easy to manage.", "hero": "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/6a33a45dacb42d0013a02824/d698e8fc-6101-48-COSAd", "gallery": ["https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/6a33a45dacb42d0013a02824/d698e8fc-6101-48-COSAd", "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/6a33a45dacb42d0013a02824/e7e3e58b-a4ca-49-juRgj", "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/6a33a45dacb42d0013a02824/81ddcd18-9bdf-4f-X3KTt", "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/6a33a45dacb42d0013a02824/e04e065c-af70-4b-WxOkg", "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/6a33a45dacb42d0013a02824/1208e6d2-631b-47-Kqr7_"]}, {"id": "bunny", "name": "Bunny Villa", "bd": 2, "city": "Hin Kong", "price": 8900000, "months": 16, "occ": 78, "adr": 7300, "net": 84000, "yld": 11.3, "cum": 1250000, "built": 186, "land": 540, "interior": 104, "since": "Mar 2025", "desc": "Well-loved 2-bedroom villa with the longest track record in the portfolio. Consistent returns and a loyal repeat-guest base.", "hero": "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/68db460a078d7f0013bf721b/d0f4ab47-313b-42-jEpFL", "gallery": ["https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/68db460a078d7f0013bf721b/d0f4ab47-313b-42-jEpFL", "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/68db460a078d7f0013bf721b/73490fd6-80d7-46-HtDqi", "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/68db460a078d7f0013bf721b/aeddce0a-a059-48-U6PrD", "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/68db460a078d7f0013bf721b/21b35dd1-fc87-4b-aWMOk", "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/68db460a078d7f0013bf721b/addc732f-bcdd-4d-A5bE3"]}];
+const money = n => n.toLocaleString('en-US');
+const rnd = (a,b)=> a + Math.random()*(b-a);
+const bySlug = s => VILLAS.find(v=>v.id===s);
+
+/* seasonal shape for net monthly profit (Jul..Jun), scaled to villa.net */
+const SEASON=[.86,.80,.78,.96,1.18,1.42,1.55,1.50,1.30,1.00,.84,.90];
+const MONTHS=['J','A','S','O','N','D','J','F','M','A','M','J'];
+
+function sparkSVG(id, net){
+  const base=SEASON.map(s=> net*s*(1+rnd(-.05,.05)));
+  const W=200,H=30,n=base.length,mx=Math.max(...base),mn=Math.min(...base);
+  const xs=i=>i*(W/(n-1)), ys=v=>H-3-((v-mn)/(mx-mn||1))*(H-7);
+  let d=`M0 ${ys(base[0]).toFixed(1)}`;
+  for(let i=1;i<n;i++) d+=` L${xs(i).toFixed(1)} ${ys(base[i]).toFixed(1)}`;
+  const area=d+` L${W} ${H} L0 ${H} Z`;
+  return `<defs><linearGradient id="g${id}" x1="0" y1="0" x2="0" y2="1">
+     <stop offset="0" stop-color="#c6a878" stop-opacity=".5"/>
+     <stop offset="1" stop-color="#c6a878" stop-opacity="0"/></linearGradient></defs>
+     <path d="${area}" fill="url(#g${id})"/>
+     <path d="${d}" fill="none" stroke="#d9c09a" stroke-width="2"/>
+     <circle cx="${W}" cy="${ys(base[n-1]).toFixed(1)}" r="2.6" fill="#e2c592"/>`;
+}
+
+function barsSVG(net){
+  const vals=SEASON.map(s=> Math.round(net*s*(1+rnd(-.05,.05))));
+  const mx=Math.max(...vals), W=400,H=150,n=vals.length,gap=8,bw=(W-gap*(n-1))/n,floor=H-22;
+  let s=`<line x1="0" y1="${floor}" x2="${W}" y2="${floor}" stroke="#4a5553"/>`;
+  const avg=vals.reduce((a,b)=>a+b,0)/n, ay=floor-(avg/mx)*(floor-8);
+  s+=`<line x1="0" y1="${ay.toFixed(1)}" x2="${W}" y2="${ay.toFixed(1)}" stroke="#c6a878" stroke-dasharray="3 4" opacity=".6"/>`;
+  vals.forEach((v,i)=>{ const h=(v/mx)*(floor-8),x=i*(bw+gap),y=floor-h,hot=i>=4&&i<=8;
+    s+=`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" rx="3" fill="${hot?'#d9c09a':'#c6a878'}" opacity="${hot?1:.82}"/>`;
+    s+=`<text x="${(x+bw/2).toFixed(1)}" y="${H-6}" fill="#8b948f" font-size="9" text-anchor="middle">${MONTHS[i]}</text>`; });
+  return s;
+}
+
+/* ---------- CATALOG ---------- */
+function catalog(){
+  let cards = VILLAS.map((v,i)=>`
+    <div class="card" onclick="go('${v.id}')" style="animation-delay:${i*70}ms">
+      <div class="photo">
+        <img src="${v.hero}" alt="" loading="lazy">
+        <div class="pill">FOR SALE</div>
+        <div class="ybadge">Net yield <b>${v.yld}%</b>/yr</div>
+      </div>
+      <div class="cbody">
+        <div class="cname">${v.name.replace('AVA ','')} — ${v.bd} BR</div>
+        <div class="csub">${v.city} · fully furnished, rental-ready. Verified performance on Airbnb &amp; Booking.</div>
+        <div class="cprice">${money(v.price)} <span>฿</span></div>
+        <div class="strip">
+          <div class="m"><div class="l">In operation</div><div class="v">${v.months} <small>mo</small></div></div>
+          <div class="m"><div class="l">Net / month</div><div class="v"><span class="u">฿</span>${Math.round(v.net/1000)}k</div></div>
+          <div class="m"><div class="l">Occupancy</div><div class="v">${v.occ}<span class="u">%</span></div></div>
+        </div>
+        <div class="sparkrow">
+          <svg id="sp-${v.id}" viewBox="0 0 200 30" preserveAspectRatio="none">${sparkSVG(v.id,v.net)}</svg>
+          <div class="trend">▲ ฿${(v.cum/1e6).toFixed(2)}M earned</div>
+        </div>
+        <button class="more" onclick="event.stopPropagation();go('${v.id}')">More Info <span class="arr">→</span></button>
+      </div>
+    </div>`).join('');
+  return `
+    <header>
+      <div class="logo" onclick="go('')">ΛVΛ</div>
+      <div class="icons"><div class="ic">✆</div><div class="ic">✈</div><div class="ic dark">≡</div></div>
+    </header>
+    <div class="lead">
+      <h2>Investment villas · Koh Phangan</h2>
+      <p>Turnkey, rental-ready homes with verified returns. Tap any villa for its full performance.</p>
+    </div>
+    ${cards}
+    <div class="disc">Figures are indicative, based on actual Guesty booking data. Full P&amp;L available on request.</div>`;
+}
+
+/* ---------- DETAIL ---------- */
+function detail(v){
+  const gal = v.gallery.slice(1,5).map(u=>`<img src="${u}" loading="lazy">`).join('');
+  const recovered = Math.round(v.cum/v.price*100);
+  const feats = ['Private saltwater pool','Patio &amp; tropical garden','Dressing room &amp; laundry',
+                 'Fully furnished (TV, washer/dryer, dishwasher)','Solid construction, 20 cm walls'];
+  return `
+    <header>
+      <button class="back" onclick="go('')"><span class="r">←</span> All villas</button>
+      <div class="icons"><div class="ic">✆</div><div class="ic dark">≡</div></div>
+    </header>
+    <div class="dhero"><img src="${v.hero}" alt=""><div class="pill">FOR SALE</div></div>
+    <div class="gal">${gal}</div>
+    <div class="dpad">
+      <h1>${v.name.replace('AVA ','')} — ${v.bd} Bedrooms</h1>
+      <div class="dprice">${money(v.price)} <span>฿</span></div>
+      <div class="badges"><span class="tag sale">For sale</span><span class="tag">Turnkey</span><span class="tag">Rental-ready</span></div>
+      <p class="ddesc">${v.desc}</p>
+      <div class="kv"><b>District:</b> ${v.city}, <a href="#">location on the map</a></div>
+      <div class="specs"><div><b>Total built area:</b> ${v.built} m²</div><div><b>Land plot:</b> ${v.land} m²</div><div><b>Interior:</b> ${v.interior} m²</div></div>
+      <div class="feat">${v.bd} bedrooms · ${feats.join(' · ')}</div>
+      <div class="own"><b>Ownership:</b> Freehold · <b>Construction phase:</b> Ready 100%</div>
+    </div>
+    <div class="hr"></div>
+    <div class="invest">
+      <div class="itop"><div class="kicker">Investment performance</div>
+        <div class="live"><span class="dot"></span> Live · updated monthly</div></div>
+      <div class="kpis">
+        <div class="kpi"><div class="lab">In operation</div><div class="num">${v.months} <small>mo</small></div></div>
+        <div class="kpi"><div class="lab">Avg. net profit / mo</div><div class="num"><span class="u">฿</span><span id="d-net">${money(v.net)}</span></div></div>
+        <div class="kpi"><div class="lab">Net yield / year</div><div class="num"><span id="d-yld">${v.yld}</span><span class="u">%</span></div></div>
+      </div>
+      <div class="yhint">Net yield = yearly profit after all costs ÷ villa price. ~10%/yr is strong for villas here — full payback in ≈ ${Math.round(100/v.yld)} years, then pure income (the villa itself stays yours).</div>
+      <div class="subrow"><div>Occupancy <b id="d-occ">${v.occ}%</b></div><div>ADR <b id="d-adr">฿${money(v.adr)}</b></div><div>Since <b>${v.since}</b></div></div>
+      <div class="ctitle">Net monthly profit, ฿ <span class="hi">last 12 months</span></div>
+      <svg id="d-bars" viewBox="0 0 400 150" preserveAspectRatio="none">${barsSVG(v.net)}</svg>
+      <div class="cum">
+        <div class="r1"><div><div class="lab2">Earned since launch</div><div class="big">฿<span id="d-cum">${money(v.cum)}</span></div></div>
+          <div class="pct"><span id="d-rec">${recovered}</span>% of price back</div></div>
+        <div class="barw"><div class="barf" id="d-bar" style="width:${Math.min(100,recovered)}%"></div></div>
+        <div class="cap">Of the ${money(v.price)} ฿ purchase price, ฿${money(v.cum)} has already come back as net rental profit since the villa opened.</div>
+      </div>
+      <button class="cta">Request full P&amp;L <span class="arr">→</span></button>
+      <div class="note">Indicative figures from actual Guesty booking data. Full 12-month P&amp;L &amp; occupancy report on request.</div>
+    </div>
+    <div class="foot"></div>`;
+}
+
+/* ---------- ROUTER + LIVE DRIFT ---------- */
+let liveTimer=null;
+function render(){
+  clearInterval(liveTimer);
+  const slug=location.hash.replace(/^#\/?v?\/?/,'').replace('#','');
+  const app=document.getElementById('app');
+  window.scrollTo(0,0);
+  if(slug && bySlug(slug)){
+    const v=bySlug(slug); app.innerHTML=detail(v);
+    liveTimer=setInterval(()=>driftDetail(v),4500);
+  } else {
+    app.innerHTML=catalog();
+    liveTimer=setInterval(driftCatalog,4500);
+  }
+}
+function driftCatalog(){
+  VILLAS.forEach(v=>{ const el=document.getElementById('sp-'+v.id); if(el) el.innerHTML=sparkSVG(v.id,v.net); });
+}
+function driftDetail(v){
+  const net=Math.round(v.net*(1+rnd(-.04,.04))/1000)*1000;
+  const set=(id,val)=>{const e=document.getElementById(id); if(e)e.textContent=val;};
+  set('d-net',money(net));
+  set('d-yld',(net*12/v.price*100).toFixed(1));
+  set('d-occ',Math.round(v.occ+rnd(-2,2))+'%');
+  set('d-adr','฿'+money(Math.round(v.adr*(1+rnd(-.03,.03))/50)*50));
+  const cum=v.cum+Math.round(rnd(-12,18))*1000; set('d-cum',money(cum));
+  const rec=Math.round(cum/v.price*100); set('d-rec',rec);
+  const bars=document.getElementById('d-bars'); if(bars)bars.innerHTML=barsSVG(v.net);
+  const bar=document.getElementById('d-bar'); if(bar)bar.style.width=Math.min(100,rec)+'%';
+}
+function go(slug){ location.hash = slug ? ('#/v/'+slug) : '#'; }
+window.addEventListener('hashchange', render);
+render();
+</script>
+</body></html>
