@@ -1,0 +1,72 @@
+/* ============================================================
+   AVA Investment Villas — component styles
+   Всё под-namespace .ava-* чтобы не конфликтовать со стилями Tilda.
+   Шрифт: Manrope (подключите на странице Tilda или замените на свой).
+   Палитра ava.estate: ink #2b3838 / cream #efe6db / gold #c6a878.
+   ============================================================ */
+
+.ava-card, .ava-detail { --ink:#2b3838; --ink2:#333f3e; --cream:#efe6db; --sub:#9aa39f;
+  --muted:#6f7a76; --hair:#ddd2c3; --gold:#c6a878; --gold2:#d9c09a; --green:#7fa06f; --card-cream:#f2ebe1;
+  font-family:'Manrope',system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+
+/* ---------- CARD (для карточки в каталоге товаров) ---------- */
+.ava-card{ background:var(--ink); color:var(--card-cream); border-radius:24px; padding:13px; }
+.ava-card *{ box-sizing:border-box; }
+.ava-card .photo{ position:relative; border-radius:16px; overflow:hidden; aspect-ratio:16/11;
+  background:linear-gradient(135deg,#3a4a44,#2b3838); }
+.ava-card .photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+.ava-card .pill{ position:absolute; top:13px; left:13px; background:#efe7db; color:#2b3838;
+  font-weight:800; font-size:12px; letter-spacing:.6px; padding:7px 14px; border-radius:40px; }
+.ava-card .cname{ font-size:22px; font-weight:800; letter-spacing:-.3px; margin-top:15px; }
+.ava-card .csub{ font-size:14px; color:var(--sub); margin-top:7px; line-height:1.45; }
+.ava-card .cprice{ font-size:25px; font-weight:800; margin-top:14px; letter-spacing:-.5px; }
+.ava-card .cprice span{ font-size:15px; color:var(--sub); font-weight:600; }
+.ava-card .strip{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:7px; margin-top:14px; }
+.ava-card .m{ background:var(--ink2); border-radius:14px; padding:10px 9px; }
+.ava-card .m .l{ font-size:10px; font-weight:700; letter-spacing:.3px; text-transform:uppercase; color:#8f9994; }
+.ava-card .m .v{ font-size:17px; font-weight:800; margin-top:4px; letter-spacing:-.3px; font-variant-numeric:tabular-nums; }
+.ava-card .m .v .u{ font-size:11px; color:var(--gold); font-weight:700; }
+.ava-card .m .v small{ font-size:10.5px; color:#c9d1cc; font-weight:700; }
+.ava-card .sparkrow{ display:flex; align-items:center; gap:9px; margin-top:12px; padding:0 2px; }
+.ava-card .sparkrow svg{ flex:1; height:30px; }
+.ava-card .trend{ font-size:11.5px; font-weight:800; color:var(--green); white-space:nowrap; }
+.ava-card .more{ margin-top:14px; width:100%; border:none; cursor:pointer; background:#efe7db; color:#2b3838;
+  font-weight:800; font-size:15px; padding:14px; border-radius:40px; display:flex; align-items:center;
+  justify-content:center; gap:9px; font-family:inherit; }
+.ava-card .more .arr{ width:25px; height:25px; border-radius:50%; background:#2b3838; color:#efe7db;
+  display:flex; align-items:center; justify-content:center; font-size:13px; }
+
+/* ---------- DETAIL (для страницы объекта) ---------- */
+.ava-detail{ color:var(--ink); }
+.ava-detail *{ box-sizing:border-box; }
+.ava-detail .invest{ background:var(--ink); color:var(--card-cream); border-radius:24px; padding:22px 20px 24px; }
+.ava-detail .itop{ display:flex; align-items:center; justify-content:space-between; }
+.ava-detail .kicker{ font-size:12.5px; font-weight:800; letter-spacing:1.3px; text-transform:uppercase; color:#cdd4d0; }
+.ava-detail .live{ display:flex; align-items:center; gap:6px; font-size:11px; font-weight:700; color:#a9b2ad; }
+.ava-detail .dot{ width:8px; height:8px; border-radius:50%; background:var(--green); }
+.ava-detail .kpis{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:9px; margin-top:18px; }
+.ava-detail .kpi{ background:var(--ink2); border-radius:16px; padding:14px 11px; }
+.ava-detail .kpi .lab{ font-size:10.5px; font-weight:700; letter-spacing:.3px; color:#939d98;
+  text-transform:uppercase; line-height:1.25; min-height:26px; }
+.ava-detail .kpi .num{ font-size:22px; font-weight:800; margin-top:7px; letter-spacing:-.5px; font-variant-numeric:tabular-nums; }
+.ava-detail .kpi .num .u{ font-size:13px; font-weight:700; color:var(--gold); }
+.ava-detail .kpi .num small{ font-size:12px; font-weight:700; color:#c9d1cc; }
+.ava-detail .subrow{ display:flex; justify-content:space-between; gap:8px; margin-top:14px; font-size:12.5px; color:#aab3ae; }
+.ava-detail .subrow b{ color:#e6ded2; font-weight:700; }
+.ava-detail .ctitle{ font-size:12.5px; font-weight:700; color:#c3ccc6; margin:20px 0 12px; display:flex; justify-content:space-between; }
+.ava-detail .ctitle .hi{ color:var(--gold2); }
+.ava-detail svg{ display:block; width:100%; }
+.ava-detail .cum{ background:var(--ink2); border-radius:16px; padding:16px; margin-top:20px; }
+.ava-detail .cum .r1{ display:flex; justify-content:space-between; align-items:baseline; }
+.ava-detail .cum .big{ font-size:22px; font-weight:800; letter-spacing:-.4px; }
+.ava-detail .cum .lab2{ font-size:11px; color:#9aa39f; font-weight:600; margin-bottom:3px; }
+.ava-detail .cum .pct{ font-size:13px; font-weight:800; color:var(--green); }
+.ava-detail .barw{ height:9px; border-radius:6px; background:#28312f; margin-top:12px; overflow:hidden; }
+.ava-detail .barf{ height:100%; border-radius:6px; background:linear-gradient(90deg,#c6a878,#d9c09a); }
+.ava-detail .cum .cap{ font-size:11px; color:#8f9994; margin-top:9px; line-height:1.45; }
+.ava-detail .cta{ margin-top:20px; width:100%; border:none; cursor:pointer; background:var(--gold); color:#2b2016;
+  font-weight:800; font-size:16px; padding:16px; border-radius:40px; display:flex; align-items:center;
+  justify-content:center; gap:10px; font-family:inherit; }
+.ava-detail .cta .arr{ width:26px; height:26px; border-radius:50%; background:#2b2016; color:var(--gold);
+  display:flex; align-items:center; justify-content:center; font-size:14px; }
+.ava-detail .note{ font-size:10.5px; color:#8f9994; margin-top:13px; line-height:1.5; text-align:center; }
