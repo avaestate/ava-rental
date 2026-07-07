@@ -29,28 +29,28 @@
 <style>
   :root{
     /* ===== V2 LUXE — dark graphite + soft gold (Aman / Ritz) ===== */
-    --gold:#c8a96a;
-    --gold-soft:#d9c193;
-    --cream:#efe6da;            /* primary readable text on dark */
+    --gold:#c9b39a;
+    --gold-soft:#dccbb4;
+    --cream:#f0e7df;            /* primary readable text on dark */
 
     /* mapped brand tokens (names kept so every component inherits the luxe theme) */
-    --ink:#efe6da;             /* "ink" now = light text on dark surfaces */
-    --ink-soft:#f3ece1;
+    --ink:#f0e7df;             /* "ink" now = light text on dark surfaces */
+    --ink-soft:#f5eee6;
     --slate:#c2cccd;
-    --muted:#9aa3a5;
-    --accent:#c8a96a;          /* gold accent everywhere */
+    --muted:#9aa39f;
+    --accent:#c9b39a;          /* gold accent everywhere */
 
     /* dark surfaces (replacing cream stack) */
-    --bg:#161b1c;              /* app background */
-    --d1:#283133;
-    --d2:#1b2123;
-    --cream-1:#1e2526;        /* input / subtle panel surface */
-    --cream-2:#222a2c;
-    --cream-3:#1d2425;        /* recap / linkout surface */
-    --white:#202829;          /* "card" surface on dark */
+    --bg:#2b3639;              /* app background */
+    --d1:#33403f;
+    --d2:#2f3b3a;
+    --cream-1:#33403f;        /* input / subtle panel surface */
+    --cream-2:#364341;
+    --cream-3:#313d3c;        /* recap / linkout surface */
+    --white:#33403f;          /* "card" surface on dark */
 
-    --line:rgba(200,169,106,.18);
-    --line-strong:rgba(200,169,106,.34);
+    --line:rgba(201,179,154,.20);
+    --line-strong:rgba(201,179,154,.38);
     --shadow-sm:0 1px 2px rgba(0,0,0,.30), 0 2px 8px rgba(0,0,0,.28);
     --shadow-md:0 12px 30px -16px rgba(0,0,0,.6), 0 4px 12px rgba(0,0,0,.3);
     --shadow-lg:0 30px 60px -26px rgba(0,0,0,.7), 0 8px 18px rgba(0,0,0,.35);
@@ -71,7 +71,7 @@
     /* desktop: dark graphite stage behind the phone */
     background:
       radial-gradient(120% 80% at 50% -10%, #2e3739, transparent 60%),
-      linear-gradient(180deg,#171d1e,#0f1314);
+      linear-gradient(180deg,#2b3639,#232d2f);
     -webkit-font-smoothing:antialiased;
     text-rendering:optimizeLegibility;
     line-height:1.5;
@@ -88,7 +88,7 @@
     position:relative;
     width:100%; max-width:var(--phone);
     height:min(900px, calc(100dvh - 48px));
-    background:linear-gradient(180deg,#202829,#161b1c);
+    background:linear-gradient(180deg,#313d3c,#2b3639);
     border-radius:42px;
     box-shadow:0 50px 90px -30px rgba(0,0,0,.7), 0 0 0 1px rgba(200,169,106,.10);
     overflow:hidden;
@@ -124,7 +124,7 @@
   .brand{display:flex; align-items:center; gap:11px; flex:1; min-width:0}
   .mark{
     width:40px;height:40px;border-radius:12px; flex:0 0 auto;
-    background:linear-gradient(150deg,#2e3739,#1d2425); border:1px solid var(--line);
+    background:linear-gradient(150deg,#394645,#2e3938); border:1px solid var(--line);
     display:grid;place-items:center; box-shadow:var(--shadow-sm);
   }
   .mark svg{width:22px;height:22px}
@@ -168,7 +168,7 @@
     position:relative; cursor:pointer; text-align:left; overflow:hidden;
     border-radius:20px; padding:22px 18px 18px; -webkit-tap-highlight-color:transparent;
     display:flex; flex-direction:column; justify-content:space-between;
-    aspect-ratio:165/128; background:linear-gradient(160deg,#283133,#1b2123);
+    aspect-ratio:165/128; background:linear-gradient(160deg,#354241,#2c3737);
     border:1px solid var(--line);
     transition:transform .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease);
   }
@@ -194,7 +194,7 @@
     width:100%; aspect-ratio:auto;
     min-height:0; height:auto;            /* slightly shorter — content-sized, tight padding */
     padding:20px 24px 20px;
-    background:linear-gradient(150deg,#2f3a3c,#1a2122);
+    background:linear-gradient(150deg,#3a4746,#2d3837);
   }
   /* stronger scrim on hero so the text stays readable over the photo */
   .tile.hero.has-photo .tscrim{background:
@@ -224,7 +224,7 @@
 
   /* ============ SERVICE DETAIL (V2 luxe dark + large gold line icon) ============ */
   .detail-hero{
-    position:relative; background:linear-gradient(150deg,#2f3a3c,#1a2122); color:var(--cream);
+    position:relative; background:linear-gradient(150deg,#3a4746,#2d3837); color:var(--cream);
     border:1px solid var(--line); border-radius:var(--radius);
     padding:28px 24px 26px; overflow:hidden; box-shadow:var(--shadow-md); margin-bottom:18px;
   }
@@ -252,7 +252,7 @@
   .detail-hero.has-photo h2{color:#fff; text-shadow:0 1px 8px rgba(0,0,0,.55)}
   .detail-hero.has-photo p{color:#eef1f1; text-shadow:0 1px 6px rgba(0,0,0,.5)}
 
-  .panel{background:linear-gradient(160deg,#222a2c,#1a2021); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-sm); padding:20px 20px; margin-bottom:16px}
+  .panel{background:linear-gradient(160deg,#33403f,#2c3736); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-sm); padding:20px 20px; margin-bottom:16px}
   .panel h4{font-size:11.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); font-weight:600; margin-bottom:14px}
   .incl{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px}
   .incl li{display:flex; gap:11px; align-items:flex-start; font-size:14px; color:var(--cream); line-height:1.45}
@@ -272,8 +272,8 @@
 
   /* ============ BUTTONS ============ */
   .btn-primary{
-    width:100%; border:0; cursor:pointer; font-weight:700; font-size:15px; color:#1a2122;
-    background:linear-gradient(150deg,var(--gold-soft),var(--gold)); padding:16px; border-radius:13px; letter-spacing:.02em;
+    width:100%; border:0; cursor:pointer; font-weight:700; font-size:15px; color:#2b3838;
+    background:#efe7db; padding:16px; border-radius:40px; letter-spacing:.02em;
     box-shadow:var(--shadow-md); transition:.3s var(--ease);
     display:flex; align-items:center; justify-content:center; gap:9px;
     -webkit-tap-highlight-color:transparent;
@@ -284,10 +284,10 @@
   .btn-primary svg{width:17px;height:17px}
   .btn-ghost{
     width:100%; border:1px solid var(--line-strong); cursor:pointer; font-weight:600; font-size:14px; color:var(--cream);
-    background:rgba(200,169,106,.05); padding:14px; border-radius:13px; transition:.3s var(--ease);
+    background:rgba(201,179,154,.06); padding:14px; border-radius:40px; transition:.3s var(--ease);
     display:flex; align-items:center; justify-content:center; gap:9px; margin-top:10px;
   }
-  .btn-ghost:hover{background:rgba(200,169,106,.12); border-color:var(--gold)}
+  .btn-ghost:hover{background:rgba(201,179,154,.14); border-color:var(--gold)}
 
   /* ============ FORM ============ */
   .field{margin-bottom:15px}
@@ -344,7 +344,7 @@
   .confirm{text-align:center; padding:30px 14px 10px; animation:viewIn .5s var(--ease)}
   .confirm .badge{
     width:88px;height:88px;border-radius:50%; margin:0 auto 22px; display:grid; place-items:center;
-    background:linear-gradient(150deg,#2f3a3c,#1a2122); border:1px solid var(--line-strong); box-shadow:var(--shadow-md); color:var(--gold);
+    background:linear-gradient(150deg,#3a4746,#2d3837); border:1px solid var(--line-strong); box-shadow:var(--shadow-md); color:var(--gold);
     animation:pop .55s var(--ease);
   }
   @keyframes pop{0%{transform:scale(.5); opacity:0} 60%{transform:scale(1.08)} 100%{transform:scale(1); opacity:1}}
@@ -366,12 +366,12 @@
   .chat-day{align-self:center; font-size:10.5px; letter-spacing:.06em; color:var(--muted); background:rgba(200,169,106,.08); border:1px solid var(--line); padding:4px 12px; border-radius:999px; margin-bottom:2px}
   .msg{display:flex; gap:9px; max-width:86%; animation:msgIn .35s var(--ease)}
   @keyframes msgIn{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none}}
-  .msg .av{width:30px;height:30px;border-radius:50%; flex:0 0 auto; display:grid; place-items:center; background:linear-gradient(150deg,#2e3739,#1d2425); border:1px solid var(--line); box-shadow:var(--shadow-sm)}
+  .msg .av{width:30px;height:30px;border-radius:50%; flex:0 0 auto; display:grid; place-items:center; background:linear-gradient(150deg,#394645,#2e3938); border:1px solid var(--line); box-shadow:var(--shadow-sm)}
   .msg .av svg{width:16px;height:16px}
   .msg .stack{display:flex; flex-direction:column; gap:3px}
   .msg .who{font-size:10.5px; font-weight:600; letter-spacing:.04em; color:var(--gold); margin-left:3px}
   .bubble{padding:11px 14px; border-radius:16px; font-size:14px; line-height:1.5; box-shadow:var(--shadow-sm)}
-  .msg.in .bubble{background:linear-gradient(160deg,#222a2c,#1a2021); border:1px solid var(--line); border-top-left-radius:5px; color:var(--cream)}
+  .msg.in .bubble{background:linear-gradient(160deg,#33403f,#2c3736); border:1px solid var(--line); border-top-left-radius:5px; color:var(--cream)}
   .msg.in .time, .msg.out .time{font-size:9.5px; color:var(--muted); margin-top:1px}
   .msg.out{align-self:flex-end; flex-direction:row-reverse}
   .msg.out .stack{align-items:flex-end}
@@ -415,7 +415,7 @@
   .rq-head p{margin:9px 0 0; color:var(--muted); font-size:14px; line-height:1.5}
   .rq-list{display:flex; flex-direction:column; gap:12px}
   .rq-card{
-    background:linear-gradient(160deg,#222a2c,#1a2021); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-sm);
+    background:linear-gradient(160deg,#33403f,#2c3736); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-sm);
     padding:16px 17px; display:flex; gap:14px; align-items:flex-start; animation:viewIn .4s var(--ease);
   }
   .rq-card .ric{width:46px;height:46px;border-radius:13px; background:linear-gradient(160deg,#2a3335,#1d2425); border:1px solid var(--line); display:grid; place-items:center; flex:0 0 auto}
@@ -425,7 +425,7 @@
   .rq-card .meta{margin-top:6px; font-size:12.5px; color:var(--muted); line-height:1.5}
   .rq-card .meta b{color:var(--gold-soft); font-weight:600}
   .status-pill{display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:5px 11px; border-radius:999px; margin-top:10px}
-  .status-pill.pending{color:var(--gold-soft); background:rgba(200,169,106,.12); border:1px solid var(--line-strong)}
+  .status-pill.pending{color:var(--gold-soft); background:rgba(201,179,154,.14); border:1px solid var(--line-strong)}
   .status-pill.pending .d{width:6px;height:6px;border-radius:50%; background:var(--gold)}
   .empty{text-align:center; padding:60px 24px}
   .empty .eic{width:74px;height:74px;border-radius:20px; margin:0 auto 20px; background:linear-gradient(150deg,#2e3739,#1a2122); border:1px solid var(--line); box-shadow:var(--shadow-sm); display:grid; place-items:center; font-size:32px}
