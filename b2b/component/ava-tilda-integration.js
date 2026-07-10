@@ -30,12 +30,12 @@
   var CSS =
   '.ava-inv{font-family:Manrope,system-ui,sans-serif;margin:20px 0 4px}' +
   '.ava-inv .strip{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid #3f4748;border-bottom:1px solid #3f4748}' +
-  '.ava-inv .m{padding:13px 12px 14px}' +
+  '.ava-inv .m{padding:13px 10px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}' +
   '.ava-inv .m + .m{border-left:1px solid #3f4748}' +
   '.ava-inv .m .l{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#75878b}' +
-  '.ava-inv .m .v{font-size:19px;font-weight:800;margin-top:6px;letter-spacing:-.3px;color:#f0e7df;font-variant-numeric:tabular-nums}' +
-  '.ava-inv .m .v .u{font-size:12px;color:#f0e7df;font-weight:700}' +
-  '.ava-inv .m .v small{font-size:11px;color:#f0e7df;font-weight:700;opacity:.85}' +
+  '.ava-inv .m .v{font-size:20px;font-weight:600;margin-top:6px;letter-spacing:-.3px;color:#f0e7df;font-variant-numeric:tabular-nums}' +
+  '.ava-inv .m .v .u{font-size:12px;color:#f0e7df;font-weight:600}' +
+  '.ava-inv .m .v small{font-size:11px;color:#f0e7df;font-weight:600;opacity:.85}' +
   '.ava-inv .sparkpanel{background:#3F4A4C;border-radius:10px;padding:12px 14px 10px;margin-top:14px}' +
   '.ava-inv .sparkpanel svg{width:100%;height:44px;margin-top:6px;display:block;overflow:visible}' +
   '.ava-inv .trend{font-size:12px;font-weight:800;color:#90e480;white-space:nowrap;text-align:right}' +
@@ -64,7 +64,8 @@
   '.ava-detail .barw{height:9px;border-radius:6px;background:#28312f;margin-top:12px;overflow:hidden}' +
   '.ava-detail .barf{height:100%;border-radius:6px;background:linear-gradient(90deg,#c6a878,#d9c09a)}' +
   '.ava-detail .cum .cap{font-size:11px;color:#8f9994;margin-top:9px;line-height:1.45}' +
-  '.ava-detail .note{font-size:10.5px;color:#8f9994;margin-top:13px;line-height:1.5;text-align:center}';
+  '.ava-detail .note{font-size:10.5px;color:#8f9994;margin-top:13px;line-height:1.5;text-align:center}' +
+  '@media(max-width:640px){.ava-inv .m .v{font-size:18px}}';
 
   function injectCSS() {
     if (document.getElementById('ava-inv-css')) return;
