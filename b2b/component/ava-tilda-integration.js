@@ -29,14 +29,15 @@
   /* ---------- стили (namespace .ava-*, совпадают с тёмными карточками ava.estate) ---------- */
   var CSS =
   '.ava-inv{font-family:Manrope,system-ui,sans-serif;margin:20px 0 4px}' +
-  '.ava-inv .strip{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid #3f4748;border-bottom:1px solid #3f4748}' +
-  '.ava-inv .m{padding:13px 10px 14px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;text-align:left}' +
-  '.ava-inv .m + .m{border-left:1px solid #3f4748}' +
-  '.ava-inv .m .l{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#75878b}' +
+  '.ava-inv .invblock{background:#3F4A4C;border-radius:10px;overflow:hidden}' +
+  '.ava-inv .strip{display:grid;grid-template-columns:1fr 1fr 1fr}' +
+  '.ava-inv .m{padding:13px 14px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;text-align:left}' +
+  '.ava-inv .m + .m{border-left:1px solid rgba(255,255,255,.09)}' +
+  '.ava-inv .m .l{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#9db0b4}' +
   '.ava-inv .m .v{font-size:20px;font-weight:600;margin-top:6px;letter-spacing:-.3px;color:#f0e7df;font-variant-numeric:tabular-nums}' +
   '.ava-inv .m .v .u{font-size:12px;color:#f0e7df;font-weight:600}' +
-  '.ava-inv .m .v small{font-size:11px;color:#f0e7df;font-weight:600;opacity:.85}' +
-  '.ava-inv .sparkpanel{background:#3F4A4C;border-radius:10px;padding:12px 14px 10px;margin-top:14px}' +
+  '.ava-inv .m .v small{font-size:12px;color:#f0e7df;font-weight:600;opacity:.85}' +
+  '.ava-inv .sparkpanel{padding:10px 14px;border-top:1px solid rgba(255,255,255,.09)}' +
   '.ava-inv .sparkpanel svg{width:100%;height:44px;margin-top:6px;display:block;overflow:visible}' +
   '.ava-inv .trend{font-size:12px;font-weight:800;color:#90e480;white-space:nowrap;text-align:right}' +
   '.ava-detail{font-family:Manrope,system-ui,sans-serif;margin:20px 0}' +
@@ -106,13 +107,13 @@
 
   /* ---------- каталог: строка метрик в карточку ---------- */
   function stripHTML(v){
-    return '<div class="strip">'+
+    return '<div class="invblock"><div class="strip">'+
       '<div class="m"><div class="l">In operation</div><div class="v">'+v.months+' <small>mo</small></div></div>'+
       '<div class="m"><div class="l">Net / month</div><div class="v"><span class="u">฿</span>'+kfmt(v.net)+'</div></div>'+
       '<div class="m"><div class="l">ROI / year</div><div class="v">'+v.yld+'<span class="u">%</span></div></div>'+
       '</div>'+
       '<div class="sparkpanel"><div class="trend">▲ ฿'+(v.cum/1e6).toFixed(2)+'M earned</div>'+
-      '<svg viewBox="0 0 200 30" preserveAspectRatio="none">'+sparkSVG(v.series)+'</svg></div>';
+      '<svg viewBox="0 0 200 30" preserveAspectRatio="none">'+sparkSVG(v.series)+'</svg></div></div>';
   }
   function decorateCards(){
     var cards=document.querySelectorAll('.js-product.t-store__card');
