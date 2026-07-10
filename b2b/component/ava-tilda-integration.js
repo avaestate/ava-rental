@@ -33,7 +33,7 @@
   '.ava-inv .strip{display:grid;grid-template-columns:1fr 1fr 1fr}' +
   '.ava-inv .m{padding:13px 14px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;text-align:left}' +
   '.ava-inv .m + .m{border-left:1px solid rgba(255,255,255,.09)}' +
-  '.ava-inv .m .l{font-size:9px;line-height:1;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#9db0b4}' +
+  '.ava-inv .m .l{font-size:12px;line-height:1;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#9db0b4}' +
   '.ava-inv .m .v{font-size:20px;font-weight:600;margin-top:6px;letter-spacing:0;color:#f0e7df;font-variant-numeric:tabular-nums}' +
   '.ava-inv .m .v .u{font-size:12px;color:#f0e7df;font-weight:600}' +
   '.ava-inv .m .v small{font-size:12px;color:#f0e7df;font-weight:600;opacity:.85}' +
@@ -66,7 +66,7 @@
   '.ava-detail .barf{height:100%;border-radius:6px;background:linear-gradient(90deg,#c6a878,#d9c09a)}' +
   '.ava-detail .cum .cap{font-size:11px;color:#8f9994;margin-top:9px;line-height:1.45}' +
   '.ava-detail .note{font-size:10.5px;color:#8f9994;margin-top:13px;line-height:1.5;text-align:center}' +
-  '@media(max-width:640px){.ava-inv .m .v{font-size:18px}}';
+  '@media(max-width:640px){.ava-inv .m .v{font-size:18px}.ava-inv .m .l{font-size:9px}}';
 
   function injectCSS() {
     if (document.getElementById('ava-inv-css')) return;
