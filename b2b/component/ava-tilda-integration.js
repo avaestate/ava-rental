@@ -28,7 +28,7 @@
 
   /* ---------- стили (namespace .ava-*, совпадают с тёмными карточками ava.estate) ---------- */
   var CSS =
-  '.ava-inv{font-family:Manrope,system-ui,sans-serif;margin:14px 0 4px}' +
+  '.ava-inv{font-family:Manrope,system-ui,sans-serif;margin:20px 0 4px}' +
   '.ava-inv .strip{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid #3f4748;border-bottom:1px solid #3f4748}' +
   '.ava-inv .m{padding:13px 12px 14px}' +
   '.ava-inv .m + .m{border-left:1px solid #3f4748}' +
@@ -36,7 +36,7 @@
   '.ava-inv .m .v{font-size:19px;font-weight:800;margin-top:6px;letter-spacing:-.3px;color:#f0e7df;font-variant-numeric:tabular-nums}' +
   '.ava-inv .m .v .u{font-size:12px;color:#f0e7df;font-weight:700}' +
   '.ava-inv .m .v small{font-size:11px;color:#f0e7df;font-weight:700;opacity:.85}' +
-  '.ava-inv .sparkpanel{background:#22292b;border-radius:14px;padding:12px 14px 10px;margin-top:14px}' +
+  '.ava-inv .sparkpanel{background:#3F4A4C;border-radius:14px;padding:12px 14px 10px;margin-top:14px}' +
   '.ava-inv .sparkpanel svg{width:100%;height:44px;margin-top:6px;display:block;overflow:visible}' +
   '.ava-inv .trend{font-size:12px;font-weight:800;color:#90e480;white-space:nowrap;text-align:right}' +
   '.ava-detail{font-family:Manrope,system-ui,sans-serif;margin:20px 0}' +
