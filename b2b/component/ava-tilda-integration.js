@@ -33,7 +33,7 @@
   '.ava-inv .strip{display:grid;grid-template-columns:1fr 1fr 1fr}' +
   '.ava-inv .m{padding:13px 14px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;text-align:left}' +
   '.ava-inv .m + .m{border-left:1px solid rgba(255,255,255,.09)}' +
-  '.ava-inv .m .l{font-size:8px;line-height:1;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#9db0b4}' +
+  '.ava-inv .m .l{font-size:9px;line-height:1;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#9db0b4}' +
   '.ava-inv .m .v{font-size:20px;font-weight:600;margin-top:6px;letter-spacing:0;color:#f0e7df;font-variant-numeric:tabular-nums}' +
   '.ava-inv .m .v .u{font-size:12px;color:#f0e7df;font-weight:600}' +
   '.ava-inv .m .v small{font-size:12px;color:#f0e7df;font-weight:600;opacity:.85}' +
