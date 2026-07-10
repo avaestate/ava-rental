@@ -29,15 +29,16 @@
   /* ---------- стили (namespace .ava-*, совпадают с тёмными карточками ava.estate) ---------- */
   var CSS =
   '.ava-inv{font-family:Manrope,system-ui,sans-serif;margin:14px 0 4px}' +
-  '.ava-inv .strip{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}' +
-  '.ava-inv .m{background:#333f3e;border-radius:14px;padding:10px 9px}' +
-  '.ava-inv .m .l{font-size:10px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:#8f9994}' +
-  '.ava-inv .m .v{font-size:17px;font-weight:800;margin-top:4px;letter-spacing:-.3px;color:#f2ebe1;font-variant-numeric:tabular-nums}' +
-  '.ava-inv .m .v .u{font-size:11px;color:#c6a878;font-weight:700}' +
-  '.ava-inv .m .v small{font-size:10.5px;color:#c9d1cc;font-weight:700}' +
-  '.ava-inv .sparkrow{display:flex;align-items:center;gap:9px;margin-top:12px;padding:0 2px}' +
-  '.ava-inv .sparkrow svg{flex:1;height:30px;display:block}' +
-  '.ava-inv .trend{font-size:11.5px;font-weight:800;color:#7fa06f;white-space:nowrap}' +
+  '.ava-inv .strip{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid #3f4748;border-bottom:1px solid #3f4748}' +
+  '.ava-inv .m{padding:13px 12px 14px}' +
+  '.ava-inv .m + .m{border-left:1px solid #3f4748}' +
+  '.ava-inv .m .l{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#75878b}' +
+  '.ava-inv .m .v{font-size:19px;font-weight:800;margin-top:6px;letter-spacing:-.3px;color:#f0e7df;font-variant-numeric:tabular-nums}' +
+  '.ava-inv .m .v .u{font-size:12px;color:#f0e7df;font-weight:700}' +
+  '.ava-inv .m .v small{font-size:11px;color:#f0e7df;font-weight:700;opacity:.85}' +
+  '.ava-inv .sparkpanel{background:#22292b;border-radius:14px;padding:12px 14px 10px;margin-top:14px}' +
+  '.ava-inv .sparkpanel svg{width:100%;height:44px;margin-top:6px;display:block;overflow:visible}' +
+  '.ava-inv .trend{font-size:12px;font-weight:800;color:#90e480;white-space:nowrap;text-align:right}' +
   '.ava-detail{font-family:Manrope,system-ui,sans-serif;margin:20px 0}' +
   '.ava-detail .invest{background:#2b3838;color:#f2ebe1;border-radius:24px;padding:22px 20px 24px}' +
   '.ava-detail .itop{display:flex;align-items:center;justify-content:space-between}' +
@@ -75,14 +76,14 @@
   function money(n){ return Math.round(n).toLocaleString('en-US'); }
   function kfmt(n){ return n>=1e6 ? (n/1e6).toFixed(n>=1e7?0:2)+'M' : (n>=1000 ? Math.round(n/1000)+'k' : Math.round(n)); }
   function sparkSVG(series){
-    var v=series.slice(),W=200,H=30,n=v.length,mx=Math.max.apply(0,v.concat([1])),mn=Math.min.apply(0,v);
-    var xs=function(i){return i*(W/(n-1));},ys=function(x){return H-3-((x-mn)/((mx-mn)||1))*(H-7);};
-    var d='M0 '+ys(v[0]).toFixed(1),i;
+    var v=series.slice(),W=200,H=30,PAD=4,n=v.length,mx=Math.max.apply(0,v.concat([1])),mn=Math.min.apply(0,v);
+    var xs=function(i){return PAD+i*((W-2*PAD)/(n-1));},ys=function(x){return H-4-((x-mn)/((mx-mn)||1))*(H-9);};
+    var d='M'+PAD+' '+ys(v[0]).toFixed(1),i;
     for(i=1;i<n;i++) d+=' L'+xs(i).toFixed(1)+' '+ys(v[i]).toFixed(1);
-    var area=d+' L'+W+' '+H+' L0 '+H+' Z';
-    return '<defs><linearGradient id="avaSg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c6a878" stop-opacity=".5"/><stop offset="1" stop-color="#c6a878" stop-opacity="0"/></linearGradient></defs>'+
-      '<path d="'+area+'" fill="url(#avaSg)"/><path d="'+d+'" fill="none" stroke="#d9c09a" stroke-width="2"/>'+
-      '<circle cx="'+W+'" cy="'+ys(v[n-1]).toFixed(1)+'" r="2.6" fill="#e2c592"/>';
+    var area=d+' L'+(W-PAD)+' '+H+' L'+PAD+' '+H+' Z';
+    return '<defs><linearGradient id="avaSg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#abc4c7" stop-opacity=".35"/><stop offset="1" stop-color="#abc4c7" stop-opacity="0"/></linearGradient></defs>'+
+      '<path d="'+area+'" fill="url(#avaSg)"/><path d="'+d+'" fill="none" stroke="#abc4c7" stroke-width="1" vector-effect="non-scaling-stroke"/>'+
+      '<circle cx="'+(W-PAD)+'" cy="'+ys(v[n-1]).toFixed(1)+'" r="0.1" fill="none" stroke="#dcebec" stroke-width="4.6" stroke-linecap="round" vector-effect="non-scaling-stroke"/>';
   }
   function barsSVG(series,labels){
     var vals=series.slice(),W=400,H=168,n=vals.length,gap=7,bw=(W-gap*(n-1))/n,floor=H-24,top=22,mx=Math.max.apply(0,vals.concat([1])),s='';
@@ -109,8 +110,8 @@
       '<div class="m"><div class="l">Net / month</div><div class="v"><span class="u">฿</span>'+kfmt(v.net)+'</div></div>'+
       '<div class="m"><div class="l">ROI / year</div><div class="v">'+v.yld+'<span class="u">%</span></div></div>'+
       '</div>'+
-      '<div class="sparkrow"><svg viewBox="0 0 200 30" preserveAspectRatio="none">'+sparkSVG(v.series)+'</svg>'+
-      '<div class="trend">▲ ฿'+(v.cum/1e6).toFixed(2)+'M earned</div></div>';
+      '<div class="sparkpanel"><div class="trend">▲ ฿'+(v.cum/1e6).toFixed(2)+'M earned</div>'+
+      '<svg viewBox="0 0 200 30" preserveAspectRatio="none">'+sparkSVG(v.series)+'</svg></div>';
   }
   function decorateCards(){
     var cards=document.querySelectorAll('.js-product.t-store__card');
