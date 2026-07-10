@@ -30,7 +30,7 @@
   var CSS =
   '.ava-inv{font-family:Manrope,system-ui,sans-serif;margin:20px 0 4px}' +
   '.ava-inv .strip{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid #3f4748;border-bottom:1px solid #3f4748}' +
-  '.ava-inv .m{padding:13px 10px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}' +
+  '.ava-inv .m{padding:13px 10px 14px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;text-align:left}' +
   '.ava-inv .m + .m{border-left:1px solid #3f4748}' +
   '.ava-inv .m .l{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#75878b}' +
   '.ava-inv .m .v{font-size:20px;font-weight:600;margin-top:6px;letter-spacing:-.3px;color:#f0e7df;font-variant-numeric:tabular-nums}' +
