@@ -46,10 +46,10 @@
   .cprice span{ font-size:15px; color:var(--sub); font-weight:600; }
   .strip{ display:grid; grid-template-columns:1fr 1fr 1fr; margin-top:20px;
           border-top:1px solid #3f4748; border-bottom:1px solid #3f4748; }
-  .m{ padding:13px 12px 14px; }
+  .m{ padding:13px 10px 14px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
   .m + .m{ border-left:1px solid #3f4748; }
   .m .l{ font-size:10px; font-weight:700; letter-spacing:.6px; text-transform:uppercase; color:#75878b; }
-  .m .v{ font-size:19px; font-weight:800; margin-top:6px; letter-spacing:-.3px; font-variant-numeric:tabular-nums; color:#f0e7df; }
+  .m .v{ font-size:20px; font-weight:600; margin-top:6px; letter-spacing:-.3px; font-variant-numeric:tabular-nums; color:#f0e7df; }
   .m .v .u{ font-size:12px; color:#f0e7df; font-weight:700; }
   .m .v small{ font-size:11px; color:#f0e7df; font-weight:700; opacity:.85; }
   .sparkpanel{ background:#3F4A4C; border-radius:10px; padding:12px 14px 10px; margin-top:14px; }
@@ -115,6 +115,7 @@
         align-items:center; justify-content:center; gap:10px; }
   .cta .arr{ width:26px; height:26px; border-radius:50%; background:#2b2016; color:var(--gold); display:flex; align-items:center; justify-content:center; font-size:14px; }
   .note{ font-size:10.5px; color:#8f9994; margin-top:13px; line-height:1.5; text-align:center; }
+@media(max-width:640px){ .m .v{ font-size:18px } }
 </style></head>
 <body>
   <div id="app"></div>
