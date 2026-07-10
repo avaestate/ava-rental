@@ -29,7 +29,7 @@
   .lead h2{ font-size:22px; font-weight:800; letter-spacing:-.3px; }
   .lead p{ font-size:13.5px; color:var(--muted); margin-top:6px; line-height:1.45; }
 
-  .card{ background:var(--ink); color:var(--card-cream); border-radius:24px;
+  .card{ background:#2c3638; color:#f0e7df; border-radius:24px;
          margin:16px 18px 0; padding:13px; cursor:pointer; transition:transform .18s ease;
          animation:rise .5s ease both; }
   .card:active{ transform:scale(.985) }
@@ -45,16 +45,16 @@
   .cprice{ font-size:25px; font-weight:800; margin-top:14px; letter-spacing:-.5px; }
   .cprice span{ font-size:15px; color:var(--sub); font-weight:600; }
   .strip{ display:grid; grid-template-columns:1fr 1fr 1fr; margin-top:16px;
-          border-top:1px solid #3d4846; border-bottom:1px solid #3d4846; }
+          border-top:1px solid #3f4748; border-bottom:1px solid #3f4748; }
   .m{ padding:13px 12px 14px; }
-  .m + .m{ border-left:1px solid #3d4846; }
-  .m .l{ font-size:10px; font-weight:700; letter-spacing:.6px; text-transform:uppercase; color:#8f9994; }
-  .m .v{ font-size:19px; font-weight:800; margin-top:6px; letter-spacing:-.3px; font-variant-numeric:tabular-nums; }
-  .m .v .u{ font-size:12px; color:var(--gold); font-weight:700; }
-  .m .v small{ font-size:11px; color:#c9d1cc; font-weight:700; }
-  .sparkpanel{ background:var(--ink2); border-radius:14px; padding:12px 14px 10px; margin-top:14px; }
+  .m + .m{ border-left:1px solid #3f4748; }
+  .m .l{ font-size:10px; font-weight:700; letter-spacing:.6px; text-transform:uppercase; color:#75878b; }
+  .m .v{ font-size:19px; font-weight:800; margin-top:6px; letter-spacing:-.3px; font-variant-numeric:tabular-nums; color:#f0e7df; }
+  .m .v .u{ font-size:12px; color:#f0e7df; font-weight:700; }
+  .m .v small{ font-size:11px; color:#f0e7df; font-weight:700; opacity:.85; }
+  .sparkpanel{ background:#22292b; border-radius:14px; padding:12px 14px 10px; margin-top:14px; }
   .sparkpanel svg{ width:100%; height:44px; margin-top:6px; }
-  .trend{ font-size:12px; font-weight:800; color:var(--green); white-space:nowrap; text-align:right; }
+  .trend{ font-size:12px; font-weight:800; color:#90e480; white-space:nowrap; text-align:right; }
   .more{ margin-top:14px; width:100%; border:none; cursor:pointer; background:#efe7db; color:#2b3838;
          font-weight:800; font-size:15px; padding:14px; border-radius:40px; display:flex;
          align-items:center; justify-content:center; gap:9px; }
@@ -570,10 +570,10 @@ function sparkSVG(series){
   for(let i=1;i<n;i++) d+=` L${xs(i).toFixed(1)} ${ys(v[i]).toFixed(1)}`;
   const area=d+` L${W} ${H} L0 ${H} Z`;
   return `<defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
-     <stop offset="0" stop-color="#c6a878" stop-opacity=".5"/>
-     <stop offset="1" stop-color="#c6a878" stop-opacity="0"/></linearGradient></defs>
-     <path d="${area}" fill="url(#sg)"/><path d="${d}" fill="none" stroke="#d9c09a" stroke-width="2"/>
-     <circle cx="${W}" cy="${ys(v[n-1]).toFixed(1)}" r="2.6" fill="#e2c592"/>`;
+     <stop offset="0" stop-color="#abc4c7" stop-opacity=".35"/>
+     <stop offset="1" stop-color="#abc4c7" stop-opacity="0"/></linearGradient></defs>
+     <path d="${area}" fill="url(#sg)"/><path d="${d}" fill="none" stroke="#abc4c7" stroke-width="2"/>
+     <circle cx="${W}" cy="${ys(v[n-1]).toFixed(1)}" r="2.6" fill="#dcebec"/>`;
 }
 function barsSVG(series,labels){
   const vals=series.slice(); const W=400,H=168,n=vals.length,gap=7,bw=(W-gap*(n-1))/n;
