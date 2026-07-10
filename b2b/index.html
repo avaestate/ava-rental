@@ -573,8 +573,8 @@ function sparkSVG(series){
   return `<defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
      <stop offset="0" stop-color="#abc4c7" stop-opacity=".35"/>
      <stop offset="1" stop-color="#abc4c7" stop-opacity="0"/></linearGradient></defs>
-     <path d="${area}" fill="url(#sg)"/><path d="${d}" fill="none" stroke="#abc4c7" stroke-width="1"/>
-     <circle cx="${W-PAD}" cy="${ys(v[n-1]).toFixed(1)}" r="2.2" fill="#dcebec"/>`;
+     <path d="${area}" fill="url(#sg)"/><path d="${d}" fill="none" stroke="#abc4c7" stroke-width="1" vector-effect="non-scaling-stroke"/>
+     <circle cx="${W-PAD}" cy="${ys(v[n-1]).toFixed(1)}" r="0.1" fill="none" stroke="#dcebec" stroke-width="4.6" stroke-linecap="round" vector-effect="non-scaling-stroke"/>`;
 }
 function barsSVG(series,labels){
   const vals=series.slice(); const W=400,H=168,n=vals.length,gap=7,bw=(W-gap*(n-1))/n;
