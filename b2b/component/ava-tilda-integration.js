@@ -116,14 +116,15 @@
       '<svg viewBox="0 0 200 30" preserveAspectRatio="none">'+sparkSVG(v.series)+'</svg></div></div>';
   }
   function decorateCards(){
-    var cards=document.querySelectorAll('.js-product.t-store__card');
+    // t-store (классический каталог) + t1291/ST340 (новый каталог, в т.ч. блок "More ready villas")
+    var cards=document.querySelectorAll('.js-product.t-store__card, .js-product.t-catalog__card');
     for(var i=0;i<cards.length;i++){
       var card=cards[i];
       if(card.getAttribute('data-ava-done'))continue;
-      var url=card.getAttribute('data-product-url')||'';
+      var url=card.getAttribute('data-product-url')||(card.querySelector('a[href*="/ready-objects/"]')||{}).href||'';
       var slug=(url.split('/ready-objects/')[1]||'').replace(/-+$/,'');
       var v=byId[idFromSlug(slug)];
-      var anchor=card.querySelector('.js-store-price-wrapper');
+      var anchor=card.querySelector('.js-store-price-wrapper, .js-catalog-price-wrapper');
       if(!anchor)continue;
       card.setAttribute('data-ava-done','1');   // помечаем даже если данных нет — не дёргаемся повторно
       if(!v)continue;
@@ -164,7 +165,10 @@
   }
 
   /* ---------- запуск: Tilda рендерит карточки асинхронно → опрос + наблюдатель ---------- */
-  function run(){ try{ decorateCards(); decorateProductPage(); }catch(e){} }
+  // Инвест-блок на странице объекта отключён по просьбе дизайнера (15.07.2026):
+  // вместо него метрики показываются в карточках каталога и блока "More ready villas".
+  // Вернуть: window.AVA_INSERT_DETAIL = true перед подключением скрипта.
+  function run(){ try{ decorateCards(); if(window.AVA_INSERT_DETAIL) decorateProductPage(); }catch(e){} }
   function boot(){
     injectCSS();
     fetch(DATA_URL,{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
