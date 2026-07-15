@@ -22,20 +22,20 @@
     var s = document.createElement("style");
     s.id = "ava-stats-css";
     s.textContent = "" +
-      ".ava-stats-box{font-family:'Manrope',-apple-system,'Helvetica Neue',Arial,sans-serif;border-radius:16px;padding:22px 26px;display:flex;flex-wrap:wrap;gap:26px;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;box-sizing:border-box}" +
-      ".ava-stats-box.dark{background:#1C2523;color:#F0E7DF}" +
+      ".ava-stats-box{font-family:'Manrope',-apple-system,'Helvetica Neue',Arial,sans-serif;border-radius:14px;padding:16px;display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;box-sizing:border-box}" +
+      ".ava-stats-box.dark{background:#232E2B;color:#F0E7DF}" +
       ".ava-stats-box.light{background:#F7F2EC;color:#2C3638;border:1px solid #e4dccd}" +
-      ".ava-stats-kpis{display:flex;gap:14px;flex-wrap:wrap}" +
-      ".ava-stats-kpi{border-radius:12px;padding:14px 18px;min-width:118px;box-sizing:border-box}" +
-      ".dark .ava-stats-kpi{background:rgba(255,255,255,.055)}" +
+      ".ava-stats-kpis{display:flex;gap:12px;flex-wrap:wrap}" +
+      ".ava-stats-kpi{border-radius:10px;padding:16px 20px;min-width:150px;box-sizing:border-box}" +
+      ".dark .ava-stats-kpi{background:rgba(255,255,255,.07)}" +
       ".light .ava-stats-kpi{background:rgba(44,54,56,.06)}" +
-      ".ava-stats-kpi span{display:block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;opacity:.55;font-weight:600;margin-bottom:6px}" +
-      ".ava-stats-kpi b{display:block;font-size:24px;font-weight:800;letter-spacing:-.01em;line-height:1.05}" +
-      ".ava-stats-kpi b small{font-size:14px;font-weight:600;opacity:.85;margin-left:2px}" +
-      ".ava-stats-chart{flex:1;min-width:260px;max-width:520px;position:relative}" +
-      ".ava-stats-chart svg{display:block;width:100%;height:86px}" +
-      ".ava-stats-badge{position:absolute;top:-10px;left:2px;color:#4ED98A;font-size:13px;font-weight:800;letter-spacing:.01em}" +
-      "@media(max-width:640px){.ava-stats-box{gap:16px;padding:18px}.ava-stats-kpis{gap:20px}.ava-stats-kpi b{font-size:21px}}";
+      ".ava-stats-kpi span{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;opacity:.6;font-weight:600;margin-bottom:10px}" +
+      ".ava-stats-kpi b{display:block;font-size:24px;font-weight:700;letter-spacing:-.01em;line-height:1}" +
+      ".ava-stats-kpi b small{font-size:14px;font-weight:600;opacity:.8;margin-left:3px}" +
+      ".ava-stats-chart{flex:1;min-width:280px;max-width:560px;position:relative;padding-top:26px}" +
+      ".ava-stats-chart svg{display:block;width:100%;height:64px}" +
+      ".ava-stats-badge{position:absolute;top:0;left:2px;color:#8BE28B;font-size:14px;font-weight:700;letter-spacing:.01em}" +
+      "@media(max-width:640px){.ava-stats-box{gap:14px;padding:14px}.ava-stats-kpis{gap:10px}.ava-stats-kpi{min-width:104px;padding:12px 14px}.ava-stats-kpi b{font-size:20px}}";
     document.head.appendChild(s);
   }
 
@@ -45,13 +45,13 @@
     var pts = series.map(function (v, i) { return [i * stepX, h - 8 - (v / max) * (h - 20)]; });
     var line = pts.map(function (p, i) { return (i ? "L" : "M") + p[0].toFixed(1) + "," + p[1].toFixed(1); }).join(" ");
     var area = line + " L" + w + "," + h + " L0," + h + " Z";
-    var stroke = theme === "light" ? "#2C3638" : "#DCC59A";
-    var fill = theme === "light" ? "rgba(44,54,56,.10)" : "rgba(220,197,154,.16)";
+    var stroke = theme === "light" ? "#2C3638" : "#C9D2CE";
+    var fill = theme === "light" ? "rgba(44,54,56,.10)" : "rgba(201,210,206,.12)";
     var last = pts[pts.length - 1];
     return '<svg viewBox="0 0 ' + w + " " + h + '" preserveAspectRatio="none">' +
       '<path d="' + area + '" fill="' + fill + '"/>' +
-      '<path d="' + line + '" fill="none" stroke="' + stroke + '" stroke-width="2.2" stroke-linecap="round"/>' +
-      '<circle cx="' + last[0] + '" cy="' + last[1] + '" r="4" fill="' + stroke + '"/></svg>';
+      '<path d="' + line + '" fill="none" stroke="' + stroke + '" stroke-width="1.8" stroke-linecap="round"/>' +
+      '<circle cx="' + last[0] + '" cy="' + last[1] + '" r="5" fill="' + stroke + '"/></svg>';
   }
 
   function render(el, v, lang, theme) {
