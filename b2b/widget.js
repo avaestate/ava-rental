@@ -44,15 +44,15 @@
       ".ava-stats-box *{box-sizing:border-box}" +
       ".ava-stats-left{flex:0 0 460px;display:flex;flex-direction:column;gap:10px}" +
       ".ava-stats-kpis{display:flex;gap:10px}" +
-      ".ava-stats-kpi{flex:1;background:#3F4A4C;border-radius:8px;padding:16px 20px}" +
+      ".ava-stats-kpi{flex:1;background:#3F4A4C;border-radius:8px;padding:16px 20px;display:flex;flex-direction:column;justify-content:center}" +
       ".ava-stats-kpi span{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#75878B;font-weight:600;margin-bottom:10px;white-space:nowrap}" +
       ".ava-stats-kpi b{display:block;font-size:18px;font-weight:700;line-height:1;white-space:nowrap}" +
-      ".ava-stats-kpi b small{font-size:13px;font-weight:600;opacity:.75;margin-left:3px}" +
+      ".ava-stats-kpi b small{font-size:12px;font-weight:600;opacity:.75;margin-left:3px}" +
       ".ava-stats-usd{display:block;font-size:11px;font-weight:600;color:#8FA3A8;margin-top:5px;white-space:nowrap}" +
       ".ava-stats-earned{background:#22292B;border-radius:8px;padding:16px 20px;flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:8px}" +
       ".ava-stats-earned .row{display:flex;justify-content:space-between;align-items:baseline;gap:10px}" +
-      ".ava-stats-earned .lbl{font-size:13px;color:#C3CDCA;font-weight:500}" +
-      ".ava-stats-earned .back{font-size:13px;color:#8BE28B;font-weight:600;white-space:nowrap}" +
+      ".ava-stats-earned .lbl{font-size:12px;color:#C3CDCA;font-weight:500}" +
+      ".ava-stats-earned .back{font-size:12px;color:#8BE28B;font-weight:600;white-space:nowrap}" +
       ".ava-stats-earned .val{font-size:24px;font-weight:700;line-height:1.1}" +
       ".ava-stats-bar{height:4px;border-radius:2px;background:rgba(255,255,255,.14);overflow:hidden}" +
       ".ava-stats-bar i{display:block;height:100%;border-radius:2px;background:#C9D2CE}" +
@@ -63,7 +63,7 @@
       ".ava-stats-meta .m b{font-size:14px;font-weight:600;white-space:nowrap}" +
       ".ava-stats-live{margin-left:auto;font-size:12px;color:#8BE28B;font-weight:500;white-space:nowrap}" +
       ".ava-stats-live i{display:inline-block;width:6px;height:6px;border-radius:50%;background:#8BE28B;margin-right:6px;vertical-align:1px}" +
-      ".ava-stats-ct{font-size:13px;line-height:1.4;color:#D2C6BC;margin:16px 0 8px;font-weight:500}" +
+      ".ava-stats-ct{font-size:12px;line-height:1.4;color:#D2C6BC;margin:16px 0 8px;font-weight:500}" +
       ".ava-stats-bars{flex:1;display:flex;align-items:flex-end;gap:8px;min-height:96px;border-bottom:1px solid rgba(255,255,255,.09)}" +
       ".ava-stats-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0}" +
       ".ava-stats-col .v{font-size:11px;color:#E4EAE7;font-weight:600;margin-bottom:4px;white-space:nowrap}" +
@@ -73,9 +73,9 @@
       ".ava-stats-months .m{flex:1;text-align:center;font-size:11px;color:#75878B;font-weight:500;min-width:0}" +
       ".ava-stats{container-type:inline-size}" +
       "@container(max-width:920px){.ava-stats-box{flex-direction:column;gap:16px}.ava-stats-left{flex:none;width:100%}.ava-stats-right{padding:0 10px 6px}}" +
-      "@container(max-width:640px){.ava-stats-kpis{flex-wrap:wrap}.ava-stats-kpi{flex:1 1 calc(33% - 10px);min-width:96px;padding:12px 12px}.ava-stats-kpi b{font-size:16px}.ava-stats-meta{flex-wrap:wrap;gap:14px 20px}.ava-stats-live{margin-left:0;width:100%;order:9}.ava-stats-bars{gap:4px}.ava-stats-col .v{font-size:9px;margin-bottom:2px}.ava-stats-col .m{font-size:9px}.ava-stats-earned .val{font-size:20px}}" +
+      "@container(max-width:640px){.ava-stats-earned{margin-bottom:20px}.ava-stats-live{color:#ABA097}.ava-stats-live i{background:#ABA097}.ava-stats-kpis{flex-wrap:wrap}.ava-stats-kpi{flex:1 1 calc(33% - 10px);min-width:96px;padding:12px 12px}.ava-stats-kpi b{font-size:16px}.ava-stats-meta{flex-wrap:wrap;gap:14px 20px}.ava-stats-live{margin-left:0;width:100%;order:9}.ava-stats-bars{gap:4px}.ava-stats-col .v{font-size:9px;margin-bottom:2px}.ava-stats-col .m{font-size:9px}.ava-stats-earned .val{font-size:20px}}" +
       "@media(max-width:920px){.ava-stats-box{flex-direction:column;gap:16px}.ava-stats-left{flex:none;width:100%}.ava-stats-right{padding:0 10px 6px}}" +
-      "@media(max-width:640px){.ava-stats-kpis{flex-wrap:wrap}.ava-stats-kpi{flex:1 1 calc(33% - 10px);min-width:96px;padding:12px 12px}.ava-stats-kpi b{font-size:16px}.ava-stats-meta{flex-wrap:wrap;gap:14px 20px}.ava-stats-live{margin-left:0;width:100%;order:9}.ava-stats-bars{gap:4px}.ava-stats-col .v{font-size:9px}.ava-stats-col .m{font-size:9px}.ava-stats-earned .val{font-size:20px}}";
+      "@media(max-width:640px){.ava-stats-earned{margin-bottom:20px}.ava-stats-live{color:#ABA097}.ava-stats-live i{background:#ABA097}.ava-stats-kpis{flex-wrap:wrap}.ava-stats-kpi{flex:1 1 calc(33% - 10px);min-width:96px;padding:12px 12px}.ava-stats-kpi b{font-size:16px}.ava-stats-meta{flex-wrap:wrap;gap:14px 20px}.ava-stats-live{margin-left:0;width:100%;order:9}.ava-stats-bars{gap:4px}.ava-stats-col .v{font-size:9px}.ava-stats-col .m{font-size:9px}.ava-stats-earned .val{font-size:20px}}";
     document.head.appendChild(s);
   }
 
@@ -111,7 +111,7 @@
             '<div class="row"><span class="lbl">' + t.earned + "</span>" +
               (pct !== null ? '<span class="back">' + pct + t.back + "</span>" : "") + "</div>" +
             '<div class="val">' + fmtNum(v.cum) + ' <small style="font-size:14px;font-weight:600;opacity:.75">THB</small>' +
-              (fx ? ' <span style="font-size:13px;font-weight:600;color:#8FA3A8">' + fmtUSD(v.cum, fx) + "</span>" : "") + "</div>" +
+              (fx ? ' <span style="font-size:12px;font-weight:600;color:#8FA3A8">' + fmtUSD(v.cum, fx) + "</span>" : "") + "</div>" +
             (pct !== null ? '<div class="ava-stats-bar"><i style="width:' + Math.min(100, pct) + '%"></i></div>' : "") +
             (payback !== null ? '<div class="cap">' + t.payback(payback) + "</div>" : "") +
           "</div>" +
