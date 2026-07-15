@@ -40,7 +40,7 @@
     var s = document.createElement("style");
     s.id = "ava-stats-css";
     s.textContent = "" +
-      ".ava-stats-box{font-family:'Manrope',-apple-system,'Helvetica Neue',Arial,sans-serif;background:#293638;color:#FFFFFF;border-radius:10px;padding:10px;display:flex;gap:40px;max-width:1040px;margin:0 auto;box-sizing:border-box}" +
+      ".ava-stats-box{font-family:'Manrope',-apple-system,'Helvetica Neue',Arial,sans-serif;background:#2C3638;color:#FFFFFF;border-radius:10px;padding:10px;display:flex;gap:40px;max-width:1040px;margin:0 auto;box-sizing:border-box}" +
       ".ava-stats-box *{box-sizing:border-box}" +
       ".ava-stats-left{flex:0 0 460px;display:flex;flex-direction:column;gap:10px}" +
       ".ava-stats-kpis{display:flex;gap:10px}" +
@@ -49,7 +49,7 @@
       ".ava-stats-kpi b{display:block;font-size:18px;font-weight:700;line-height:1;white-space:nowrap}" +
       ".ava-stats-kpi b small{font-size:13px;font-weight:600;opacity:.75;margin-left:3px}" +
       ".ava-stats-usd{display:block;font-size:11px;font-weight:600;color:#8FA3A8;margin-top:5px;white-space:nowrap}" +
-      ".ava-stats-earned{background:#3F4A4C;border-radius:8px;padding:16px 20px;flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:8px}" +
+      ".ava-stats-earned{background:#22292B;border-radius:8px;padding:16px 20px;flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:8px}" +
       ".ava-stats-earned .row{display:flex;justify-content:space-between;align-items:baseline;gap:10px}" +
       ".ava-stats-earned .lbl{font-size:13px;color:#C3CDCA;font-weight:500}" +
       ".ava-stats-earned .back{font-size:13px;color:#8BE28B;font-weight:600;white-space:nowrap}" +
