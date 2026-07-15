@@ -32,7 +32,8 @@
   };
 
   function fmtK(n) { return n >= 1000 ? Math.round(n / 1000) + "k" : String(n); }
-  function fmtNum(n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+  function fmtNum(n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, " "); }
+  function fmtUSD(thb, fx) { return fx ? "≈ $" + fmtNum(thb / fx) : ""; }
 
   function css() {
     if (document.getElementById("ava-stats-css")) return;
@@ -47,6 +48,7 @@
       ".ava-stats-kpi span{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#75878B;font-weight:600;margin-bottom:10px;white-space:nowrap}" +
       ".ava-stats-kpi b{display:block;font-size:18px;font-weight:700;line-height:1;white-space:nowrap}" +
       ".ava-stats-kpi b small{font-size:13px;font-weight:600;opacity:.75;margin-left:3px}" +
+      ".ava-stats-usd{display:block;font-size:11px;font-weight:600;color:#8FA3A8;margin-top:5px;white-space:nowrap}" +
       ".ava-stats-earned{background:#3F4A4C;border-radius:8px;padding:16px 20px;flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:8px}" +
       ".ava-stats-earned .row{display:flex;justify-content:space-between;align-items:baseline;gap:10px}" +
       ".ava-stats-earned .lbl{font-size:13px;color:#C3CDCA;font-weight:500}" +
@@ -56,13 +58,13 @@
       ".ava-stats-bar i{display:block;height:100%;border-radius:2px;background:#C9D2CE}" +
       ".ava-stats-earned .cap{font-size:12px;line-height:1.5;color:#75878B}" +
       ".ava-stats-right{flex:1;min-width:0;display:flex;flex-direction:column;padding:10px 10px 6px 0}" +
-      ".ava-stats-meta{display:flex;align-items:flex-start;gap:32px}" +
+      ".ava-stats-meta{display:flex;align-items:flex-start;gap:56px;border-bottom:1px solid rgba(255,255,255,.09);padding-bottom:14px}" +
       ".ava-stats-meta .m span{display:block;font-size:12px;color:#75878B;font-weight:500;margin-bottom:4px;white-space:nowrap}" +
       ".ava-stats-meta .m b{font-size:14px;font-weight:600;white-space:nowrap}" +
       ".ava-stats-live{margin-left:auto;font-size:12px;color:#8BE28B;font-weight:500;white-space:nowrap}" +
       ".ava-stats-live i{display:inline-block;width:6px;height:6px;border-radius:50%;background:#8BE28B;margin-right:6px;vertical-align:1px}" +
       ".ava-stats-ct{font-size:13px;line-height:1.4;color:#C3CDCA;margin:16px 0 8px;font-weight:500}" +
-      ".ava-stats-bars{flex:1;display:flex;align-items:flex-end;gap:8px;min-height:96px}" +
+      ".ava-stats-bars{flex:1;display:flex;align-items:flex-end;gap:8px;min-height:96px;border-bottom:1px solid rgba(255,255,255,.09)}" +
       ".ava-stats-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0}" +
       ".ava-stats-col .v{font-size:11px;color:#E4EAE7;font-weight:600;margin-bottom:4px;white-space:nowrap}" +
       ".ava-stats-col .b{width:100%;border-radius:3px 3px 0 0;background:rgba(201,210,206,.38)}" +
@@ -89,7 +91,7 @@
     }).join("");
   }
 
-  function render(el, v, lang) {
+  function render(el, v, lang, fx) {
     var t = L[lang] || L.en;
     var pct = v.price ? Math.max(1, Math.round(v.cum / v.price * 100)) : null;
     var payback = v.price && v.net ? Math.round(v.price / (v.net * 12)) : null;
@@ -98,13 +100,15 @@
         '<div class="ava-stats-left">' +
           '<div class="ava-stats-kpis">' +
             '<div class="ava-stats-kpi"><span>' + t.months + '</span><b>' + v.months + "<small>" + t.mo + "</small></b></div>" +
-            '<div class="ava-stats-kpi"><span>' + t.net + '</span><b>' + fmtK(v.net) + "</b></div>" +
+            '<div class="ava-stats-kpi"><span>' + t.net + '</span><b>' + fmtNum(v.net) + "<small>THB</small></b>" +
+              (fx ? '<span class="ava-stats-usd">' + fmtUSD(v.net, fx) + "</span>" : "") + "</div>" +
             '<div class="ava-stats-kpi"><span>' + t.yld + '</span><b>' + v.yld + "<small>%</small></b></div>" +
           "</div>" +
           '<div class="ava-stats-earned">' +
             '<div class="row"><span class="lbl">' + t.earned + "</span>" +
               (pct !== null ? '<span class="back">' + pct + t.back + "</span>" : "") + "</div>" +
-            '<div class="val">' + fmtNum(v.cum) + "</div>" +
+            '<div class="val">' + fmtNum(v.cum) + ' <small style="font-size:14px;font-weight:600;opacity:.75">THB</small>' +
+              (fx ? ' <span style="font-size:13px;font-weight:600;color:#8FA3A8">' + fmtUSD(v.cum, fx) + "</span>" : "") + "</div>" +
             (pct !== null ? '<div class="ava-stats-bar"><i style="width:' + Math.min(100, pct) + '%"></i></div>' : "") +
             (payback !== null ? '<div class="cap">' + t.payback(payback) + "</div>" : "") +
           "</div>" +
@@ -112,7 +116,7 @@
         '<div class="ava-stats-right">' +
           '<div class="ava-stats-meta">' +
             '<div class="m"><span>' + t.occ + "</span><b>" + v.occ + "%</b></div>" +
-            '<div class="m"><span>' + t.adr + "</span><b>" + fmtNum(v.adr) + "</b></div>" +
+            '<div class="m"><span>' + t.adr + "</span><b>" + fmtNum(v.adr) + ' <small style="font-size:11px;font-weight:600;opacity:.75">THB</small></b></div>' +
             '<div class="m"><span>' + t.since + "</span><b>" + (v.since || "") + "</b></div>" +
             '<div class="ava-stats-live"><i></i>' + t.live + "</div>" +
           "</div>" +
@@ -132,7 +136,7 @@
       nodes.forEach(function (el) {
         var v = map[el.getAttribute("data-villa")];
         if (!v) { el.style.display = "none"; return; }
-        render(el, v, el.getAttribute("data-lang") || "en");
+        render(el, v, el.getAttribute("data-lang") || "en", data.fx);
       });
     }).catch(function () { nodes.forEach(function (el) { el.style.display = "none"; }); });
   }
