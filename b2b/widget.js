@@ -63,13 +63,14 @@
       ".ava-stats-meta .m b{font-size:14px;font-weight:600;white-space:nowrap}" +
       ".ava-stats-live{margin-left:auto;font-size:12px;color:#8BE28B;font-weight:500;white-space:nowrap}" +
       ".ava-stats-live i{display:inline-block;width:6px;height:6px;border-radius:50%;background:#8BE28B;margin-right:6px;vertical-align:1px}" +
-      ".ava-stats-ct{font-size:13px;line-height:1.4;color:#C3CDCA;margin:16px 0 8px;font-weight:500}" +
+      ".ava-stats-ct{font-size:13px;line-height:1.4;color:#D2C6BC;margin:16px 0 8px;font-weight:500}" +
       ".ava-stats-bars{flex:1;display:flex;align-items:flex-end;gap:8px;min-height:96px;border-bottom:1px solid rgba(255,255,255,.09)}" +
       ".ava-stats-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0}" +
       ".ava-stats-col .v{font-size:11px;color:#E4EAE7;font-weight:600;margin-bottom:4px;white-space:nowrap}" +
       ".ava-stats-col .b{width:100%;border-radius:3px 3px 0 0;background:rgba(201,210,206,.38)}" +
       ".ava-stats-col .b.max{background:#C9D2CE}" +
-      ".ava-stats-col .m{font-size:11px;color:#75878B;margin-top:6px;font-weight:500}" +
+      ".ava-stats-months{display:flex;gap:8px;margin-top:6px}" +
+      ".ava-stats-months .m{flex:1;text-align:center;font-size:11px;color:#75878B;font-weight:500;min-width:0}" +
       ".ava-stats{container-type:inline-size}" +
       "@container(max-width:920px){.ava-stats-box{flex-direction:column;gap:16px}.ava-stats-left{flex:none;width:100%}.ava-stats-right{padding:0 10px 6px}}" +
       "@container(max-width:640px){.ava-stats-kpis{flex-wrap:wrap}.ava-stats-kpi{flex:1 1 calc(33% - 10px);min-width:96px;padding:12px 12px}.ava-stats-kpi b{font-size:16px}.ava-stats-meta{flex-wrap:wrap;gap:14px 20px}.ava-stats-live{margin-left:0;width:100%;order:9}.ava-stats-bars{gap:4px}.ava-stats-col .v{font-size:9px;margin-bottom:2px}.ava-stats-col .m{font-size:9px}.ava-stats-earned .val{font-size:20px}}" +
@@ -78,17 +79,19 @@
     document.head.appendChild(s);
   }
 
-  function bars(series, labels) {
+  function bars(series) {
     var max = Math.max.apply(null, series.concat([1]));
     var MAXH = 96; // px, tallest bar
-    return series.map(function (v, i) {
+    return series.map(function (v) {
       var h = v > 0 ? Math.max(3, Math.round(v / max * MAXH)) : 0;
       return '<div class="ava-stats-col">' +
         (v > 0 ? '<div class="v">' + fmtK(v) + "</div>" : "") +
         (v > 0 ? '<div class="b' + (v === max ? " max" : "") + '" style="height:' + h + 'px"></div>' : "") +
-        '<div class="m">' + (labels && labels[i] ? labels[i] : "") + "</div>" +
       "</div>";
     }).join("");
+  }
+  function months(labels) {
+    return (labels || []).map(function (l) { return '<div class="m">' + (l || "") + "</div>"; }).join("");
   }
 
   function render(el, v, lang, fx) {
@@ -121,7 +124,8 @@
             '<div class="ava-stats-live"><i></i>' + t.live + "</div>" +
           "</div>" +
           '<div class="ava-stats-ct">' + t.chart + "</div>" +
-          '<div class="ava-stats-bars">' + bars(v.series || [], v.labels || []) + "</div>" +
+          '<div class="ava-stats-bars">' + bars(v.series || []) + "</div>" +
+          '<div class="ava-stats-months">' + months(v.labels || []) + "</div>" +
         "</div>" +
       "</div>";
   }
