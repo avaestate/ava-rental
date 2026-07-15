@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AVA Owner Portal</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232C3638'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='15' font-weight='800' fill='%238BE28B' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2C3638; --ink-soft:#3F4A4C; --cream:#F6F3ED; --cream2:#F0E7DF;
+  --sub:#75878B; --green:#8BE28B; --green-deep:#4FA764;
+  --hair:#E2DACC; --bar-ink:#3F4A4C; --bar-sub:#8FA0A4;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Manrope',system-ui,sans-serif;background:var(--cream);color:var(--ink);
+     font-size:15px;line-height:1.45;min-height:100vh}
+button,input{font-family:inherit}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- login ---------- */
+#login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;
+       background:linear-gradient(160deg,var(--cream) 0%,var(--cream2) 100%)}
+.login-card{width:100%;max-width:380px;background:var(--ink);color:var(--cream2);
+            border-radius:10px;padding:38px 32px 34px;box-shadow:0 24px 60px rgba(44,54,56,.25)}
+.brand{font-weight:800;font-size:26px;letter-spacing:4px;text-align:center}
+.brand small{display:block;font-size:11px;font-weight:700;letter-spacing:3px;color:#9DB0B4;margin-top:6px}
+.login-card label{display:block;font-size:12px;font-weight:700;letter-spacing:.8px;
+                  text-transform:uppercase;color:#9DB0B4;margin:30px 0 8px}
+.login-card input{width:100%;background:#3F4A4C;border:1px solid rgba(255,255,255,.12);
+                  border-radius:8px;color:#F0E7DF;font-size:16px;padding:12px 14px;outline:none}
+.login-card input:focus{border-color:var(--green)}
+.login-card button{width:100%;margin-top:18px;background:var(--green);color:var(--ink);
+                   border:none;border-radius:8px;font-weight:800;font-size:15px;padding:13px;cursor:pointer}
+.login-card button:active{transform:scale(.985)}
+.login-err{margin-top:12px;font-size:13px;color:#F2A0A0;text-align:center;min-height:18px}
+.login-note{margin-top:20px;font-size:11.5px;color:#9DB0B4;text-align:center;line-height:1.5}
+
+/* ---------- app frame ---------- */
+#app{display:none;max-width:1020px;margin:0 auto;padding:0 20px 60px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;
+       padding:22px 0 16px;border-bottom:1px solid var(--hair)}
+header .hbrand{font-weight:800;font-size:19px;letter-spacing:2.5px}
+header .hbrand small{font-size:10px;letter-spacing:2px;color:var(--sub);display:block;font-weight:700}
+.huser{display:flex;align-items:center;gap:14px}
+.huser .name{font-weight:700;font-size:14px;text-align:right}
+.huser .role{display:block;font-size:11px;color:var(--sub);font-weight:600}
+.logout{background:none;border:1px solid var(--hair);border-radius:8px;color:var(--sub);
+        font-weight:700;font-size:12.5px;padding:8px 14px;cursor:pointer}
+.logout:hover{border-color:var(--sub);color:var(--ink)}
+
+.controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+          gap:12px;margin:20px 0 6px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{border:1px solid var(--hair);background:#FBF9F4;border-radius:8px;padding:9px 18px;
+     font-weight:700;font-size:13.5px;color:var(--ink-soft);cursor:pointer;letter-spacing:.3px}
+.tab.active{background:var(--ink);color:var(--cream2);border-color:var(--ink)}
+.months{display:flex;gap:8px}
+.month{border:1px solid var(--hair);background:transparent;border-radius:8px;padding:8px 14px;
+       font-weight:700;font-size:12.5px;color:var(--sub);cursor:pointer}
+.month.active{background:var(--cream2);border-color:#D8CDBB;color:var(--ink)}
+.month:disabled{opacity:.42;cursor:not-allowed}
+
+h2.vname{font-size:23px;font-weight:800;letter-spacing:-.3px;margin:24px 0 4px}
+.vsub{font-size:13px;color:var(--sub);font-weight:600;margin-bottom:18px}
+
+/* ---------- KPI ---------- */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi{background:var(--ink-soft);color:var(--cream2);border-radius:10px;padding:16px 18px}
+.kpi .l{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#9DB0B4}
+.kpi .v{font-size:21px;font-weight:800;margin-top:8px;letter-spacing:-.3px;white-space:nowrap}
+.kpi.green .v{color:var(--green)}
+
+/* ---------- sections & tables ---------- */
+section{margin-top:30px}
+section>h3{font-size:12.5px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;
+           color:var(--sub);margin-bottom:12px}
+.tablewrap{overflow-x:auto;background:#FBF9F4;border:1px solid var(--hair);border-radius:10px}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
+th{font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--sub);
+   text-align:left;padding:12px 16px;border-bottom:1px solid var(--hair);white-space:nowrap}
+td{padding:11px 16px;border-bottom:1px solid #EFE8DA;vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.r,th.r{text-align:right;white-space:nowrap}
+.chan{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.4px;border-radius:6px;
+      padding:3px 8px;background:var(--cream2);color:var(--ink-soft)}
+tfoot td{font-weight:800;background:#F3EEE3}
+.note{font-size:12px;color:var(--sub);margin-top:10px;line-height:1.5}
+
+/* ---------- payout ---------- */
+.payout{background:var(--ink);color:var(--cream2);border-radius:10px;padding:22px 24px;
+        display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px}
+.payout .steps{font-size:13px;color:#9DB0B4;line-height:1.7}
+.payout .steps b{color:var(--cream2);font-weight:700}
+.payout .big .l{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#9DB0B4}
+.payout .big .v{font-size:32px;font-weight:800;color:var(--green);letter-spacing:-.5px;white-space:nowrap;margin-top:4px}
+
+/* ---------- chart ---------- */
+.chartcard{background:#FBF9F4;border:1px solid var(--hair);border-radius:10px;padding:20px 20px 12px}
+.chartcard svg{width:100%;height:auto;display:block}
+.bar{transition:opacity .15s}
+.bar:hover{opacity:.82}
+
+/* ---------- summary ---------- */
+.sumnote{font-size:12px;color:var(--sub);margin:8px 0 0}
+
+footer{margin-top:44px;font-size:11.5px;color:#A8A094;text-align:center;line-height:1.6}
+
+@media(max-width:720px){
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .kpi .v{font-size:18px}
+  header{flex-wrap:wrap}
+  .payout .big .v{font-size:26px}
+  h2.vname{font-size:20px}
+}
+</style>
+</head>
+<body>
+
+<div id="login">
+  <form class="login-card" onsubmit="return doLogin(event)">
+    <div class="brand">AVA ESTATE<small>OWNER PORTAL · KO PHA-NGAN</small></div>
+    <label for="pwd">Пароль владельца</label>
+    <input id="pwd" type="password" autocomplete="current-password" placeholder="••••••••" required>
+    <button type="submit">Войти</button>
+    <div class="login-err" id="loginErr"></div>
+    <div class="login-note">Персональный кабинет владельца виллы.<br>Доступ выдаёт менеджер AVA Estate.</div>
+  </form>
+</div>
+
+<div id="app">
+  <header>
+    <div class="hbrand">AVA ESTATE<small>OWNER PORTAL</small></div>
+    <div class="huser">
+      <div class="name" id="userName"><span class="role" id="userRole"></span></div>
+      <button class="logout" onclick="logout()">Выйти</button>
+    </div>
+  </header>
+
+  <div class="controls">
+    <div class="tabs" id="tabs"></div>
+    <div class="months">
+      <button class="month" disabled>Апрель 2026</button>
+      <button class="month" disabled>Май 2026</button>
+      <button class="month active">Июнь 2026</button>
+    </div>
+  </div>
+
+  <div id="view"></div>
+
+  <footer>Прототип · данные за июнь 2026 · AVA Estate / Ready To Move Co., Ltd.<br>
+  Схема управления «25% + вода»: выплата = (доход − расходы) × 75% − withholding tax 5% от доли владельца.</footer>
+</div>
+
+<script>
+/* ================= data: month -> villa ================= */
+const DATA = {
+  "2026-06": {
+    label: "Июнь 2026",
+    villas: {
+      aurora: {
+        name: "Aurora", owner: "Виталий Красюк", nights: 16,
+        bookings: [
+          {guest:"Yonatan Mayman", dates:"13 – 20 июня", nights:7, channel:"Airbnb", amount:28474.92},
+          {guest:"Shamar Suissa",  dates:"27 июня – 6 июля", nights:9, channel:"Airbnb", amount:40662.25},
+        ],
+        income: 69137.17,
+        expenses: [
+          {name:"Электричество", amount:9540},
+          {name:"Интернет", amount:1000},
+          {name:"Вывоз мусора", amount:1000},
+          {name:"Вода (4 доставки × 500)", amount:2000},
+        ],
+        expensesTotal: 13540,
+        afterExpenses: 55597.17,
+        ownerShare: 41697.88,
+        tax: 2084.89,
+        payout: 39612.98,
+        commission: 13899.29
+      },
+      radharani: {
+        name: "Radharani", owner: "Александр Красюк", nights: 23,
+        bookings: [
+          {guest:"Yacov Reingewirtz", dates:"7 – 10 июня", nights:3, channel:"Booking.com", amount:9450},
+          {guest:"Shalev Sharon", dates:"11 – 19 июня", nights:8, channel:"Прямая", amount:36800},
+          {guest:"Shalev Sharon", dates:"19 – 26 июня", nights:7, channel:"Прямая", amount:25000},
+          {guest:"Lucy Prost", dates:"26 июня – 1 июля", nights:5, channel:"Airbnb", amount:23356.20},
+        ],
+        income: 94606.20,
+        expenses: [
+          {name:"Электричество", amount:9955},
+          {name:"Интернет", amount:1000},
+          {name:"Вывоз мусора", amount:1000},
+          {name:"Вода (8 доставок × 500)", amount:4000},
+          {name:"Комиссия Booking.com (бронь Yacov)", amount:1769.51},
+          {name:"Эквайринг", amount:482.42},
+        ],
+        expensesTotal: 18206.93,
+        afterExpenses: 76399.27,
+        ownerShare: 57299.45,
+        tax: 2864.97,
+        payout: 54434.48,
+        commission: 19099.82
+      },
+      axis: {
+        name: "Axis", owner: "Александр Красюк", nights: 9,
+        bookings: [
+          {guest:"Vic Bhamra", dates:"12 – 14 июня", nights:2, channel:"Airbnb", amount:7799.23},
+          {guest:"Sébastian Graub", dates:"29 июня – 6 июля", nights:7, channel:"Booking.com", amount:40028.65},
+        ],
+        income: 47827.88,
+        expenses: [
+          {name:"Электричество", amount:6430},
+          {name:"Интернет", amount:1000},
+          {name:"Вывоз мусора", amount:1000},
+          {name:"Вода (4 доставки × 500)", amount:2000},
+          {name:"Комиссия Booking.com (бронь Graub)", amount:7495.37},
+          {name:"Эквайринг", amount:2045.16},
+        ],
+        expensesTotal: 19970.53,
+        afterExpenses: 27857.35,
+        ownerShare: 20893.01,
+        tax: 1044.65,
+        payout: 19848.36,
+        commission: 6964.34
+      }
+    }
+  }
+};
+const MONTH = "2026-06";
+
+/* users (демо-прототип: пароли захардкожены) */
+const USERS = {
+  "vitalii2026":   {name:"Виталий Красюк",  role:"Владелец · Aurora",            villas:["aurora"], master:false},
+  "oleksandr2026": {name:"Александр Красюк", role:"Владелец · Radharani, Axis",   villas:["radharani","axis"], master:false},
+  "denys2026":     {name:"Денис",            role:"Мастер-доступ · AVA Estate",   villas:["aurora","radharani","axis"], master:true}
+};
+
+let user = null, activeTab = null;
+
+/* ================= helpers ================= */
+function fmt(n){
+  const s = n.toLocaleString("ru-RU",{minimumFractionDigits:2,maximumFractionDigits:2});
+  return s.replace(/ /g," ") + " ฿";
+}
+function fmt0(n){
+  return n.toLocaleString("ru-RU",{maximumFractionDigits:0}).replace(/ /g," ") + " ฿";
+}
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+
+/* ================= auth ================= */
+function doLogin(e){
+  e.preventDefault();
+  const p = document.getElementById("pwd").value.trim();
+  if(USERS[p]){
+    user = USERS[p];
+    document.getElementById("login").style.display = "none";
+    document.getElementById("app").style.display = "block";
+    document.getElementById("userName").innerHTML =
+      esc(user.name) + '<span class="role">' + esc(user.role) + '</span>';
+    activeTab = user.master ? "summary" : user.villas[0];
+    renderTabs(); render();
+  } else {
+    document.getElementById("loginErr").textContent = "Неверный пароль. Попробуйте ещё раз.";
+    document.getElementById("pwd").select();
+  }
+  return false;
+}
+function logout(){
+  user = null;
+  document.getElementById("app").style.display = "none";
+  document.getElementById("login").style.display = "flex";
+  document.getElementById("pwd").value = "";
+  document.getElementById("loginErr").textContent = "";
+}
+
+/* ================= tabs ================= */
+function renderTabs(){
+  const m = DATA[MONTH];
+  let h = "";
+  if(user.master) h += tabBtn("summary","Сводная");
+  for(const id of user.villas) h += tabBtn(id, m.villas[id].name);
+  document.getElementById("tabs").innerHTML = h;
+}
+function tabBtn(id,label){
+  return `<button class="tab${id===activeTab?" active":""}" onclick="setTab('${id}')">${label}</button>`;
+}
+function setTab(id){ activeTab = id; renderTabs(); render(); }
+
+/* ================= render ================= */
+function render(){
+  const el = document.getElementById("view");
+  el.innerHTML = (activeTab === "summary") ? renderSummary() : renderVilla(activeTab);
+}
+
+function renderVilla(id){
+  const m = DATA[MONTH], v = m.villas[id];
+  const bookingRows = v.bookings.map(b=>`
+    <tr><td>${esc(b.guest)}</td><td>${b.dates}</td>
+        <td class="r num">${b.nights}</td>
+        <td><span class="chan">${b.channel}</span></td>
+        <td class="r num">${fmt(b.amount)}</td></tr>`).join("");
+  const expRows = v.expenses.map(x=>`
+    <tr><td>${esc(x.name)}</td><td class="r num">${fmt(x.amount)}</td></tr>`).join("");
+
+  return `
+  <h2 class="vname">Вилла ${v.name}</h2>
+  <div class="vsub">${m.label} · владелец: ${esc(v.owner)}</div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="l">Доход</div><div class="v num">${fmt(v.income)}</div></div>
+    <div class="kpi"><div class="l">Расходы</div><div class="v num">${fmt(v.expensesTotal)}</div></div>
+    <div class="kpi green"><div class="l">К выплате</div><div class="v num">${fmt(v.payout)}</div></div>
+    <div class="kpi"><div class="l">Ночей занято</div><div class="v num">${v.nights}</div></div>
+  </div>
+
+  <section>
+    <h3>Брони месяца</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Гость</th><th>Даты</th><th class="r">Ночей</th><th>Канал</th><th class="r">Сумма</th></tr></thead>
+      <tbody>${bookingRows}</tbody>
+      <tfoot><tr><td>Итого доход</td><td></td><td class="r num">${v.nights}</td><td></td>
+      <td class="r num">${fmt(v.income)}</td></tr></tfoot>
+    </table></div>
+  </section>
+
+  <section>
+    <h3>Расходы месяца</h3>
+    <div class="tablewrap"><table style="min-width:380px">
+      <thead><tr><th>Статья</th><th class="r">Сумма</th></tr></thead>
+      <tbody>${expRows}</tbody>
+      <tfoot><tr><td>Итого расходы</td><td class="r num">${fmt(v.expensesTotal)}</td></tr></tfoot>
+    </table></div>
+  </section>
+
+  <section>
+    <h3>К выплате</h3>
+    <div class="payout">
+      <div class="steps">
+        Доход − расходы: <b class="num">${fmt(v.afterExpenses)}</b><br>
+        Доля владельца 75%: <b class="num">${fmt(v.ownerShare)}</b><br>
+        Withholding tax 5% — удерживается при выплате: <b class="num">− ${fmt(v.tax)}</b>
+      </div>
+      <div class="big"><div class="l">К выплате за ${m.label.toLowerCase()}</div>
+      <div class="v num">${fmt(v.payout)}</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h3>Доход · Расходы · Выплата</h3>
+    <div class="chartcard">${barChart([
+      {label:"Доход", value:v.income, color:"#3F4A4C"},
+      {label:"Расходы", value:v.expensesTotal, color:"#8FA0A4"},
+      {label:"К выплате", value:v.payout, color:"#4FA764"},
+    ])}</div>
+  </section>`;
+}
+
+function renderSummary(){
+  const m = DATA[MONTH];
+  const ids = Object.keys(m.villas);
+  const T = {income:0, exp:0, comm:0, tax:0, payout:0, nights:0};
+  const rows = ids.map(id=>{
+    const v = m.villas[id];
+    T.income += v.income; T.exp += v.expensesTotal; T.comm += v.commission;
+    T.tax += v.tax; T.payout += v.payout; T.nights += v.nights;
+    return `<tr><td><b>${v.name}</b><br><span style="font-size:12px;color:var(--sub)">${esc(v.owner)}</span></td>
+      <td class="r num">${v.nights}</td>
+      <td class="r num">${fmt(v.income)}</td>
+      <td class="r num">${fmt(v.expensesTotal)}</td>
+      <td class="r num">${fmt(v.commission)}</td>
+      <td class="r num">${fmt(v.tax)}</td>
+      <td class="r num"><b>${fmt(v.payout)}</b></td></tr>`;
+  }).join("");
+
+  return `
+  <h2 class="vname">Сводная по виллам</h2>
+  <div class="vsub">${m.label} · мастер-доступ</div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="l">Доход всего</div><div class="v num">${fmt(T.income)}</div></div>
+    <div class="kpi"><div class="l">Расходы всего</div><div class="v num">${fmt(T.exp)}</div></div>
+    <div class="kpi green"><div class="l">Наша комиссия 25%</div><div class="v num">${fmt(T.comm)}</div></div>
+    <div class="kpi"><div class="l">Выплаты владельцам</div><div class="v num">${fmt(T.payout)}</div></div>
+  </div>
+
+  <section>
+    <h3>Виллы · ${m.label}</h3>
+    <div class="tablewrap"><table style="min-width:760px">
+      <thead><tr><th>Вилла</th><th class="r">Ночей</th><th class="r">Доход</th><th class="r">Расходы</th>
+      <th class="r">Комиссия 25%</th><th class="r">Tax 5%</th><th class="r">К выплате</th></tr></thead>
+      <tbody>${rows}</tbody>
+      <tfoot><tr><td>Итого</td><td class="r num">${T.nights}</td>
+        <td class="r num">${fmt(T.income)}</td><td class="r num">${fmt(T.exp)}</td>
+        <td class="r num">${fmt(T.comm)}</td><td class="r num">${fmt(T.tax)}</td>
+        <td class="r num">${fmt(T.payout)}</td></tr></tfoot>
+    </table></div>
+    <div class="sumnote">Комиссия = 25% от «доход − расходы». Withholding tax 5% удерживается из доли владельца при выплате. Владельцы комиссию в своих кабинетах не видят.</div>
+  </section>
+
+  <section>
+    <h3>Выплаты по виллам</h3>
+    <div class="chartcard">${barChart(ids.map((id,i)=>({
+      label:m.villas[id].name, value:m.villas[id].payout,
+      color:["#3F4A4C","#8FA0A4","#4FA764"][i%3]
+    })))}</div>
+  </section>`;
+}
+
+/* ================= SVG bar chart (no libraries) ================= */
+function barChart(items){
+  const W = 640, H = 260, padL = 16, padR = 16, padT = 34, padB = 34;
+  const iw = W - padL - padR, ih = H - padT - padB;
+  const max = Math.max(...items.map(d=>d.value));
+  const n = items.length;
+  const gap = 26;
+  const bw = Math.min(110, (iw - gap*(n-1)) / n);
+  const totalW = bw*n + gap*(n-1);
+  const x0 = padL + (iw - totalW)/2;
+  const baseY = padT + ih;
+
+  /* recessive gridlines at 0 / 50% / 100% of max */
+  let grid = "";
+  for(const f of [0.5, 1]){
+    const y = baseY - ih*f;
+    grid += `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="#E7DFD0" stroke-width="1"/>`;
+  }
+
+  let bars = "";
+  items.forEach((d,i)=>{
+    const h = Math.max(4, ih * d.value / max);
+    const x = x0 + i*(bw+gap), y = baseY - h;
+    bars += `
+    <g class="bar">
+      <path d="M${x},${baseY} L${x},${y+4} Q${x},${y} ${x+4},${y} L${x+bw-4},${y} Q${x+bw},${y} ${x+bw},${y+4} L${x+bw},${baseY} Z"
+            fill="${d.color}"><title>${d.label}: ${fmt(d.value)}</title></path>
+      <text x="${x+bw/2}" y="${y-9}" text-anchor="middle" font-size="13" font-weight="800"
+            fill="#2C3638" style="font-variant-numeric:tabular-nums">${fmt0(d.value)}</text>
+      <text x="${x+bw/2}" y="${baseY+21}" text-anchor="middle" font-size="12" font-weight="700"
+            fill="#75878B">${d.label}</text>
+    </g>`;
+  });
+
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Столбчатая диаграмма: ${items.map(d=>d.label+" "+fmt0(d.value)).join(", ")}">
+    ${grid}
+    <line x1="${padL}" y1="${baseY}" x2="${W-padR}" y2="${baseY}" stroke="#D8CDBB" stroke-width="1.5"/>
+    ${bars}
+  </svg>`;
+}
+</script>
+</body>
+</html>
