@@ -1,93 +1,125 @@
-/* AVA Villa Performance Widget — embeddable stats bar for villa pages (Tilda etc.)
+/* AVA Villa Performance Widget — embeddable stats panel for villa pages (Tilda etc.)
+ * Layout per Figma frame 1410-1072 (Frame 1339, 1040×285).
  * Usage:
  *   <div class="ava-stats" data-villa="aurora"></div>
  *   <script src="https://avaestate.github.io/ava-rental/b2b/widget.js" defer></script>
  * Data source: https://avaestate.github.io/ava-rental/b2b/data.json (maintained by AVA)
  * Optional attributes:
  *   data-lang="en|ru"      (default en)
- *   data-theme="dark|light" (default dark)
  */
 (function () {
   "use strict";
   var DATA_URL = "https://avaestate.github.io/ava-rental/b2b/data.json";
   var L = {
-    en: { months: "In operation", net: "Net / month", yld: "ROI / year", earned: "earned",
-      tip: "Cumulative net income earned by this villa since it started operating. The chart shows monthly net income for the last 12 months — hover the trend to see the villa's earning momentum." },
-    ru: { months: "В работе", net: "Чистыми / мес", yld: "ROI / год", earned: "earned",
-      tip: "Накопленный чистый доход виллы с начала работы. График — чистый доход по месяцам за последние 12 месяцев: видно динамику заработка." }
+    en: {
+      months: "In operation", net: "Net / month", yld: "ROI / year",
+      earned: "Earned since launch", back: "% of price back",
+      payback: function (y) { return "Full payback in ≈ " + y + " years, then pure income – and the villa itself stays yours."; },
+      occ: "Occupancy", adr: "ADR", since: "Since",
+      live: "Live · updated daily",
+      chart: "Net monthly profit,<br>last 12 months",
+      mo: "mo"
+    },
+    ru: {
+      months: "В работе", net: "Чистыми / мес", yld: "ROI / год",
+      earned: "Заработано с запуска", back: "% цены возвращено",
+      payback: function (y) { return "Полная окупаемость ≈ " + y + " лет, дальше — чистый доход, а вилла остаётся вашей."; },
+      occ: "Загрузка", adr: "Ставка / ночь", since: "Старт",
+      live: "Live · обновляется ежедневно",
+      chart: "Чистая прибыль по месяцам,<br>последние 12 мес",
+      mo: "мес"
+    }
   };
-  function fmtK(n) { return n >= 1000 ? Math.round(n / 1000) + "K" : String(n); }
-  function fmtM(n) { return "฿" + (n / 1000000).toFixed(2).replace(/\.?0+$/, "") + "M"; }
+
+  function fmtK(n) { return n >= 1000 ? Math.round(n / 1000) + "k" : String(n); }
+  function fmtNum(n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
 
   function css() {
     if (document.getElementById("ava-stats-css")) return;
     var s = document.createElement("style");
     s.id = "ava-stats-css";
     s.textContent = "" +
-      ".ava-stats-box{font-family:'Manrope',-apple-system,'Helvetica Neue',Arial,sans-serif;border-radius:10px;padding:10px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;box-sizing:border-box}" +
-      ".ava-stats-box.dark{background:#293638;color:#F0E7DF}" +
-      ".ava-stats-box.light{background:#F7F2EC;color:#2C3638;border:1px solid #e4dccd}" +
-      ".ava-stats-kpis{display:flex;gap:10px;flex-wrap:wrap}" +
-      ".ava-stats-kpi{border-radius:8px;padding:16px 20px;min-width:150px;box-sizing:border-box}" +
-      ".dark .ava-stats-kpi{background:#3F4A4C}" +
-      ".light .ava-stats-kpi{background:rgba(44,54,56,.06)}" +
-      ".ava-stats-kpi span{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#75878B;font-weight:600;margin-bottom:10px}" +
-      ".light .ava-stats-kpi span{color:#75878B}" +
-      ".ava-stats-kpi b{display:block;font-size:18px;font-weight:700;letter-spacing:-.01em;line-height:1}" +
-      ".ava-stats-kpi b small{font-size:13px;font-weight:600;opacity:.8;margin-left:3px}" +
-      ".ava-stats-chart{flex:1;min-width:280px;max-width:560px;box-sizing:border-box;padding:10px 40px}" +
-      ".ava-stats-chart svg{display:block;width:100%;height:64px;overflow:visible}" +
-      ".ava-stats-badge{display:block;color:#8BE28B;font-size:14px;font-weight:700;letter-spacing:.01em;margin-bottom:8px;position:relative}" +
-      ".ava-stats-help{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;margin-left:6px;border-radius:50%;border:1.2px solid #75878B;color:#75878B;font-size:11px;font-weight:700;cursor:pointer;vertical-align:1px;user-select:none}" +
-      ".ava-stats-tip{display:none;position:absolute;left:0;top:24px;z-index:9;max-width:290px;background:#1E2829;color:#DDE4E1;font-size:12px;font-weight:500;line-height:1.5;letter-spacing:0;padding:10px 12px;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.35)}" +
-      ".ava-stats-tip.open{display:block}" +
-      "@media(max-width:640px){.ava-stats-box{gap:10px;padding:10px}.ava-stats-kpis{gap:10px}.ava-stats-kpi{min-width:104px;padding:12px 14px}.ava-stats-chart{padding:10px 16px}}";
+      ".ava-stats-box{font-family:'Manrope',-apple-system,'Helvetica Neue',Arial,sans-serif;background:#293638;color:#FFFFFF;border-radius:10px;padding:10px;display:flex;gap:40px;max-width:1040px;margin:0 auto;box-sizing:border-box}" +
+      ".ava-stats-box *{box-sizing:border-box}" +
+      ".ava-stats-left{flex:0 0 460px;display:flex;flex-direction:column;gap:10px}" +
+      ".ava-stats-kpis{display:flex;gap:10px}" +
+      ".ava-stats-kpi{flex:1;background:#3F4A4C;border-radius:8px;padding:16px 20px}" +
+      ".ava-stats-kpi span{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#75878B;font-weight:600;margin-bottom:10px;white-space:nowrap}" +
+      ".ava-stats-kpi b{display:block;font-size:18px;font-weight:700;line-height:1;white-space:nowrap}" +
+      ".ava-stats-kpi b small{font-size:13px;font-weight:600;opacity:.75;margin-left:3px}" +
+      ".ava-stats-earned{background:#3F4A4C;border-radius:8px;padding:16px 20px;flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:8px}" +
+      ".ava-stats-earned .row{display:flex;justify-content:space-between;align-items:baseline;gap:10px}" +
+      ".ava-stats-earned .lbl{font-size:13px;color:#C3CDCA;font-weight:500}" +
+      ".ava-stats-earned .back{font-size:13px;color:#8BE28B;font-weight:600;white-space:nowrap}" +
+      ".ava-stats-earned .val{font-size:24px;font-weight:700;line-height:1.1}" +
+      ".ava-stats-bar{height:4px;border-radius:2px;background:rgba(255,255,255,.14);overflow:hidden}" +
+      ".ava-stats-bar i{display:block;height:100%;border-radius:2px;background:#C9D2CE}" +
+      ".ava-stats-earned .cap{font-size:12px;line-height:1.5;color:#75878B}" +
+      ".ava-stats-right{flex:1;min-width:0;display:flex;flex-direction:column;padding:10px 10px 6px 0}" +
+      ".ava-stats-meta{display:flex;align-items:flex-start;gap:32px}" +
+      ".ava-stats-meta .m span{display:block;font-size:12px;color:#75878B;font-weight:500;margin-bottom:4px;white-space:nowrap}" +
+      ".ava-stats-meta .m b{font-size:14px;font-weight:600;white-space:nowrap}" +
+      ".ava-stats-live{margin-left:auto;font-size:12px;color:#8BE28B;font-weight:500;white-space:nowrap}" +
+      ".ava-stats-live i{display:inline-block;width:6px;height:6px;border-radius:50%;background:#8BE28B;margin-right:6px;vertical-align:1px}" +
+      ".ava-stats-ct{font-size:13px;line-height:1.4;color:#C3CDCA;margin:16px 0 8px;font-weight:500}" +
+      ".ava-stats-bars{flex:1;display:flex;align-items:flex-end;gap:8px;min-height:96px}" +
+      ".ava-stats-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0}" +
+      ".ava-stats-col .v{font-size:11px;color:#E4EAE7;font-weight:600;margin-bottom:4px;white-space:nowrap}" +
+      ".ava-stats-col .b{width:100%;border-radius:3px 3px 0 0;background:rgba(201,210,206,.38)}" +
+      ".ava-stats-col .b.max{background:#C9D2CE}" +
+      ".ava-stats-col .m{font-size:11px;color:#75878B;margin-top:6px;font-weight:500}" +
+      ".ava-stats{container-type:inline-size}" +
+      "@container(max-width:920px){.ava-stats-box{flex-direction:column;gap:16px}.ava-stats-left{flex:none;width:100%}.ava-stats-right{padding:0 10px 6px}}" +
+      "@container(max-width:640px){.ava-stats-kpis{flex-wrap:wrap}.ava-stats-kpi{flex:1 1 calc(33% - 10px);min-width:96px;padding:12px 12px}.ava-stats-kpi b{font-size:16px}.ava-stats-meta{flex-wrap:wrap;gap:14px 20px}.ava-stats-live{margin-left:0;width:100%;order:9}.ava-stats-bars{gap:4px}.ava-stats-col .v{font-size:9px;margin-bottom:2px}.ava-stats-col .m{font-size:9px}.ava-stats-earned .val{font-size:20px}}" +
+      "@media(max-width:920px){.ava-stats-box{flex-direction:column;gap:16px}.ava-stats-left{flex:none;width:100%}.ava-stats-right{padding:0 10px 6px}}" +
+      "@media(max-width:640px){.ava-stats-kpis{flex-wrap:wrap}.ava-stats-kpi{flex:1 1 calc(33% - 10px);min-width:96px;padding:12px 12px}.ava-stats-kpi b{font-size:16px}.ava-stats-meta{flex-wrap:wrap;gap:14px 20px}.ava-stats-live{margin-left:0;width:100%;order:9}.ava-stats-bars{gap:4px}.ava-stats-col .v{font-size:9px}.ava-stats-col .m{font-size:9px}.ava-stats-earned .val{font-size:20px}}";
     document.head.appendChild(s);
   }
 
-  var GRAD_N = 0;
-  function chartSVG(series, theme) {
-    var w = 520, h = 86, max = Math.max.apply(null, series.concat([1]));
-    var stepX = w / (series.length - 1);
-    var pts = series.map(function (v, i) { return [i * stepX, h - 8 - (v / max) * (h - 20)]; });
-    var line = pts.map(function (p, i) { return (i ? "L" : "M") + p[0].toFixed(1) + "," + p[1].toFixed(1); }).join(" ");
-    var area = line + " L" + w + "," + h + " L0," + h + " Z";
-    var stroke = theme === "light" ? "#2C3638" : "#C9D2CE";
-    var gid = "ava-stats-grad-" + (++GRAD_N);
-    var last = pts[pts.length - 1];
-    return '<svg viewBox="0 0 ' + w + " " + h + '" preserveAspectRatio="none">' +
-      '<defs><linearGradient id="' + gid + '" x1="0" y1="0" x2="0" y2="1">' +
-        '<stop offset="0%" stop-color="' + stroke + '" stop-opacity=".28"/>' +
-        '<stop offset="100%" stop-color="' + stroke + '" stop-opacity="0"/>' +
-      "</linearGradient></defs>" +
-      '<path d="' + area + '" fill="url(#' + gid + ')"/>' +
-      '<path d="' + line + '" fill="none" stroke="' + stroke + '" stroke-width="1.8" stroke-linecap="round"/>' +
-      '<circle cx="' + last[0] + '" cy="' + last[1] + '" r="5" fill="' + stroke + '"/></svg>';
+  function bars(series, labels) {
+    var max = Math.max.apply(null, series.concat([1]));
+    var MAXH = 96; // px, tallest bar
+    return series.map(function (v, i) {
+      var h = v > 0 ? Math.max(3, Math.round(v / max * MAXH)) : 0;
+      return '<div class="ava-stats-col">' +
+        (v > 0 ? '<div class="v">' + fmtK(v) + "</div>" : "") +
+        (v > 0 ? '<div class="b' + (v === max ? " max" : "") + '" style="height:' + h + 'px"></div>' : "") +
+        '<div class="m">' + (labels && labels[i] ? labels[i] : "") + "</div>" +
+      "</div>";
+    }).join("");
   }
 
-  function render(el, v, lang, theme) {
+  function render(el, v, lang) {
     var t = L[lang] || L.en;
+    var pct = v.price ? Math.max(1, Math.round(v.cum / v.price * 100)) : null;
+    var payback = v.price && v.net ? Math.round(v.price / (v.net * 12)) : null;
     el.innerHTML =
-      '<div class="ava-stats-box ' + theme + '">' +
-        '<div class="ava-stats-kpis">' +
-          '<div class="ava-stats-kpi"><span>' + t.months + '</span><b>' + v.months + "<small>mo</small></b></div>" +
-          '<div class="ava-stats-kpi"><span>' + t.net + '</span><b>' + fmtK(v.net).toLowerCase() + "</b></div>" +
-          '<div class="ava-stats-kpi"><span>' + t.yld + '</span><b>' + v.yld + "<small>%</small></b></div>" +
-        "</div>" +
-        '<div class="ava-stats-chart">' +
-          '<div class="ava-stats-badge">▲ ' + fmtM(v.cum) + " " + t.earned +
-            '<span class="ava-stats-help" role="button" tabindex="0" aria-label="What is this chart?">?</span>' +
-            '<span class="ava-stats-tip">' + t.tip + "</span>" +
+      '<div class="ava-stats-box">' +
+        '<div class="ava-stats-left">' +
+          '<div class="ava-stats-kpis">' +
+            '<div class="ava-stats-kpi"><span>' + t.months + '</span><b>' + v.months + "<small>" + t.mo + "</small></b></div>" +
+            '<div class="ava-stats-kpi"><span>' + t.net + '</span><b>' + fmtK(v.net) + "</b></div>" +
+            '<div class="ava-stats-kpi"><span>' + t.yld + '</span><b>' + v.yld + "<small>%</small></b></div>" +
           "</div>" +
-          chartSVG(v.series, theme) +
+          '<div class="ava-stats-earned">' +
+            '<div class="row"><span class="lbl">' + t.earned + "</span>" +
+              (pct !== null ? '<span class="back">' + pct + t.back + "</span>" : "") + "</div>" +
+            '<div class="val">' + fmtNum(v.cum) + "</div>" +
+            (pct !== null ? '<div class="ava-stats-bar"><i style="width:' + Math.min(100, pct) + '%"></i></div>' : "") +
+            (payback !== null ? '<div class="cap">' + t.payback(payback) + "</div>" : "") +
+          "</div>" +
+        "</div>" +
+        '<div class="ava-stats-right">' +
+          '<div class="ava-stats-meta">' +
+            '<div class="m"><span>' + t.occ + "</span><b>" + v.occ + "%</b></div>" +
+            '<div class="m"><span>' + t.adr + "</span><b>" + fmtNum(v.adr) + "</b></div>" +
+            '<div class="m"><span>' + t.since + "</span><b>" + (v.since || "") + "</b></div>" +
+            '<div class="ava-stats-live"><i></i>' + t.live + "</div>" +
+          "</div>" +
+          '<div class="ava-stats-ct">' + t.chart + "</div>" +
+          '<div class="ava-stats-bars">' + bars(v.series || [], v.labels || []) + "</div>" +
         "</div>" +
       "</div>";
-    var help = el.querySelector(".ava-stats-help");
-    var tip = el.querySelector(".ava-stats-tip");
-    if (help && tip) {
-      help.addEventListener("click", function (e) { e.stopPropagation(); tip.classList.toggle("open"); });
-      document.addEventListener("click", function () { tip.classList.remove("open"); });
-    }
   }
 
   function init() {
@@ -100,7 +132,7 @@
       nodes.forEach(function (el) {
         var v = map[el.getAttribute("data-villa")];
         if (!v) { el.style.display = "none"; return; }
-        render(el, v, el.getAttribute("data-lang") || "en", el.getAttribute("data-theme") || "dark");
+        render(el, v, el.getAttribute("data-lang") || "en");
       });
     }).catch(function () { nodes.forEach(function (el) { el.style.display = "none"; }); });
   }
