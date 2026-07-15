@@ -40,7 +40,7 @@ button,input{font-family:inherit}
 .login-note{margin-top:20px;font-size:11.5px;color:#9DB0B4;text-align:center;line-height:1.5}
 
 /* ---------- app frame ---------- */
-#app{display:none;max-width:1020px;margin:0 auto;padding:0 20px 60px}
+#app{display:none;max-width:1040px;margin:0 auto;padding:0 20px 60px}
 header{display:flex;align-items:center;justify-content:space-between;gap:12px;
        padding:22px 0 16px;border-bottom:1px solid var(--hair)}
 header .hbrand{font-weight:800;font-size:19px;letter-spacing:2.5px}
@@ -55,23 +55,43 @@ header .hbrand small{font-size:10px;letter-spacing:2px;color:var(--sub);display:
 .controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
           gap:12px;margin:20px 0 6px}
 .tabs{display:flex;gap:8px;flex-wrap:wrap}
-.tab{border:1px solid var(--hair);background:#FBF9F4;border-radius:8px;padding:9px 18px;
-     font-weight:700;font-size:13.5px;color:var(--ink-soft);cursor:pointer;letter-spacing:.3px}
+.tab{border:1px solid var(--hair);background:#FBF9F4;border-radius:8px;padding:9px 16px;
+     font-weight:700;font-size:13px;color:var(--ink-soft);cursor:pointer;letter-spacing:.3px}
 .tab.active{background:var(--ink);color:var(--cream2);border-color:var(--ink)}
+.tab.special{border-style:dashed}
+.tab.special.active{border-style:solid}
 .months{display:flex;gap:8px}
 .month{border:1px solid var(--hair);background:transparent;border-radius:8px;padding:8px 14px;
        font-weight:700;font-size:12.5px;color:var(--sub);cursor:pointer}
 .month.active{background:var(--cream2);border-color:#D8CDBB;color:var(--ink)}
-.month:disabled{opacity:.42;cursor:not-allowed}
+.month:disabled{opacity:.45;cursor:not-allowed}
 
-h2.vname{font-size:23px;font-weight:800;letter-spacing:-.3px;margin:24px 0 4px}
+.vhead{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;margin:24px 0 4px}
+h2.vname{font-size:23px;font-weight:800;letter-spacing:-.3px}
 .vsub{font-size:13px;color:var(--sub);font-weight:600;margin-bottom:18px}
 
+/* scheme segment control */
+.segwrap{text-align:right}
+.seg{display:inline-flex;background:#EFE8DA;border:1px solid var(--hair);border-radius:9px;padding:3px;gap:3px}
+.seg button{border:none;background:transparent;border-radius:7px;padding:7px 14px;
+            font-weight:800;font-size:12.5px;color:var(--sub);cursor:pointer;letter-spacing:.2px}
+.seg button.active{background:var(--ink);color:var(--cream2)}
+.segnote{font-size:11px;color:#A8A094;font-weight:600;margin-top:5px}
+
+/* badges / notices */
+.badge{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.4px;border-radius:6px;
+       padding:3px 9px;background:var(--cream2);color:var(--ink-soft);vertical-align:2px}
+.notice{background:#F3EEE3;border:1px dashed #D8CDBB;border-radius:10px;padding:14px 18px;
+        font-size:13.5px;color:var(--ink-soft);font-weight:600;margin-top:14px;line-height:1.55}
+.notice b{font-weight:800}
+
 /* ---------- KPI ---------- */
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.kpi{background:var(--ink-soft);color:var(--cream2);border-radius:10px;padding:16px 18px}
-.kpi .l{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#9DB0B4}
-.kpi .v{font-size:21px;font-weight:800;margin-top:8px;letter-spacing:-.3px;white-space:nowrap}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.kpis.k4{grid-template-columns:repeat(4,1fr)}
+.kpi{background:var(--ink-soft);color:var(--cream2);border-radius:10px;padding:15px 16px}
+.kpi .l{font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:#9DB0B4}
+.kpi .v{font-size:19px;font-weight:800;margin-top:8px;letter-spacing:-.3px;white-space:nowrap}
+.kpi .s{font-size:11px;color:#9DB0B4;font-weight:600;margin-top:3px}
 .kpi.green .v{color:var(--green)}
 
 /* ---------- sections & tables ---------- */
@@ -85,36 +105,58 @@ th{font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;c
 td{padding:11px 16px;border-bottom:1px solid #EFE8DA;vertical-align:top}
 tr:last-child td{border-bottom:none}
 td.r,th.r{text-align:right;white-space:nowrap}
+td.muted{color:var(--sub)}
 .chan{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.4px;border-radius:6px;
       padding:3px 8px;background:var(--cream2);color:var(--ink-soft)}
+.pill{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.3px;border-radius:6px;
+      padding:2px 7px;background:#E7E0D2;color:#8A8171;margin-left:8px;vertical-align:1px}
+.pill.skip{background:#F0E7DF;color:#A8A094;text-decoration:none}
 tfoot td{font-weight:800;background:#F3EEE3}
-.note{font-size:12px;color:var(--sub);margin-top:10px;line-height:1.5}
+.note{font-size:12px;color:var(--sub);margin-top:10px;line-height:1.55}
+tr.skipped td{color:#A8A094}
 
 /* ---------- payout ---------- */
 .payout{background:var(--ink);color:var(--cream2);border-radius:10px;padding:22px 24px;
         display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px}
-.payout .steps{font-size:13px;color:#9DB0B4;line-height:1.7}
+.payout .steps{font-size:13px;color:#9DB0B4;line-height:1.75}
 .payout .steps b{color:var(--cream2);font-weight:700}
+.payout .steps .eq{color:#C8D4D6;font-weight:800}
+.payout .big{text-align:right}
 .payout .big .l{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#9DB0B4}
 .payout .big .v{font-size:32px;font-weight:800;color:var(--green);letter-spacing:-.5px;white-space:nowrap;margin-top:4px}
+.payout .big .s{font-size:11.5px;color:#9DB0B4;font-weight:600;margin-top:6px;max-width:230px}
 
-/* ---------- chart ---------- */
+/* ---------- charts ---------- */
 .chartcard{background:#FBF9F4;border:1px solid var(--hair);border-radius:10px;padding:20px 20px 12px}
 .chartcard svg{width:100%;height:auto;display:block}
+.chartcard .cap{font-size:12px;color:var(--sub);font-weight:600;margin:2px 0 10px}
 .bar{transition:opacity .15s}
 .bar:hover{opacity:.82}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 
-/* ---------- summary ---------- */
-.sumnote{font-size:12px;color:var(--sub);margin:8px 0 0}
+/* donut legend */
+.donutwrap{display:flex;flex-wrap:wrap;align-items:center;gap:26px}
+.donutwrap svg{width:210px;flex:none}
+.legend{font-size:13.5px;line-height:2}
+.legend .sw{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:9px;vertical-align:-1px}
+.legend b{font-weight:800}
+
+.sumnote{font-size:12px;color:var(--sub);margin:8px 0 0;line-height:1.55}
 
 footer{margin-top:44px;font-size:11.5px;color:#A8A094;text-align:center;line-height:1.6}
 
+@media(max-width:840px){
+  .kpis{grid-template-columns:repeat(3,1fr)}
+  .grid2{grid-template-columns:1fr}
+}
 @media(max-width:720px){
-  .kpis{grid-template-columns:repeat(2,1fr)}
-  .kpi .v{font-size:18px}
+  .kpis,.kpis.k4{grid-template-columns:repeat(2,1fr)}
+  .kpi .v{font-size:17px}
   header{flex-wrap:wrap}
   .payout .big .v{font-size:26px}
+  .payout .big{text-align:left}
   h2.vname{font-size:20px}
+  .segwrap{text-align:left}
 }
 </style>
 </head>
@@ -143,113 +185,176 @@ footer{margin-top:44px;font-size:11.5px;color:#A8A094;text-align:center;line-hei
   <div class="controls">
     <div class="tabs" id="tabs"></div>
     <div class="months">
-      <button class="month" disabled>Апрель 2026</button>
-      <button class="month" disabled>Май 2026</button>
       <button class="month active">Июнь 2026</button>
+      <button class="month" disabled title="Данные за июль собираются">Июль 2026 · данные собираются</button>
     </div>
   </div>
 
   <div id="view"></div>
 
-  <footer>Прототип · данные за июнь 2026 · AVA Estate / Ready To Move Co., Ltd.<br>
-  Схема управления «25% + вода»: выплата = (доход − расходы) × 75% − withholding tax 5% от доли владельца.</footer>
+  <footer id="foot">Прототип · данные за июнь 2026 · AVA Estate / Ready To Move Co., Ltd.<br>
+  Базовая схема управления «комиссия 20% + операционные расходы на владельце»; финальная схема — на утверждении.<br>
+  Withholding tax 5% удерживается при выплате.</footer>
 </div>
 
 <script>
-/* ================= data: month -> villa ================= */
-const DATA = {
-  "2026-06": {
-    label: "Июнь 2026",
-    villas: {
-      aurora: {
-        name: "Aurora", owner: "Виталий Красюк", nights: 16,
-        bookings: [
-          {guest:"Yonatan Mayman", dates:"13 – 20 июня", nights:7, channel:"Airbnb", amount:28474.92},
-          {guest:"Shamar Suissa",  dates:"27 июня – 6 июля", nights:9, channel:"Airbnb", amount:40662.25},
-        ],
-        income: 69137.17,
-        expenses: [
-          {name:"Электричество", amount:9540},
-          {name:"Интернет", amount:1000},
-          {name:"Вывоз мусора", amount:1000},
-          {name:"Вода (4 доставки × 500)", amount:2000},
-        ],
-        expensesTotal: 13540,
-        afterExpenses: 55597.17,
-        ownerShare: 41697.88,
-        tax: 2084.89,
-        payout: 39612.98,
-        commission: 13899.29
-      },
-      radharani: {
-        name: "Radharani", owner: "Александр Красюк", nights: 23,
-        bookings: [
-          {guest:"Yacov Reingewirtz", dates:"7 – 10 июня", nights:3, channel:"Booking.com", amount:9450},
-          {guest:"Shalev Sharon", dates:"11 – 19 июня", nights:8, channel:"Прямая", amount:36800},
-          {guest:"Shalev Sharon", dates:"19 – 26 июня", nights:7, channel:"Прямая", amount:25000},
-          {guest:"Lucy Prost", dates:"26 июня – 1 июля", nights:5, channel:"Airbnb", amount:23356.20},
-        ],
-        income: 94606.20,
-        expenses: [
-          {name:"Электричество", amount:9955},
-          {name:"Интернет", amount:1000},
-          {name:"Вывоз мусора", amount:1000},
-          {name:"Вода (8 доставок × 500)", amount:4000},
-          {name:"Комиссия Booking.com (бронь Yacov)", amount:1769.51},
-          {name:"Эквайринг", amount:482.42},
-        ],
-        expensesTotal: 18206.93,
-        afterExpenses: 76399.27,
-        ownerShare: 57299.45,
-        tax: 2864.97,
-        payout: 54434.48,
-        commission: 19099.82
-      },
-      axis: {
-        name: "Axis", owner: "Александр Красюк", nights: 9,
-        bookings: [
-          {guest:"Vic Bhamra", dates:"12 – 14 июня", nights:2, channel:"Airbnb", amount:7799.23},
-          {guest:"Sébastian Graub", dates:"29 июня – 6 июля", nights:7, channel:"Booking.com", amount:40028.65},
-        ],
-        income: 47827.88,
-        expenses: [
-          {name:"Электричество", amount:6430},
-          {name:"Интернет", amount:1000},
-          {name:"Вывоз мусора", amount:1000},
-          {name:"Вода (4 доставки × 500)", amount:2000},
-          {name:"Комиссия Booking.com (бронь Graub)", amount:7495.37},
-          {name:"Эквайринг", amount:2045.16},
-        ],
-        expensesTotal: 19970.53,
-        afterExpenses: 27857.35,
-        ownerShare: 20893.01,
-        tax: 1044.65,
-        payout: 19848.36,
-        commission: 6964.34
-      }
-    }
-  }
-};
-const MONTH = "2026-06";
+/* ================================================================
+   AVA Owner Portal v2 · Июнь 2026 · клиентский демо-прототип
+   ================================================================ */
 
-/* users (демо-прототип: пароли захардкожены) */
+/* ---------- данные июня 2026 (из Guesty, захардкожено) ---------- */
+/* ci/co — ISO-даты для календаря занятости; totals — из выгрузки  */
+const VILLAS = {
+  aurora: {
+    name:"Aurora", owner:"Виталий Красюк", schemes:true,
+    bookings:[
+      {guest:"Yonatan Mayman", ci:"2026-06-13", co:"2026-06-20", nights:7, channel:"Airbnb",  amount:28474.92},
+      {guest:"Shamar Suissa",  ci:"2026-06-27", co:"2026-07-06", nights:9, channel:"Airbnb",  amount:40662.25},
+    ],
+    totals:{turnovers:2, nights:16, income:69137.17, adr:4321.07, occ:0.5333},
+    channel:[],                     /* канальные вычеты (комиссия OTA + эквайринг) */
+    opex:[
+      {name:"Электричество", amount:9540,  base:true},
+      {name:"Интернет", amount:1000, base:true},
+      {name:"Вывоз мусора", amount:1000, base:true},
+      {name:"Вода (4 доставки × 500)", amount:2000, base:true},
+      {name:"Бассейн (обслуживание, месяц)", amount:3000, base:false},
+      {name:"Сад (обслуживание, месяц)", amount:2000, base:false},
+      {name:"Клининг (2 перезаезда × 2 500)", amount:5000, base:false},
+    ]
+  },
+  radharani: {
+    name:"Radharani", owner:"Александр Красюк", schemes:true,
+    bookings:[
+      {guest:"Yacov Reingewirtz", ci:"2026-06-07", co:"2026-06-10", nights:3, channel:"Booking.com", amount:9450},
+      {guest:"Shalev Sharon", ci:"2026-06-11", co:"2026-06-19", nights:8, channel:"Прямая", amount:36800},
+      {guest:"Shalev Sharon", ci:"2026-06-19", co:"2026-06-26", nights:7, channel:"Прямая", amount:25000},
+      {guest:"Lucy Prost", ci:"2026-06-26", co:"2026-07-01", nights:5, channel:"Airbnb", amount:23356.20},
+    ],
+    totals:{turnovers:4, nights:23, income:94606.20, adr:4113.31, occ:0.7667},
+    channel:[
+      {name:"Комиссия Booking.com (бронь Yacov)", amount:1769.51},
+      {name:"Эквайринг (бронь Yacov)", amount:482.42},
+    ],
+    opex:[
+      {name:"Электричество", amount:9955, base:true},
+      {name:"Интернет", amount:1000, base:true},
+      {name:"Вывоз мусора", amount:1000, base:true},
+      {name:"Вода (8 доставок × 500)", amount:4000, base:true},
+      {name:"Бассейн (обслуживание, месяц)", amount:3000, base:false},
+      {name:"Сад (обслуживание, месяц)", amount:2000, base:false},
+      {name:"Клининг (4 перезаезда × 2 500)", amount:10000, base:false},
+    ]
+  },
+  axis: {
+    name:"Axis", owner:"Александр Красюк", schemes:true,
+    bookings:[
+      {guest:"Vic Bhamra", ci:"2026-06-12", co:"2026-06-14", nights:2, channel:"Airbnb", amount:7799.23},
+      {guest:"Sébastian Graub", ci:"2026-06-29", co:"2026-07-06", nights:7, channel:"Booking.com", amount:40028.65},
+    ],
+    totals:{turnovers:2, nights:9, income:47827.88, adr:5314.21, occ:0.30},
+    channel:[
+      {name:"Комиссия Booking.com (бронь Graub)", amount:7495.37},
+      {name:"Эквайринг (бронь Graub)", amount:2045.16},
+    ],
+    opex:[
+      {name:"Электричество", amount:6430, base:true},
+      {name:"Интернет", amount:1000, base:true},
+      {name:"Вывоз мусора", amount:1000, base:true},
+      {name:"Вода (4 доставки × 500)", amount:2000, base:true},
+      {name:"Бассейн (обслуживание, месяц)", amount:3000, base:false},
+      {name:"Сад (обслуживание, месяц)", amount:2000, base:false},
+      {name:"Клининг (2 перезаезда × 2 500)", amount:5000, base:false},
+    ]
+  },
+  cocolane2:{ name:"Cocolane 2", owner:null, schemes:false, bookings:[],
+    totals:{turnovers:0,nights:0,income:0,adr:0,occ:0}, channel:[], opex:null },
+  cocolane3:{ name:"Cocolane 3", owner:null, schemes:false,
+    bookings:[
+      {guest:"Ohana Ori", ci:"2026-06-25", co:"2026-06-27", nights:2, channel:"Booking.com", amount:8797.51},
+      {guest:"Ariel Fadlon", ci:"2026-06-29", co:"2026-07-06", nights:7, channel:"Booking.com", amount:36509.63},
+    ],
+    totals:{turnovers:2,nights:9,income:45307.14,adr:5034.13,occ:0.30}, channel:[], opex:null },
+  cocolane4:{ name:"Cocolane 4", owner:null, schemes:false, bookings:[],
+    totals:{turnovers:0,nights:0,income:0,adr:0,occ:0}, channel:[], opex:null },
+  katai:{ name:"Katai", owner:null, schemes:false, bookings:[],
+    totals:{turnovers:0,nights:0,income:0,adr:0,occ:0}, channel:[], opex:null },
+  whitelotus:{ name:"White Lotus", owner:null, schemes:false, bookings:[],
+    totals:{turnovers:0,nights:0,income:0,adr:0,occ:0}, channel:[], opex:null },
+  fourmoons:{ name:"Four Moons", owner:null, schemes:false, bookings:[],
+    totals:{turnovers:0,nights:0,income:0,adr:0,occ:0}, channel:[], opex:null },
+};
+const VILLA_ORDER = ["aurora","radharani","axis","cocolane2","cocolane3","cocolane4","katai","whitelotus","fourmoons"];
+const MONTH_LABEL = "Июнь 2026";
+const DAYS = 30; /* дней в июне */
+
+/* ---------- пользователи (демо, клиентская проверка) ---------- */
 const USERS = {
-  "vitalii2026":   {name:"Виталий Красюк",  role:"Владелец · Aurora",            villas:["aurora"], master:false},
-  "oleksandr2026": {name:"Александр Красюк", role:"Владелец · Radharani, Axis",   villas:["radharani","axis"], master:false},
-  "denys2026":     {name:"Денис",            role:"Мастер-доступ · AVA Estate",   villas:["aurora","radharani","axis"], master:true}
+  "denys2026":       {name:"Денис", role:"Администратор · AVA Estate", villas:VILLA_ORDER, master:true},
+  "vitalii2026":     {name:"Виталий Красюк", role:"Владелец · Aurora", villas:["aurora"], master:false},
+  "oleksandr2026":   {name:"Александр Красюк", role:"Владелец · Radharani, Axis", villas:["radharani","axis"], master:false},
+  "villa-owner2026": {name:"Владелец виллы", role:"Временный общий доступ",
+                      villas:["cocolane2","cocolane3","cocolane4","katai","whitelotus","fourmoons"],
+                      master:false, temp:true},
 };
 
-let user = null, activeTab = null;
+let user = null, activeTab = null, scheme = "20"; /* "20" | "2575" */
 
 /* ================= helpers ================= */
 function fmt(n){
   const s = n.toLocaleString("ru-RU",{minimumFractionDigits:2,maximumFractionDigits:2});
-  return s.replace(/ /g," ") + " ฿";
+  return s.replace(/ /g," ").replace(/ /g," ") + " ฿";
 }
 function fmt0(n){
-  return n.toLocaleString("ru-RU",{maximumFractionDigits:0}).replace(/ /g," ") + " ฿";
+  return n.toLocaleString("ru-RU",{maximumFractionDigits:0}).replace(/ /g," ").replace(/ /g," ") + " ฿";
 }
-function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+function pct(x){ return (x*100).toLocaleString("ru-RU",{maximumFractionDigits:1}) + " %"; }
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+function sum(arr,f){ return arr.reduce((a,x)=>a+(f?f(x):x),0); }
+
+const MONTHS_GEN = {6:"июня",7:"июля"};
+function dparts(iso){ return {m:+iso.slice(5,7), d:+iso.slice(8,10)}; }
+function dateRange(ci,co){
+  const a=dparts(ci), b=dparts(co);
+  if(a.m===b.m) return `${a.d} – ${b.d} ${MONTHS_GEN[a.m]}`;
+  return `${a.d} ${MONTHS_GEN[a.m]} – ${b.d} ${MONTHS_GEN[b.m]}`;
+}
+/* занятые дни июня (1..30) по броням */
+function occupiedDays(v){
+  const occ = new Array(DAYS+1).fill(false);
+  for(const b of v.bookings){
+    const a=dparts(b.ci), z=dparts(b.co);
+    const from = a.m<6 ? 1 : a.d;
+    const to   = z.m>6 ? DAYS : z.d-1; /* ночь = дата заезда..(выезд−1) */
+    for(let d=Math.max(1,from); d<=Math.min(DAYS,to); d++) occ[d]=true;
+  }
+  return occ;
+}
+
+/* ================= расчёты ================= */
+function calc(v){
+  if(!v.opex) return null;
+  const channelSum = sum(v.channel, x=>x.amount);
+  const net = v.totals.income - channelSum;                 /* нетто-поступления */
+  const opexAll = sum(v.opex, x=>x.amount);
+  const opexBase = sum(v.opex.filter(x=>x.base), x=>x.amount);
+
+  /* схема 20% + расходы на владельце (базовая) */
+  const comm20 = net * 0.20;
+  const before20 = net - comm20 - opexAll;
+  const tax20 = before20 * 0.05;
+  const payout20 = before20 - tax20;
+
+  /* схема 25/75 (старая): бассейн/сад/клининг не вычитаются */
+  const base75 = net - opexBase;
+  const owner75 = base75 * 0.75;
+  const tax75 = owner75 * 0.05;
+  const payout75 = owner75 - tax75;
+
+  return {channelSum, net, opexAll, opexBase,
+          s20:{comm:comm20, before:before20, tax:tax20, payout:payout20},
+          s2575:{base:base75, owner:owner75, tax:tax75, payout:payout75, comm:base75*0.25}};
+}
 
 /* ================= auth ================= */
 function doLogin(e){
@@ -261,8 +366,10 @@ function doLogin(e){
     document.getElementById("app").style.display = "block";
     document.getElementById("userName").innerHTML =
       esc(user.name) + '<span class="role">' + esc(user.role) + '</span>';
+    scheme = "20";
     activeTab = user.master ? "summary" : user.villas[0];
     renderTabs(); render();
+    window.scrollTo(0,0);
   } else {
     document.getElementById("loginErr").textContent = "Неверный пароль. Попробуйте ещё раз.";
     document.getElementById("pwd").select();
@@ -279,142 +386,338 @@ function logout(){
 
 /* ================= tabs ================= */
 function renderTabs(){
-  const m = DATA[MONTH];
   let h = "";
-  if(user.master) h += tabBtn("summary","Сводная");
-  for(const id of user.villas) h += tabBtn(id, m.villas[id].name);
+  if(user.master){
+    h += tabBtn("summary","Сводная",true);
+    h += tabBtn("business","Бизнес",true);
+  }
+  for(const id of user.villas) h += tabBtn(id, VILLAS[id].name,false);
   document.getElementById("tabs").innerHTML = h;
 }
-function tabBtn(id,label){
-  return `<button class="tab${id===activeTab?" active":""}" onclick="setTab('${id}')">${label}</button>`;
+function tabBtn(id,label,special){
+  return `<button class="tab${id===activeTab?" active":""}${special?" special":""}" onclick="setTab('${id}')">${label}</button>`;
 }
-function setTab(id){ activeTab = id; renderTabs(); render(); }
+function setTab(id){
+  const allowed = user.master ? ["summary","business",...user.villas] : user.villas;
+  if(!allowed.includes(id)) return;
+  activeTab = id; renderTabs(); render();
+}
+function setScheme(s){ scheme = s; render(); }
 
 /* ================= render ================= */
 function render(){
   const el = document.getElementById("view");
-  el.innerHTML = (activeTab === "summary") ? renderSummary() : renderVilla(activeTab);
+  if(activeTab === "summary") el.innerHTML = renderSummary();
+  else if(activeTab === "business") el.innerHTML = renderBusiness();
+  else el.innerHTML = renderVilla(activeTab);
 }
 
+/* ---------- вилла ---------- */
 function renderVilla(id){
-  const m = DATA[MONTH], v = m.villas[id];
-  const bookingRows = v.bookings.map(b=>`
-    <tr><td>${esc(b.guest)}</td><td>${b.dates}</td>
-        <td class="r num">${b.nights}</td>
-        <td><span class="chan">${b.channel}</span></td>
-        <td class="r num">${fmt(b.amount)}</td></tr>`).join("");
-  const expRows = v.expenses.map(x=>`
-    <tr><td>${esc(x.name)}</td><td class="r num">${fmt(x.amount)}</td></tr>`).join("");
+  const v = VILLAS[id], c = calc(v), t = v.totals;
+  const isPending = !v.opex;
+  const useScheme = v.schemes ? scheme : "20";
+  const cur = c ? (useScheme==="20" ? c.s20 : c.s2575) : null;
+
+  /* шапка */
+  let head = `
+  <div class="vhead">
+    <div>
+      <h2 class="vname">Вилла ${v.name}</h2>
+    </div>
+    ${v.schemes ? `
+    <div class="segwrap">
+      <div class="seg">
+        <button class="${useScheme==='20'?'active':''}" onclick="setScheme('20')">Схема 20%</button>
+        <button class="${useScheme==='2575'?'active':''}" onclick="setScheme('2575')">Схема 25/75</button>
+      </div>
+      <div class="segnote">Финальная схема — на утверждении</div>
+    </div>` : ``}
+  </div>
+  <div class="vsub">${MONTH_LABEL}${v.owner ? " · владелец: "+esc(v.owner) : ""}${user.temp ? ' · <span class="badge">персональные доступы выдаются</span>' : ""}</div>`;
+
+  /* KPI */
+  const kpis = `
+  <div class="kpis${c?"":" k4"}">
+    <div class="kpi"><div class="l">Доход</div><div class="v num">${fmt(t.income)}</div></div>
+    <div class="kpi"><div class="l">Ночей занято</div><div class="v num">${t.nights}</div></div>
+    <div class="kpi"><div class="l">ADR</div><div class="v num">${t.nights? fmt0(t.adr) : "—"}</div><div class="s">средняя цена ночи</div></div>
+    <div class="kpi"><div class="l">Загрузка</div><div class="v num">${pct(t.occ)}</div></div>
+    ${c ? `<div class="kpi green"><div class="l">К выплате</div><div class="v num">${fmt(cur.payout)}</div></div>` : ``}
+  </div>`;
+
+  /* брони */
+  let bookings = "";
+  if(v.bookings.length){
+    const rows = v.bookings.map(b=>`
+      <tr><td>${esc(b.guest)}</td><td>${dateRange(b.ci,b.co)}</td>
+          <td class="r num">${b.nights}</td>
+          <td><span class="chan">${b.channel}</span></td>
+          <td class="r num">${fmt(b.amount)}</td></tr>`).join("");
+    bookings = `
+    <section>
+      <h3>Брони месяца</h3>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Гость</th><th>Даты</th><th class="r">Ночей</th><th>Канал</th><th class="r">Сумма</th></tr></thead>
+        <tbody>${rows}</tbody>
+        <tfoot><tr><td>Итого доход</td><td></td><td class="r num">${t.nights}</td><td></td>
+        <td class="r num">${fmt(t.income)}</td></tr></tfoot>
+      </table></div>
+    </section>`;
+  } else {
+    bookings = `<section><h3>Брони месяца</h3>
+      <div class="notice">Броней в июне не было.</div></section>`;
+  }
+
+  /* календарь занятости */
+  const calSection = `
+  <section>
+    <h3>Занятость по дням июня</h3>
+    <div class="chartcard">
+      <div class="cap">Зелёный — вилла занята (ночь), светлый — свободна</div>
+      ${calendarStrip(occupiedDays(v))}
+    </div>
+  </section>`;
+
+  /* расходы + выплата */
+  let money = "";
+  if(isPending){
+    money = `
+    <section>
+      <h3>Расходы и выплата</h3>
+      <div class="notice"><b>Расходы за июнь вносятся.</b> Выплата будет рассчитана после внесения
+      операционных расходов и канальных вычетов по вилле.</div>
+    </section>`;
+  } else {
+    const is2575 = useScheme==="2575";
+    const chanRows = v.channel.map(x=>`
+      <tr><td>${esc(x.name)} <span class="pill">канальный вычет</span></td>
+          <td class="r num">− ${fmt(x.amount)}</td></tr>`).join("");
+    const opexRows = v.opex.map(x=>{
+      const skipped = is2575 && !x.base;
+      return `<tr${skipped?' class="skipped"':''}><td>${esc(x.name)}${skipped?' <span class="pill skip">в схеме 25/75 не вычитается</span>':''}</td>
+        <td class="r num">${skipped?fmt(x.amount):"− "+fmt(x.amount)}</td></tr>`;
+    }).join("");
+    const deducted = is2575 ? c.channelSum + c.opexBase : c.channelSum + c.opexAll;
+    money = `
+    <section>
+      <h3>Расходы месяца</h3>
+      <div class="tablewrap"><table style="min-width:420px">
+        <thead><tr><th>Статья</th><th class="r">Сумма</th></tr></thead>
+        <tbody>${chanRows}${opexRows}</tbody>
+        <tfoot><tr><td>Вычитается из дохода${is2575?" (схема 25/75)":""}</td><td class="r num">− ${fmt(deducted)}</td></tr></tfoot>
+      </table></div>
+      ${is2575?'<div class="note">В схеме 25/75 бассейн, сад и клининг не вычитаются из дохода владельца — они входят в комиссию управляющей компании 25%.</div>':''}
+    </section>
+
+    <section>
+      <h3>К выплате</h3>
+      <div class="payout">
+        <div class="steps">${is2575 ? `
+          Доход за месяц: <b class="num">${fmt(t.income)}</b><br>
+          ${c.channelSum>0?`− Канальные вычеты (комиссия OTA + эквайринг): <b class="num">${fmt(c.channelSum)}</b><br>`:""}
+          − Электричество, интернет, мусор, вода: <b class="num">${fmt(c.opexBase)}</b><br>
+          <span class="eq">= База:</span> <b class="num">${fmt(c.s2575.base)}</b><br>
+          Доля владельца 75%: <b class="num">${fmt(c.s2575.owner)}</b><br>
+          − Withholding tax 5% (удерживается при выплате): <b class="num">${fmt(c.s2575.tax)}</b>
+        ` : `
+          Доход за месяц: <b class="num">${fmt(t.income)}</b><br>
+          ${c.channelSum>0?`− Канальные вычеты (комиссия OTA + эквайринг): <b class="num">${fmt(c.channelSum)}</b><br>`:""}
+          <span class="eq">= Нетто-поступления:</span> <b class="num">${fmt(c.net)}</b><br>
+          − Комиссия AVA 20%: <b class="num">${fmt(c.s20.comm)}</b><br>
+          − Операционные расходы: <b class="num">${fmt(c.opexAll)}</b><br>
+          <span class="eq">= Доход владельца до налога:</span> <b class="num">${fmt(c.s20.before)}</b><br>
+          − Withholding tax 5% (удерживается при выплате): <b class="num">${fmt(c.s20.tax)}</b>
+        `}</div>
+        <div class="big"><div class="l">К выплате за июнь</div>
+          <div class="v num">${fmt(cur.payout)}</div>
+          <div class="s">Схема «${is2575?"25/75":"20% + расходы"}» · финальная схема на утверждении</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h3>Доход · Вычеты · Выплата</h3>
+      <div class="chartcard">${barChart([
+        {label:"Доход", value:t.income, color:"#3F4A4C"},
+        {label:is2575?"Вычеты":"Расходы", value:deducted, color:"#8FA0A4"},
+        {label:"К выплате", value:cur.payout, color:"#4FA764"},
+      ])}</div>
+    </section>`;
+  }
+
+  return head + kpis + bookings + calSection + money;
+}
+
+/* ---------- сводная (админ) ---------- */
+function renderSummary(){
+  const T = {nights:0, income:0, exp:0, payout:0};
+  let expKnown = true;
+  const rows = VILLA_ORDER.map(id=>{
+    const v = VILLAS[id], t = v.totals, c = calc(v);
+    T.nights += t.nights; T.income += t.income;
+    if(c){ T.exp += c.channelSum + c.opexAll; T.payout += c.s20.payout; } else if(t.income>0) expKnown = false;
+    return `<tr><td><b>${v.name}</b>${v.owner?`<br><span style="font-size:12px;color:var(--sub)">${esc(v.owner)}</span>`:""}</td>
+      <td class="r num">${t.nights}</td>
+      <td class="r num">${pct(t.occ)}</td>
+      <td class="r num">${fmt(t.income)}</td>
+      <td class="r num">${t.nights?fmt0(t.adr):"—"}</td>
+      <td class="r num">${c ? fmt(c.channelSum+c.opexAll) : '<span class="muted" style="color:var(--sub)">вносятся</span>'}</td>
+      <td class="r num">${c ? "<b>"+fmt(c.s20.payout)+"</b>" : "—"}</td></tr>`;
+  }).join("");
 
   return `
-  <h2 class="vname">Вилла ${v.name}</h2>
-  <div class="vsub">${m.label} · владелец: ${esc(v.owner)}</div>
+  <h2 class="vname" style="margin:24px 0 4px">Сводная по виллам</h2>
+  <div class="vsub">${MONTH_LABEL} · администратор · выплаты по схеме 20% (финальная схема на утверждении)</div>
 
-  <div class="kpis">
-    <div class="kpi"><div class="l">Доход</div><div class="v num">${fmt(v.income)}</div></div>
-    <div class="kpi"><div class="l">Расходы</div><div class="v num">${fmt(v.expensesTotal)}</div></div>
-    <div class="kpi green"><div class="l">К выплате</div><div class="v num">${fmt(v.payout)}</div></div>
-    <div class="kpi"><div class="l">Ночей занято</div><div class="v num">${v.nights}</div></div>
+  <div class="kpis k4">
+    <div class="kpi"><div class="l">Доход портфеля</div><div class="v num">${fmt(T.income)}</div></div>
+    <div class="kpi"><div class="l">Ночей занято</div><div class="v num">${T.nights}</div></div>
+    <div class="kpi"><div class="l">Расходы (3 виллы)</div><div class="v num">${fmt(T.exp)}</div></div>
+    <div class="kpi green"><div class="l">Выплаты владельцам</div><div class="v num">${fmt(T.payout)}</div></div>
   </div>
 
   <section>
-    <h3>Брони месяца</h3>
-    <div class="tablewrap"><table>
-      <thead><tr><th>Гость</th><th>Даты</th><th class="r">Ночей</th><th>Канал</th><th class="r">Сумма</th></tr></thead>
-      <tbody>${bookingRows}</tbody>
-      <tfoot><tr><td>Итого доход</td><td></td><td class="r num">${v.nights}</td><td></td>
-      <td class="r num">${fmt(v.income)}</td></tr></tfoot>
+    <h3>Виллы · ${MONTH_LABEL}</h3>
+    <div class="tablewrap"><table style="min-width:820px">
+      <thead><tr><th>Вилла</th><th class="r">Ночей</th><th class="r">Загрузка</th><th class="r">Доход</th>
+      <th class="r">ADR</th><th class="r">Расходы</th><th class="r">К выплате (20%)</th></tr></thead>
+      <tbody>${rows}</tbody>
+      <tfoot><tr><td>Итого</td><td class="r num">${T.nights}</td><td></td>
+        <td class="r num">${fmt(T.income)}</td><td></td>
+        <td class="r num">${fmt(T.exp)}</td>
+        <td class="r num">${fmt(T.payout)}</td></tr></tfoot>
     </table></div>
+    <div class="sumnote">Расходы = канальные вычеты + операционные. По Cocolane 3 и остальным виллам расходы за июнь вносятся — выплата не рассчитана.
+    Withholding tax 5% удерживается при выплате.</div>
   </section>
 
   <section>
-    <h3>Расходы месяца</h3>
-    <div class="tablewrap"><table style="min-width:380px">
-      <thead><tr><th>Статья</th><th class="r">Сумма</th></tr></thead>
-      <tbody>${expRows}</tbody>
-      <tfoot><tr><td>Итого расходы</td><td class="r num">${fmt(v.expensesTotal)}</td></tr></tfoot>
-    </table></div>
-  </section>
-
-  <section>
-    <h3>К выплате</h3>
-    <div class="payout">
-      <div class="steps">
-        Доход − расходы: <b class="num">${fmt(v.afterExpenses)}</b><br>
-        Доля владельца 75%: <b class="num">${fmt(v.ownerShare)}</b><br>
-        Withholding tax 5% — удерживается при выплате: <b class="num">− ${fmt(v.tax)}</b>
-      </div>
-      <div class="big"><div class="l">К выплате за ${m.label.toLowerCase()}</div>
-      <div class="v num">${fmt(v.payout)}</div></div>
-    </div>
-  </section>
-
-  <section>
-    <h3>Доход · Расходы · Выплата</h3>
+    <h3>Выплаты по виллам (схема 20%)</h3>
     <div class="chartcard">${barChart([
-      {label:"Доход", value:v.income, color:"#3F4A4C"},
-      {label:"Расходы", value:v.expensesTotal, color:"#8FA0A4"},
-      {label:"К выплате", value:v.payout, color:"#4FA764"},
+      {label:"Aurora", value:calc(VILLAS.aurora).s20.payout, color:"#3F4A4C"},
+      {label:"Radharani", value:calc(VILLAS.radharani).s20.payout, color:"#4FA764"},
+      {label:"Axis", value:calc(VILLAS.axis).s20.payout, color:"#8FA0A4"},
     ])}</div>
   </section>`;
 }
 
-function renderSummary(){
-  const m = DATA[MONTH];
-  const ids = Object.keys(m.villas);
-  const T = {income:0, exp:0, comm:0, tax:0, payout:0, nights:0};
-  const rows = ids.map(id=>{
-    const v = m.villas[id];
-    T.income += v.income; T.exp += v.expensesTotal; T.comm += v.commission;
-    T.tax += v.tax; T.payout += v.payout; T.nights += v.nights;
-    return `<tr><td><b>${v.name}</b><br><span style="font-size:12px;color:var(--sub)">${esc(v.owner)}</span></td>
-      <td class="r num">${v.nights}</td>
-      <td class="r num">${fmt(v.income)}</td>
-      <td class="r num">${fmt(v.expensesTotal)}</td>
-      <td class="r num">${fmt(v.commission)}</td>
-      <td class="r num">${fmt(v.tax)}</td>
-      <td class="r num"><b>${fmt(v.payout)}</b></td></tr>`;
-  }).join("");
+/* ---------- бизнес (только админ): P&L управляющей компании ---------- */
+function renderBusiness(){
+  /* комиссия 20% */
+  const commRows = [];
+  let commConfirmed = 0, commPrelim = 0;
+  for(const id of VILLA_ORDER){
+    const v = VILLAS[id], c = calc(v);
+    if(c){
+      commConfirmed += c.s20.comm;
+      commRows.push({name:v.name, base:c.net, comm:c.s20.comm, prelim:false});
+    } else if(v.totals.income>0){
+      const p = v.totals.income*0.20; /* канальные вычеты неизвестны — предварительно от валового дохода */
+      commPrelim += p;
+      commRows.push({name:v.name, base:v.totals.income, comm:p, prelim:true});
+    }
+  }
+  const commTotal = commConfirmed + commPrelim;
+
+  /* сервисная выручка и оценочная себестоимость */
+  const turnAll = sum(VILLA_ORDER, id=>VILLAS[id].totals.turnovers);       /* перезаезды всех вилл */
+  const schemeVillas = VILLA_ORDER.filter(id=>VILLAS[id].schemes);          /* 3 виллы на схеме */
+  const svc = [
+    {name:`Клининг (${turnAll} перезаездов × 2 500)`, rev:turnAll*2500, cost:turnAll*1000,
+     costNote:`~1 000 / уборка`},
+    {name:`Бассейн (${schemeVillas.length} виллы × 3 000/мес)`, rev:schemeVillas.length*3000, cost:schemeVillas.length*1500,
+     costNote:`~1 500 / мес / вилла`},
+    {name:`Сад (${schemeVillas.length} виллы × 2 000/мес)`, rev:schemeVillas.length*2000, cost:schemeVillas.length*1000,
+     costNote:`~1 000 / мес / вилла`},
+  ];
+  const svcRev = sum(svc,x=>x.rev), svcCost = sum(svc,x=>x.cost), svcMargin = svcRev - svcCost;
+
+  const grossConfirmed = commConfirmed + svcMargin;
+  const grossTotal = commTotal + svcMargin;
+
+  const portfolio = sum(VILLA_ORDER, id=>VILLAS[id].totals.income);
+  const payouts = sum(["aurora","radharani","axis"], id=>calc(VILLAS[id]).s20.payout);
+
+  const commTableRows = commRows.map(r=>`
+    <tr><td><b>${r.name}</b>${r.prelim?' <span class="pill">предварительно — расходы вносятся</span>':''}</td>
+        <td class="r num">${fmt(r.base)}</td>
+        <td class="r num">${fmt(r.comm)}</td></tr>`).join("");
+
+  const svcRowsHtml = svc.map(x=>`
+    <tr><td>${x.name}</td>
+        <td class="r num">${fmt0(x.rev)}</td>
+        <td class="r num">− ${fmt0(x.cost)}<br><span style="font-size:11px;color:var(--sub)">${x.costNote}</span></td>
+        <td class="r num"><b>${fmt0(x.rev-x.cost)}</b></td></tr>`).join("");
 
   return `
-  <h2 class="vname">Сводная по виллам</h2>
-  <div class="vsub">${m.label} · мастер-доступ</div>
+  <h2 class="vname" style="margin:24px 0 4px">Бизнес · P&amp;L управляющей компании</h2>
+  <div class="vsub">${MONTH_LABEL} · виден только администратору · схема 20% + сервисы</div>
 
-  <div class="kpis">
-    <div class="kpi"><div class="l">Доход всего</div><div class="v num">${fmt(T.income)}</div></div>
-    <div class="kpi"><div class="l">Расходы всего</div><div class="v num">${fmt(T.exp)}</div></div>
-    <div class="kpi green"><div class="l">Наша комиссия 25%</div><div class="v num">${fmt(T.comm)}</div></div>
-    <div class="kpi"><div class="l">Выплаты владельцам</div><div class="v num">${fmt(T.payout)}</div></div>
+  <div class="kpis k4">
+    <div class="kpi"><div class="l">Доход портфеля</div><div class="v num">${fmt(portfolio)}</div><div class="s">все виллы, июнь</div></div>
+    <div class="kpi"><div class="l">Выплаты владельцам</div><div class="v num">${fmt(payouts)}</div><div class="s">3 виллы со внесёнными расходами</div></div>
+    <div class="kpi green"><div class="l">Валовый заработок УК</div><div class="v num">${fmt(grossTotal)}</div><div class="s">из них предварительно: ${fmt(commPrelim)}</div></div>
+    <div class="kpi"><div class="l">Доля УК от портфеля</div><div class="v num">${pct(grossTotal/portfolio)}</div></div>
   </div>
 
   <section>
-    <h3>Виллы · ${m.label}</h3>
-    <div class="tablewrap"><table style="min-width:760px">
-      <thead><tr><th>Вилла</th><th class="r">Ночей</th><th class="r">Доход</th><th class="r">Расходы</th>
-      <th class="r">Комиссия 25%</th><th class="r">Tax 5%</th><th class="r">К выплате</th></tr></thead>
-      <tbody>${rows}</tbody>
-      <tfoot><tr><td>Итого</td><td class="r num">${T.nights}</td>
-        <td class="r num">${fmt(T.income)}</td><td class="r num">${fmt(T.exp)}</td>
-        <td class="r num">${fmt(T.comm)}</td><td class="r num">${fmt(T.tax)}</td>
-        <td class="r num">${fmt(T.payout)}</td></tr></tfoot>
+    <h3>Комиссия AVA 20% по виллам</h3>
+    <div class="tablewrap"><table style="min-width:560px">
+      <thead><tr><th>Вилла</th><th class="r">Нетто-поступления</th><th class="r">Комиссия 20%</th></tr></thead>
+      <tbody>${commTableRows}</tbody>
+      <tfoot><tr><td>Итого комиссия</td><td></td><td class="r num">${fmt(commTotal)}</td></tr></tfoot>
     </table></div>
-    <div class="sumnote">Комиссия = 25% от «доход − расходы». Withholding tax 5% удерживается из доли владельца при выплате. Владельцы комиссию в своих кабинетах не видят.</div>
+    <div class="sumnote">По виллам без внесённых расходов канальные вычеты пока неизвестны — комиссия посчитана предварительно от валового дохода.
+    Виллы без броней в июне комиссию не дали.</div>
   </section>
 
   <section>
-    <h3>Выплаты по виллам</h3>
-    <div class="chartcard">${barChart(ids.map((id,i)=>({
-      label:m.villas[id].name, value:m.villas[id].payout,
-      color:["#3F4A4C","#8FA0A4","#4FA764"][i%3]
-    })))}</div>
+    <h3>Сервисная выручка − себестоимость (оценка)</h3>
+    <div class="tablewrap"><table style="min-width:620px">
+      <thead><tr><th>Сервис</th><th class="r">Выручка</th><th class="r">Себестоимость (оценка)</th><th class="r">Маржа</th></tr></thead>
+      <tbody>${svcRowsHtml}</tbody>
+      <tfoot><tr><td>Итого сервисы</td><td class="r num">${fmt0(svcRev)}</td><td class="r num">− ${fmt0(svcCost)}</td><td class="r num">${fmt0(svcMargin)}</td></tr></tfoot>
+    </table></div>
+    <div class="sumnote">Себестоимость — ориентировочная оценка (клининг ~1 000/уборка, бассейн ~1 500/мес/вилла, сад ~1 000/мес/вилла); уточняется по факту.
+    Бассейн и сад учтены по трём виллам, где применяется схема «20% + расходы».</div>
+  </section>
+
+  <section>
+    <h3>Итог июня</h3>
+    <div class="payout">
+      <div class="steps">
+        Комиссия 20% (подтверждённая): <b class="num">${fmt(commConfirmed)}</b><br>
+        Комиссия 20% (предварительно, расходы вносятся): <b class="num">${fmt(commPrelim)}</b><br>
+        Маржа сервисов (оценка): <b class="num">${fmt0(svcMargin)}</b><br>
+        <span class="eq">= Подтверждённая часть: <b class="num">${fmt(grossConfirmed)}</b></span>
+      </div>
+      <div class="big"><div class="l">Валовый заработок УК за июнь</div>
+        <div class="v num">${fmt(grossTotal)}</div>
+        <div class="s">включая предварительную комиссию ${fmt(commPrelim)}</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h3>Структура заработка УК</h3>
+    <div class="chartcard">
+      <div class="donutwrap">
+        ${donut([
+          {label:"Комиссия 20% (подтв.)", value:commConfirmed, color:"#4FA764"},
+          {label:"Комиссия 20% (предв.)", value:commPrelim, color:"#8BE28B"},
+          {label:"Маржа сервисов (оценка)", value:svcMargin, color:"#3F4A4C"},
+        ])}
+      </div>
+    </div>
   </section>`;
 }
 
-/* ================= SVG bar chart (no libraries) ================= */
+/* ================= SVG: bar chart ================= */
 function barChart(items){
   const W = 640, H = 260, padL = 16, padR = 16, padT = 34, padB = 34;
   const iw = W - padL - padR, ih = H - padT - padB;
-  const max = Math.max(...items.map(d=>d.value));
+  const max = Math.max(...items.map(d=>d.value), 1);
   const n = items.length;
   const gap = 26;
   const bw = Math.min(110, (iw - gap*(n-1)) / n);
@@ -422,7 +725,6 @@ function barChart(items){
   const x0 = padL + (iw - totalW)/2;
   const baseY = padT + ih;
 
-  /* recessive gridlines at 0 / 50% / 100% of max */
   let grid = "";
   for(const f of [0.5, 1]){
     const y = baseY - ih*f;
@@ -444,11 +746,63 @@ function barChart(items){
     </g>`;
   });
 
-  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Столбчатая диаграмма: ${items.map(d=>d.label+" "+fmt0(d.value)).join(", ")}">
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Диаграмма: ${items.map(d=>d.label+" "+fmt0(d.value)).join(", ")}">
     ${grid}
     <line x1="${padL}" y1="${baseY}" x2="${W-padR}" y2="${baseY}" stroke="#D8CDBB" stroke-width="1.5"/>
     ${bars}
   </svg>`;
+}
+
+/* ================= SVG: календарь занятости июня ================= */
+function calendarStrip(occ){
+  const W = 640, H = 74, pad = 4;
+  const cw = (W - pad*2) / DAYS;
+  const cellW = cw - 3, cellH = 34, y0 = 8;
+  let cells = "", labels = "";
+  let busy = 0;
+  for(let d=1; d<=DAYS; d++){
+    const x = pad + (d-1)*cw;
+    const on = occ[d]; if(on) busy++;
+    cells += `<rect x="${x.toFixed(1)}" y="${y0}" width="${cellW.toFixed(1)}" height="${cellH}" rx="4"
+      fill="${on ? "#4FA764" : "#EFE8DA"}" ${on?"":'stroke="#E2DACC" stroke-width="1"'}>
+      <title>${d} июня — ${on ? "занята" : "свободна"}</title></rect>`;
+    if(d===1 || d%5===0){
+      labels += `<text x="${(x+cellW/2).toFixed(1)}" y="${y0+cellH+18}" text-anchor="middle"
+        font-size="11" font-weight="700" fill="#75878B">${d}</text>`;
+    }
+  }
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Занятость по дням июня: ${busy} из ${DAYS} ночей">
+    ${cells}${labels}</svg>
+    <div class="cap num" style="margin-top:6px">Занято ночей в июне: ${busy} из ${DAYS}</div>`;
+}
+
+/* ================= SVG: donut ================= */
+function donut(items){
+  const total = sum(items, x=>x.value);
+  const R = 74, r2 = 46, cx = 100, cy = 100;
+  let a0 = -Math.PI/2, segs = "";
+  for(const it of items){
+    const frac = it.value/total;
+    const a1 = a0 + frac*Math.PI*2;
+    /* сегмент кольца */
+    const large = (a1-a0) > Math.PI ? 1 : 0;
+    const x0=cx+R*Math.cos(a0), y0=cy+R*Math.sin(a0);
+    const x1=cx+R*Math.cos(a1), y1=cy+R*Math.sin(a1);
+    const x2=cx+r2*Math.cos(a1), y2=cy+r2*Math.sin(a1);
+    const x3=cx+r2*Math.cos(a0), y3=cy+r2*Math.sin(a0);
+    segs += `<path d="M${x0.toFixed(1)},${y0.toFixed(1)} A${R},${R} 0 ${large} 1 ${x1.toFixed(1)},${y1.toFixed(1)}
+      L${x2.toFixed(1)},${y2.toFixed(1)} A${r2},${r2} 0 ${large} 0 ${x3.toFixed(1)},${y3.toFixed(1)} Z"
+      fill="${it.color}"><title>${it.label}: ${fmt(it.value)} (${pct(frac)})</title></path>`;
+    a0 = a1;
+  }
+  const legend = items.map(it=>`
+    <div><span class="sw" style="background:${it.color}"></span>${it.label} —
+      <b class="num">${fmt(it.value)}</b> <span style="color:var(--sub)">(${pct(it.value/total)})</span></div>`).join("");
+  return `<svg viewBox="0 0 200 200" role="img" aria-label="Структура заработка УК">${segs}
+    <text x="100" y="95" text-anchor="middle" font-size="12" font-weight="700" fill="#75878B">июнь</text>
+    <text x="100" y="114" text-anchor="middle" font-size="14" font-weight="800" fill="#2C3638"
+      style="font-variant-numeric:tabular-nums">${fmt0(total)}</text></svg>
+  <div class="legend">${legend}</div>`;
 }
 </script>
 </body>
