@@ -69,6 +69,15 @@ header .hbrand small{font-size:10px;letter-spacing:2px;color:var(--sub);display:
 h2.vname{font-size:23px;font-weight:800;letter-spacing:-.3px}
 .vsub{font-size:13px;color:var(--sub);font-weight:600;margin-bottom:6px;line-height:1.6}
 .method{font-size:12px;color:#A8A094;font-weight:600;margin-bottom:16px;line-height:1.55}
+/* партнёрский кабинет: карточки документов */
+.doclist{display:flex;flex-direction:column;gap:10px}
+.doccard{display:flex;align-items:center;gap:14px;background:#FFFFFF;border:1px solid #E7DFD3;border-radius:12px;padding:14px 18px;text-decoration:none;color:var(--ink);transition:border-color .15s, box-shadow .15s}
+.doccard:hover{border-color:#4FA764;box-shadow:0 2px 10px rgba(44,54,56,.07)}
+.docic{flex:0 0 auto;width:40px;height:40px;border-radius:10px;background:#F0E7DF;color:#4FA764;display:flex;align-items:center;justify-content:center}
+.doctxt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.doctxt b{font-size:14px;font-weight:700}
+.doctxt i{font-style:normal;font-size:12px;color:var(--sub);font-weight:600}
+.docopen{flex:0 0 auto;font-size:12.5px;font-weight:800;color:var(--green-deep);white-space:nowrap}
 
 /* scheme segment control */
 .segwrap{text-align:right}
@@ -246,7 +255,7 @@ const VILLAS = {
       {name:"Электричество", amount:9540, base:true},
       {name:"Интернет", amount:1000, base:true},
       {name:"Вывоз мусора", amount:1000, base:true},
-      {name:"Вода (4 доставки × 500)", amount:2000, base:true},
+      {name:"Вода (3 доставки × 500)", amount:1500, base:true},
       {name:"Бассейн (обслуживание, месяц)", amount:3000, base:false},
       {name:"Сад (обслуживание, месяц)", amount:2000, base:false},
       {name:"Клининг — перезаезды (2 × 2 500)", amount:5000, base:false},
@@ -270,7 +279,7 @@ const VILLAS = {
       {name:"Электричество", amount:9955, base:true},
       {name:"Интернет", amount:1000, base:true},
       {name:"Вывоз мусора", amount:1000, base:true},
-      {name:"Вода (8 доставок × 500)", amount:4000, base:true},
+      {name:"Вода (6 доставок × 500)", amount:3000, base:true},
       {name:"Бассейн (обслуживание, месяц)", amount:3000, base:false},
       {name:"Сад (обслуживание, месяц)", amount:2000, base:false},
       {name:"Клининг — перезаезды (4 × 2 500)", amount:10000, base:false},
@@ -292,7 +301,7 @@ const VILLAS = {
       {name:"Электричество", amount:6430, base:true},
       {name:"Интернет", amount:1000, base:true},
       {name:"Вывоз мусора", amount:1000, base:true},
-      {name:"Вода (4 доставки × 500)", amount:2000, base:true},
+      {name:"Вода (3 доставки × 500)", amount:1500, base:true},
       {name:"Бассейн (обслуживание, месяц)", amount:3000, base:false},
       {name:"Сад (обслуживание, месяц)", amount:2000, base:false},
       {name:"Клининг — перезаезды (2 × 2 500)", amount:5000, base:false},
@@ -457,6 +466,63 @@ const USERS = {
   "aleksandra2026": {name:"Aleksandra Agapitova", role:"Владелец · Cocolane 2, 3, 4", villas:["cocolane2","cocolane3","cocolane4"], master:false},
   "danny2026":      {name:"Danny Taylor", role:"Владелец · White Lotus", villas:["whitelotus"], master:false},
   "abyzova2026":    {name:"Aleksandra Abyzova", role:"Владелец · Katai", villas:["katai"], master:false},
+  "arthur2026":     {name:"Артур Гатунок", role:"Партнёр · AVA Villa, Sea View Land, Hill Valley", villas:[], master:false, partner:"arthur"},
+};
+
+/* ================= ПАРТНЁРСКИЕ КАБИНЕТЫ · документы лежат в Google Drive (доступ по ссылке) ================= */
+const GD_FILE = id => `https://drive.google.com/file/d/${id}/view`;
+const GD_DOC  = id => `https://docs.google.com/document/d/${id}/edit`;
+const GD_DIR  = id => `https://drive.google.com/drive/folders/${id}`;
+const PARTNERS = {
+ arthur: {
+  name: "Артур Гатунок",
+  intro: "Личный кабинет партнёра: три направления совместного бизнеса с AVA Estate / Ready To Move. Все документы открываются из защищённого хранилища Google Drive.",
+  folder: "1GGIaCwsXsvINifFpcXG_QFhwo2ME6CC-",
+  projects: [
+   {id:"p_villa", tab:"Вилла AVA", title:"AVA Villa · вилла на участке AVA",
+    status:"Строительство по договору", statusKind:"build",
+    facts:[
+      ["Участок","чанот 860 м², район Ко Панган"],
+      ["Подрядчик","Ready To Move Co., Ltd."],
+      ["Основание","Construction Agreement (Hatunok)"],
+    ],
+    docs:[
+      {name:"Construction agreement — Hatunok", sub:"договор строительства · PDF", url:GD_FILE("1dsg3C3TPQraP1ZhOOPx0dOn6TWVKBwIi")},
+      {name:"Чанот AVA 860 м² · English", sub:"правоустанавливающий документ · перевод", url:GD_FILE("15ixXl6x8DhdMmmSubv0mSmWPWAr2Xn2E")},
+      {name:"Чанот AVA 860 м² · ไทย", sub:"правоустанавливающий документ · оригинал", url:GD_FILE("1gvUaG4YI6BEq4FRcLI3jsNCre6P2xhUR")},
+    ],
+    folder:"1jeA9ytvW-_5_LU8D2Bulu5T1Q1H_bhRG"},
+   {id:"p_land", tab:"Земля Eastside", title:"Sea View Land · Eastside Seaview 5 500 м²",
+    status:"Оформлена · инвестиционное владение", statusKind:"own",
+    facts:[
+      ["Участок","5 500 м², east side, вид на море"],
+      ["Основание","Investment & Ownership Agreement"],
+      ["Оценка","Value report — в документах"],
+    ],
+    docs:[
+      {name:"Investment & Ownership Agreement", sub:"инвестиционный договор · PDF", url:GD_FILE("1IqCKF1bZvLl2mL_pEUcAMAU-AUwh-DG0")},
+      {name:"Value report", sub:"отчёт об оценке участка · PDF", url:GD_FILE("1Pz8uyvN_pBdXJFBD3Q3ZG9IBVXot6JsI")},
+      {name:"Land plot 2", sub:"план участка · PDF", url:GD_FILE("1laL0EUWMXdpDJzgNSFLwG1eZuUnjwEHH")},
+      {name:"Чанот Eastside Seaview · English", sub:"перевод", url:GD_FILE("17zFukNPOgJQR5L8uwFO62xN7yo4V3wRI")},
+      {name:"Чанот Eastside land · ไทย", sub:"оригинал", url:GD_FILE("1yP7KLO1emv5C9ltsuvksTOWjcYOYqSg-")},
+    ],
+    folder:"1_c6eq6fPyAtQSnLhI-xQ-MgxH3K4UXwA"},
+   {id:"p_hv", tab:"Hill Valley", title:"Hill Valley · Chaloklum",
+    status:"Проектирование · подбор подрядчиков", statusKind:"design",
+    facts:[
+      ["Формат","совместный проект 50/50 с AVA Estate"],
+      ["Состав","виллы на склоне + наклонный лифт + парковка"],
+      ["Земля","аренда: Miss Supamonta → Ready To Move, договор № 11697"],
+      ["Сейчас","рабочее проектирование; запросы на лифт разосланы заводам-производителям"],
+    ],
+    docs:[
+      {name:"Contract (Arthur — Denys)", sub:"партнёрский договор · PDF", url:GD_FILE("15Q9HtTKWM5n1a1YLlGNymoD7RvPEp3-f")},
+      {name:"Land Lease Agreement № 11697", sub:"Miss Supamonta — Ready To Move · PDF", url:GD_FILE("104pj6Q5EsNSPW_bjRgIH6PWpZsMjPOr3")},
+      {name:"Hill Valley — рабочий документ", sub:"Google Docs · открывается онлайн", url:GD_DOC("1TpndgHpVQCbrqMcUV2jzyft_H6zBvMxkgw_jV4I_2Uc")},
+    ],
+    folder:"1ZwOAjMpXndxQmz6PA0uwej16Rl4wl8eM"},
+  ],
+ },
 };
 
 let user = null, activeTab = null, activeMonth = JUNE_ID, scheme = "20"; /* "20" | "2575" */
@@ -540,8 +606,10 @@ function doLogin(e){
     document.getElementById("userName").innerHTML =
       esc(user.name) + '<span class="role">' + esc(user.role) + '</span>';
     scheme = "20"; activeMonth = JUNE_ID;
-    activeTab = user.master ? "summary" : user.villas[0];
-    renderTabs(); renderMonths(); render();
+    activeTab = user.partner ? PARTNERS[user.partner].projects[0].id
+              : (user.master ? "summary" : user.villas[0]);
+    document.getElementById("months").style.display = user.partner ? "none" : "";
+    renderTabs(); if(!user.partner) renderMonths(); render();
     window.scrollTo(0,0);
   } else {
     document.getElementById("loginErr").textContent = "Неверный пароль. Попробуйте ещё раз.";
@@ -560,6 +628,11 @@ function logout(){
 /* ================= tabs & months ================= */
 function renderTabs(){
   let h = "";
+  if(user.partner){
+    for(const p of PARTNERS[user.partner].projects) h += tabBtn(p.id, p.tab, false);
+    document.getElementById("tabs").innerHTML = h;
+    return;
+  }
   if(user.master){
     h += tabBtn("summary","Сводная",true);
     h += tabBtn("business","Бизнес",true);
@@ -572,7 +645,8 @@ function tabBtn(id,label,special){
   return `<button class="tab${id===activeTab?" active":""}${special?" special":""}" onclick="setTab('${id}')">${label}</button>`;
 }
 function setTab(id){
-  const allowed = user.master ? ["summary","business","accounting",...user.villas] : user.villas;
+  const allowed = user.partner ? PARTNERS[user.partner].projects.map(p=>p.id)
+                : (user.master ? ["summary","business","accounting",...user.villas] : user.villas);
   if(!allowed.includes(id)) return;
   activeTab = id; renderTabs(); render();
 }
@@ -591,6 +665,7 @@ function setScheme(s){ scheme = s; render(); }
 /* ================= render ================= */
 function render(){
   const el = document.getElementById("view");
+  if(user && user.partner){ el.innerHTML = renderPartnerProject(user.partner, activeTab); return; }
   if(activeTab === "summary") el.innerHTML = (activeMonth===JUNE_ID ? renderSummary() : renderSummaryArchive(activeMonth));
   else if(activeTab === "business") el.innerHTML = renderBusiness();
   else if(activeTab === "accounting") el.innerHTML = renderAccounting();
@@ -658,7 +733,9 @@ function villaSparkSection(id){
 function renderVilla(id){
   const v = VILLAS[id], c = calc(v), t = v.totals;
   const isPending = !v.opex;
-  const useScheme = v.schemes ? scheme : "20";
+  /* переключатель схем 20% / 25-75 — только в админ-доступе; владельцы видят только действующую схему 20% */
+  const canSwitchScheme = v.schemes && user && user.master;
+  const useScheme = canSwitchScheme ? scheme : "20";
   const cur = c ? (useScheme==="20" ? c.s20 : c.s2575) : null;
 
   /* шапка */
@@ -667,7 +744,7 @@ function renderVilla(id){
     <div>
       <h2 class="vname">Вилла ${v.name}</h2>
     </div>
-    ${v.schemes ? `
+    ${canSwitchScheme ? `
     <div class="segwrap">
       <div class="seg">
         <button class="${useScheme==='20'?'active':''}" onclick="setScheme('20')">Схема 20%</button>
@@ -806,6 +883,49 @@ function renderVilla(id){
 }
 
 /* ---------- вилла · АРХИВНЫЙ месяц ---------- */
+/* ================= партнёрский кабинет ================= */
+function renderPartnerProject(pid, projectId){
+  const P = PARTNERS[pid];
+  const pr = P.projects.find(x=>x.id===projectId) || P.projects[0];
+  const stColors = {build:"#4FA764", own:"#4FA764", design:"#B98A2F"};
+  const facts = pr.facts.map(f=>`
+    <div class="kpi"><div class="l">${esc(f[0])}</div>
+      <div class="v" style="font-size:15.5px;line-height:1.45;font-weight:700">${esc(f[1])}</div></div>`).join("");
+  const docs = pr.docs.map(d=>`
+    <a class="doccard" href="${d.url}" target="_blank" rel="noopener">
+      <span class="docic" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      </span>
+      <span class="doctxt"><b>${esc(d.name)}</b><i>${esc(d.sub)}</i></span>
+      <span class="docopen">Открыть ↗</span>
+    </a>`).join("");
+  return `
+  <h2 class="vname" style="margin:24px 0 4px">${esc(pr.title)}</h2>
+  <div class="vsub">Партнёр: ${esc(P.name)} · совместно с AVA Estate</div>
+  <div class="method" style="display:flex;align-items:center;gap:10px">
+    <span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${stColors[pr.statusKind]||"#4FA764"}"></span>
+    <b>Статус: ${esc(pr.status)}</b>
+  </div>
+
+  <section>
+    <h3>Ключевые параметры</h3>
+    <div class="kpis k3">${facts}</div>
+  </section>
+
+  <section>
+    <h3>Документы</h3>
+    <div class="doclist">${docs}</div>
+    <div class="sumnote">Файлы хранятся в защищённом облаке Google Drive. <a href="${GD_DIR(pr.folder)}" target="_blank" rel="noopener" style="color:var(--green-deep);font-weight:700">Открыть всю папку проекта ↗</a></div>
+  </section>
+
+  <section>
+    <h3>Что дальше</h3>
+    <div class="notice">Раздел развивается: сюда добавятся статистика, бухгалтерия по проекту и отчёты по стройке.
+    Вопросы — вашему менеджеру AVA Estate.</div>
+  </section>`;
+}
+
 function renderVillaArchive(id, monthId){
   const v = VILLAS[id];
   const hist = HISTORY[id] || {};
