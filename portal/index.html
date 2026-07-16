@@ -217,15 +217,17 @@ footer{margin-top:44px;font-size:11.5px;color:#A8A094;text-align:center;line-hei
 
   <div id="view"></div>
 
-  <footer id="foot">Owner Portal v4 · декабрь 2025 – июнь 2026 · AVA Estate / Ready To Move Co., Ltd.<br>
-  Июнь 2026 — методика «календарный месяц» (учитываются только ночи месяца, переходящие брони pro-rate; брони с заездом до 1 июня учтены в майском отчёте полностью). Исторические месяцы — архив, методика и схема периода.<br>
+  <footer id="foot">Owner Portal v5 · декабрь 2025 – июнь 2026 · AVA Estate / Ready To Move Co., Ltd.<br>
+  Июнь 2026 — методика «календарный месяц» (учитываются только ночи месяца, переходящие брони pro-rate; брони с заездом до 1 июня учтены в майском отчёте полностью). Исторические месяцы — архив: финансы из отчётных файлов, занятость — по данным Guesty.<br>
   Базовая схема «комиссия 20% + операционные расходы на владельце»; финальная схема — на утверждении. Withholding tax 5% удерживается при выплате (при отрицательном балансе не удерживается).</footer>
 </div>
 
 <script>
 /* ================================================================
-   AVA Owner Portal v4 · Дек 2025 – Июнь 2026 · клиентский демо-прототип
+   AVA Owner Portal v5 · Дек 2025 – Июнь 2026 · клиентский демо-прототип
    v4: блок «Сравнение схем» в «Бизнесе» + админ-вкладка «Бухгалтерия» (журнал операций контура AVA)
+   v5: занятость архивных месяцев (дек 2025 – май 2026) из Guesty (календарь + KPI, финансы архива не тронуты);
+       бухгалтерия — только контур УК (RTM/Xero-операции убраны), единые категории, графики приходы/расходы и донат расходов
    Июнь = методика «календарный месяц» (pro-rate переходящих броней)
    ================================================================ */
 
@@ -410,6 +412,29 @@ const HISTORY = {
  },
  bunny:{} /* истории нет */
 };
+
+/* ---------- ЗАНЯТОСТЬ архивных месяцев · Guesty Open API (выгрузка 16.07.2026) ----------
+   Только календарная занятость (ночь = дата начала). Финансы архива — из отчётных файлов, не отсюда.
+   n = занятых ночей, d = дней в месяце, iv = интервалы занятых дней [от, до] включительно. */
+const OCC_HISTORY = {
+ "2025-12":{aurora:{n:4,d:31,iv:[[14,15],[30,31]]},radharani:{n:3,d:31,iv:[[29,31]]},axis:{n:0,d:31,iv:[]},fourmoons:{n:0,d:31,iv:[]},cocolane2:{n:0,d:31,iv:[]},cocolane3:{n:6,d:31,iv:[[26,31]]},cocolane4:{n:0,d:31,iv:[]},katai:{n:0,d:31,iv:[]},whitelotus:{n:3,d:31,iv:[[29,31]]},bunny:{n:10,d:31,iv:[[3,3],[22,22],[24,31]]}},
+ "2026-01":{aurora:{n:16,d:31,iv:[[1,3],[10,11],[13,16],[22,28]]},radharani:{n:28,d:31,iv:[[1,18],[22,31]]},axis:{n:14,d:31,iv:[[13,17],[23,31]]},fourmoons:{n:0,d:31,iv:[]},cocolane2:{n:28,d:31,iv:[[2,16],[18,19],[21,31]]},cocolane3:{n:26,d:31,iv:[[1,1],[3,14],[19,31]]},cocolane4:{n:0,d:31,iv:[]},katai:{n:0,d:31,iv:[]},whitelotus:{n:16,d:31,iv:[[1,9],[12,17],[31,31]]},bunny:{n:28,d:31,iv:[[1,1],[3,25],[28,31]]}},
+ "2026-02":{aurora:{n:21,d:28,iv:[[1,4],[8,10],[12,20],[22,26]]},radharani:{n:19,d:28,iv:[[1,6],[8,10],[15,18],[21,26]]},axis:{n:17,d:28,iv:[[1,1],[3,7],[9,13],[16,18],[25,27]]},fourmoons:{n:0,d:28,iv:[]},cocolane2:{n:23,d:28,iv:[[1,13],[15,19],[22,26]]},cocolane3:{n:21,d:28,iv:[[1,8],[10,21],[23,23]]},cocolane4:{n:24,d:28,iv:[[2,16],[20,28]]},katai:{n:0,d:28,iv:[]},whitelotus:{n:20,d:28,iv:[[1,2],[4,21]]},bunny:{n:27,d:28,iv:[[1,2],[4,28]]}},
+ "2026-03":{aurora:{n:26,d:31,iv:[[1,14],[20,31]]},radharani:{n:25,d:31,iv:[[3,22],[27,31]]},axis:{n:23,d:31,iv:[[2,8],[13,17],[20,30]]},fourmoons:{n:2,d:31,iv:[[14,15]]},cocolane2:{n:16,d:31,iv:[[1,3],[5,8],[12,16],[28,31]]},cocolane3:{n:22,d:31,iv:[[1,6],[10,20],[26,30]]},cocolane4:{n:27,d:31,iv:[[1,4],[7,13],[16,31]]},katai:{n:5,d:31,iv:[[24,26],[30,31]]},whitelotus:{n:6,d:31,iv:[[2,3],[7,10]]},bunny:{n:17,d:31,iv:[[1,17]]}},
+ "2026-04":{aurora:{n:19,d:30,iv:[[1,3],[10,14],[16,18],[20,26],[30,30]]},radharani:{n:16,d:30,iv:[[1,10],[12,17]]},axis:{n:19,d:30,iv:[[1,5],[9,12],[17,25],[30,30]]},fourmoons:{n:0,d:30,iv:[]},cocolane2:{n:26,d:30,iv:[[1,5],[9,12],[14,30]]},cocolane3:{n:10,d:30,iv:[[1,3],[14,17],[19,20],[30,30]]},cocolane4:{n:15,d:30,iv:[[1,1],[12,15],[18,24],[26,28]]},katai:{n:20,d:30,iv:[[1,1],[4,12],[21,30]]},whitelotus:{n:8,d:30,iv:[[1,2],[8,13]]},bunny:{n:10,d:30,iv:[[10,19]]}},
+ "2026-05":{aurora:{n:7,d:31,iv:[[1,2],[25,29]]},radharani:{n:16,d:31,iv:[[1,13],[22,24]]},axis:{n:5,d:31,iv:[[1,3],[30,31]]},fourmoons:{n:0,d:31,iv:[]},cocolane2:{n:20,d:31,iv:[[1,11],[13,18],[29,31]]},cocolane3:{n:15,d:31,iv:[[1,13],[17,18]]},cocolane4:{n:4,d:31,iv:[[4,5],[17,18]]},katai:{n:17,d:31,iv:[[1,3],[6,11],[17,18],[24,27],[29,30]]},whitelotus:{n:0,d:31,iv:[]},bunny:{n:0,d:31,iv:[]}},
+};
+/* родительный падеж месяца для подписей календаря */
+const MONTH_GEN_FULL = {"2025-12":"декабря","2026-01":"января","2026-02":"февраля","2026-03":"марта","2026-04":"апреля","2026-05":"мая","2026-06":"июня"};
+function occHist(id, monthId){
+  const m = OCC_HISTORY[monthId];
+  return m ? (m[id] || null) : null;
+}
+function occDaysFromIntervals(o){
+  const arr = new Array(o.d+1).fill(false);
+  for(const [a,b] of o.iv) for(let d=a; d<=b; d++) arr[d]=true;
+  return arr;
+}
 
 const MONTHS = [
   {id:"2025-12", label:"Дек 2025", short:"Дек"},
@@ -795,10 +820,31 @@ function renderVillaArchive(id, monthId){
     <div class="segwrap"><span class="badge">архив · методика и схема периода</span></div>
   </div>
   <div class="vsub">${label}${v.owner ? " · владелец: "+esc(v.owner) : ""}</div>
-  <div class="method">Архивные данные из отчётных листов владельцев; методика учёта и схема распределения — те, что действовали в этом месяце.</div>`;
+  <div class="method">Архивные данные из отчётных листов владельцев; методика учёта и схема распределения — те, что действовали в этом месяце.
+  Занятость — по данным Guesty (календарные ночи месяца); финансовые цифры — строго из отчётных файлов.</div>`;
+
+  /* занятость архивного месяца — из Guesty */
+  const o = occHist(id, monthId);
+  let occKpi = "", occSection = "";
+  if(o){
+    occKpi = `<div class="kpi"><div class="l">Занятость · Guesty</div><div class="v num">${o.n} ноч. · ${pct(o.n/o.d)}</div><div class="s">из ${o.d} ночей месяца</div></div>`;
+    const mismatch = h && h.income>0 && o.n===0;
+    occSection = `
+    <section>
+      <h3>Занятость по дням · ${label} <span class="badge">по данным Guesty</span></h3>
+      <div class="chartcard">
+        <div class="cap">Зелёный — вилла занята (ночь), светлый — свободна · источник: Guesty Open API</div>
+        ${calendarStrip(occDaysFromIntervals(o), o.d, MONTH_GEN_FULL[monthId])}
+      </div>
+      ${mismatch ? `<div class="notice" style="margin-top:12px"><b>Расхождение с отчётным файлом:</b> по файлу за ${label} есть доход ${fmt(h.income)},
+      но броней в Guesty за этот месяц нет — вилла в этот период велась вне Guesty (подключена позже). Финансовые цифры — из файла.</div>` : ``}
+    </section>`;
+  }
 
   if(!h){
-    return head + `<div class="notice">Нет данных за ${label} по этой вилле.</div>` + villaSparkSection(id);
+    return head +
+      `<div class="notice">Финансовых данных за ${label} по этой вилле в отчётных файлах нет.</div>` +
+      occSection + villaSparkSection(id);
   }
 
   const expEntries = Object.entries(h.expenses||{});
@@ -808,11 +854,12 @@ function renderVillaArchive(id, monthId){
     : `<tr><td class="muted" colspan="2">Расходы в листе не указаны</td></tr>`;
 
   const kpis = `
-  <div class="kpis k4">
+  <div class="kpis${occKpi?"":" k4"}">
     <div class="kpi"><div class="l">Доход</div><div class="v num">${fmt(h.income)}</div></div>
     <div class="kpi"><div class="l">Расходы</div><div class="v num">${fmt(expSum)}</div></div>
     <div class="kpi"><div class="l">Комиссия УК</div><div class="v num">${fmt(h.commission)}</div></div>
     <div class="kpi green"><div class="l">Выплата владельцу</div><div class="v num">${fmt(h.payout)}</div></div>
+    ${occKpi}
   </div>`;
 
   const table = `
@@ -841,7 +888,7 @@ function renderVillaArchive(id, monthId){
     ${h.notes?`<div class="histnotes">Примечание из отчётного листа: ${esc(h.notes)}</div>`:""}
   </section>`;
 
-  return head + kpis + table + villaSparkSection(id);
+  return head + kpis + occSection + table + villaSparkSection(id);
 }
 
 /* ---------- сводная · ИЮНЬ (админ) ---------- */
@@ -913,13 +960,19 @@ function renderSummary(){
 /* ---------- сводная · АРХИВНЫЙ месяц (админ) ---------- */
 function renderSummaryArchive(monthId){
   const label = RU_MONTH[monthId];
-  const T = {income:0, exp:0, comm:0, payout:0};
+  const T = {income:0, exp:0, comm:0, payout:0, nights:0};
   const rows = VILLA_ORDER.map(id=>{
     const v = VILLAS[id], h = (HISTORY[id]||{})[monthId];
-    if(!h) return `<tr><td><b>${v.name}</b></td><td class="r muted" colspan="4">нет данных</td></tr>`;
+    const o = occHist(id, monthId);
+    const occCells = o
+      ? `<td class="r num">${o.n}</td><td class="r num">${pct(o.n/o.d)}</td>`
+      : `<td class="r muted">—</td><td class="r muted">—</td>`;
+    if(o) T.nights += o.n;
+    if(!h) return `<tr><td><b>${v.name}</b></td>${occCells}<td class="r muted" colspan="4">нет данных в файлах</td></tr>`;
     const expSum = sum(Object.entries(h.expenses||{}), e=>e[1]);
     T.income += h.income; T.exp += expSum; T.comm += h.commission; T.payout += h.payout;
     return `<tr><td><b>${v.name}</b>${v.owner?`<br><span style="font-size:12px;color:var(--sub)">${esc(v.owner)}</span>`:""}</td>
+      ${occCells}
       <td class="r num">${fmt(h.income)}</td>
       <td class="r num">${fmt(expSum)}</td>
       <td class="r num">${fmt(h.commission)}</td>
@@ -930,8 +983,9 @@ function renderSummaryArchive(monthId){
   <h2 class="vname" style="margin:24px 0 4px">Сводная по виллам</h2>
   <div class="vsub">${label} · администратор · <span class="badge">архив · методика и схема периода</span></div>
 
-  <div class="kpis k4">
+  <div class="kpis">
     <div class="kpi"><div class="l">Доход портфеля</div><div class="v num">${fmt(T.income)}</div></div>
+    <div class="kpi"><div class="l">Ночей занято</div><div class="v num">${T.nights}</div><div class="s">по данным Guesty</div></div>
     <div class="kpi"><div class="l">Расходы</div><div class="v num">${fmt(T.exp)}</div></div>
     <div class="kpi"><div class="l">Комиссия УК</div><div class="v num">${fmt(T.comm)}</div></div>
     <div class="kpi green"><div class="l">Выплаты владельцам</div><div class="v num">${fmt(T.payout)}</div></div>
@@ -939,13 +993,14 @@ function renderSummaryArchive(monthId){
 
   <section>
     <h3>Виллы · ${label}</h3>
-    <div class="tablewrap"><table style="min-width:720px">
-      <thead><tr><th>Вилла</th><th class="r">Доход</th><th class="r">Расходы</th><th class="r">Комиссия</th><th class="r">Выплата</th></tr></thead>
+    <div class="tablewrap"><table style="min-width:860px">
+      <thead><tr><th>Вилла</th><th class="r">Ночей·Guesty</th><th class="r">Загрузка</th><th class="r">Доход</th><th class="r">Расходы</th><th class="r">Комиссия</th><th class="r">Выплата</th></tr></thead>
       <tbody>${rows}</tbody>
-      <tfoot><tr><td>Итого</td><td class="r num">${fmt(T.income)}</td><td class="r num">${fmt(T.exp)}</td>
+      <tfoot><tr><td>Итого</td><td class="r num">${T.nights}</td><td></td><td class="r num">${fmt(T.income)}</td><td class="r num">${fmt(T.exp)}</td>
         <td class="r num">${fmt(T.comm)}</td><td class="r num">${fmt(T.payout)}</td></tr></tfoot>
     </table></div>
-    <div class="sumnote">Данные архивных месяцев — из отчётных листов владельцев (методика и схема периода). Подробности и примечания — на страницах вилл.</div>
+    <div class="sumnote">Финансовые данные архивных месяцев — из отчётных листов владельцев (методика и схема периода); занятость — по данным Guesty.
+    Если по вилле есть доход, но ночей в Guesty нет — вилла в тот период велась вне Guesty. Подробности и примечания — на страницах вилл.</div>
   </section>`;
 }
 
@@ -1149,26 +1204,35 @@ function renderBusiness(){
 }
 
 /* ---------- бухгалтерия (только админ) · операционный учёт контура AVA ---------- */
-/* стартовые операции — реальные движения контура AVA (май–июль 2026) */
+/* v5: только операции управляющей компании (контур AVA). Всё, что относится к Ready To Move
+   (белая бухгалтерия: Twin Palms аренда земли, permit, Green Consulting, транш Шуваева) — убрано, ведётся в Xero. */
+
+/* единая система категорий (v5) */
+const ACCT_CATS = [
+  "Комиссия управления",     /* доход: комиссия УК 20% */
+  "Прямые брони",            /* доход: direct / Stripe-инвойсы */
+  "Сервисная выручка",       /* доход: клининги, бассейн, сад, апселлы */
+  "Зарплаты и клининг",      /* расход: клинеры, персонал */
+  "Коммунальные (транзит)",  /* расход-транзит: электричество, вода — перевыставляется владельцам */
+  "Ремонт и материалы",      /* расход: ремонты, закупки */
+  "Возвраты гостям",         /* расход: рефанды */
+  "Комиссии OTA",            /* расход: комиссии Booking и др. */
+  "Прочее",
+];
 const ACCT_SEED = [
-  {date:"2026-05-07", type:"exp", cat:"Земля/проекты",     who:"Twin Palms — аренда земли",   amount:960000,  note:"аренда участка Twin Palms"},
-  {date:"2026-06-12", type:"exp", cat:"Комиссии OTA",      who:"Booking.com",                 amount:6500.25, note:"комиссии Booking"},
-  {date:"2026-06-12", type:"exp", cat:"Комиссии OTA",      who:"Booking.com",                 amount:4173,    note:"комиссии Booking"},
-  {date:"2026-06-13", type:"exp", cat:"Разрешения",        who:"Building permit (Twin Palms)",amount:71500,   note:"permit — транш 1"},
-  {date:"2026-06-16", type:"exp", cat:"Возвраты гостям",   who:"Amy Dixon",                   amount:19000,   note:"возврат гостю"},
-  {date:"2026-06-17", type:"exp", cat:"Ремонт",            who:"Cocolane 2",                  amount:2500,    note:"ремонт труб"},
-  {date:"2026-06-20", type:"inc", cat:"Прямые брони",      who:"Shalev Sharon",               amount:25550,   note:"direct · Stripe"},
-  {date:"2026-06-23", type:"inc", cat:"Прямые брони",      who:"Оплата инвойса",              amount:45000,   note:"инвойс"},
-  {date:"2026-06-25", type:"exp", cat:"Коммунальные",      who:"PEA — 3 виллы",               amount:25925,   note:"электричество", transit:true},
-  {date:"2026-06-30", type:"inc", cat:"Комиссия управления",who:"Комиссия УК за июнь",        amount:31082.30,note:"начислено · схема 20%, 3 виллы"},
-  {date:"2026-07-01", type:"exp", cat:"Зарплаты клинеров", who:"Клинеры",                     amount:20000,   note:""},
-  {date:"2026-07-04", type:"exp", cat:"Зарплаты клинеров", who:"Nina & Chit",                 amount:10000,   note:""},
-  {date:"2026-07-06", type:"exp", cat:"Вода",              who:"KPG",                         amount:15000,   note:"подвоз воды", transit:true},
-  {date:"2026-07-08", type:"exp", cat:"Зарплаты",          who:"Igor Plyushch",               amount:10000,   note:""},
-  {date:"2026-07-13", type:"exp", cat:"Зарплаты клинеров", who:"Lisa",                        amount:13000,   note:"зарплата за июнь"},
-  {date:"2026-07-14", type:"exp", cat:"Разрешения",        who:"Building permit (Twin Palms)",amount:71500,   note:"permit — транш 2"},
-  {date:"2026-07-14", type:"exp", cat:"Консалтинг",        who:"Green Consulting",            amount:87500,   note:"site management"},
-  {date:"2026-07-14", type:"inc", cat:"Инвестиции/проекты",who:"Шуваев",                      amount:1072500, note:"инвест-транш (Twin Palms); дата поступления уточняется"},
+  {date:"2026-06-12", type:"exp", cat:"Комиссии OTA",          who:"Booking.com",          amount:6500.25, note:"комиссии Booking"},
+  {date:"2026-06-12", type:"exp", cat:"Комиссии OTA",          who:"Booking.com",          amount:4173,    note:"комиссии Booking"},
+  {date:"2026-06-16", type:"exp", cat:"Возвраты гостям",       who:"Amy Dixon",            amount:19000,   note:"возврат гостю"},
+  {date:"2026-06-17", type:"exp", cat:"Ремонт и материалы",    who:"Cocolane 2",           amount:2500,    note:"ремонт труб"},
+  {date:"2026-06-20", type:"inc", cat:"Прямые брони",          who:"Shalev Sharon",        amount:25550,   note:"direct · Stripe"},
+  {date:"2026-06-23", type:"inc", cat:"Прямые брони",          who:"Оплата инвойса",       amount:45000,   note:"инвойс · Stripe"},
+  {date:"2026-06-25", type:"exp", cat:"Коммунальные (транзит)",who:"PEA — 3 виллы",        amount:25925,   note:"электричество", transit:true},
+  {date:"2026-06-30", type:"inc", cat:"Комиссия управления",   who:"Комиссия УК за июнь",  amount:31082.30,note:"начислено · схема 20%, 3 виллы"},
+  {date:"2026-07-01", type:"exp", cat:"Зарплаты и клининг",    who:"Клинеры",              amount:20000,   note:""},
+  {date:"2026-07-04", type:"exp", cat:"Зарплаты и клининг",    who:"Nina & Chit",          amount:10000,   note:""},
+  {date:"2026-07-06", type:"exp", cat:"Коммунальные (транзит)",who:"KPG",                  amount:15000,   note:"подвоз воды", transit:true},
+  {date:"2026-07-08", type:"exp", cat:"Зарплаты и клининг",    who:"Igor Plyushch",        amount:10000,   note:""},
+  {date:"2026-07-13", type:"exp", cat:"Зарплаты и клининг",    who:"Lisa",                 amount:13000,   note:"зарплата за июнь"},
 ];
 const ACCT_LS_KEY = "ava_acct_ops_v1";
 let acctCat = "all", acctMonth = "all";
@@ -1220,7 +1284,7 @@ function acctDel(ci){
 function acctExport(){
   const data = {
     exported: new Date().toISOString(),
-    source: "AVA Owner Portal v4 · Бухгалтерия (контур AVA)",
+    source: "AVA Owner Portal v5 · Бухгалтерия (контур AVA · управляющая компания)",
     operations: acctAll().map(o=>({date:o.date, type:o.type==="inc"?"income":"expense", category:o.cat,
       counterparty:o.who, amount:o.amount, note:o.note||"", transit:!!o.transit, addedManually:!!o.custom}))
   };
@@ -1232,9 +1296,61 @@ function acctExport(){
   setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 500);
 }
 
+/* цвета категорий расходов для доната */
+const ACCT_EXP_COLORS = {
+  "Зарплаты и клининг":"#3F4A4C",
+  "Коммунальные (транзит)":"#8FA0A4",
+  "Ремонт и материалы":"#9A7B4F",
+  "Возвраты гостям":"#C96A5B",
+  "Комиссии OTA":"#75878B",
+  "Прочее":"#D8CDBB",
+};
+function acctExpColor(cat, i){
+  return ACCT_EXP_COLORS[cat] || ["#B99F6B","#6B8F94","#A98A9C","#7C9A6D"][i%4];
+}
+
+/* грч: приходы vs расходы по месяцам (сгруппированные бары) */
+function acctGroupedBars(data){
+  /* data: [{label, inc, exp}] */
+  if(!data.length) return `<div class="notice">Нет операций для графика.</div>`;
+  const W=640, H=270, padL=16, padR=16, padT=40, padB=40;
+  const iw=W-padL-padR, ih=H-padT-padB, baseY=padT+ih;
+  const max = Math.max(...data.map(d=>Math.max(d.inc,d.exp)), 1);
+  const groupW = iw/data.length;
+  const bw = Math.min(64, groupW*0.30), gapIn = 8;
+  let grid = "";
+  for(const f of [0.5,1]){
+    const y = baseY - ih*f;
+    grid += `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="#E7DFD0" stroke-width="1"/>`;
+  }
+  let bars = "";
+  data.forEach((d,i)=>{
+    const cx = padL + groupW*i + groupW/2;
+    const pairs = [
+      {v:d.inc, color:"#4FA764", x:cx-bw-gapIn/2, name:"Приходы"},
+      {v:d.exp, color:"#8FA0A4", x:cx+gapIn/2,    name:"Расходы"},
+    ];
+    for(const p of pairs){
+      const h = Math.max(3, ih*p.v/max), y = baseY - h;
+      bars += `<g class="bar">
+        <path d="M${p.x},${baseY} L${p.x},${y+4} Q${p.x},${y} ${p.x+4},${y} L${p.x+bw-4},${y} Q${p.x+bw},${y} ${p.x+bw},${y+4} L${p.x+bw},${baseY} Z"
+          fill="${p.color}"><title>${d.label} · ${p.name}: ${fmt(p.v)}</title></path>
+        <text x="${p.x+bw/2}" y="${y-8}" text-anchor="middle" font-size="12" font-weight="800" fill="#2C3638"
+          style="font-variant-numeric:tabular-nums">${fmtK(p.v)}</text></g>`;
+    }
+    bars += `<text x="${cx}" y="${baseY+22}" text-anchor="middle" font-size="12" font-weight="700" fill="#75878B">${d.label}</text>`;
+  });
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Приходы и расходы по месяцам">
+    ${grid}<line x1="${padL}" y1="${baseY}" x2="${W-padR}" y2="${baseY}" stroke="#D8CDBB" stroke-width="1.5"/>${bars}
+    <g font-size="12" font-weight="700">
+      <rect x="${padL}" y="12" width="11" height="11" rx="3" fill="#4FA764"/><text x="${padL+17}" y="22" fill="#3F4A4C">Приходы</text>
+      <rect x="${padL+92}" y="12" width="11" height="11" rx="3" fill="#8FA0A4"/><text x="${padL+109}" y="22" fill="#3F4A4C">Расходы</text>
+    </g></svg>`;
+}
+
 function renderAccounting(){
   const all = acctAll();
-  const cats = [...new Set(all.map(o=>o.cat))].sort((a,b)=>a.localeCompare(b,"ru"));
+  const cats = [...new Set([...ACCT_CATS, ...all.map(o=>o.cat)])].sort((a,b)=>a.localeCompare(b,"ru"));
   const months = [...new Set(all.map(o=>o.date.slice(0,7)))].sort().reverse();
   if(acctCat!=="all" && !cats.includes(acctCat)) acctCat = "all";
   if(acctMonth!=="all" && !months.includes(acctMonth)) acctMonth = "all";
@@ -1265,12 +1381,28 @@ function renderAccounting(){
 
   const today = new Date().toISOString().slice(0,10);
 
+  /* графики: приходы vs расходы по месяцам (все операции, без учёта фильтров) */
+  const chartMonths = [...new Set(all.map(o=>o.date.slice(0,7)))].sort();
+  const monthData = chartMonths.map(m=>({
+    label: acctMonthLabel(m),
+    inc: round2(sum(all.filter(o=>o.date.slice(0,7)===m && o.type==="inc"), o=>o.amount)),
+    exp: round2(sum(all.filter(o=>o.date.slice(0,7)===m && o.type==="exp"), o=>o.amount)),
+  }));
+
+  /* донат: расходы по категориям за выбранный месяц (или за всё время) */
+  const donutOps = all.filter(o=>o.type==="exp" && (acctMonth==="all" || o.date.slice(0,7)===acctMonth));
+  const byCat = {};
+  for(const o of donutOps) byCat[o.cat] = round2((byCat[o.cat]||0) + o.amount);
+  const donutItems = Object.entries(byCat).sort((a,b)=>b[1]-a[1])
+    .map(([c,v],i)=>({label:c, value:v, color:acctExpColor(c,i)}));
+  const donutCenter = acctMonth==="all" ? "все месяцы" : acctMonthLabel(acctMonth).split(" ")[0].toLowerCase();
+
   return `
   <h2 class="vname" style="margin:24px 0 4px">Бухгалтерия · контур AVA</h2>
-  <div class="vsub">Операционный учёт обслуживающей компании · виден только администратору</div>
-  <div class="notice" style="margin-top:10px">Это операционный контур <b>AVA</b> (обслуживающая компания).
-  Юрлицо <b>Ready To Move Co., Ltd.</b> ведётся в <b>Xero</b> — официальный учёт остаётся там,
-  этот журнал его не заменяет.</div>
+  <div class="vsub">Операционный учёт управляющей компании · виден только администратору</div>
+  <div class="notice" style="margin-top:10px">Это операционный контур <b>AVA</b> (управляющая компания вилл).
+  Белая бухгалтерия юрлица <b>Ready To Move Co., Ltd.</b> (Twin Palms, permit, консалтинг, инвест-транши) ведётся в <b>Xero</b>
+  и в этот журнал не входит.</div>
 
   <section>
     <h3>Итоги · ${periodLabel}</h3>
@@ -1279,6 +1411,21 @@ function renderAccounting(){
       <div class="kpi"><div class="l">Расходы</div><div class="v num">${fmt(exp)}</div></div>
       <div class="kpi${bal<0?" neg":" green"}"><div class="l">Сальдо</div><div class="v num">${fmt(bal)}</div></div>
     </div>
+  </section>
+
+  <section>
+    <h3>Приходы и расходы по месяцам</h3>
+    <div class="grid2">
+      <div class="chartcard">
+        <div class="cap">Все операции журнала · комиссия УК июня — начисление</div>
+        ${acctGroupedBars(monthData)}
+      </div>
+      <div class="chartcard">
+        <div class="cap">Расходы по категориям · ${acctMonth==="all" ? "все месяцы" : acctMonthLabel(acctMonth)} (фильтр «Месяц» ниже)</div>
+        <div class="donutwrap">${donut(donutItems, donutCenter)}</div>
+      </div>
+    </div>
+    <div class="sumnote">Коммунальные — транзит: перевыставляются владельцам вилл и не являются затратой УК.</div>
   </section>
 
   <section>
@@ -1360,33 +1507,38 @@ function barChart(items){
   </svg>`;
 }
 
-/* ================= SVG: календарь занятости июня ================= */
-function calendarStrip(occ){
+/* ================= SVG: календарь занятости месяца ================= */
+/* occ — булев массив [1..days]; days — дней в месяце (по умолчанию июнь);
+   genName — месяц в родительном падеже для подписей */
+function calendarStrip(occ, days, genName){
+  days = days || DAYS; genName = genName || "июня";
   const W = 640, H = 74, pad = 4;
-  const cw = (W - pad*2) / DAYS;
+  const cw = (W - pad*2) / days;
   const cellW = cw - 3, cellH = 34, y0 = 8;
   let cells = "", labels = "";
   let busy = 0;
-  for(let d=1; d<=DAYS; d++){
+  for(let d=1; d<=days; d++){
     const x = pad + (d-1)*cw;
     const on = occ[d]; if(on) busy++;
     cells += `<rect x="${x.toFixed(1)}" y="${y0}" width="${cellW.toFixed(1)}" height="${cellH}" rx="4"
       fill="${on ? "#4FA764" : "#EFE8DA"}" ${on?"":'stroke="#E2DACC" stroke-width="1"'}>
-      <title>${d} июня — ${on ? "занята" : "свободна"}</title></rect>`;
+      <title>${d} ${genName} — ${on ? "занята" : "свободна"}</title></rect>`;
     if(d===1 || d%5===0){
       labels += `<text x="${(x+cellW/2).toFixed(1)}" y="${y0+cellH+18}" text-anchor="middle"
         font-size="11" font-weight="700" fill="#75878B">${d}</text>`;
     }
   }
-  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Занятость по дням июня: ${busy} из ${DAYS} ночей">
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Занятость по дням: ${busy} из ${days} ночей">
     ${cells}${labels}</svg>
-    <div class="cap num" style="margin-top:6px">Занято ночей в июне: ${busy} из ${DAYS}</div>`;
+    <div class="cap num" style="margin-top:6px">Занято ночей: ${busy} из ${days}</div>`;
 }
 
 /* ================= SVG: donut ================= */
-function donut(items){
+function donut(items, centerLabel){
+  centerLabel = centerLabel || "июнь";
   items = items.filter(x=>x.value>0);
   const total = sum(items, x=>x.value);
+  if(!items.length) return `<div class="notice">Нет данных для диаграммы.</div>`;
   const R = 74, r2 = 46, cx = 100, cy = 100;
   let a0 = -Math.PI/2, segs = "";
   for(const it of items){
@@ -1405,8 +1557,8 @@ function donut(items){
   const legend = items.map(it=>`
     <div><span class="sw" style="background:${it.color}"></span>${it.label} —
       <b class="num">${fmt(it.value)}</b> <span style="color:var(--sub)">(${pct(it.value/total)})</span></div>`).join("");
-  return `<svg viewBox="0 0 200 200" role="img" aria-label="Структура заработка УК">${segs}
-    <text x="100" y="95" text-anchor="middle" font-size="12" font-weight="700" fill="#75878B">июнь</text>
+  return `<svg viewBox="0 0 200 200" role="img" aria-label="Структура: ${items.map(i=>i.label).join(", ")}">${segs}
+    <text x="100" y="95" text-anchor="middle" font-size="12" font-weight="700" fill="#75878B">${centerLabel}</text>
     <text x="100" y="114" text-anchor="middle" font-size="14" font-weight="800" fill="#2C3638"
       style="font-variant-numeric:tabular-nums">${fmt0(total)}</text></svg>
   <div class="legend">${legend}</div>`;
