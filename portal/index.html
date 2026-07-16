@@ -1343,8 +1343,8 @@ function acctGroupedBars(data){
   return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Приходы и расходы по месяцам">
     ${grid}<line x1="${padL}" y1="${baseY}" x2="${W-padR}" y2="${baseY}" stroke="#D8CDBB" stroke-width="1.5"/>${bars}
     <g font-size="12" font-weight="700">
-      <rect x="${padL}" y="12" width="11" height="11" rx="3" fill="#4FA764"/><text x="${padL+17}" y="22" fill="#3F4A4C">Приходы</text>
-      <rect x="${padL+92}" y="12" width="11" height="11" rx="3" fill="#8FA0A4"/><text x="${padL+109}" y="22" fill="#3F4A4C">Расходы</text>
+      <rect x="${W-padR-186}" y="12" width="11" height="11" rx="3" fill="#4FA764"/><text x="${W-padR-169}" y="22" fill="#3F4A4C">Приходы</text>
+      <rect x="${W-padR-94}" y="12" width="11" height="11" rx="3" fill="#8FA0A4"/><text x="${W-padR-77}" y="22" fill="#3F4A4C">Расходы</text>
     </g></svg>`;
 }
 
