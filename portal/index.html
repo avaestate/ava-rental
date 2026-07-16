@@ -312,14 +312,13 @@ const VILLAS = {
     totals:{turnovers:2,nights:4,income:19228.83,adr:4807.21,occ:0.1333}, channel:[], opex:null },
   cocolane4:{ name:"Cocolane 4", owner:"Aleksandra Agapitova", schemes:false, bookings:[],
     totals:{turnovers:0,nights:0,income:0,adr:0,occ:0}, channel:[], opex:null },
-  katai:{ name:"Katai", owner:null, schemes:false, bookings:[],
+  /* Katai = бывший листинг «Bunny» (одна и та же вилла, объединено 16.07.2026) */
+  katai:{ name:"Katai", owner:"Aleksandra Abyzova", schemes:false, bookings:[],
     totals:{turnovers:0,nights:0,income:0,adr:0,occ:0}, channel:[], opex:null },
   whitelotus:{ name:"White Lotus", owner:"Danny Taylor", schemes:false, bookings:[],
     totals:{turnovers:0,nights:0,income:0,adr:0,occ:0}, channel:[], opex:null },
-  bunny:{ name:"Bunny", owner:"Aleksandra Abyzova", schemes:false, bookings:[],
-    totals:{turnovers:0,nights:0,income:0,adr:0,occ:0}, channel:[], opex:null },
 };
-const VILLA_ORDER = ["aurora","radharani","axis","fourmoons","cocolane2","cocolane3","cocolane4","katai","whitelotus","bunny"];
+const VILLA_ORDER = ["aurora","radharani","axis","fourmoons","cocolane2","cocolane3","cocolane4","katai","whitelotus"];
 const DAYS = 30; /* дней в июне */
 
 /* ---------- ИСТОРИЯ · Дек 2025 – Май 2026 (Google Drive «AVA villa owners», выгрузка 16.07.2026) ----------
@@ -409,20 +408,19 @@ const HISTORY = {
   "2026-03":{income:132393,expenses:{"Electricity":12000,"Internet":1000,"Expenses":1200,"Technical works":3500},commission:33098.25,payout:81594.75},
   "2026-04":{income:43912,expenses:{"Electricity":12800,"Internet":1000},commission:10978,payout:19134},
   "2026-05":{income:16034,expenses:{"Electricity":10000,"Internet":1000},commission:4008.5,payout:1025.5}
- },
- bunny:{} /* истории нет */
+ }
 };
 
 /* ---------- ЗАНЯТОСТЬ архивных месяцев · Guesty Open API (выгрузка 16.07.2026) ----------
    Только календарная занятость (ночь = дата начала). Финансы архива — из отчётных файлов, не отсюда.
    n = занятых ночей, d = дней в месяце, iv = интервалы занятых дней [от, до] включительно. */
 const OCC_HISTORY = {
- "2025-12":{aurora:{n:4,d:31,iv:[[14,15],[30,31]]},radharani:{n:3,d:31,iv:[[29,31]]},axis:{n:0,d:31,iv:[]},fourmoons:{n:0,d:31,iv:[]},cocolane2:{n:0,d:31,iv:[]},cocolane3:{n:6,d:31,iv:[[26,31]]},cocolane4:{n:0,d:31,iv:[]},katai:{n:0,d:31,iv:[]},whitelotus:{n:3,d:31,iv:[[29,31]]},bunny:{n:10,d:31,iv:[[3,3],[22,22],[24,31]]}},
- "2026-01":{aurora:{n:16,d:31,iv:[[1,3],[10,11],[13,16],[22,28]]},radharani:{n:28,d:31,iv:[[1,18],[22,31]]},axis:{n:14,d:31,iv:[[13,17],[23,31]]},fourmoons:{n:0,d:31,iv:[]},cocolane2:{n:28,d:31,iv:[[2,16],[18,19],[21,31]]},cocolane3:{n:26,d:31,iv:[[1,1],[3,14],[19,31]]},cocolane4:{n:0,d:31,iv:[]},katai:{n:0,d:31,iv:[]},whitelotus:{n:16,d:31,iv:[[1,9],[12,17],[31,31]]},bunny:{n:28,d:31,iv:[[1,1],[3,25],[28,31]]}},
- "2026-02":{aurora:{n:21,d:28,iv:[[1,4],[8,10],[12,20],[22,26]]},radharani:{n:19,d:28,iv:[[1,6],[8,10],[15,18],[21,26]]},axis:{n:17,d:28,iv:[[1,1],[3,7],[9,13],[16,18],[25,27]]},fourmoons:{n:0,d:28,iv:[]},cocolane2:{n:23,d:28,iv:[[1,13],[15,19],[22,26]]},cocolane3:{n:21,d:28,iv:[[1,8],[10,21],[23,23]]},cocolane4:{n:24,d:28,iv:[[2,16],[20,28]]},katai:{n:0,d:28,iv:[]},whitelotus:{n:20,d:28,iv:[[1,2],[4,21]]},bunny:{n:27,d:28,iv:[[1,2],[4,28]]}},
- "2026-03":{aurora:{n:26,d:31,iv:[[1,14],[20,31]]},radharani:{n:25,d:31,iv:[[3,22],[27,31]]},axis:{n:23,d:31,iv:[[2,8],[13,17],[20,30]]},fourmoons:{n:2,d:31,iv:[[14,15]]},cocolane2:{n:16,d:31,iv:[[1,3],[5,8],[12,16],[28,31]]},cocolane3:{n:22,d:31,iv:[[1,6],[10,20],[26,30]]},cocolane4:{n:27,d:31,iv:[[1,4],[7,13],[16,31]]},katai:{n:5,d:31,iv:[[24,26],[30,31]]},whitelotus:{n:6,d:31,iv:[[2,3],[7,10]]},bunny:{n:17,d:31,iv:[[1,17]]}},
- "2026-04":{aurora:{n:19,d:30,iv:[[1,3],[10,14],[16,18],[20,26],[30,30]]},radharani:{n:16,d:30,iv:[[1,10],[12,17]]},axis:{n:19,d:30,iv:[[1,5],[9,12],[17,25],[30,30]]},fourmoons:{n:0,d:30,iv:[]},cocolane2:{n:26,d:30,iv:[[1,5],[9,12],[14,30]]},cocolane3:{n:10,d:30,iv:[[1,3],[14,17],[19,20],[30,30]]},cocolane4:{n:15,d:30,iv:[[1,1],[12,15],[18,24],[26,28]]},katai:{n:20,d:30,iv:[[1,1],[4,12],[21,30]]},whitelotus:{n:8,d:30,iv:[[1,2],[8,13]]},bunny:{n:10,d:30,iv:[[10,19]]}},
- "2026-05":{aurora:{n:7,d:31,iv:[[1,2],[25,29]]},radharani:{n:16,d:31,iv:[[1,13],[22,24]]},axis:{n:5,d:31,iv:[[1,3],[30,31]]},fourmoons:{n:0,d:31,iv:[]},cocolane2:{n:20,d:31,iv:[[1,11],[13,18],[29,31]]},cocolane3:{n:15,d:31,iv:[[1,13],[17,18]]},cocolane4:{n:4,d:31,iv:[[4,5],[17,18]]},katai:{n:17,d:31,iv:[[1,3],[6,11],[17,18],[24,27],[29,30]]},whitelotus:{n:0,d:31,iv:[]},bunny:{n:0,d:31,iv:[]}},
+ "2025-12":{aurora:{n:4,d:31,iv:[[14,15],[30,31]]},radharani:{n:3,d:31,iv:[[29,31]]},axis:{n:0,d:31,iv:[]},fourmoons:{n:0,d:31,iv:[]},cocolane2:{n:0,d:31,iv:[]},cocolane3:{n:6,d:31,iv:[[26,31]]},cocolane4:{n:0,d:31,iv:[]},katai:{n:10,d:31,iv:[[3,3],[22,22],[24,31]]},whitelotus:{n:3,d:31,iv:[[29,31]]}},
+ "2026-01":{aurora:{n:16,d:31,iv:[[1,3],[10,11],[13,16],[22,28]]},radharani:{n:28,d:31,iv:[[1,18],[22,31]]},axis:{n:14,d:31,iv:[[13,17],[23,31]]},fourmoons:{n:0,d:31,iv:[]},cocolane2:{n:28,d:31,iv:[[2,16],[18,19],[21,31]]},cocolane3:{n:26,d:31,iv:[[1,1],[3,14],[19,31]]},cocolane4:{n:0,d:31,iv:[]},katai:{n:28,d:31,iv:[[1,1],[3,25],[28,31]]},whitelotus:{n:16,d:31,iv:[[1,9],[12,17],[31,31]]}},
+ "2026-02":{aurora:{n:21,d:28,iv:[[1,4],[8,10],[12,20],[22,26]]},radharani:{n:19,d:28,iv:[[1,6],[8,10],[15,18],[21,26]]},axis:{n:17,d:28,iv:[[1,1],[3,7],[9,13],[16,18],[25,27]]},fourmoons:{n:0,d:28,iv:[]},cocolane2:{n:23,d:28,iv:[[1,13],[15,19],[22,26]]},cocolane3:{n:21,d:28,iv:[[1,8],[10,21],[23,23]]},cocolane4:{n:24,d:28,iv:[[2,16],[20,28]]},katai:{n:27,d:28,iv:[[1,2],[4,28]]},whitelotus:{n:20,d:28,iv:[[1,2],[4,21]]}},
+ "2026-03":{aurora:{n:26,d:31,iv:[[1,14],[20,31]]},radharani:{n:25,d:31,iv:[[3,22],[27,31]]},axis:{n:23,d:31,iv:[[2,8],[13,17],[20,30]]},fourmoons:{n:2,d:31,iv:[[14,15]]},cocolane2:{n:16,d:31,iv:[[1,3],[5,8],[12,16],[28,31]]},cocolane3:{n:22,d:31,iv:[[1,6],[10,20],[26,30]]},cocolane4:{n:27,d:31,iv:[[1,4],[7,13],[16,31]]},katai:{n:22,d:31,iv:[[1,17],[24,26],[30,31]]},whitelotus:{n:6,d:31,iv:[[2,3],[7,10]]}},
+ "2026-04":{aurora:{n:19,d:30,iv:[[1,3],[10,14],[16,18],[20,26],[30,30]]},radharani:{n:16,d:30,iv:[[1,10],[12,17]]},axis:{n:19,d:30,iv:[[1,5],[9,12],[17,25],[30,30]]},fourmoons:{n:0,d:30,iv:[]},cocolane2:{n:26,d:30,iv:[[1,5],[9,12],[14,30]]},cocolane3:{n:10,d:30,iv:[[1,3],[14,17],[19,20],[30,30]]},cocolane4:{n:15,d:30,iv:[[1,1],[12,15],[18,24],[26,28]]},katai:{n:27,d:30,iv:[[1,1],[4,19],[21,30]]},whitelotus:{n:8,d:30,iv:[[1,2],[8,13]]}},
+ "2026-05":{aurora:{n:7,d:31,iv:[[1,2],[25,29]]},radharani:{n:16,d:31,iv:[[1,13],[22,24]]},axis:{n:5,d:31,iv:[[1,3],[30,31]]},fourmoons:{n:0,d:31,iv:[]},cocolane2:{n:20,d:31,iv:[[1,11],[13,18],[29,31]]},cocolane3:{n:15,d:31,iv:[[1,13],[17,18]]},cocolane4:{n:4,d:31,iv:[[4,5],[17,18]]},katai:{n:17,d:31,iv:[[1,3],[6,11],[17,18],[24,27],[29,30]]},whitelotus:{n:0,d:31,iv:[]}},
 };
 /* родительный падеж месяца для подписей календаря */
 const MONTH_GEN_FULL = {"2025-12":"декабря","2026-01":"января","2026-02":"февраля","2026-03":"марта","2026-04":"апреля","2026-05":"мая","2026-06":"июня"};
@@ -458,8 +456,7 @@ const USERS = {
   "shlomi2026":     {name:"Shlomi Berg", role:"Владелец · Four Moons", villas:["fourmoons"], master:false},
   "aleksandra2026": {name:"Aleksandra Agapitova", role:"Владелец · Cocolane 2, 3, 4", villas:["cocolane2","cocolane3","cocolane4"], master:false},
   "danny2026":      {name:"Danny Taylor", role:"Владелец · White Lotus", villas:["whitelotus"], master:false},
-  "abyzova2026":    {name:"Aleksandra Abyzova", role:"Владелец · Bunny", villas:["bunny"], master:false},
-  /* Katai: владельца в Guesty нет — кабинет пока только у администратора */
+  "abyzova2026":    {name:"Aleksandra Abyzova", role:"Владелец · Katai", villas:["katai"], master:false},
 };
 
 let user = null, activeTab = null, activeMonth = JUNE_ID, scheme = "20"; /* "20" | "2575" */
@@ -1018,6 +1015,8 @@ function renderBusiness(){
       const p = round2(v.totals.income*0.20); /* канальные вычеты неизвестны — предварительно от валового дохода июня */
       commPrelim = round2(commPrelim + p);
       commRows.push({name:v.name, base:v.totals.income, comm:p, prelim:true});
+    } else {
+      commRows.push({name:v.name, base:0, comm:0, prelim:false, empty:true});
     }
   }
   const commTotal = round2(commConfirmed + commPrelim);
@@ -1041,7 +1040,7 @@ function renderBusiness(){
   const payouts = round2(sum(schemeVillas, id=>{ const c=calc(VILLAS[id]); return c.s20.negative?0:c.s20.payout; }));
 
   const commTableRows = commRows.map(r=>`
-    <tr><td><b>${r.name}</b>${r.prelim?' <span class="pill">предварительно — расходы вносятся</span>':''}</td>
+    <tr${r.empty?' style="color:var(--sub)"':''}><td><b>${r.name}</b>${r.prelim?' <span class="pill">предварительно — расходы вносятся</span>':''}${r.empty?' <span style="font-size:11.5px">— без броней в июне</span>':''}</td>
         <td class="r num">${fmt(r.base)}</td>
         <td class="r num">${fmt(r.comm)}</td></tr>`).join("");
 
@@ -1112,7 +1111,7 @@ function renderBusiness(){
       <tbody>
         <tr><td><b>Katai — задолженность по выплатам владельцу</b></td>
             <td class="r num neg">≈ 218 790,50 ฿</td>
-            <td style="font-size:12.5px;color:var(--sub)">Итог листа: начислено 381 290,50, выплачено 162 500 (дек 2025 – апр 2026). Владелец в Guesty не указан.</td></tr>
+            <td style="font-size:12.5px;color:var(--sub)">Итог листа: начислено 381 290,50, выплачено 162 500 (дек 2025 – апр 2026). Владелец — Aleksandra Abyzova (листинги Bunny и Katai объединены: одна вилла).</td></tr>
         <tr><td><b>Villa start — Aurora</b></td><td class="r num">128 335 ฿</td>
             <td style="font-size:12.5px;color:var(--sub)">Стартовая закупка; удержана из первых выплат (дек–янв), закрыта.</td></tr>
         <tr><td><b>Villa start — Radharani</b></td><td class="r num">128 335 ฿</td>
