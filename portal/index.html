@@ -1338,22 +1338,24 @@ const ACCT_CATS = [
   "Комиссии OTA",            /* расход: комиссии Booking и др. */
   "Прочее",
 ];
+/* burden: "ava" = наш расход (ложится на прибыль УК) · "owner" = расход владельцев (перевыставляется / вычитается из их доходной части) */
 const ACCT_SEED = [
-  {date:"2026-06-12", type:"exp", cat:"Комиссии OTA",          who:"Booking.com",          amount:6500.25, note:"комиссии Booking"},
-  {date:"2026-06-12", type:"exp", cat:"Комиссии OTA",          who:"Booking.com",          amount:4173,    note:"комиссии Booking"},
-  {date:"2026-06-16", type:"exp", cat:"Возвраты гостям",       who:"Amy Dixon",            amount:19000,   note:"возврат гостю"},
-  {date:"2026-06-17", type:"exp", cat:"Ремонт и материалы",    who:"Cocolane 2",           amount:2500,    note:"ремонт труб"},
+  {date:"2026-06-12", type:"exp", cat:"Комиссии OTA",          who:"Booking.com",          amount:6500.25, note:"комиссии Booking · из выручки до раздела", burden:"owner"},
+  {date:"2026-06-12", type:"exp", cat:"Комиссии OTA",          who:"Booking.com",          amount:4173,    note:"комиссии Booking · из выручки до раздела", burden:"owner"},
+  {date:"2026-06-16", type:"exp", cat:"Возвраты гостям",       who:"Amy Dixon",            amount:19000,   note:"возврат гостю", burden:"ava"},
+  {date:"2026-06-17", type:"exp", cat:"Ремонт и материалы",    who:"Cocolane 2",           amount:2500,    note:"ремонт труб · перевыставляется владельцу", burden:"owner"},
   {date:"2026-06-20", type:"inc", cat:"Прямые брони",          who:"Shalev Sharon",        amount:25550,   note:"direct · Stripe"},
   {date:"2026-06-23", type:"inc", cat:"Прямые брони",          who:"Оплата инвойса",       amount:45000,   note:"инвойс · Stripe"},
-  {date:"2026-06-25", type:"exp", cat:"Коммунальные (транзит)",who:"PEA — 3 виллы",        amount:25925,   note:"электричество", transit:true},
+  {date:"2026-06-25", type:"exp", cat:"Коммунальные (транзит)",who:"PEA — 3 виллы",        amount:25925,   note:"электричество", transit:true, burden:"owner"},
   {date:"2026-06-30", type:"inc", cat:"Комиссия управления",   who:"Комиссия УК за июнь",  amount:31082.30,note:"начислено · схема 20%, 3 виллы"},
-  {date:"2026-07-01", type:"exp", cat:"Зарплаты и клининг",    who:"Клинеры",              amount:20000,   note:""},
-  {date:"2026-07-04", type:"exp", cat:"Зарплаты и клининг",    who:"Nina & Chit",          amount:10000,   note:""},
-  {date:"2026-07-06", type:"exp", cat:"Коммунальные (транзит)",who:"KPG",                  amount:15000,   note:"подвоз воды", transit:true},
-  {date:"2026-07-08", type:"exp", cat:"Зарплаты и клининг",    who:"Igor Plyushch",        amount:10000,   note:""},
-  {date:"2026-07-13", type:"exp", cat:"Зарплаты и клининг",    who:"Lisa",                 amount:13000,   note:"зарплата за июнь"},
-  {date:"2026-07-16", type:"exp", cat:"Прочее",                who:"Родители Ксении",      amount:30000,   note:"оплата по поручению Дениса 16.07"},
+  {date:"2026-07-01", type:"exp", cat:"Зарплаты и клининг",    who:"Клинеры",              amount:20000,   note:"", burden:"ava"},
+  {date:"2026-07-04", type:"exp", cat:"Зарплаты и клининг",    who:"Nina & Chit",          amount:10000,   note:"", burden:"ava"},
+  {date:"2026-07-06", type:"exp", cat:"Коммунальные (транзит)",who:"KPG",                  amount:15000,   note:"подвоз воды", transit:true, burden:"owner"},
+  {date:"2026-07-08", type:"exp", cat:"Зарплаты и клининг",    who:"Igor Plyushch",        amount:10000,   note:"", burden:"ava"},
+  {date:"2026-07-13", type:"exp", cat:"Зарплаты и клининг",    who:"Lisa",                 amount:13000,   note:"зарплата за июнь", burden:"ava"},
+  {date:"2026-07-16", type:"exp", cat:"Прочее",                who:"Родители Ксении",      amount:30000,   note:"оплата по поручению Дениса 16.07", burden:"ava"},
 ];
+function burdenOf(o){ return o.type!=="exp" ? null : (o.burden || (o.transit ? "owner" : "ava")); }
 
 /* ---------- Архив УК по месяцам · мастер-файл вилл (Google Sheet, лист Villas, выгрузка 16.07.2026) ----------
    income = «Management company income», expenses = внесённые в файл расходы УК, profit = «AVA TOTAL PROFIT» из файла.
@@ -1367,7 +1369,7 @@ const ACCT_HIST = [
   {ym:"2026-05", income:71780.75,  expenses:[["Зарплаты клинеров",73000],["Бассейн",35000],["Расходники клининга",15000],["PMS (Guesty)",10000],["Зарплата менеджера",32000]], profit:-75719.25},
 ];
 const ACCT_LS_KEY = "ava_acct_ops_v1";
-let acctCat = "all", acctMonth = "all";
+let acctCat = "all", acctMonth = "all", acctBurden = "all"; /* all | ava | owner */
 
 function acctCustom(){
   try{ const a = JSON.parse(localStorage.getItem(ACCT_LS_KEY)); return Array.isArray(a) ? a : []; }
@@ -1389,6 +1391,7 @@ function acctMonthLabel(ym){
 function acctDate(iso){ return iso.slice(8,10)+"."+iso.slice(5,7)+"."+iso.slice(0,4); }
 function setAcctCat(v){ acctCat = v; render(); }
 function setAcctMonth(v){ acctMonth = v; render(); }
+function setAcctBurden(v){ acctBurden = v; render(); }
 
 function acctAdd(e){
   e.preventDefault();
@@ -1401,7 +1404,8 @@ function acctAdd(e){
     cat: g("opCat").value.trim() || "Прочее",
     who: g("opWho").value.trim(),
     amount: round2(amount),
-    note: g("opNote").value.trim()
+    note: g("opNote").value.trim(),
+    burden: g("opType").value==="exp" ? (g("opBurden") ? g("opBurden").value : "ava") : undefined
   };
   if(!op.date || !op.who) return false;
   const list = acctCustom(); list.push(op); acctSaveCustom(list);
@@ -1443,13 +1447,13 @@ function acctExpColor(cat, i){
 
 /* грч: приходы vs расходы по месяцам (сгруппированные бары) */
 function acctGroupedBars(data){
-  /* data: [{label, inc, exp}] */
+  /* data: [{label, inc, expAva, expOwner}] */
   if(!data.length) return `<div class="notice">Нет операций для графика.</div>`;
   const W=640, H=270, padL=16, padR=16, padT=40, padB=40;
   const iw=W-padL-padR, ih=H-padT-padB, baseY=padT+ih;
-  const max = Math.max(...data.map(d=>Math.max(d.inc,d.exp)), 1);
+  const max = Math.max(...data.map(d=>Math.max(d.inc, d.expAva, d.expOwner)), 1);
   const groupW = iw/data.length;
-  const bw = Math.min(64, groupW*0.30), gapIn = 8;
+  const bw = Math.min(48, groupW*0.22), gapIn = 6;
   let grid = "";
   for(const f of [0.5,1]){
     const y = baseY - ih*f;
@@ -1458,25 +1462,28 @@ function acctGroupedBars(data){
   let bars = "";
   data.forEach((d,i)=>{
     const cx = padL + groupW*i + groupW/2;
-    const pairs = [
-      {v:d.inc, color:"#4FA764", x:cx-bw-gapIn/2, name:"Приходы"},
-      {v:d.exp, color:"#8FA0A4", x:cx+gapIn/2,    name:"Расходы"},
+    const totalW = bw*3 + gapIn*2;
+    const trio = [
+      {v:d.inc,      color:"#4FA764", x:cx-totalW/2,             name:"Приходы"},
+      {v:d.expAva,   color:"#3F4A4C", x:cx-totalW/2+bw+gapIn,    name:"Наши расходы"},
+      {v:d.expOwner, color:"#C9B48F", x:cx-totalW/2+(bw+gapIn)*2,name:"Расходы владельцев"},
     ];
-    for(const p of pairs){
+    for(const p of trio){
       const h = Math.max(3, ih*p.v/max), y = baseY - h;
       bars += `<g class="bar">
         <path d="M${p.x},${baseY} L${p.x},${y+4} Q${p.x},${y} ${p.x+4},${y} L${p.x+bw-4},${y} Q${p.x+bw},${y} ${p.x+bw},${y+4} L${p.x+bw},${baseY} Z"
           fill="${p.color}"><title>${d.label} · ${p.name}: ${fmt(p.v)}</title></path>
-        <text x="${p.x+bw/2}" y="${y-8}" text-anchor="middle" font-size="12" font-weight="800" fill="#2C3638"
+        <text x="${p.x+bw/2}" y="${y-8}" text-anchor="middle" font-size="11" font-weight="800" fill="#2C3638"
           style="font-variant-numeric:tabular-nums">${fmtK(p.v)}</text></g>`;
     }
     bars += `<text x="${cx}" y="${baseY+22}" text-anchor="middle" font-size="12" font-weight="700" fill="#75878B">${d.label}</text>`;
   });
   return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Приходы и расходы по месяцам">
     ${grid}<line x1="${padL}" y1="${baseY}" x2="${W-padR}" y2="${baseY}" stroke="#D8CDBB" stroke-width="1.5"/>${bars}
-    <g font-size="12" font-weight="700">
-      <rect x="${W-padR-186}" y="12" width="11" height="11" rx="3" fill="#4FA764"/><text x="${W-padR-169}" y="22" fill="#3F4A4C">Приходы</text>
-      <rect x="${W-padR-94}" y="12" width="11" height="11" rx="3" fill="#8FA0A4"/><text x="${W-padR-77}" y="22" fill="#3F4A4C">Расходы</text>
+    <g font-size="11.5" font-weight="700">
+      <rect x="${padL+2}" y="12" width="11" height="11" rx="3" fill="#4FA764"/><text x="${padL+19}" y="22" fill="#3F4A4C">Приходы</text>
+      <rect x="${padL+106}" y="12" width="11" height="11" rx="3" fill="#3F4A4C"/><text x="${padL+123}" y="22" fill="#3F4A4C">Наши расходы</text>
+      <rect x="${padL+248}" y="12" width="11" height="11" rx="3" fill="#C9B48F"/><text x="${padL+265}" y="22" fill="#3F4A4C">Расходы владельцев</text>
     </g></svg>`;
 }
 
@@ -1488,22 +1495,29 @@ function renderAccounting(){
   if(acctMonth!=="all" && !months.includes(acctMonth)) acctMonth = "all";
 
   const rows = all.filter(o=>
-    (acctCat==="all" || o.cat===acctCat) && (acctMonth==="all" || o.date.slice(0,7)===acctMonth));
+    (acctCat==="all" || o.cat===acctCat) && (acctMonth==="all" || o.date.slice(0,7)===acctMonth)
+    && (acctBurden==="all" || (o.type==="inc" ? acctBurden==="ava" : burdenOf(o)===acctBurden)));
   const inc = round2(sum(rows.filter(o=>o.type==="inc"), o=>o.amount));
-  const exp = round2(sum(rows.filter(o=>o.type==="exp"), o=>o.amount));
-  const bal = round2(inc - exp);
+  const expAva = round2(sum(rows.filter(o=>o.type==="exp" && burdenOf(o)==="ava"), o=>o.amount));
+  const expOwner = round2(sum(rows.filter(o=>o.type==="exp" && burdenOf(o)==="owner"), o=>o.amount));
+  const exp = round2(expAva + expOwner);
+  const bal = round2(inc - expAva); /* сальдо УК — только наши расходы; владельческие перевыставляются */
   const periodLabel = (acctMonth==="all" ? "все месяцы" : acctMonthLabel(acctMonth)) +
                       (acctCat==="all" ? "" : " · " + acctCat);
 
-  const trs = rows.length ? rows.map(o=>`
+  const trs = rows.length ? rows.map(o=>{
+    const b = burdenOf(o);
+    const bpill = b==="owner" ? ' <span class="pill" style="background:#EFE3CE;color:#8A6D3B">владельцы</span>'
+                : b==="ava"   ? ' <span class="pill" style="background:#DCE9DD;color:#2F6B3F">наш</span>' : '';
+    return `
     <tr>
       <td class="num" style="white-space:nowrap">${acctDate(o.date)}</td>
       <td><span class="typepill ${o.type}">${o.type==="inc"?"Доход":"Расход"}</span></td>
-      <td>${esc(o.cat)}${o.transit?' <span class="pill">транзит</span>':''}${o.custom?' <span class="pill part">вручную</span>':''}</td>
+      <td>${esc(o.cat)}${bpill}${o.custom?' <span class="pill part">вручную</span>':''}</td>
       <td>${esc(o.who)}</td>
-      <td class="r num" style="font-weight:800;${o.type==="inc"?"color:var(--green-deep)":""}">${o.type==="inc"?"+ ":"− "}${fmt(o.amount)}</td>
+      <td class="r num" style="font-weight:800;${o.type==="inc"?"color:var(--green-deep)":(b==="owner"?"color:#8A6D3B":"")}">${o.type==="inc"?"+ ":"− "}${fmt(o.amount)}</td>
       <td class="muted" style="font-size:12.5px">${esc(o.note||"")}${o.custom?` <button class="dellink" onclick="acctDel(${o.ci})" title="Удалить операцию">удалить</button>`:""}</td>
-    </tr>`).join("")
+    </tr>`;}).join("")
     : `<tr><td colspan="6" class="muted">Операций по выбранному фильтру нет.</td></tr>`;
 
   const catOpts = `<option value="all">Все категории</option>` +
@@ -1513,16 +1527,17 @@ function renderAccounting(){
 
   const today = new Date().toISOString().slice(0,10);
 
-  /* графики: приходы vs расходы по месяцам (все операции, без учёта фильтров) */
+  /* графики: приходы vs расходы (наши / владельцев) по месяцам (все операции, без учёта фильтров) */
   const chartMonths = [...new Set(all.map(o=>o.date.slice(0,7)))].sort();
   const monthData = chartMonths.map(m=>({
     label: acctMonthLabel(m),
     inc: round2(sum(all.filter(o=>o.date.slice(0,7)===m && o.type==="inc"), o=>o.amount)),
-    exp: round2(sum(all.filter(o=>o.date.slice(0,7)===m && o.type==="exp"), o=>o.amount)),
+    expAva: round2(sum(all.filter(o=>o.date.slice(0,7)===m && o.type==="exp" && burdenOf(o)==="ava"), o=>o.amount)),
+    expOwner: round2(sum(all.filter(o=>o.date.slice(0,7)===m && o.type==="exp" && burdenOf(o)==="owner"), o=>o.amount)),
   }));
 
-  /* донат: расходы по категориям за выбранный месяц (или за всё время) */
-  const donutOps = all.filter(o=>o.type==="exp" && (acctMonth==="all" || o.date.slice(0,7)===acctMonth));
+  /* донат: ТОЛЬКО НАШИ расходы по категориям за выбранный месяц (или за всё время) */
+  const donutOps = all.filter(o=>o.type==="exp" && burdenOf(o)==="ava" && (acctMonth==="all" || o.date.slice(0,7)===acctMonth));
   const byCat = {};
   for(const o of donutOps) byCat[o.cat] = round2((byCat[o.cat]||0) + o.amount);
   const donutItems = Object.entries(byCat).sort((a,b)=>b[1]-a[1])
@@ -1538,10 +1553,11 @@ function renderAccounting(){
 
   <section>
     <h3>Итоги · ${periodLabel}</h3>
-    <div class="kpis k3">
+    <div class="kpis k4">
       <div class="kpi green"><div class="l">Доходы</div><div class="v num">${fmt(inc)}</div></div>
-      <div class="kpi"><div class="l">Расходы</div><div class="v num">${fmt(exp)}</div></div>
-      <div class="kpi${bal<0?" neg":" green"}"><div class="l">Сальдо</div><div class="v num">${fmt(bal)}</div></div>
+      <div class="kpi"><div class="l">Наши расходы</div><div class="v num">${fmt(expAva)}</div><div class="s">ложатся на прибыль УК</div></div>
+      <div class="kpi"><div class="l">Расходы владельцев</div><div class="v num" style="color:#8A6D3B">${fmt(expOwner)}</div><div class="s">перевыставляются из их дохода</div></div>
+      <div class="kpi${bal<0?" neg":" green"}"><div class="l">Сальдо УК</div><div class="v num">${fmt(bal)}</div><div class="s">доходы − наши расходы</div></div>
     </div>
   </section>
 
@@ -1573,15 +1589,16 @@ function renderAccounting(){
     <h3>Приходы и расходы по месяцам</h3>
     <div class="grid2">
       <div class="chartcard">
-        <div class="cap">Все операции журнала · комиссия УК июня — начисление</div>
+        <div class="cap">Все операции журнала · тёмное — наши расходы, бежевое — владельцев · комиссия УК июня — начисление</div>
         ${acctGroupedBars(monthData)}
       </div>
       <div class="chartcard">
-        <div class="cap">Расходы по категориям · ${acctMonth==="all" ? "все месяцы" : acctMonthLabel(acctMonth)} (фильтр «Месяц» ниже)</div>
+        <div class="cap">НАШИ расходы по категориям · ${acctMonth==="all" ? "все месяцы" : acctMonthLabel(acctMonth)} (владельческие не входят)</div>
         <div class="donutwrap">${donut(donutItems, donutCenter)}</div>
       </div>
     </div>
-    <div class="sumnote">Коммунальные — транзит: перевыставляются владельцам вилл и не являются затратой УК.</div>
+    <div class="sumnote">«Владельцы» (бежевая пометка) — расходы, которые платятся из доходной части владельцев или перевыставляются им (электричество, вода, комиссии OTA, ремонты по тарифам); на прибыль УК не влияют.
+    «Наш» (зелёная пометка) — расходы управляющей компании: зарплаты, выплаты, PMS, маркетинг — уменьшают нашу прибыль.</div>
   </section>
 
   <section>
@@ -1591,6 +1608,12 @@ function renderAccounting(){
       <select onchange="setAcctCat(this.value)">${catOpts}</select>
       <label>Месяц</label>
       <select onchange="setAcctMonth(this.value)">${monOpts}</select>
+      <label>Чей расход</label>
+      <select onchange="setAcctBurden(this.value)">
+        <option value="all"${acctBurden==="all"?" selected":""}>Все</option>
+        <option value="ava"${acctBurden==="ava"?" selected":""}>Наши (УК)</option>
+        <option value="owner"${acctBurden==="owner"?" selected":""}>Владельцев</option>
+      </select>
       <button class="btn ghost" onclick="acctExport()" style="margin-left:auto">Экспорт JSON</button>
     </div>
     <div class="tablewrap"><table style="min-width:860px">
@@ -1608,6 +1631,8 @@ function renderAccounting(){
     <form class="acctform" onsubmit="return acctAdd(event)">
       <div class="f"><label>Тип</label>
         <select id="opType"><option value="exp">Расход</option><option value="inc">Доход</option></select></div>
+      <div class="f"><label>Чей расход</label>
+        <select id="opBurden"><option value="ava">Наш (УК)</option><option value="owner">Владельца</option></select></div>
       <div class="f"><label>Дата</label><input id="opDate" type="date" value="${today}" required></div>
       <div class="f"><label>Категория</label>
         <input id="opCat" list="acctCatList" placeholder="например, Ремонт" required>
