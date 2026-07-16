@@ -1232,6 +1232,19 @@ const ACCT_SEED = [
   {date:"2026-07-06", type:"exp", cat:"Коммунальные (транзит)",who:"KPG",                  amount:15000,   note:"подвоз воды", transit:true},
   {date:"2026-07-08", type:"exp", cat:"Зарплаты и клининг",    who:"Igor Plyushch",        amount:10000,   note:""},
   {date:"2026-07-13", type:"exp", cat:"Зарплаты и клининг",    who:"Lisa",                 amount:13000,   note:"зарплата за июнь"},
+  {date:"2026-07-16", type:"exp", cat:"Прочее",                who:"Родители Ксении",      amount:30000,   note:"оплата по поручению Дениса 16.07"},
+];
+
+/* ---------- Архив УК по месяцам · мастер-файл вилл (Google Sheet, лист Villas, выгрузка 16.07.2026) ----------
+   income = «Management company income», expenses = внесённые в файл расходы УК, profit = «AVA TOTAL PROFIT» из файла.
+   В апреле и мае доход − расходы ≠ итог файла: часть расходов в мастер-файле разнесена по колонкам вилл — итог берём из файла. */
+const ACCT_HIST = [
+  {ym:"2025-12", income:146995.75, expenses:[["Бассейн",3000],["Сад",2500]], profit:141495.75},
+  {ym:"2026-01", income:353474.75, expenses:[], profit:353474.75, note:"расходы в файл не внесены"},
+  {ym:"2026-02", income:320754.00, expenses:[["Зарплаты клинеров",73600],["Расходники клининга",29900],["Бассейн",18000],["Сервис",4000]], profit:195254.00},
+  {ym:"2026-03", income:226297.50, expenses:[], profit:226297.50, note:"расходы в файл не внесены"},
+  {ym:"2026-04", income:174596.50, expenses:[["Зарплаты клинеров",73000],["Бассейн",42000],["Расходники клининга",22600],["PMS (Guesty)",10000],["Зарплата",32000]], profit:15996.50},
+  {ym:"2026-05", income:71780.75,  expenses:[["Зарплаты клинеров",73000],["Бассейн",35000],["Расходники клининга",15000],["PMS (Guesty)",10000],["Зарплата менеджера",32000]], profit:-75719.25},
 ];
 const ACCT_LS_KEY = "ava_acct_ops_v1";
 let acctCat = "all", acctMonth = "all";
@@ -1410,6 +1423,30 @@ function renderAccounting(){
       <div class="kpi"><div class="l">Расходы</div><div class="v num">${fmt(exp)}</div></div>
       <div class="kpi${bal<0?" neg":" green"}"><div class="l">Сальдо</div><div class="v num">${fmt(bal)}</div></div>
     </div>
+  </section>
+
+  <section>
+    <h3>Архив УК по месяцам · Дек 2025 → Май 2026</h3>
+    <div class="tablewrap"><table style="min-width:760px">
+      <thead><tr><th>Месяц</th><th class="r">Доход УК</th><th class="r">Расходы УК</th><th class="r">Прибыль УК</th><th>Расшифровка расходов</th></tr></thead>
+      <tbody>${ACCT_HIST.map(h=>{
+        const expSum = round2(h.expenses.reduce((s,e)=>s+e[1],0));
+        const expTxt = h.expenses.length ? h.expenses.map(e=>`${e[0]} ${fmt0(e[1])}`).join(" · ") : (h.note||"—");
+        return `<tr>
+          <td><b>${acctMonthLabel(h.ym)}</b></td>
+          <td class="r num">${fmt(h.income)}</td>
+          <td class="r num">${expSum? "− "+fmt(expSum) : "—"}</td>
+          <td class="r num" style="font-weight:800;${h.profit<0?"":"color:var(--green-deep)"}">${fmt(h.profit)}</td>
+          <td class="muted" style="font-size:12px">${expTxt}</td></tr>`;
+      }).join("")}</tbody>
+      <tfoot><tr><td>Итого дек–май</td>
+        <td class="r num">${fmt(round2(sum(ACCT_HIST,h=>h.income)))}</td>
+        <td class="r num">− ${fmt(round2(sum(ACCT_HIST,h=>h.expenses.reduce((s,e)=>s+e[1],0))))}</td>
+        <td class="r num">${fmt(round2(sum(ACCT_HIST,h=>h.profit)))}</td><td></td></tr></tfoot>
+    </table></div>
+    <div class="sumnote">Источник — мастер-файл вилл (лист Villas): доход = «Management company income», итог = «AVA TOTAL PROFIT».
+    В апреле и мае часть расходов в файле разнесена по колонкам вилл, поэтому «доход − расходы» не сходится с итогом копейка в копейку — прибыль показана по файлу.
+    Июнь и далее ведутся живым журналом ниже (методика «календарный месяц», схема 20%).</div>
   </section>
 
   <section>
