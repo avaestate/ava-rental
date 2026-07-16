@@ -44,7 +44,7 @@
       ".ava-stats-box *{box-sizing:border-box}" +
       ".ava-stats-left{flex:0 0 460px;display:flex;flex-direction:column;gap:10px}" +
       ".ava-stats-kpis{display:flex;gap:10px}" +
-      ".ava-stats-kpi{flex:1;background:#3F4A4C;border-radius:8px;padding:16px 20px;display:flex;flex-direction:column;justify-content:flex-start}" +
+      ".ava-stats-kpi{flex:1;background:#3F4A4C;border-radius:8px;padding:16px 20px;display:flex;flex-direction:column;justify-content:center}" +
       ".ava-stats-kpi span{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#75878B;font-weight:600;margin-bottom:7px;white-space:nowrap}" +
       ".ava-stats-kpi b{display:block;font-size:18px;font-weight:700;line-height:1;white-space:nowrap}" +
       ".ava-stats-kpi b small{font-size:12px;font-weight:600;opacity:.75;margin-left:3px}" +
