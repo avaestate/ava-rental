@@ -151,6 +151,28 @@ tr.skipped td{color:#A8A094}
 
 footer{margin-top:44px;font-size:11.5px;color:#A8A094;text-align:center;line-height:1.6}
 
+/* ---------- бухгалтерия ---------- */
+.acct-controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.acct-controls label{font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--sub)}
+.acct-controls select{background:#FBF9F4;border:1px solid var(--hair);border-radius:8px;padding:8px 10px;
+  font-size:13px;font-weight:700;color:var(--ink);outline:none;cursor:pointer}
+.acctform{display:grid;grid-template-columns:110px 150px 1fr 1fr 140px 1fr auto;gap:10px;align-items:end;
+  background:#FBF9F4;border:1px solid var(--hair);border-radius:10px;padding:16px}
+.acctform .f label{display:block;font-size:10.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--sub);margin-bottom:5px}
+.acctform input,.acctform select{width:100%;background:#fff;border:1px solid var(--hair);border-radius:8px;
+  padding:9px 10px;font-size:13.5px;font-weight:600;color:var(--ink);outline:none}
+.acctform input:focus,.acctform select:focus{border-color:var(--green-deep)}
+.btn{background:var(--ink);color:var(--cream2);border:none;border-radius:8px;font-weight:800;font-size:13px;
+  padding:10px 18px;cursor:pointer;white-space:nowrap}
+.btn:active{transform:scale(.985)}
+.btn.ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--hair)}
+.btn.ghost:hover{border-color:var(--sub)}
+.dellink{background:none;border:none;color:var(--red);font-size:11.5px;font-weight:800;cursor:pointer;padding:0}
+.typepill{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.4px;border-radius:6px;padding:2px 8px}
+.typepill.inc{background:#DFF1DC;color:#3B7A4C}
+.typepill.exp{background:#F3E3DE;color:#A15648}
+@media(max-width:840px){.acctform{grid-template-columns:1fr 1fr}}
+
 @media(max-width:840px){
   .kpis{grid-template-columns:repeat(3,1fr)}
   .grid2{grid-template-columns:1fr}
@@ -195,14 +217,15 @@ footer{margin-top:44px;font-size:11.5px;color:#A8A094;text-align:center;line-hei
 
   <div id="view"></div>
 
-  <footer id="foot">Owner Portal v3 · декабрь 2025 – июнь 2026 · AVA Estate / Ready To Move Co., Ltd.<br>
+  <footer id="foot">Owner Portal v4 · декабрь 2025 – июнь 2026 · AVA Estate / Ready To Move Co., Ltd.<br>
   Июнь 2026 — методика «календарный месяц» (учитываются только ночи месяца, переходящие брони pro-rate; брони с заездом до 1 июня учтены в майском отчёте полностью). Исторические месяцы — архив, методика и схема периода.<br>
   Базовая схема «комиссия 20% + операционные расходы на владельце»; финальная схема — на утверждении. Withholding tax 5% удерживается при выплате (при отрицательном балансе не удерживается).</footer>
 </div>
 
 <script>
 /* ================================================================
-   AVA Owner Portal v3 · Дек 2025 – Июнь 2026 · клиентский демо-прототип
+   AVA Owner Portal v4 · Дек 2025 – Июнь 2026 · клиентский демо-прототип
+   v4: блок «Сравнение схем» в «Бизнесе» + админ-вкладка «Бухгалтерия» (журнал операций контура AVA)
    Июнь = методика «календарный месяц» (pro-rate переходящих броней)
    ================================================================ */
 
@@ -518,6 +541,7 @@ function renderTabs(){
   if(user.master){
     h += tabBtn("summary","Сводная",true);
     h += tabBtn("business","Бизнес",true);
+    h += tabBtn("accounting","Бухгалтерия",true);
   }
   for(const id of user.villas) h += tabBtn(id, VILLAS[id].name,false);
   document.getElementById("tabs").innerHTML = h;
@@ -526,7 +550,7 @@ function tabBtn(id,label,special){
   return `<button class="tab${id===activeTab?" active":""}${special?" special":""}" onclick="setTab('${id}')">${label}</button>`;
 }
 function setTab(id){
-  const allowed = user.master ? ["summary","business",...user.villas] : user.villas;
+  const allowed = user.master ? ["summary","business","accounting",...user.villas] : user.villas;
   if(!allowed.includes(id)) return;
   activeTab = id; renderTabs(); render();
 }
@@ -547,6 +571,7 @@ function render(){
   const el = document.getElementById("view");
   if(activeTab === "summary") el.innerHTML = (activeMonth===JUNE_ID ? renderSummary() : renderSummaryArchive(activeMonth));
   else if(activeTab === "business") el.innerHTML = renderBusiness();
+  else if(activeTab === "accounting") el.innerHTML = renderAccounting();
   else el.innerHTML = (activeMonth===JUNE_ID ? renderVilla(activeTab) : renderVillaArchive(activeTab, activeMonth));
 }
 
@@ -979,6 +1004,50 @@ function renderBusiness(){
     return {short:m.short,label:m.label,value: has ? round2(s) : null};
   });
 
+  /* сравнение схем: 20% + тарифы vs 25/75 (3 виллы Красюков, июнь календарный) */
+  const cmpRows = schemeVillas.map(id=>{
+    const c = calc(VILLAS[id]);
+    return {name:VILLAS[id].name, c20:c.s20.comm, c25:c.s2575.comm};
+  });
+  const cmp20comm = round2(sum(cmpRows,r=>r.c20));            /* ≈ 31 082 */
+  const cmp25comm = round2(sum(cmpRows,r=>r.c25));            /* ≈ 28 872 */
+  const cmp25cost = turn3*1000 + schemeVillas.length*1500 + schemeVillas.length*1000; /* 8×1000 + 3×1500 + 3×1000 = 15 500 */
+  const cmp20total = round2(cmp20comm + svcMargin);           /* ≈ 52 082 */
+  const cmp25total = round2(cmp25comm - cmp25cost);           /* ≈ 13 372 */
+  const cmpRatio = (cmp20total / cmp25total).toLocaleString("ru-RU",{maximumFractionDigits:1});
+  const cmpRowsHtml = cmpRows.map(r=>`
+    <tr><td>Комиссия · <b>${r.name}</b></td>
+        <td class="r num">${fmt(r.c20)}</td>
+        <td class="r num">${fmt(r.c25)}</td></tr>`).join("");
+  const schemeCompare = `
+  <section>
+    <h3>Сравнение схем · июнь</h3>
+    <div class="tablewrap"><table style="min-width:640px">
+      <thead><tr><th>Статья</th><th class="r">Схема 20% + тарифы (текущая)</th><th class="r">Схема 25/75 (старая)</th></tr></thead>
+      <tbody>
+        ${cmpRowsHtml}
+        <tr><td><b>Комиссии, итого</b></td>
+            <td class="r num"><b>${fmt(cmp20comm)}</b><br><span style="font-size:11px;color:var(--sub)">20% от нетто-поступлений</span></td>
+            <td class="r num"><b>${fmt(cmp25comm)}</b><br><span style="font-size:11px;color:var(--sub)">25% от базы (доход − канальные − свет − интернет − мусор − вода)</span></td></tr>
+        <tr><td>Сервисы (клининги, доп. уборки, бассейн, сад)</td>
+            <td class="r num">+ ${fmt0(svcMargin)}<br><span style="font-size:11px;color:var(--sub)">валовая маржа: выручка ${fmt0(svcRev)} − себестоимость ${fmt0(svcCost)}</span></td>
+            <td class="r num neg">− ${fmt0(cmp25cost)}<br><span style="font-size:11px;color:var(--sub)">расходы УК из своей доли: ${turn3} клинингов × 1 000 + бассейн 3 × 1 500 + сад 3 × 1 000</span></td></tr>
+      </tbody>
+      <tfoot><tr><td>Итого заработок УК за июнь</td>
+        <td class="r num">≈ ${fmt0(cmp20total)}</td>
+        <td class="r num">≈ ${fmt0(cmp25total)}</td></tr></tfoot>
+    </table></div>
+    <div class="notice" style="margin-top:14px"><b>Новая схема даёт УК ≈ в ${cmpRatio} раза больше при том же месяце.</b></div>
+    <div class="chartcard" style="margin-top:14px">
+      <div class="cap">Заработок УК за июнь по двум схемам · 3 виллы Красюков, календарный месяц</div>
+      ${barChart([
+        {label:"20% + тарифы (текущая)", value:cmp20total, color:"#4FA764"},
+        {label:"25/75 (старая)", value:cmp25total, color:"#8FA0A4"},
+      ])}
+    </div>
+    <div class="sumnote">Сравнение только в админ-доступе. 3 виллы схемы (Aurora, Radharani, Axis), июнь — календарная методика; себестоимость сервисов — оценка из блока выше.</div>
+  </section>`;
+
   /* долги / особые случаи */
   const debts = `
   <section>
@@ -1053,6 +1122,8 @@ function renderBusiness(){
     </div>
   </section>
 
+  ${schemeCompare}
+
   <section>
     <h3>Заработок УК по месяцам · Дек 2025 → Июнь 2026</h3>
     <div class="chartcard">
@@ -1074,6 +1145,177 @@ function renderBusiness(){
         ])}
       </div>
     </div>
+  </section>`;
+}
+
+/* ---------- бухгалтерия (только админ) · операционный учёт контура AVA ---------- */
+/* стартовые операции — реальные движения контура AVA (май–июль 2026) */
+const ACCT_SEED = [
+  {date:"2026-05-07", type:"exp", cat:"Земля/проекты",     who:"Twin Palms — аренда земли",   amount:960000,  note:"аренда участка Twin Palms"},
+  {date:"2026-06-12", type:"exp", cat:"Комиссии OTA",      who:"Booking.com",                 amount:6500.25, note:"комиссии Booking"},
+  {date:"2026-06-12", type:"exp", cat:"Комиссии OTA",      who:"Booking.com",                 amount:4173,    note:"комиссии Booking"},
+  {date:"2026-06-13", type:"exp", cat:"Разрешения",        who:"Building permit (Twin Palms)",amount:71500,   note:"permit — транш 1"},
+  {date:"2026-06-16", type:"exp", cat:"Возвраты гостям",   who:"Amy Dixon",                   amount:19000,   note:"возврат гостю"},
+  {date:"2026-06-17", type:"exp", cat:"Ремонт",            who:"Cocolane 2",                  amount:2500,    note:"ремонт труб"},
+  {date:"2026-06-20", type:"inc", cat:"Прямые брони",      who:"Shalev Sharon",               amount:25550,   note:"direct · Stripe"},
+  {date:"2026-06-23", type:"inc", cat:"Прямые брони",      who:"Оплата инвойса",              amount:45000,   note:"инвойс"},
+  {date:"2026-06-25", type:"exp", cat:"Коммунальные",      who:"PEA — 3 виллы",               amount:25925,   note:"электричество", transit:true},
+  {date:"2026-06-30", type:"inc", cat:"Комиссия управления",who:"Комиссия УК за июнь",        amount:31082.30,note:"начислено · схема 20%, 3 виллы"},
+  {date:"2026-07-01", type:"exp", cat:"Зарплаты клинеров", who:"Клинеры",                     amount:20000,   note:""},
+  {date:"2026-07-04", type:"exp", cat:"Зарплаты клинеров", who:"Nina & Chit",                 amount:10000,   note:""},
+  {date:"2026-07-06", type:"exp", cat:"Вода",              who:"KPG",                         amount:15000,   note:"подвоз воды", transit:true},
+  {date:"2026-07-08", type:"exp", cat:"Зарплаты",          who:"Igor Plyushch",               amount:10000,   note:""},
+  {date:"2026-07-13", type:"exp", cat:"Зарплаты клинеров", who:"Lisa",                        amount:13000,   note:"зарплата за июнь"},
+  {date:"2026-07-14", type:"exp", cat:"Разрешения",        who:"Building permit (Twin Palms)",amount:71500,   note:"permit — транш 2"},
+  {date:"2026-07-14", type:"exp", cat:"Консалтинг",        who:"Green Consulting",            amount:87500,   note:"site management"},
+  {date:"2026-07-14", type:"inc", cat:"Инвестиции/проекты",who:"Шуваев",                      amount:1072500, note:"инвест-транш (Twin Palms); дата поступления уточняется"},
+];
+const ACCT_LS_KEY = "ava_acct_ops_v1";
+let acctCat = "all", acctMonth = "all";
+
+function acctCustom(){
+  try{ const a = JSON.parse(localStorage.getItem(ACCT_LS_KEY)); return Array.isArray(a) ? a : []; }
+  catch(e){ return []; }
+}
+function acctSaveCustom(list){ try{ localStorage.setItem(ACCT_LS_KEY, JSON.stringify(list)); }catch(e){} }
+function acctAll(){
+  const ops = [
+    ...ACCT_SEED.map(o=>({...o})),
+    ...acctCustom().map((o,i)=>({...o, custom:true, ci:i}))
+  ];
+  ops.sort((a,b)=> a.date===b.date ? 0 : (a.date<b.date?1:-1)); /* новые сверху */
+  return ops;
+}
+function acctMonthLabel(ym){
+  const names = ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"];
+  return names[+ym.slice(5,7)-1] + " " + ym.slice(0,4);
+}
+function acctDate(iso){ return iso.slice(8,10)+"."+iso.slice(5,7)+"."+iso.slice(0,4); }
+function setAcctCat(v){ acctCat = v; render(); }
+function setAcctMonth(v){ acctMonth = v; render(); }
+
+function acctAdd(e){
+  e.preventDefault();
+  const g = id => document.getElementById(id);
+  const amount = parseFloat(g("opAmt").value);
+  if(!(amount > 0)) return false;
+  const op = {
+    date: g("opDate").value,
+    type: g("opType").value,
+    cat: g("opCat").value.trim() || "Прочее",
+    who: g("opWho").value.trim(),
+    amount: round2(amount),
+    note: g("opNote").value.trim()
+  };
+  if(!op.date || !op.who) return false;
+  const list = acctCustom(); list.push(op); acctSaveCustom(list);
+  render();
+  return false;
+}
+function acctDel(ci){
+  const list = acctCustom();
+  if(ci < 0 || ci >= list.length) return;
+  list.splice(ci,1); acctSaveCustom(list); render();
+}
+function acctExport(){
+  const data = {
+    exported: new Date().toISOString(),
+    source: "AVA Owner Portal v4 · Бухгалтерия (контур AVA)",
+    operations: acctAll().map(o=>({date:o.date, type:o.type==="inc"?"income":"expense", category:o.cat,
+      counterparty:o.who, amount:o.amount, note:o.note||"", transit:!!o.transit, addedManually:!!o.custom}))
+  };
+  const blob = new Blob([JSON.stringify(data,null,2)], {type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "ava-accounting-" + new Date().toISOString().slice(0,10) + ".json";
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+
+function renderAccounting(){
+  const all = acctAll();
+  const cats = [...new Set(all.map(o=>o.cat))].sort((a,b)=>a.localeCompare(b,"ru"));
+  const months = [...new Set(all.map(o=>o.date.slice(0,7)))].sort().reverse();
+  if(acctCat!=="all" && !cats.includes(acctCat)) acctCat = "all";
+  if(acctMonth!=="all" && !months.includes(acctMonth)) acctMonth = "all";
+
+  const rows = all.filter(o=>
+    (acctCat==="all" || o.cat===acctCat) && (acctMonth==="all" || o.date.slice(0,7)===acctMonth));
+  const inc = round2(sum(rows.filter(o=>o.type==="inc"), o=>o.amount));
+  const exp = round2(sum(rows.filter(o=>o.type==="exp"), o=>o.amount));
+  const bal = round2(inc - exp);
+  const periodLabel = (acctMonth==="all" ? "все месяцы" : acctMonthLabel(acctMonth)) +
+                      (acctCat==="all" ? "" : " · " + acctCat);
+
+  const trs = rows.length ? rows.map(o=>`
+    <tr>
+      <td class="num" style="white-space:nowrap">${acctDate(o.date)}</td>
+      <td><span class="typepill ${o.type}">${o.type==="inc"?"Доход":"Расход"}</span></td>
+      <td>${esc(o.cat)}${o.transit?' <span class="pill">транзит</span>':''}${o.custom?' <span class="pill part">вручную</span>':''}</td>
+      <td>${esc(o.who)}</td>
+      <td class="r num" style="font-weight:800;${o.type==="inc"?"color:var(--green-deep)":""}">${o.type==="inc"?"+ ":"− "}${fmt(o.amount)}</td>
+      <td class="muted" style="font-size:12.5px">${esc(o.note||"")}${o.custom?` <button class="dellink" onclick="acctDel(${o.ci})" title="Удалить операцию">удалить</button>`:""}</td>
+    </tr>`).join("")
+    : `<tr><td colspan="6" class="muted">Операций по выбранному фильтру нет.</td></tr>`;
+
+  const catOpts = `<option value="all">Все категории</option>` +
+    cats.map(c=>`<option value="${esc(c)}"${c===acctCat?" selected":""}>${esc(c)}</option>`).join("");
+  const monOpts = `<option value="all">Все месяцы</option>` +
+    months.map(m=>`<option value="${m}"${m===acctMonth?" selected":""}>${acctMonthLabel(m)}</option>`).join("");
+
+  const today = new Date().toISOString().slice(0,10);
+
+  return `
+  <h2 class="vname" style="margin:24px 0 4px">Бухгалтерия · контур AVA</h2>
+  <div class="vsub">Операционный учёт обслуживающей компании · виден только администратору</div>
+  <div class="notice" style="margin-top:10px">Это операционный контур <b>AVA</b> (обслуживающая компания).
+  Юрлицо <b>Ready To Move Co., Ltd.</b> ведётся в <b>Xero</b> — официальный учёт остаётся там,
+  этот журнал его не заменяет.</div>
+
+  <section>
+    <h3>Итоги · ${periodLabel}</h3>
+    <div class="kpis k3">
+      <div class="kpi green"><div class="l">Доходы</div><div class="v num">${fmt(inc)}</div></div>
+      <div class="kpi"><div class="l">Расходы</div><div class="v num">${fmt(exp)}</div></div>
+      <div class="kpi${bal<0?" neg":" green"}"><div class="l">Сальдо</div><div class="v num">${fmt(bal)}</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h3>Журнал операций</h3>
+    <div class="acct-controls">
+      <label>Категория</label>
+      <select onchange="setAcctCat(this.value)">${catOpts}</select>
+      <label>Месяц</label>
+      <select onchange="setAcctMonth(this.value)">${monOpts}</select>
+      <button class="btn ghost" onclick="acctExport()" style="margin-left:auto">Экспорт JSON</button>
+    </div>
+    <div class="tablewrap"><table style="min-width:860px">
+      <thead><tr><th>Дата</th><th>Тип</th><th>Категория</th><th>Контрагент</th><th class="r">Сумма</th><th>Примечание</th></tr></thead>
+      <tbody>${trs}</tbody>
+      <tfoot><tr><td colspan="4">Итого по фильтру (${rows.length} опер.)</td>
+        <td class="r num">${fmt(bal)}</td><td></td></tr></tfoot>
+    </table></div>
+    <div class="note">«Транзит» — расход, который перевыставляется владельцам вилл (электричество, вода) и не является затратой УК.
+    Комиссия УК за июнь — начисление (не денежное поступление на счёт).</div>
+  </section>
+
+  <section>
+    <h3>Добавить операцию</h3>
+    <form class="acctform" onsubmit="return acctAdd(event)">
+      <div class="f"><label>Тип</label>
+        <select id="opType"><option value="exp">Расход</option><option value="inc">Доход</option></select></div>
+      <div class="f"><label>Дата</label><input id="opDate" type="date" value="${today}" required></div>
+      <div class="f"><label>Категория</label>
+        <input id="opCat" list="acctCatList" placeholder="например, Ремонт" required>
+        <datalist id="acctCatList">${cats.map(c=>`<option value="${esc(c)}">`).join("")}</datalist></div>
+      <div class="f"><label>Контрагент</label><input id="opWho" placeholder="кому / от кого" required></div>
+      <div class="f"><label>Сумма, ฿</label><input id="opAmt" type="number" step="0.01" min="0.01" placeholder="0.00" required></div>
+      <div class="f"><label>Примечание</label><input id="opNote" placeholder="необязательно"></div>
+      <button class="btn" type="submit">Добавить</button>
+    </form>
+    <div class="notice" style="margin-top:12px"><b>Прототип:</b> операции, добавленные вручную, хранятся только в этом браузере (localStorage)
+    поверх стартовых данных. Серверное хранение — следующий этап (Vercel).</div>
   </section>`;
 }
 
