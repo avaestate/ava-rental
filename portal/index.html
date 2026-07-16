@@ -78,6 +78,16 @@ h2.vname{font-size:23px;font-weight:800;letter-spacing:-.3px}
 .doctxt b{font-size:14px;font-weight:700}
 .doctxt i{font-style:normal;font-size:12px;color:var(--sub);font-weight:600}
 .docopen{flex:0 0 auto;font-size:12.5px;font-weight:800;color:var(--green-deep);white-space:nowrap}
+/* бухгалтерия: тёмная KPI-панель */
+.acct-dark{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.acct-dark .dk{background:#2C3638;border-radius:12px;padding:14px 16px;color:#fff}
+.acct-dark .dk .l{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#8FA3A8;margin-bottom:6px;white-space:nowrap}
+.acct-dark .dk .v{font-size:19px;font-weight:800;letter-spacing:-.01em;white-space:nowrap}
+.acct-dark .dk .s{font-size:10.5px;color:#75878B;font-weight:600;margin-top:5px;line-height:1.35}
+.acct-dark .dk.grn .v{color:#8BE28B}
+.acct-dark .dk.red .v{color:#F0A0A0}
+.acct-dark .dk.sand .v{color:#D9C08F}
+@media(max-width:900px){.acct-dark{grid-template-columns:repeat(2,1fr)}}
 
 /* scheme segment control */
 .segwrap{text-align:right}
@@ -1357,6 +1367,19 @@ const ACCT_SEED = [
 ];
 function burdenOf(o){ return o.type!=="exp" ? null : (o.burden || (o.transit ? "owner" : "ava")); }
 
+/* операции архивных месяцев из ACCT_HIST (мастер-файл): доход УК одной строкой + расходы УК построчно */
+function acctHistOps(){
+  const ops = [];
+  for(const h of (typeof ACCT_HIST!=="undefined" ? ACCT_HIST : [])){
+    const last = h.ym + "-" + String(new Date(+h.ym.slice(0,4), +h.ym.slice(5,7), 0).getDate()).padStart(2,"0");
+    ops.push({date:last, type:"inc", cat:"Комиссия управления", who:"Доход УК за месяц", amount:h.income, note:"мастер-файл · все виллы", hist:true});
+    const catMap = {"Бассейн":"Бассейн и сад","Сад":"Бассейн и сад","Зарплаты клинеров":"Зарплаты и клининг","Расходники клининга":"Зарплаты и клининг","PMS (Guesty)":"Софт и подписки","Зарплата":"Зарплаты и клининг","Зарплата менеджера":"Зарплаты и клининг","Сервис":"Прочее"};
+    for(const e of h.expenses)
+      ops.push({date:last, type:"exp", cat:catMap[e[0]]||"Прочее", who:e[0], amount:e[1], note:"мастер-файл", burden:"ava", hist:true});
+  }
+  return ops;
+}
+
 /* ---------- Архив УК по месяцам · мастер-файл вилл (Google Sheet, лист Villas, выгрузка 16.07.2026) ----------
    income = «Management company income», expenses = внесённые в файл расходы УК, profit = «AVA TOTAL PROFIT» из файла.
    В апреле и мае доход − расходы ≠ итог файла: часть расходов в мастер-файле разнесена по колонкам вилл — итог берём из файла. */
@@ -1369,7 +1392,7 @@ const ACCT_HIST = [
   {ym:"2026-05", income:71780.75,  expenses:[["Зарплаты клинеров",73000],["Бассейн",35000],["Расходники клининга",15000],["PMS (Guesty)",10000],["Зарплата менеджера",32000]], profit:-75719.25},
 ];
 const ACCT_LS_KEY = "ava_acct_ops_v1";
-let acctCat = "all", acctMonth = "all", acctBurden = "all"; /* all | ava | owner */
+let acctCat = "all", acctMonth = "2026-07", acctBurden = "all"; /* месяц по умолчанию — текущий; "all" = все */
 
 function acctCustom(){
   try{ const a = JSON.parse(localStorage.getItem(ACCT_LS_KEY)); return Array.isArray(a) ? a : []; }
@@ -1378,6 +1401,7 @@ function acctCustom(){
 function acctSaveCustom(list){ try{ localStorage.setItem(ACCT_LS_KEY, JSON.stringify(list)); }catch(e){} }
 function acctAll(){
   const ops = [
+    ...acctHistOps(),
     ...ACCT_SEED.map(o=>({...o})),
     ...acctCustom().map((o,i)=>({...o, custom:true, ci:i}))
   ];
@@ -1544,6 +1568,22 @@ function renderAccounting(){
     .map(([c,v],i)=>({label:c, value:v, color:acctExpColor(c,i)}));
   const donutCenter = acctMonth==="all" ? "все месяцы" : acctMonthLabel(acctMonth).split(" ")[0].toLowerCase();
 
+  /* выплаты владельцам за период: архив — из HISTORY (payout), июнь — расчёт, июль — нет данных */
+  function payoutForYm(ym){
+    if(ym==="2026-06"){ let s=0; for(const id of VILLA_ORDER){ const p=junePayout(id); if(p!=null && p>0) s+=p; } return round2(s); }
+    if(ym==="2026-07") return null;
+    let s=0, has=false;
+    for(const id of VILLA_ORDER){ const h=(HISTORY[id]||{})[ym]; if(h && h.payout!=null){ s+=h.payout; has=true; } }
+    return has ? round2(s) : null;
+  }
+  let ownerPayouts;
+  if(acctMonth==="all"){
+    ownerPayouts = 0;
+    for(const ym of chartMonthsAll()) { const p = payoutForYm(ym); if(p!=null) ownerPayouts += p; }
+    ownerPayouts = round2(ownerPayouts);
+  } else ownerPayouts = payoutForYm(acctMonth);
+  function chartMonthsAll(){ return [...new Set(all.map(o=>o.date.slice(0,7)))].sort(); }
+
   return `
   <h2 class="vname" style="margin:24px 0 4px">Бухгалтерия · контур AVA</h2>
   <div class="vsub">Операционный учёт управляющей компании · виден только администратору</div>
@@ -1551,18 +1591,67 @@ function renderAccounting(){
   Белая бухгалтерия юрлица <b>Ready To Move Co., Ltd.</b> (Twin Palms, permit, консалтинг, инвест-транши) ведётся в <b>Xero</b>
   и в этот журнал не входит.</div>
 
+  <div class="months" style="margin:14px 0 4px">
+    ${[...months].reverse().map(m=>`<button class="month${m===acctMonth?" active":""}" onclick="setAcctMonth('${m}')">${acctMonthLabel(m)}${m==="2026-07"?" · текущий":""}</button>`).join("")}
+    <button class="month${acctMonth==="all"?" active":""}" onclick="setAcctMonth('all')">Все месяцы</button>
+  </div>
+  ${acctMonth==="2026-07" ? `<div class="method">Текущий месяц: цифры пополняются по ходу июля — картина предварительная, часть расходов ещё не внесена.</div>` : ``}
+  ${(()=>{ const h = (typeof ACCT_HIST!=="undefined") && ACCT_HIST.find(x=>x.ym===acctMonth);
+     if(!h) return "";
+     const diff = Math.abs(round2(h.income - h.expenses.reduce((s,e)=>s+e[1],0)) - h.profit) > 1;
+     return `<div class="method">Архивный месяц из мастер-файла. Итог месяца по файлу (AVA TOTAL PROFIT): <b>${fmt(h.profit)}</b>${diff?" — в файле часть расходов разнесена по виллам, поэтому построчная сумма ниже может отличаться":""}.</div>`; })()}
+
   <section>
     <h3>Итоги · ${periodLabel}</h3>
-    <div class="kpis k4">
-      <div class="kpi green"><div class="l">Доходы</div><div class="v num">${fmt(inc)}</div></div>
-      <div class="kpi"><div class="l">Наши расходы</div><div class="v num">${fmt(expAva)}</div><div class="s">ложатся на прибыль УК</div></div>
-      <div class="kpi"><div class="l">Расходы владельцев</div><div class="v num" style="color:#8A6D3B">${fmt(expOwner)}</div><div class="s">перевыставляются из их дохода</div></div>
-      <div class="kpi${bal<0?" neg":" green"}"><div class="l">Сальдо УК</div><div class="v num">${fmt(bal)}</div><div class="s">доходы − наши расходы</div></div>
+    <div class="acct-dark">
+      <div class="dk"><div class="l">Доходы УК</div><div class="v num">${fmt(inc)}</div><div class="s">комиссии · прямые · сервисы</div></div>
+      <div class="dk"><div class="l">Наши расходы</div><div class="v num">− ${fmt(expAva)}</div><div class="s">зарплаты · софт · прочее УК</div></div>
+      <div class="dk ${bal<0?"red":"grn"}"><div class="l">Прибыль УК</div><div class="v num">${fmt(bal)}</div><div class="s">доходы − наши расходы</div></div>
+      <div class="dk sand"><div class="l">Расходы владельцев</div><div class="v num">− ${fmt(expOwner)}</div><div class="s">свет · вода · комиссии OTA</div></div>
+      <div class="dk"><div class="l">Выплаты владельцам</div><div class="v num">${ownerPayouts==null ? "—" : fmt(ownerPayouts)}</div><div class="s">${ownerPayouts==null ? "июль — считается в конце месяца" : "за выбранный период"}</div></div>
     </div>
   </section>
 
   <section>
-    <h3>Архив УК по месяцам · Дек 2025 → Май 2026</h3>
+    <h3>Операции · ${periodLabel}</h3>
+    <div class="acct-controls">
+      <label>Категория</label>
+      <select onchange="setAcctCat(this.value)">${catOpts}</select>
+      <label>Чей расход</label>
+      <select onchange="setAcctBurden(this.value)">
+        <option value="all"${acctBurden==="all"?" selected":""}>Все</option>
+        <option value="ava"${acctBurden==="ava"?" selected":""}>Наши (УК)</option>
+        <option value="owner"${acctBurden==="owner"?" selected":""}>Владельцев</option>
+      </select>
+      <button class="btn ghost" onclick="acctExport()" style="margin-left:auto">Экспорт JSON</button>
+    </div>
+    <div class="tablewrap"><table style="min-width:860px">
+      <thead><tr><th>Дата</th><th>Тип</th><th>Категория</th><th>Контрагент</th><th class="r">Сумма</th><th>Примечание</th></tr></thead>
+      <tbody>${trs}</tbody>
+      <tfoot><tr><td colspan="4">Итого по фильтру (${rows.length} опер.)</td>
+        <td class="r num">${fmt(bal)}</td><td></td></tr></tfoot>
+    </table></div>
+    <div class="note">Бежевая пометка «владельцы» — расход платится из доходной части владельцев или перевыставляется им; на прибыль УК не влияет.
+    Зелёная «наш» — расход управляющей компании, уменьшает нашу прибыль. Комиссия УК за июнь — начисление (не денежное поступление на счёт).</div>
+  </section>
+
+  <section>
+    <h3>Графики</h3>
+    <div class="grid2">
+      <div class="chartcard">
+        <div class="cap">По месяцам: приходы · наши расходы (тёмное) · расходы владельцев (бежевое)</div>
+        ${acctGroupedBars(monthData)}
+      </div>
+      <div class="chartcard">
+        <div class="cap">НАШИ расходы по категориям · ${acctMonth==="all" ? "все месяцы" : acctMonthLabel(acctMonth)}</div>
+        <div class="donutwrap">${donut(donutItems, donutCenter)}</div>
+      </div>
+    </div>
+  </section>
+
+  ${acctMonth==="all" ? `
+  <section>
+    <h3>Сводная по месяцам · мастер-файл · Дек 2025 → Май 2026</h3>
     <div class="tablewrap"><table style="min-width:760px">
       <thead><tr><th>Месяц</th><th class="r">Доход УК</th><th class="r">Расходы УК</th><th class="r">Прибыль УК</th><th>Расшифровка расходов</th></tr></thead>
       <tbody>${ACCT_HIST.map(h=>{
@@ -1580,50 +1669,9 @@ function renderAccounting(){
         <td class="r num">− ${fmt(round2(sum(ACCT_HIST,h=>h.expenses.reduce((s,e)=>s+e[1],0))))}</td>
         <td class="r num">${fmt(round2(sum(ACCT_HIST,h=>h.profit)))}</td><td></td></tr></tfoot>
     </table></div>
-    <div class="sumnote">Источник — мастер-файл вилл (лист Villas): доход = «Management company income», итог = «AVA TOTAL PROFIT».
-    В апреле и мае часть расходов в файле разнесена по колонкам вилл, поэтому «доход − расходы» не сходится с итогом копейка в копейку — прибыль показана по файлу.
-    Июнь и далее ведутся живым журналом ниже (методика «календарный месяц», схема 20%).</div>
-  </section>
-
-  <section>
-    <h3>Приходы и расходы по месяцам</h3>
-    <div class="grid2">
-      <div class="chartcard">
-        <div class="cap">Все операции журнала · тёмное — наши расходы, бежевое — владельцев · комиссия УК июня — начисление</div>
-        ${acctGroupedBars(monthData)}
-      </div>
-      <div class="chartcard">
-        <div class="cap">НАШИ расходы по категориям · ${acctMonth==="all" ? "все месяцы" : acctMonthLabel(acctMonth)} (владельческие не входят)</div>
-        <div class="donutwrap">${donut(donutItems, donutCenter)}</div>
-      </div>
-    </div>
-    <div class="sumnote">«Владельцы» (бежевая пометка) — расходы, которые платятся из доходной части владельцев или перевыставляются им (электричество, вода, комиссии OTA, ремонты по тарифам); на прибыль УК не влияют.
-    «Наш» (зелёная пометка) — расходы управляющей компании: зарплаты, выплаты, PMS, маркетинг — уменьшают нашу прибыль.</div>
-  </section>
-
-  <section>
-    <h3>Журнал операций</h3>
-    <div class="acct-controls">
-      <label>Категория</label>
-      <select onchange="setAcctCat(this.value)">${catOpts}</select>
-      <label>Месяц</label>
-      <select onchange="setAcctMonth(this.value)">${monOpts}</select>
-      <label>Чей расход</label>
-      <select onchange="setAcctBurden(this.value)">
-        <option value="all"${acctBurden==="all"?" selected":""}>Все</option>
-        <option value="ava"${acctBurden==="ava"?" selected":""}>Наши (УК)</option>
-        <option value="owner"${acctBurden==="owner"?" selected":""}>Владельцев</option>
-      </select>
-      <button class="btn ghost" onclick="acctExport()" style="margin-left:auto">Экспорт JSON</button>
-    </div>
-    <div class="tablewrap"><table style="min-width:860px">
-      <thead><tr><th>Дата</th><th>Тип</th><th>Категория</th><th>Контрагент</th><th class="r">Сумма</th><th>Примечание</th></tr></thead>
-      <tbody>${trs}</tbody>
-      <tfoot><tr><td colspan="4">Итого по фильтру (${rows.length} опер.)</td>
-        <td class="r num">${fmt(bal)}</td><td></td></tr></tfoot>
-    </table></div>
-    <div class="note">«Транзит» — расход, который перевыставляется владельцам вилл (электричество, вода) и не является затратой УК.
-    Комиссия УК за июнь — начисление (не денежное поступление на счёт).</div>
+    <div class="sumnote">Источник — мастер-файл вилл: доход = «Management company income», итог = «AVA TOTAL PROFIT».
+    В апреле и мае часть расходов в файле разнесена по колонкам вилл, поэтому «доход − расходы» не сходится с итогом копейка в копейку — прибыль показана по файлу.</div>
+  </section>` : ``}
   </section>
 
   <section>
