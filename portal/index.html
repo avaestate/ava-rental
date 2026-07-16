@@ -78,6 +78,12 @@ h2.vname{font-size:23px;font-weight:800;letter-spacing:-.3px}
 .doctxt b{font-size:14px;font-weight:700}
 .doctxt i{font-style:normal;font-size:12px;color:var(--sub);font-weight:600}
 .docopen{flex:0 0 auto;font-size:12.5px;font-weight:800;color:var(--green-deep);white-space:nowrap}
+/* галерея фото виллы */
+.vgallery{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:4px 0 18px}
+.vgallery a{display:block;border-radius:10px;overflow:hidden;aspect-ratio:4/3;background:#EDE6DA}
+.vgallery img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .2s}
+.vgallery a:hover img{transform:scale(1.04)}
+@media(max-width:760px){.vgallery{grid-template-columns:repeat(3,1fr)}}
 /* бухгалтерия: тёмная KPI-панель */
 .acct-dark{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
 .acct-dark .dk{background:#2C3638;border-radius:12px;padding:14px 16px;color:#fff}
@@ -479,6 +485,90 @@ const USERS = {
   "arthur2026":     {name:"Артур Гатунок", role:"Партнёр · AVA Villa, Sea View Land, Hill Valley", villas:[], master:false, partner:"arthur"},
 };
 
+
+/* ---------- ДОКУМЕНТЫ ВЛАДЕЛЬЦЕВ (ссылки Google Drive появляются после загрузки) ---------- */
+const VILLA_DOCS = {
+  aurora:    [{name:"Договор управления · 20% + Schedule 1A", sub:"финальная редакция 16.07.2026 · на подписании", url:null}],
+  radharani: [{name:"Договор управления · 20% + Schedule 1A", sub:"финальная редакция 16.07.2026 · на подписании", url:null}],
+  axis:      [{name:"Договор управления · 20% + Schedule 1A", sub:"финальная редакция 16.07.2026 · на подписании", url:null}],
+};
+
+/* ---------- ФОТО ВИЛЛ · Guesty CDN (подтянуто 16.07.2026) ---------- */
+const VILLA_PHOTOS = {
+ "aurora": [
+  "https://assets.guesty.com/image/upload/v1767748302/production/68daa11d455d7fda436119a0/lmlg8kmpmqepewcc4nyz.jpg",
+  "https://assets.guesty.com/image/upload/v1767748306/production/68daa11d455d7fda436119a0/jxe5c9fcvuewlonqnyxu.jpg",
+  "https://assets.guesty.com/image/upload/v1767748304/production/68daa11d455d7fda436119a0/rihg9g4q7obxx1cu8sgb.jpg",
+  "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/691807ef0b39360012a5f0bc/4ccd3853-41f0-4b-XXE28",
+  "https://assets.guesty.com/image/upload/v1767748304/production/68daa11d455d7fda436119a0/tugsn5z22vahcdin9c8k.jpg",
+  "https://assets.guesty.com/image/upload/v1767748305/production/68daa11d455d7fda436119a0/ljgeexzyepi5f6epcwtg.jpg"
+ ],
+ "radharani": [
+  "https://assets.guesty.com/image/upload/v1767754272/production/68daa11d455d7fda436119a0/tlhs2mbogvzyhehifisp.jpg",
+  "https://assets.guesty.com/image/upload/v1767754228/production/68daa11d455d7fda436119a0/qvp6nmbpyp6le0udnmok.jpg",
+  "https://assets.guesty.com/image/upload/v1767754213/production/68daa11d455d7fda436119a0/qhejvebl5kl91iuac3fj.jpg",
+  "https://assets.guesty.com/image/upload/v1767754223/production/68daa11d455d7fda436119a0/cixhgihc0nbgl3skulva.jpg",
+  "https://assets.guesty.com/image/upload/v1767754228/production/68daa11d455d7fda436119a0/jiuegwdxhaxordhjjmkk.jpg",
+  "https://assets.guesty.com/image/upload/v1767754227/production/68daa11d455d7fda436119a0/vtan0ou1qv4oiubfyf6d.jpg"
+ ],
+ "axis": [
+  "https://assets.guesty.com/image/upload/v1767885362/production/68daa11d455d7fda436119a0/ngspm7563yraq1l89yaf.jpg",
+  "https://assets.guesty.com/image/upload/v1767951537/production/68daa11d455d7fda436119a0/nh1yceem75tavva35keq.jpg",
+  "https://assets.guesty.com/image/upload/v1767885362/production/68daa11d455d7fda436119a0/wq8rgbvk5even3zokpdi.jpg",
+  "https://assets.guesty.com/image/upload/v1767885364/production/68daa11d455d7fda436119a0/xatutvvaeogi9gegdy3q.jpg",
+  "https://assets.guesty.com/image/upload/v1767885361/production/68daa11d455d7fda436119a0/vdjbvpd4777boajbzm7e.jpg",
+  "https://assets.guesty.com/image/upload/v1767885362/production/68daa11d455d7fda436119a0/vobgzpikilbrgdhluhcs.jpg"
+ ],
+ "fourmoons": [
+  "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/6a33a45dacb42d0013a02824/d698e8fc-6101-48-COSAd",
+  "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/6a33a45dacb42d0013a02824/e7e3e58b-a4ca-49-juRgj",
+  "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/6a33a45dacb42d0013a02824/81ddcd18-9bdf-4f-X3KTt",
+  "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/6a33a45dacb42d0013a02824/e04e065c-af70-4b-WxOkg",
+  "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/6a33a45dacb42d0013a02824/1208e6d2-631b-47-Kqr7_",
+  "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/6a33a45dacb42d0013a02824/d783d7b0-d473-41-8QFpp"
+ ],
+ "cocolane2": [
+  "https://assets.guesty.com/image/upload/v1765532983/production/68daa11d455d7fda436119a0/jvslhbib9ywljgxamxrj.jpg",
+  "https://assets.guesty.com/image/upload/v1765532983/production/68daa11d455d7fda436119a0/hmxibgrickuunts9pu9y.jpg",
+  "https://assets.guesty.com/image/upload/v1765532984/production/68daa11d455d7fda436119a0/imrpuat8t1bdpseitgsi.jpg",
+  "https://assets.guesty.com/image/upload/v1765532984/production/68daa11d455d7fda436119a0/z4fr0jdo38lkvjymw3pl.jpg",
+  "https://assets.guesty.com/image/upload/v1765532985/production/68daa11d455d7fda436119a0/sfxnuykkfjncmeweiyzz.jpg",
+  "https://assets.guesty.com/image/upload/v1765532986/production/68daa11d455d7fda436119a0/r9rwoeealgafbgm5sgs1.jpg"
+ ],
+ "cocolane3": [
+  "https://assets.guesty.com/image/upload/v1766567004/production/68daa11d455d7fda436119a0/gihgdamsvkds6ccdmyrl.jpg",
+  "https://assets.guesty.com/image/upload/v1766567004/production/68daa11d455d7fda436119a0/ocjimutt99ubxvkixijb.jpg",
+  "https://assets.guesty.com/image/upload/v1766567004/production/68daa11d455d7fda436119a0/jvaumzs4yykdwe6ctqms.jpg",
+  "https://assets.guesty.com/image/upload/v1766567004/production/68daa11d455d7fda436119a0/zshu9de7xirf0qwp1ibp.jpg",
+  "https://assets.guesty.com/image/upload/v1766567006/production/68daa11d455d7fda436119a0/kqftgsjlv7gcslsxpunz.jpg",
+  "https://assets.guesty.com/image/upload/v1766567007/production/68daa11d455d7fda436119a0/mc5unba1pmievzwaricf.jpg"
+ ],
+ "cocolane4": [
+  "https://assets.guesty.com/image/upload/v1769837497/production/68daa11d455d7fda436119a0/xrmhbh2juo6ztptgbb8a.jpg",
+  "https://assets.guesty.com/image/upload/v1769837497/production/68daa11d455d7fda436119a0/tevqgdqdegsctrd5kkot.jpg",
+  "https://assets.guesty.com/image/upload/v1769837497/production/68daa11d455d7fda436119a0/s20jtjbi1vqktfibyem5.jpg",
+  "https://assets.guesty.com/image/upload/v1769837499/production/68daa11d455d7fda436119a0/qqqk8ozly0cbmhy6qumy.jpg",
+  "https://assets.guesty.com/image/upload/v1769837499/production/68daa11d455d7fda436119a0/lt655iu6uhp68rbxje3e.jpg",
+  "https://assets.guesty.com/image/upload/v1769837497/production/68daa11d455d7fda436119a0/muu0xqbpzbmkdxytqvle.jpg"
+ ],
+ "katai": [
+  "https://assets.guesty.com/image/upload/v1768819304/production/68daa11d455d7fda436119a0/wkm3pimkhcyvusdkixdu.jpg",
+  "https://assets.guesty.com/image/upload/v1768819305/production/68daa11d455d7fda436119a0/u8yjchhavohhckaghnyd.jpg",
+  "https://assets.guesty.com/image/upload/v1768819563/production/68daa11d455d7fda436119a0/ndf338rihov1ih5ez8dz.jpg",
+  "https://assets.guesty.com/image/upload/v1768819698/production/68daa11d455d7fda436119a0/xwwdzc763qcclklwysqu.jpg",
+  "https://assets.guesty.com/image/upload/v1768819304/production/68daa11d455d7fda436119a0/fhgplj2lhdhzwxcgqdhq.jpg",
+  "https://assets.guesty.com/image/upload/v1768819944/production/68daa11d455d7fda436119a0/ccepsb7w7mfpfptve6iu.jpg"
+ ],
+ "whitelotus": [
+  "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/68e0ca97c080d00011e7508b/8d65019b-7140-4c-swU97",
+  "https://assets.guesty.com/image/upload/v1765720197/production/68daa11d455d7fda436119a0/sijcl6kg2mvpbedpspnv.jpg",
+  "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/68e0ca97c080d00011e7508b/8e49e3e7-1dff-41-ungB1",
+  "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/68e0ca97c080d00011e7508b/8f7490a2-5224-4f-NnQkh",
+  "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/68e0ca97c080d00011e7508b/75d01d1a-3cab-43-upGK6",
+  "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/68e0ca97c080d00011e7508b/5310d8c9-4e76-44-J5tgV"
+ ]
+};
+
 /* ================= ПАРТНЁРСКИЕ КАБИНЕТЫ · документы лежат в Google Drive (доступ по ссылке) ================= */
 const GD_FILE = id => `https://drive.google.com/file/d/${id}/view`;
 const GD_DOC  = id => `https://docs.google.com/document/d/${id}/edit`;
@@ -649,23 +739,36 @@ function renderTabs(){
     h += tabBtn("accounting","Бухгалтерия",true);
   }
   for(const id of user.villas) h += tabBtn(id, VILLAS[id].name,false);
+  if(user.master){
+    for(const pid in PARTNERS)
+      for(const pr of PARTNERS[pid].projects)
+        h += tabBtn(pr.id, PARTNERS[pid].name.split(" ")[0] + " · " + pr.tab, true);
+  }
   document.getElementById("tabs").innerHTML = h;
 }
 function tabBtn(id,label,special){
   return `<button class="tab${id===activeTab?" active":""}${special?" special":""}" onclick="setTab('${id}')">${label}</button>`;
 }
 function setTab(id){
+  const partnerIds = user.master ? Object.values(PARTNERS).flatMap(P=>P.projects.map(p=>p.id)) : [];
   const allowed = user.partner ? PARTNERS[user.partner].projects.map(p=>p.id)
-                : (user.master ? ["summary","business","accounting",...user.villas] : user.villas);
+                : (user.master ? ["summary","business","accounting",...user.villas,...partnerIds] : user.villas);
   if(!allowed.includes(id)) return;
-  activeTab = id; renderTabs(); render();
+  if(activeMonth === "total" && !(user.villas && user.villas.includes(id))) activeMonth = JUNE_ID;
+  activeTab = id; renderTabs(); if(!user.partner) renderMonths(); render();
 }
 function renderMonths(){
+  const isVillaTab = user && !user.partner && user.villas.includes(activeTab);
   document.getElementById("months").innerHTML = MONTHS.map(m=>
     `<button class="month${m.id===activeMonth?" active":""}" ${m.disabled?'disabled title="Данные за июль собираются"':''}
-      onclick="setMonth('${m.id}')">${m.label}</button>`).join("");
+      onclick="setMonth('${m.id}')">${m.label}</button>`).join("")
+    + (isVillaTab ? `<button class="month${activeMonth==="total"?" active":""}" onclick="setMonth('total')">Весь период</button>` : "");
 }
 function setMonth(id){
+  if(id === "total"){
+    if(!(user && user.villas.includes(activeTab))) return;
+    activeMonth = "total"; renderMonths(); render(); return;
+  }
   const m = MONTHS.find(x=>x.id===id);
   if(!m || m.disabled) return;
   activeMonth = id; renderMonths(); render();
@@ -676,9 +779,11 @@ function setScheme(s){ scheme = s; render(); }
 function render(){
   const el = document.getElementById("view");
   if(user && user.partner){ el.innerHTML = renderPartnerProject(user.partner, activeTab); return; }
+  if(user && user.master && /^p_/.test(activeTab)){ el.innerHTML = renderPartnerProject("arthur", activeTab); return; }
   if(activeTab === "summary") el.innerHTML = (activeMonth===JUNE_ID ? renderSummary() : renderSummaryArchive(activeMonth));
   else if(activeTab === "business") el.innerHTML = renderBusiness();
   else if(activeTab === "accounting") el.innerHTML = renderAccounting();
+  else if(activeMonth === "total") el.innerHTML = renderVillaTotal(activeTab);
   else el.innerHTML = (activeMonth===JUNE_ID ? renderVilla(activeTab) : renderVillaArchive(activeTab, activeMonth));
 }
 
@@ -764,6 +869,7 @@ function renderVilla(id){
     </div>` : ``}
   </div>
   <div class="vsub">${MONTH_LABEL}${v.owner ? " · владелец: "+esc(v.owner) : " · владелец в Guesty не указан · кабинет только у администратора"}</div>
+  ${villaGallery(id)}
   <div class="method">Методика «календарный месяц»: в доход июня входят только ночи 1–30 июня; у переходящих броней — доля ночей июня (pro-rate), метка «частично».<br>
   Переходный месяц: брони с заездом до 1 июня учтены в майском отчёте полностью.</div>`;
 
@@ -889,10 +995,90 @@ function renderVilla(id){
     </section>`;
   }
 
-  return head + kpis + bookings + calSection + money + villaSparkSection(id);
+  return head + kpis + bookings + calSection + money + villaSparkSection(id) + villaDocsSection(id);
 }
 
 /* ---------- вилла · АРХИВНЫЙ месяц ---------- */
+/* ---------- галерея и документы кабинета виллы ---------- */
+function villaGallery(id){
+  const pics = (typeof VILLA_PHOTOS!=="undefined" && VILLA_PHOTOS[id]) || [];
+  if(!pics.length) return "";
+  return `<div class="vgallery">${pics.map((u,i)=>`<a href="${u}" target="_blank" rel="noopener"><img src="${u}" alt="Фото виллы" loading="lazy"${i===0?' class="main"':''}></a>`).join("")}</div>`;
+}
+function villaDocsSection(id){
+  const docs = (typeof VILLA_DOCS!=="undefined" && VILLA_DOCS[id]) || [];
+  if(!docs.length) return "";
+  return `
+  <section>
+    <h3>Документы</h3>
+    <div class="doclist">${docs.map(d=>`
+      ${d.url
+        ? `<a class="doccard" href="${d.url}" target="_blank" rel="noopener">
+             <span class="docic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
+             <span class="doctxt"><b>${esc(d.name)}</b><i>${esc(d.sub)}</i></span>
+             <span class="docopen">Открыть ↗</span></a>`
+        : `<div class="doccard" style="cursor:default">
+             <span class="docic" style="color:#B98A2F"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
+             <span class="doctxt"><b>${esc(d.name)}</b><i>${esc(d.sub)}</i></span>
+             <span class="docopen" style="color:#B98A2F">скоро</span></div>`}`).join("")}
+    </div>
+  </section>`;
+}
+
+/* ---------- «Весь период» по вилле ---------- */
+function renderVillaTotal(id){
+  const v = VILLAS[id];
+  const rowsArr = [];
+  const H = HISTORY[id] || {};
+  for(const m of MONTHS){
+    if(m.id === "total") continue;
+    if(m.id === JUNE_ID){
+      const c = calc(v);
+      if(c || v.totals.income > 0){
+        const income = v.totals.income;
+        const comm = c ? c.s20.comm : round2(income*0.2);
+        const payout = c ? (c.s20.negative ? c.s20.before : c.s20.payout) : null;
+        const exp = c ? round2(c.opexAll + c.channelSum) : null;
+        rowsArr.push({label:m.label, income, exp, comm, payout});
+      } else rowsArr.push({label:m.label, income:0, exp:0, comm:0, payout:0});
+      continue;
+    }
+    const h = H[m.id];
+    if(h) rowsArr.push({label:m.label, income:h.income||0,
+      exp: h.expenses ? round2(Object.values(h.expenses).reduce((s,x)=>s+x,0)) : 0,
+      comm: h.commission||0, payout: h.payout!=null? h.payout : null});
+  }
+  const tIncome = round2(sum(rowsArr, r=>r.income||0));
+  const tExp = round2(sum(rowsArr, r=>r.exp||0));
+  const tComm = round2(sum(rowsArr, r=>r.comm||0));
+  const tPay = round2(sum(rowsArr.filter(r=>r.payout!=null && r.payout>0), r=>r.payout));
+  return `
+  <div class="vhead"><div><h2 class="vname">Вилла ${v.name}</h2></div></div>
+  <div class="vsub">Весь период · Декабрь 2025 → ${MONTH_LABEL}${v.owner ? " · владелец: "+esc(v.owner) : ""}</div>
+  ${villaGallery(id)}
+  <div class="kpis k4">
+    <div class="kpi green"><div class="l">Доход за период</div><div class="v num">${fmt(tIncome)}</div></div>
+    <div class="kpi"><div class="l">Расходы</div><div class="v num">− ${fmt(tExp)}</div></div>
+    <div class="kpi"><div class="l">Комиссия управления</div><div class="v num">− ${fmt(tComm)}</div></div>
+    <div class="kpi green"><div class="l">Выплачено владельцу</div><div class="v num">${fmt(tPay)}</div></div>
+  </div>
+  <section>
+    <h3>По месяцам</h3>
+    <div class="tablewrap"><table style="min-width:680px">
+      <thead><tr><th>Месяц</th><th class="r">Доход</th><th class="r">Расходы</th><th class="r">Комиссия</th><th class="r">Выплата</th></tr></thead>
+      <tbody>${rowsArr.map(r=>`<tr>
+        <td><b>${r.label}</b></td>
+        <td class="r num">${fmt(r.income||0)}</td>
+        <td class="r num">${r.exp? "− "+fmt(r.exp) : "—"}</td>
+        <td class="r num">${r.comm? "− "+fmt(r.comm) : "—"}</td>
+        <td class="r num" style="font-weight:800;${(r.payout!=null && r.payout<0)?"color:#B4483F":"color:var(--green-deep)"}">${r.payout!=null? fmt(r.payout) : "—"}</td></tr>`).join("")}</tbody>
+      <tfoot><tr><td>Итого</td><td class="r num">${fmt(tIncome)}</td><td class="r num">− ${fmt(tExp)}</td><td class="r num">− ${fmt(tComm)}</td><td class="r num">${fmt(tPay)}</td></tr></tfoot>
+    </table></div>
+    <div class="sumnote">Декабрь–май — по отчётным файлам (методика тех месяцев), июнь — календарная методика, схема 20%. Отрицательная выплата = минус месяца, перенесён на следующий.</div>
+  </section>
+  ${villaDocsSection(id)}`;
+}
+
 /* ================= партнёрский кабинет ================= */
 function renderPartnerProject(pid, projectId){
   const P = PARTNERS[pid];
@@ -1015,7 +1201,7 @@ function renderVillaArchive(id, monthId){
     ${h.notes?`<div class="histnotes">Примечание из отчётного листа: ${esc(h.notes)}</div>`:""}
   </section>`;
 
-  return head + kpis + occSection + table + villaSparkSection(id);
+  return head + kpis + occSection + table + villaSparkSection(id) + villaDocsSection(id);
 }
 
 /* ---------- сводная · ИЮНЬ (админ) ---------- */
