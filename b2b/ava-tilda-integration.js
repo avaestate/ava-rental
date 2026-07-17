@@ -22,7 +22,7 @@
   // (nest / asteria / daphnis / veya / lua / nova → cocolane2/cocolane3/cocolane4/bunny/…).
   var SLUG_MAP = {
     aurora: 'aurora', radharani: 'radharani', axis: 'axis',
-    katai: 'katai', white: 'whitelotus'
+    katai: 'katai', white: 'whitelotus', four: 'fourmoons'
     // nest:'', asteria:'', daphnis:'', veya:'', lua:'', nova:''  // ← сопоставьте с данными
   };
 
@@ -132,7 +132,7 @@
       var anchor=card.querySelector('.js-store-price-wrapper');
       if(!anchor)continue;
       card.setAttribute('data-ava-done','1');   // помечаем даже если данных нет — не дёргаемся повторно
-      if(!v)continue;
+      if(!v||(v.months||0)<3)continue;  // <3 мес истории — статистика ещё не показательна
       var box=document.createElement('div'); box.className='ava-inv'; box.innerHTML=stripHTML(v);
       anchor.parentNode.insertBefore(box,anchor.nextSibling);
     }
