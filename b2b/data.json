@@ -1,5 +1,5 @@
 {
- "generated": "2026-07-09",
+ "generated": "2026-07-14",
  "currency": "THB",
  "villas": [
   {
@@ -7,7 +7,7 @@
    "name": "AVA Aurora Villa",
    "bd": 3,
    "city": "Wok Tum",
-   "price": 11900000,
+   "price": 11500000,
    "desc": "Stylish, fully furnished 3-bedroom villa in a quiet, green pocket of Wok Tum. A proven rental performer — ideal as a private home or a fully hands-off investment.",
    "hero": "https://assets.guesty.com/image/upload/v1767748302/production/68daa11d455d7fda436119a0/lmlg8kmpmqepewcc4nyz.jpg",
    "gallery": [
@@ -22,10 +22,10 @@
    "interior": 124,
    "months": 7,
    "occ": 53,
-   "adr": 6866,
-   "net": 110048,
-   "yld": 11.1,
-   "cum": 748356,
+   "adr": 6831,
+   "net": 110827,
+   "yld": 11.6,
+   "cum": 771856,
    "since": "Dec 2025",
    "series": [
     0,
@@ -61,12 +61,12 @@
    "name": "AVA Radharani Villa",
    "bd": 3,
    "city": "Sri Thanu",
-   "price": 12500000,
+   "price": 11500000,
    "desc": "Bright, contemporary 3-bedroom villa in Sri Thanu with a generous pool and mature garden. Strong, steady occupancy through the year.",
-   "hero": "https://assets.guesty.com/image/upload/v1767754228/production/68daa11d455d7fda436119a0/qvp6nmbpyp6le0udnmok.jpg",
+   "hero": "https://assets.guesty.com/image/upload/v1767754272/production/68daa11d455d7fda436119a0/tlhs2mbogvzyhehifisp.jpg",
    "gallery": [
-    "https://assets.guesty.com/image/upload/v1767754228/production/68daa11d455d7fda436119a0/qvp6nmbpyp6le0udnmok.jpg",
     "https://assets.guesty.com/image/upload/v1767754272/production/68daa11d455d7fda436119a0/tlhs2mbogvzyhehifisp.jpg",
+    "https://assets.guesty.com/image/upload/v1767754228/production/68daa11d455d7fda436119a0/qvp6nmbpyp6le0udnmok.jpg",
     "https://assets.guesty.com/image/upload/v1767754213/production/68daa11d455d7fda436119a0/qhejvebl5kl91iuac3fj.jpg",
     "https://assets.guesty.com/image/upload/v1767754223/production/68daa11d455d7fda436119a0/cixhgihc0nbgl3skulva.jpg",
     "https://assets.guesty.com/image/upload/v1767754228/production/68daa11d455d7fda436119a0/jiuegwdxhaxordhjjmkk.jpg"
@@ -75,11 +75,11 @@
    "land": 710,
    "interior": 138,
    "months": 6,
-   "occ": 68,
-   "adr": 6767,
-   "net": 139472,
-   "yld": 13.4,
-   "cum": 879715,
+   "occ": 71,
+   "adr": 6661,
+   "net": 143068,
+   "yld": 14.9,
+   "cum": 925902,
    "since": "Dec 2025",
    "series": [
     0,
@@ -117,23 +117,23 @@
    "city": "Sri Thanu",
    "price": 11500000,
    "desc": "A 3-bedroom villa with premium finish and a large lap pool. Performance already tracking above plan.",
-   "hero": "https://assets.guesty.com/image/upload/v1767951537/production/68daa11d455d7fda436119a0/nh1yceem75tavva35keq.jpg",
+   "hero": "https://assets.guesty.com/image/upload/v1767885362/production/68daa11d455d7fda436119a0/ngspm7563yraq1l89yaf.jpg",
    "gallery": [
+    "https://assets.guesty.com/image/upload/v1767885362/production/68daa11d455d7fda436119a0/ngspm7563yraq1l89yaf.jpg",
     "https://assets.guesty.com/image/upload/v1767951537/production/68daa11d455d7fda436119a0/nh1yceem75tavva35keq.jpg",
     "https://assets.guesty.com/image/upload/v1767885362/production/68daa11d455d7fda436119a0/wq8rgbvk5even3zokpdi.jpg",
     "https://assets.guesty.com/image/upload/v1767885364/production/68daa11d455d7fda436119a0/xatutvvaeogi9gegdy3q.jpg",
-    "https://assets.guesty.com/image/upload/v1767885361/production/68daa11d455d7fda436119a0/vdjbvpd4777boajbzm7e.jpg",
-    "https://assets.guesty.com/image/upload/v1767885362/production/68daa11d455d7fda436119a0/vobgzpikilbrgdhluhcs.jpg"
+    "https://assets.guesty.com/image/upload/v1767885361/production/68daa11d455d7fda436119a0/vdjbvpd4777boajbzm7e.jpg"
    ],
    "built": 264,
    "land": 735,
    "interior": 142,
    "months": 6,
-   "occ": 50,
-   "adr": 6439,
-   "net": 97448,
+   "occ": 51,
+   "adr": 6351,
+   "net": 97725,
    "yld": 10.2,
-   "cum": 566630,
+   "cum": 584293,
    "since": "Jan 2026",
    "series": [
     0,
@@ -169,7 +169,7 @@
    "name": "Cocolane Villa 2",
    "bd": 2,
    "city": "Sri Thanu",
-   "price": 9900000,
+   "price": 8900000,
    "desc": "Compact, high-performing 2-bedroom villa in Sri Thanu — near-full occupancy and an easy, low-maintenance layout.",
    "hero": "https://assets.guesty.com/image/upload/v1765532983/production/68daa11d455d7fda436119a0/jvslhbib9ywljgxamxrj.jpg",
    "gallery": [
@@ -184,10 +184,10 @@
    "interior": 98,
    "months": 6,
    "occ": 61,
-   "adr": 5418,
-   "net": 100007,
-   "yld": 12.1,
-   "cum": 617652,
+   "adr": 5438,
+   "net": 101206,
+   "yld": 13.6,
+   "cum": 641680,
    "since": "Jan 2026",
    "series": [
     0,
@@ -223,7 +223,7 @@
    "name": "Cocolane Villa 3",
    "bd": 2,
    "city": "Sri Thanu",
-   "price": 9200000,
+   "price": 7100000,
    "desc": "Bright 2-bedroom villa in the Cocolane cluster with a private pool and garden and strong repeat demand.",
    "hero": "https://assets.guesty.com/image/upload/v1766567004/production/68daa11d455d7fda436119a0/gihgdamsvkds6ccdmyrl.jpg",
    "gallery": [
@@ -236,11 +236,11 @@
    "built": 162,
    "land": 455,
    "interior": 95,
-   "months": 6,
-   "occ": 56,
+   "months": 7,
+   "occ": 55,
    "adr": 5567,
-   "net": 94726,
-   "yld": 12.4,
+   "net": 92358,
+   "yld": 15.6,
    "cum": 606819,
    "since": "Dec 2025",
    "series": [
@@ -277,7 +277,7 @@
    "name": "Cocolane Villa 4",
    "bd": 2,
    "city": "Sri Thanu",
-   "price": 9500000,
+   "price": 7100000,
    "desc": "Modern 2-bedroom villa with pool and terrace in Sri Thanu, minutes from the west-coast beaches.",
    "hero": "https://assets.guesty.com/image/upload/v1769837497/production/68daa11d455d7fda436119a0/xrmhbh2juo6ztptgbb8a.jpg",
    "gallery": [
@@ -291,10 +291,10 @@
    "land": 480,
    "interior": 100,
    "months": 5,
-   "occ": 46,
+   "occ": 45,
    "adr": 4975,
-   "net": 70418,
-   "yld": 8.9,
+   "net": 68245,
+   "yld": 11.5,
    "cum": 363194,
    "since": "Feb 2026",
    "series": [
@@ -331,12 +331,12 @@
    "name": "Katai Villa",
    "bd": 2,
    "city": "Hin Kong",
-   "price": 9300000,
+   "price": 8500000,
    "desc": "Popular 2-bedroom pool villa in Hin Kong with the longest track record in the portfolio and excellent guest reviews.",
-   "hero": "https://assets.guesty.com/image/upload/v1768819305/production/68daa11d455d7fda436119a0/u8yjchhavohhckaghnyd.jpg",
+   "hero": "https://assets.guesty.com/image/upload/v1768819304/production/68daa11d455d7fda436119a0/wkm3pimkhcyvusdkixdu.jpg",
    "gallery": [
-    "https://assets.guesty.com/image/upload/v1768819305/production/68daa11d455d7fda436119a0/u8yjchhavohhckaghnyd.jpg",
     "https://assets.guesty.com/image/upload/v1768819304/production/68daa11d455d7fda436119a0/wkm3pimkhcyvusdkixdu.jpg",
+    "https://assets.guesty.com/image/upload/v1768819305/production/68daa11d455d7fda436119a0/u8yjchhavohhckaghnyd.jpg",
     "https://assets.guesty.com/image/upload/v1768819563/production/68daa11d455d7fda436119a0/ndf338rihov1ih5ez8dz.jpg",
     "https://assets.guesty.com/image/upload/v1768819698/production/68daa11d455d7fda436119a0/xwwdzc763qcclklwysqu.jpg",
     "https://assets.guesty.com/image/upload/v1768819304/production/68daa11d455d7fda436119a0/fhgplj2lhdhzwxcgqdhq.jpg"
@@ -346,10 +346,10 @@
    "interior": 102,
    "months": 11,
    "occ": 48,
-   "adr": 5734,
-   "net": 84148,
-   "yld": 10.9,
-   "cum": 928834,
+   "adr": 5720,
+   "net": 84254,
+   "yld": 11.9,
+   "cum": 943849,
    "since": "Aug 2025",
    "series": [
     0,
@@ -385,7 +385,7 @@
    "name": "White Lotus Villa",
    "bd": 2,
    "city": "Hin Kong",
-   "price": 8700000,
+   "price": 11500000,
    "desc": "Serene 2-bedroom villa in Hin Kong with a private pool and lush garden, consistent year-round demand.",
    "hero": "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/68e0ca97c080d00011e7508b/8d65019b-7140-4c-swU97",
    "gallery": [
@@ -401,8 +401,8 @@
    "months": 9,
    "occ": 23,
    "adr": 7918,
-   "net": 55750,
-   "yld": 7.7,
+   "net": 54776,
+   "yld": 5.7,
    "cum": 514645,
    "since": "Oct 2025",
    "series": [
@@ -434,6 +434,5 @@
     "J"
    ]
   }
- ],
- "fx": 32.3
+ ]
 }
