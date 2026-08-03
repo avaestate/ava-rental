@@ -1,5 +1,5 @@
 {
- "generated": "2026-07-17",
+ "generated": "2026-08-03",
  "currency": "THB",
  "villas": [
   {
@@ -20,15 +20,14 @@
    "built": 237,
    "land": 680,
    "interior": 124,
-   "months": 7,
-   "occ": 54,
-   "adr": 6755,
-   "net": 110937,
+   "months": 8,
+   "occ": 55,
+   "adr": 6674,
+   "net": 111207,
    "yld": 11.6,
-   "cum": 783555,
+   "cum": 847572,
    "since": "Dec 2025",
    "series": [
-    0,
     0,
     0,
     0,
@@ -39,10 +38,10 @@
     163714,
     115561,
     33318,
-    46547
+    46547,
+    121806
    ],
    "labels": [
-    "J",
     "A",
     "S",
     "O",
@@ -53,6 +52,7 @@
     "M",
     "A",
     "M",
+    "J",
     "J"
    ]
   },
@@ -75,14 +75,13 @@
    "land": 710,
    "interior": 138,
    "months": 7,
-   "occ": 70,
-   "adr": 6661,
-   "net": 140922,
-   "yld": 14.7,
-   "cum": 925902,
+   "occ": 74,
+   "adr": 6425,
+   "net": 144204,
+   "yld": 15.0,
+   "cum": 1027998,
    "since": "Dec 2025",
    "series": [
-    0,
     0,
     0,
     0,
@@ -93,10 +92,10 @@
     204095,
     98341,
     65821,
-    94606
+    94606,
+    148283
    ],
    "labels": [
-    "J",
     "A",
     "S",
     "O",
@@ -107,6 +106,7 @@
     "M",
     "A",
     "M",
+    "J",
     "J"
    ]
   },
@@ -128,15 +128,14 @@
    "built": 264,
    "land": 735,
    "interior": 142,
-   "months": 6,
-   "occ": 50,
-   "adr": 6351,
-   "net": 96140,
-   "yld": 10.0,
-   "cum": 584293,
+   "months": 7,
+   "occ": 56,
+   "adr": 6076,
+   "net": 103466,
+   "yld": 10.8,
+   "cum": 686601,
    "since": "Jan 2026",
    "series": [
-    0,
     0,
     0,
     0,
@@ -147,10 +146,10 @@
     184544,
     100915,
     29911,
-    24441
+    24441,
+    148563
    ],
    "labels": [
-    "J",
     "A",
     "S",
     "O",
@@ -161,6 +160,7 @@
     "M",
     "A",
     "M",
+    "J",
     "J"
    ]
   },
@@ -182,15 +182,14 @@
    "built": 168,
    "land": 470,
    "interior": 98,
-   "months": 6,
-   "occ": 60,
-   "adr": 5438,
-   "net": 99657,
-   "yld": 13.4,
-   "cum": 641680,
+   "months": 7,
+   "occ": 57,
+   "adr": 5422,
+   "net": 94528,
+   "yld": 12.7,
+   "cum": 661446,
    "since": "Jan 2026",
    "series": [
-    0,
     0,
     0,
     0,
@@ -201,10 +200,10 @@
     73128,
     101358,
     68579,
-    2459
+    2459,
+    43794
    ],
    "labels": [
-    "J",
     "A",
     "S",
     "O",
@@ -215,6 +214,7 @@
     "M",
     "A",
     "M",
+    "J",
     "J"
    ]
   },
@@ -237,14 +237,13 @@
    "land": 455,
    "interior": 95,
    "months": 7,
-   "occ": 54,
-   "adr": 5567,
-   "net": 90993,
-   "yld": 15.4,
-   "cum": 606819,
+   "occ": 52,
+   "adr": 5528,
+   "net": 87193,
+   "yld": 14.7,
+   "cum": 630176,
    "since": "Dec 2025",
    "series": [
-    0,
     0,
     0,
     0,
@@ -255,10 +254,10 @@
     123227,
     43087,
     61644,
-    19229
+    19229,
+    49435
    ],
    "labels": [
-    "J",
     "A",
     "S",
     "O",
@@ -269,6 +268,7 @@
     "M",
     "A",
     "M",
+    "J",
     "J"
    ]
   },
@@ -290,15 +290,14 @@
    "built": 170,
    "land": 480,
    "interior": 100,
-   "months": 5,
-   "occ": 44,
-   "adr": 4975,
-   "net": 67004,
-   "yld": 11.3,
-   "cum": 363194,
+   "months": 6,
+   "occ": 46,
+   "adr": 4878,
+   "net": 67711,
+   "yld": 11.4,
+   "cum": 404842,
    "since": "Feb 2026",
    "series": [
-    0,
     0,
     0,
     0,
@@ -309,10 +308,10 @@
     145004,
     55343,
     16035,
-    0
+    0,
+    52692
    ],
    "labels": [
-    "J",
     "A",
     "S",
     "O",
@@ -323,6 +322,7 @@
     "M",
     "A",
     "M",
+    "J",
     "J"
    ]
   },
@@ -344,15 +344,14 @@
    "built": 172,
    "land": 500,
    "interior": 102,
-   "months": 11,
-   "occ": 48,
-   "adr": 5684,
-   "net": 82989,
-   "yld": 11.7,
-   "cum": 937849,
+   "months": 12,
+   "occ": 51,
+   "adr": 5667,
+   "net": 87926,
+   "yld": 12.4,
+   "cum": 1042749,
    "since": "Aug 2025",
    "series": [
-    0,
     52448,
     5750,
     92458,
@@ -363,10 +362,10 @@
     85616,
     161975,
     76620,
-    0
+    0,
+    110710
    ],
    "labels": [
-    "J",
     "A",
     "S",
     "O",
@@ -377,6 +376,7 @@
     "M",
     "A",
     "M",
+    "J",
     "J"
    ]
   },
@@ -387,26 +387,25 @@
    "city": "Ko Pha-ngan",
    "price": 11500000,
    "desc": "Modern villa with private pool and open-plan living connected to the terrace. Recently added to the managed portfolio.",
-   "hero": "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/6a33a45dacb42d0013a02824/d698e8fc-6101-48-COSAd",
+   "hero": "https://assets.guesty.com/image/upload/v1784523298/production/68daa11d455d7fda436119a0/vonxdxss1dwcintwtnkw.jpg",
    "gallery": [
-    "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/6a33a45dacb42d0013a02824/d698e8fc-6101-48-COSAd",
-    "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/6a33a45dacb42d0013a02824/e7e3e58b-a4ca-49-juRgj",
-    "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/6a33a45dacb42d0013a02824/81ddcd18-9bdf-4f-X3KTt",
-    "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/6a33a45dacb42d0013a02824/e04e065c-af70-4b-WxOkg",
-    "https://assets.guesty.com/image/upload/listing_images_s3/production/property-photos/37fbd8d10038d1c5cc4377890bb160d466d396d1509e89c4/6a33a45dacb42d0013a02824/1208e6d2-631b-47-Kqr7_"
+    "https://assets.guesty.com/image/upload/v1784523298/production/68daa11d455d7fda436119a0/vonxdxss1dwcintwtnkw.jpg",
+    "https://assets.guesty.com/image/upload/v1784523298/production/68daa11d455d7fda436119a0/efkbov9ugbvguey42yzr.jpg",
+    "https://assets.guesty.com/image/upload/v1784523298/production/68daa11d455d7fda436119a0/rc02bjyafopwf3hd2m0s.jpg",
+    "https://assets.guesty.com/image/upload/v1784523298/production/68daa11d455d7fda436119a0/kufjxmuxenph084s7mfy.jpg",
+    "https://assets.guesty.com/image/upload/v1784523298/production/68daa11d455d7fda436119a0/xkqzpvptjxc1lruigdkx.jpg"
    ],
    "built": 0,
    "land": 0,
    "interior": 0,
-   "months": 4,
-   "occ": 2,
-   "adr": 968,
-   "net": 471,
-   "yld": 0.0,
-   "cum": 1936,
+   "months": 5,
+   "occ": 8,
+   "adr": 5738,
+   "net": 13531,
+   "yld": 1.4,
+   "cum": 63120,
    "since": "Mar 2026",
    "series": [
-    0,
     0,
     0,
     0,
@@ -417,10 +416,10 @@
     1936,
     0,
     0,
-    0
+    0,
+    61184
    ],
    "labels": [
-    "J",
     "A",
     "S",
     "O",
@@ -431,6 +430,7 @@
     "M",
     "A",
     "M",
+    "J",
     "J"
    ]
   },
@@ -452,15 +452,14 @@
    "built": 164,
    "land": 460,
    "interior": 96,
-   "months": 9,
-   "occ": 22,
+   "months": 10,
+   "occ": 21,
    "adr": 7918,
-   "net": 54207,
-   "yld": 5.7,
+   "net": 51195,
+   "yld": 5.3,
    "cum": 514645,
    "since": "Oct 2025",
    "series": [
-    0,
     0,
     0,
     30918,
@@ -471,10 +470,10 @@
     49861,
     64000,
     0,
+    0,
     0
    ],
    "labels": [
-    "J",
     "A",
     "S",
     "O",
@@ -485,6 +484,7 @@
     "M",
     "A",
     "M",
+    "J",
     "J"
    ]
   }
