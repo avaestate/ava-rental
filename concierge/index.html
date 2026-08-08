@@ -590,7 +590,10 @@
 
   /* ===================== AVA CONTACT ===================== */
   // AVA Concierge WhatsApp (international format, digits only, no "+")
-  var AVA_WA_NUMBER = "66922927490";
+  // Гостевой WhatsApp. Было 66922927490 — номер …7490, забанен 31.07 за рассылку.
+  // Всё это время кнопка «Chat with us» вела гостей в мёртвый чат: сообщения уходили
+  // в никуда и никто их не видел. Рабочий гостевой номер — …2312.
+  var AVA_WA_NUMBER = "66942652312";
   function AVA_WA_URL(text){
     return "https://wa.me/" + AVA_WA_NUMBER + "?text=" + encodeURIComponent(text || "Hi AVA");
   }
