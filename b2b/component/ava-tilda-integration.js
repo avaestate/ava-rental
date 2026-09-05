@@ -22,7 +22,7 @@
   // (nest / asteria / daphnis / veya / lua / nova → cocolane2/cocolane3/cocolane4/bunny/…).
   var SLUG_MAP = {
     aurora: 'aurora', radharani: 'radharani', axis: 'axis',
-    katai: 'katai', white: 'whitelotus'
+    katai: 'katai', white: 'whitelotus', four: 'fourmoons'
     // nest:'', asteria:'', daphnis:'', veya:'', lua:'', nova:''  // ← сопоставьте с данными
   };
 
@@ -103,7 +103,13 @@
 
   /* ---------- данные ---------- */
   var byId = {};
-  function idFromSlug(slug){ var f=(slug||'').split('-')[0]; return (SLUG_MAP[f]!==undefined)?SLUG_MAP[f]:f; }
+  function idFromSlug(slug){
+    var parts=(slug||'').split('-'), f=parts[0];
+    if(f==='cocolane'){                       // cocolane-villa-2-2-bedrooms → cocolane2 (первый числовой сегмент = номер виллы)
+      for(var i=1;i<parts.length;i++){ if(/^\d+$/.test(parts[i])) return 'cocolane'+parts[i]; }
+    }
+    return (SLUG_MAP[f]!==undefined)?SLUG_MAP[f]:f;
+  }
 
   /* ---------- каталог: строка метрик в карточку ---------- */
   function stripHTML(v){
@@ -116,18 +122,17 @@
       '<svg viewBox="0 0 200 30" preserveAspectRatio="none">'+sparkSVG(v.series)+'</svg></div></div>';
   }
   function decorateCards(){
-    // t-store (классический каталог) + t1291/ST340 (новый каталог, в т.ч. блок "More ready villas")
-    var cards=document.querySelectorAll('.js-product.t-store__card, .js-product.t-catalog__card');
+    var cards=document.querySelectorAll('.js-product.t-store__card');
     for(var i=0;i<cards.length;i++){
       var card=cards[i];
       if(card.getAttribute('data-ava-done'))continue;
-      var url=card.getAttribute('data-product-url')||(card.querySelector('a[href*="/ready-objects/"]')||{}).href||'';
+      var url=card.getAttribute('data-product-url')||'';
       var slug=(url.split('/ready-objects/')[1]||'').replace(/-+$/,'');
       var v=byId[idFromSlug(slug)];
-      var anchor=card.querySelector('.js-store-price-wrapper, .js-catalog-price-wrapper');
+      var anchor=card.querySelector('.js-store-price-wrapper');
       if(!anchor)continue;
       card.setAttribute('data-ava-done','1');   // помечаем даже если данных нет — не дёргаемся повторно
-      if(!v)continue;
+      if(!v||(v.months||0)<3)continue;  // <3 мес истории — статистика ещё не показательна
       var box=document.createElement('div'); box.className='ava-inv'; box.innerHTML=stripHTML(v);
       anchor.parentNode.insertBefore(box,anchor.nextSibling);
     }
@@ -165,10 +170,7 @@
   }
 
   /* ---------- запуск: Tilda рендерит карточки асинхронно → опрос + наблюдатель ---------- */
-  // Инвест-блок на странице объекта отключён по просьбе дизайнера (15.07.2026):
-  // вместо него метрики показываются в карточках каталога и блока "More ready villas".
-  // Вернуть: window.AVA_INSERT_DETAIL = true перед подключением скрипта.
-  function run(){ try{ decorateCards(); if(window.AVA_INSERT_DETAIL) decorateProductPage(); }catch(e){} }
+  function run(){ try{ decorateCards(); decorateProductPage(); }catch(e){} }
   function boot(){
     injectCSS();
     fetch(DATA_URL,{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
