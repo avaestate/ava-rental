@@ -122,14 +122,15 @@
       '<svg viewBox="0 0 200 30" preserveAspectRatio="none">'+sparkSVG(v.series)+'</svg></div></div>';
   }
   function decorateCards(){
-    var cards=document.querySelectorAll('.js-product.t-store__card');
+    // t-store (классический каталог) + t1291/ST340 (новый каталог, в т.ч. блок "More ready villas")
+    var cards=document.querySelectorAll('.js-product.t-store__card, .js-product.t-catalog__card');
     for(var i=0;i<cards.length;i++){
       var card=cards[i];
       if(card.getAttribute('data-ava-done'))continue;
-      var url=card.getAttribute('data-product-url')||'';
+      var url=card.getAttribute('data-product-url')||(card.querySelector('a[href*="/ready-objects/"]')||{}).href||'';
       var slug=(url.split('/ready-objects/')[1]||'').replace(/-+$/,'');
       var v=byId[idFromSlug(slug)];
-      var anchor=card.querySelector('.js-store-price-wrapper');
+      var anchor=card.querySelector('.js-store-price-wrapper, .js-catalog-price-wrapper');
       if(!anchor)continue;
       card.setAttribute('data-ava-done','1');   // помечаем даже если данных нет — не дёргаемся повторно
       if(!v||(v.months||0)<3)continue;  // <3 мес истории — статистика ещё не показательна
@@ -170,7 +171,11 @@
   }
 
   /* ---------- запуск: Tilda рендерит карточки асинхронно → опрос + наблюдатель ---------- */
-  function run(){ try{ decorateCards(); decorateProductPage(); }catch(e){} }
+  // Инвест-блок на странице объекта ОТКЛЮЧЁН по умолчанию (решение дизайнера 15.07.2026): статистику на странице
+  // показывает виджет widget.js (.ava-stats[data-villa]), а наши метрики живут в карточках каталога и «More ready villas».
+  // 05.09.2026 при правке слагов этот выключатель потеряли — блок задвоил статистику и сдвинул фото на всех виллах.
+  // Вернуть можно флагом window.AVA_INSERT_DETAIL = true, но и тогда блок не ставится рядом с уже стоящим виджетом.
+  function run(){ try{ decorateCards(); if(window.AVA_INSERT_DETAIL===true && !document.querySelector('.ava-stats[data-villa]')) decorateProductPage(); }catch(e){} }
   function boot(){
     injectCSS();
     fetch(DATA_URL,{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
