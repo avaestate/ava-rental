@@ -46,7 +46,7 @@
   '.ava-detail .kicker{font-size:12.5px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;color:#cdd4d0}' +
   '.ava-detail .live{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:#a9b2ad}' +
   '.ava-detail .dot{width:8px;height:8px;border-radius:50%;background:#7fa06f;display:inline-block}' +
-  '.ava-detail .kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:18px}' +
+  '.ava-detail .kpis{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr) minmax(0,1fr);gap:9px;margin-top:18px}' +
   '.ava-detail .kpi{background:#333f3e;border-radius:16px;padding:14px 11px;min-width:0;overflow:hidden}' +
   '.ava-detail .kpi .lab{font-size:10.5px;font-weight:700;color:#939d98;text-transform:uppercase;line-height:1.25;min-height:26px}' +
   '.ava-detail .kpi .num{font-size:22px;font-weight:800;margin-top:7px;letter-spacing:-.5px;font-variant-numeric:tabular-nums;white-space:nowrap}' +
@@ -68,7 +68,7 @@
   '.ava-detail .note{font-size:10.5px;color:#8f9994;margin-top:13px;line-height:1.5;text-align:center}' +
   '@media(max-width:640px){.ava-inv .m .v{font-size:18px}.ava-inv .m .l{font-size:9px}}' +
   // узкие телефоны (iPhone SE/mini): три KPI-плашки должны помещаться в ряд без обрезки
-  '@media(max-width:430px){.ava-detail .invest{padding:18px 14px 20px}.ava-detail .kpis{gap:7px}.ava-detail .kpi{padding:12px 9px;border-radius:14px}.ava-detail .kpi .lab{font-size:9.5px}.ava-detail .kpi .num{font-size:18px;letter-spacing:-.3px}.ava-detail .kpi .num .u{font-size:11px}}';
+  '@media(max-width:430px){.ava-detail .invest{padding:18px 14px 20px}.ava-detail .kpis{gap:7px}.ava-detail .kpi{padding:12px 9px;border-radius:14px}.ava-detail .kpi .lab{font-size:9.5px}.ava-detail .kpi .num{font-size:17px;letter-spacing:-.4px}.ava-detail .kpi .num .u{font-size:11px}}';
 
   function injectCSS() {
     if (document.getElementById('ava-inv-css')) return;
