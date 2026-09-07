@@ -175,7 +175,10 @@
   // показывает виджет widget.js (.ava-stats[data-villa]), а наши метрики живут в карточках каталога и «More ready villas».
   // 05.09.2026 при правке слагов этот выключатель потеряли — блок задвоил статистику и сдвинул фото на всех виллах.
   // Вернуть можно флагом window.AVA_INSERT_DETAIL = true, но и тогда блок не ставится рядом с уже стоящим виджетом.
-  function run(){ try{ decorateCards(); if(window.AVA_INSERT_DETAIL===true && !document.querySelector('.ava-stats[data-villa]')) decorateProductPage(); }catch(e){} }
+  // FALLBACK_WHEN_NO_WIDGET: если на странице объекта НЕТ виджета статистики (.ava-stats[data-villa] — его ставит
+  // сайт-разработчик в Tilda), а данные по вилле есть, показываем наш блок, чтобы страница не оставалась без цифр
+  // (07.09.2026: Four Moons — виджета нет). Рядом с виджетом блок не ставится никогда. window.AVA_INSERT_DETAIL=false — выключить совсем.
+  function run(){ try{ decorateCards(); if(window.AVA_INSERT_DETAIL!==false && !document.querySelector('.ava-stats[data-villa]')) decorateProductPage(); }catch(e){} }
   function boot(){
     injectCSS();
     fetch(DATA_URL,{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
