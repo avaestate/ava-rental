@@ -719,11 +719,11 @@
   function tileIcon(id){ return "assets/icons/" + id + ".png"; }
   function tileGrad(id){ return (TILE[id] && TILE[id].grad) || "linear-gradient(150deg,#c89870,#925d3a)"; }
 
-  var VILLAS = ["Alba","Aurora","Radharani","Twin Palms","Bunny","Four Moons","Altair","Deneb","Other / not sure"];
+  var VILLAS = ["Aurora","Radharani","Twin Palms","Bunny","Four Moons","Altair","Deneb","Other / not sure"];
 
   /* ===================== GUEST PROFILE ===================== */
   // Name + villa are remembered on the device so a guest fills them in once.
-  // index.html?villa=Alba (e.g. a QR code in the villa) pre-selects the villa for every request.
+  // index.html?villa=Aurora (e.g. a QR code in the villa) pre-selects the villa for every request.
   var PROFILE_KEY = "ava_concierge_guest_v1";
   function loadProfile(){
     try{ return JSON.parse(localStorage.getItem(PROFILE_KEY)) || {}; }catch(e){ return {}; }
@@ -1253,7 +1253,7 @@
   showView("home");
 
   // deep links:
-  //   index.html?villa=Alba   — remembers the guest's villa (QR code per villa)
+  //   index.html?villa=Aurora — remembers the guest's villa (QR code per villa)
   //   index.html?open=<id>    — opens that service detail directly
   try{
     var params = new URLSearchParams(window.location.search);
