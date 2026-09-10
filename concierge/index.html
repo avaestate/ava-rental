@@ -13,7 +13,7 @@
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="AVA Concierge" />
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20192%20192'%3E%3Crect%20width='192'%20height='192'%20rx='44'%20fill='%23161b1c'/%3E%3Cpath%20d='M30%20126c17.6%200%2017.6-16%2035.2-16s17.6%2016%2035.2%2016%2017.6-16%2035.2-16%2017.6%2016%2035.2%2016'%20stroke='%23c8a96a'%20stroke-width='9'%20stroke-linecap='round'%20fill='none'/%3E%3Cpath%20d='M96%2038l24%2044H72l24-44z'%20stroke='%23c8a96a'%20stroke-width='8'%20stroke-linejoin='round'%20fill='none'/%3E%3C/svg%3E" />
+<link rel="apple-touch-icon" href="assets/icon-512.png" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Crect%20width='24'%20height='24'%20rx='6'%20fill='%23161b1c'/%3E%3Cpath%20d='M3.5%2016c2.1%200%202.1-2%204.2-2s2.1%202%204.2%202%202.1-2%204.2-2%202.1%202%204.2%202'%20stroke='%23c8a96a'%20stroke-width='1.5'%20stroke-linecap='round'%20fill='none'/%3E%3Cpath%20d='M12%204l3%205.5H9L12%204z'%20stroke='%23c8a96a'%20stroke-width='1.4'%20stroke-linejoin='round'%20fill='none'/%3E%3C/svg%3E" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -427,6 +427,16 @@
   .status-pill{display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:5px 11px; border-radius:999px; margin-top:10px}
   .status-pill.pending{color:var(--gold-soft); background:rgba(240,231,223,.12); border:1px solid var(--line-strong)}
   .status-pill.pending .d{width:6px;height:6px;border-radius:50%; background:var(--gold)}
+  .status-pill.sent{color:#b9e4c2; background:rgba(79,167,100,.16); border:1px solid rgba(79,167,100,.45)}
+  .status-pill.sent .d{width:6px;height:6px;border-radius:50%; background:#6fcf8a}
+  .rq-actions{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+  .rq-act{
+    display:inline-flex; align-items:center; gap:6px; margin-top:10px; padding:6px 12px; border-radius:999px; cursor:pointer;
+    font-size:11.5px; font-weight:700; letter-spacing:.02em; color:#1a2122; text-decoration:none;
+    background:linear-gradient(150deg,#8be28b,#4fa764); border:0; box-shadow:var(--shadow-sm); transition:.25s var(--ease);
+  }
+  .rq-act:hover{filter:brightness(1.05); transform:translateY(-1px)}
+  .rq-act svg{width:14px;height:14px}
   .empty{text-align:center; padding:60px 24px}
   .empty .eic{width:74px;height:74px;border-radius:20px; margin:0 auto 20px; background:linear-gradient(150deg,#2e3739,#1a2122); border:1px solid var(--line); box-shadow:var(--shadow-sm); display:grid; place-items:center; font-size:32px}
   .empty .eic i{font-size:1em; color:var(--gold); line-height:1}
@@ -506,7 +516,7 @@
       <!-- ===== HOME (V3 — Featured + Grid) ===== -->
       <section class="view active" id="view-home">
         <div class="greeting">
-          <span class="hi"><span class="dot"></span> Welcome to AVA</span>
+          <span class="hi" id="greetHi"><span class="dot"></span> Welcome to AVA</span>
           <h1>Your villa <em>concierge</em>,<br/>at your fingertips.</h1>
         </div>
 
@@ -709,7 +719,27 @@
   function tileIcon(id){ return "assets/icons/" + id + ".png"; }
   function tileGrad(id){ return (TILE[id] && TILE[id].grad) || "linear-gradient(150deg,#c89870,#925d3a)"; }
 
-  var VILLAS = ["Aurora","Radharani","Twin Palms","Bunny","Four Moons","Altair","Deneb","Other / not sure"];
+  var VILLAS = ["Alba","Aurora","Radharani","Twin Palms","Bunny","Four Moons","Altair","Deneb","Other / not sure"];
+
+  /* ===================== GUEST PROFILE ===================== */
+  // Name + villa are remembered on the device so a guest fills them in once.
+  // index.html?villa=Alba (e.g. a QR code in the villa) pre-selects the villa for every request.
+  var PROFILE_KEY = "ava_concierge_guest_v1";
+  function loadProfile(){
+    try{ return JSON.parse(localStorage.getItem(PROFILE_KEY)) || {}; }catch(e){ return {}; }
+  }
+  function saveProfile(patch){
+    var prof = loadProfile();
+    for(var k in patch) if(patch[k]) prof[k] = patch[k];
+    try{ localStorage.setItem(PROFILE_KEY, JSON.stringify(prof)); }catch(e){}
+    return prof;
+  }
+  function ensureVilla(name){
+    if(!name) return;
+    for(var i=0;i<VILLAS.length;i++) if(VILLAS[i].toLowerCase()===name.toLowerCase()) return VILLAS[i];
+    VILLAS.splice(VILLAS.length-1, 0, name); // keep "Other / not sure" last
+    return name;
+  }
 
   /* ===================== STATE / DOM ===================== */
   var STORE_KEY = "ava_concierge_requests_v1";
@@ -905,8 +935,9 @@
   function openForm(s){
     current.service = s;
     current.pay = "card";
+    var prof = loadProfile();
     var villaOpts = '<option value="">Select your villa…</option>' +
-      VILLAS.map(function(v){ return '<option>'+esc(v)+'</option>'; }).join("");
+      VILLAS.map(function(v){ return '<option'+(prof.villa===v?' selected':'')+'>'+esc(v)+'</option>'; }).join("");
     var today = new Date().toISOString().slice(0,10);
     els.form.innerHTML = ''+
       '<div class="detail-hero" style="padding:22px 22px 20px">'+
@@ -917,7 +948,7 @@
       '<form id="rqForm" novalidate>'+
         '<div class="field">'+
           '<label>Guest name <span class="req-star">*</span></label>'+
-          '<input type="text" name="name" autocomplete="name" placeholder="Your full name" />'+
+          '<input type="text" name="name" autocomplete="name" placeholder="Your full name" value="'+esc(prof.name||"")+'" />'+
         '</div>'+
         '<div class="field">'+
           '<label>Villa <span class="req-star">*</span></label>'+
@@ -995,14 +1026,32 @@
       people: f.people.value.trim(),
       notes: f.notes.value.trim(),
       pay: current.pay,
-      status: "Pending",
+      status: "Not sent",
       createdAt: new Date().toISOString()
     };
     var btn = document.getElementById("sendBtn");
     btn.classList.add("sent");
     btn.innerHTML = CHECK + " Sending…";
+    saveProfile({name:name, villa:villa});
+    // Hand the request to the AVA concierge WhatsApp right away (still inside the tap gesture,
+    // so iOS/Android allow it). If the OS blocks the popup the confirmation screen keeps the button.
+    var delivered = openWhatsApp(requestWaUrl(rq));
+    if(delivered) rq.status = "Sent";
     saveRequest(rq);
     setTimeout(function(){ openConfirm(rq); }, 450);
+  }
+  function openWhatsApp(url){
+    try{
+      // no "noopener" feature here: with it browsers return null and we could not tell a blocked popup from a successful one
+      var w = window.open(url, "_blank");
+      return w !== null && w !== undefined;
+    }catch(e){ return false; }
+  }
+  function markSent(id){
+    var list = loadRequests(), hit = null;
+    list.forEach(function(r){ if(r.id===id){ r.status = "Sent"; r.sentAt = new Date().toISOString(); hit = r; } });
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(list)); }catch(e){}
+    return hit;
   }
 
   /* ===================== CONFIRMATION ===================== */
@@ -1013,8 +1062,10 @@
         '<div class="badge">'+
           '<svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
         '</div>'+
-        '<h2>Request received</h2>'+
-        '<p>Thank you, '+esc(rq.name.split(" ")[0])+'. Our concierge will confirm shortly.</p>'+
+        '<h2 id="confTitle">'+(rq.status==="Sent" ? 'Request sent' : 'One more tap')+'</h2>'+
+        '<p id="confText">'+(rq.status==="Sent"
+          ? 'Thank you, '+esc(rq.name.split(" ")[0])+'. Your request is in the AVA concierge WhatsApp chat — we confirm availability and the final price there.'
+          : 'Thank you, '+esc(rq.name.split(" ")[0])+'. Tap below to deliver this request to the AVA concierge on WhatsApp — availability and the final price are confirmed there.')+'</p>'+
         '<div class="recap">'+
           '<div class="r"><span class="l">Service</span><span class="v" style="display:inline-flex;align-items:center;gap:7px;justify-content:flex-end">'+phi(rqPhicon(rq))+esc(rq.service)+'</span></div>'+
           '<div class="r"><span class="l">Villa</span><span class="v">'+esc(rq.villa)+'</span></div>'+
@@ -1025,7 +1076,7 @@
         '</div>'+
         '<a class="wa-cta" id="confWa" style="margin:4px 0 0" href="'+esc(requestWaUrl(rq))+'" target="_blank" rel="noopener">'+
           '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.97L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.13c-.24.68-1.42 1.32-1.95 1.36-.5.04-.5.4-3.15-.66-2.66-1.06-4.3-3.78-4.43-3.96-.13-.18-1.05-1.4-1.05-2.66 0-1.26.66-1.88.9-2.14.24-.26.52-.32.7-.32.18 0 .35 0 .5.01.16.01.38-.06.59.45.24.58.81 2 .88 2.14.07.14.12.31.02.49-.09.18-.14.29-.27.45-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.15.26.66 1.09 1.42 1.77.97.87 1.79 1.14 2.05 1.27.26.13.41.11.56-.07.15-.18.65-.76.82-1.02.17-.26.35-.21.59-.13.24.09 1.52.72 1.78.85.26.13.43.2.5.31.06.11.06.66-.18 1.34z"/></svg>'+
-          'Send to concierge on WhatsApp'+
+          (rq.status==="Sent" ? 'Open the WhatsApp chat' : 'Send to concierge on WhatsApp')+
         '</a>'+
         '<button class="btn-ghost" id="confViewReq" style="margin-top:10px">'+
           '<svg viewBox="0 0 24 24" fill="none"><path d="M9 5h10M9 12h10M9 19h10M5 5h.01M5 12h.01M5 19h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'+
@@ -1033,7 +1084,16 @@
         '</button>'+
         '<button class="btn-ghost" id="confHome">Back to services</button>'+
       '</div>';
-    showView("confirm", {title:"Confirmed"});
+    showView("confirm", {title: rq.status==="Sent" ? "Sent" : "Send request"});
+    document.getElementById("confWa").addEventListener("click", function(){
+      if(rq.status!=="Sent"){
+        markSent(rq.id); rq.status = "Sent";
+        document.getElementById("confTitle").textContent = "Request sent";
+        document.getElementById("confText").textContent = "Your request is in the AVA concierge WhatsApp chat — we confirm availability and the final price there.";
+        els.appbarTitle.textContent = "Sent";
+      }
+      toast("Opening WhatsApp…");
+    });
     document.getElementById("confViewReq").addEventListener("click", function(){ goTab("requests"); });
     document.getElementById("confHome").addEventListener("click", function(){ goTab("home"); });
   }
@@ -1063,12 +1123,26 @@
             '<h3>'+esc(rq.service)+'</h3>'+
             '<div class="meta"><b>'+esc(rq.villa)+'</b> · '+esc(when)+'<br/>'+
               (rq.people?esc(rq.people)+' · ':'')+esc(payLabel)+' · '+esc(rq.id)+'</div>'+
-            '<span class="status-pill pending"><span class="d"></span>'+esc(rq.status)+'</span>'+
+            '<div class="rq-actions">'+
+              (rq.status==="Sent"
+                ? '<span class="status-pill sent"><span class="d"></span>Sent to concierge</span>'
+                : '<span class="status-pill pending"><span class="d"></span>Not sent yet</span>'+
+                  '<a class="rq-act" href="'+esc(requestWaUrl(rq))+'" target="_blank" rel="noopener" data-send="'+esc(rq.id)+'">'+
+                    '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.97L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>'+
+                    'Send on WhatsApp'+
+                  '</a>')+
+            '</div>'+
           '</div>'+
         '</div>';
     }).join("") + '</div>';
     els.rqContent.innerHTML = html;
   }
+  els.rqContent.addEventListener("click", function(e){
+    var a = e.target.closest("[data-send]"); if(!a) return;
+    markSent(a.getAttribute("data-send"));
+    toast("Opening WhatsApp…");
+    setTimeout(renderRequests, 600);
+  });
 
   /* ===================== CHAT ===================== */
   var chatScroll = document.getElementById("chatScroll");
@@ -1106,18 +1180,27 @@
   function seedChat(){
     if(chatSeeded) return;
     chatSeeded = true;
-    addMsg("Hi! I'm your AVA concierge 🌴 Welcome to Koh Phangan. How can I make your stay effortless — transfers, a private chef, a massage, anything at all?", "in", "AVA Concierge");
+    addMsg("Hi! I'm your AVA concierge 🌴 Welcome to Koh Phangan. Transfers, a private chef, a massage — anything at all. Type below and your message goes straight to our team on WhatsApp; that's where we reply.", "in", "AVA Concierge");
   }
+  var chatHandoffNoted = false;
   function sendChat(){
     var text = chatInput.value.trim();
     if(!text) return;
     addMsg(text, "out");
     chatInput.value = ""; autoGrow();
-    setTimeout(addTyping, 350);
-    setTimeout(function(){
-      removeTyping();
-      addMsg("Thanks! Our concierge will get back to you shortly 🌴", "in", "AVA Concierge");
-    }, 1400);
+    var prof = loadProfile();
+    var ctx = [];
+    if(prof.villa) ctx.push("Villa: " + prof.villa);
+    if(prof.name) ctx.push("Guest: " + prof.name);
+    var full = text + (ctx.length ? "\n\n(" + ctx.join(" · ") + " — via AVA Concierge app)" : "\n\n(via AVA Concierge app)");
+    var opened = openWhatsApp(AVA_WA_URL(full));
+    toast(opened ? "Opening WhatsApp…" : "Tap “Chat with us on WhatsApp” to send");
+    if(!chatHandoffNoted){
+      chatHandoffNoted = true;
+      setTimeout(function(){
+        addMsg("Your message is on its way to the AVA team on WhatsApp — we'll reply there, usually within minutes. 🌴", "in", "AVA Concierge");
+      }, 400);
+    }
   }
   function autoGrow(){
     chatInput.style.height = "auto";
@@ -1169,19 +1252,29 @@
   updateBadge();
   showView("home");
 
-  // optional deep-link: index.html?open=<serviceId> opens that service detail directly
+  // deep links:
+  //   index.html?villa=Alba   — remembers the guest's villa (QR code per villa)
+  //   index.html?open=<id>    — opens that service detail directly
   try{
-    var qp = new URLSearchParams(window.location.search).get("open");
+    var params = new URLSearchParams(window.location.search);
+    var qv = params.get("villa");
+    if(qv){ qv = qv.trim().slice(0,40); if(qv){ saveProfile({villa: ensureVilla(qv)}); } }
+    var qp = params.get("open");
     if(qp && svcById(qp)) openDetail(qp);
   }catch(e){}
+  (function(){
+    var prof = loadProfile();
+    var hi = document.getElementById("greetHi");
+    if(hi && prof.villa && prof.villa!=="Other / not sure"){
+      hi.innerHTML = '<span class="dot"></span> Welcome to AVA · Villa ' + esc(prof.villa);
+    }
+  })();
 
-  /* lightweight inline service worker for installability (offline shell) */
-  if("serviceWorker" in navigator){
-    var swCode = "self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('activate',e=>self.clients.claim());self.addEventListener('fetch',function(e){e.respondWith(fetch(e.request).catch(function(){return caches.match(e.request);}));});";
-    try{
-      var blob = new Blob([swCode], {type:"text/javascript"});
-      navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(function(){});
-    }catch(e){}
+  /* service worker (sw.js): offline shell + cached imagery, makes the app installable */
+  if("serviceWorker" in navigator && /^https?:$/.test(window.location.protocol)){
+    window.addEventListener("load", function(){
+      navigator.serviceWorker.register("sw.js").catch(function(){});
+    });
   }
 })();
 </script>
