@@ -172,6 +172,82 @@
     anchor.parentNode.insertBefore(box,anchor.nextSibling);
   }
 
+  /* ---------- страница без виджета: ставим ТОТ ЖЕ виджет, что и на остальных виллах ----------
+     26.09.2026, Денис: «на Four Moons виджет справа, а на всех виллах сверху над фотографиями —
+     подгони так же». Причина была не в скрипте: на остальных виллах сайт-разработчик вручную
+     вставил в Tilda зеро-блок с <div class="ava-stats"> прямо ПЕРЕД блоком магазина, а на Four
+     Moons этот блок забыли. Поэтому срабатывал запасной путь и вешал наш собственный блок
+     рядом с ценой — то есть в правую колонку.
+     Теперь вместо своего блока мы монтируем НАСТОЯЩИЙ виджет (widget.js) в ту же точку, где он
+     стоит у соседей: отдельной строкой перед блоком магазина t760. Так совпадает и место, и вид.
+     Это правка на нашей стороне, Tilda не трогаем — как только разработчик добавит блок
+     вручную, условие «виджета нет» перестанет выполняться и мы сами отступим. */
+  var WIDGET_SRC = 'https://avaestate.github.io/ava-rental/b2b/widget.js';
+
+  /* Геометрия снята с живой страницы Axis (viewport 1440): виджет там занимает
+     x 96..1344, то есть ровно 86,67 % ширины по центру. Это не случайное число —
+     зеро-блок Tilda нарисован по сетке 1200 (элемент left 80, width 1040) и
+     масштабируется множителем vw/1200. Повторяем долями, чтобы совпадать на любой
+     ширине экрана, а не только на 1440. Узкие экраны у Tilda шире по долям
+     (breakpoint-ы 960/640/320 дают ~95 %), поэтому две медиа-строки. */
+  function mountCSS(){
+    if(document.getElementById('ava-stats-rec-css'))return;
+    var s=document.createElement('style'); s.id='ava-stats-rec-css';
+    s.textContent=
+      // Полоса на всю ширину несёт фон секции, содержимое внутри — по сетке 86,667 %.
+      '#ava-stats-rec{width:100%;padding:0 0 40px;box-sizing:border-box}'+
+      '#ava-stats-rec .ava-stats-inner{width:86.667%;margin:0 auto;box-sizing:border-box}'+
+      '#ava-stats-rec .ava-stats-box{max-width:none;width:100%}'+
+      '#ava-stats-rec .ava-stats-head{font-family:Manrope,-apple-system,Arial,sans-serif;margin:0 0 18px}'+
+      '#ava-stats-rec .ava-stats-head h2{font-family:inherit;font-size:26px;line-height:1.2;font-weight:600;'+
+        'color:#2C3638;margin:0 0 4px;letter-spacing:-.01em}'+
+      '#ava-stats-rec .ava-stats-head p{font-family:inherit;font-size:14px;line-height:1.4;color:#75878B;margin:0}'+
+      '@media screen and (max-width:960px){#ava-stats-rec .ava-stats-inner{width:95%}'+
+        '#ava-stats-rec .ava-stats-head h2{font-size:24px}}'+
+      '@media screen and (max-width:640px){#ava-stats-rec .ava-stats-inner{width:94%}'+
+        '#ava-stats-rec .ava-stats-head h2{font-size:20px}}';
+    document.head.appendChild(s);
+  }
+
+  function mountWidget(){
+    var m=location.pathname.match(/\/ready-objects\/([^\/]+)/);
+    if(!m || document.querySelector('.ava-stats[data-villa]'))return;   // виджет уже есть — не лезем
+    var id=idFromSlug(m[1].replace(/-+$/,''));
+    if(!byId[id])return;                                                 // нет данных — нет блока
+    var store=document.querySelector('.t760');
+    var rec=store&&store.closest?store.closest('.t-rec'):null;
+    if(!rec||!rec.parentNode)return;                                     // магазин ещё не отрисован
+    mountCSS();
+    var holder=document.createElement('div');
+    holder.id='ava-stats-rec'; holder.className='t-rec';
+    // Фон берём у соседнего блока, а не зашиваем кремовый: на других виллах виджет
+    // лежит внутри секции и сливается с ней, а вставленная «ничья» полоса светится
+    // белым телом страницы. Цвет копируем, чтобы правка пережила смену темы сайта.
+    var bg=''; var probe=rec;
+    for(var i=0;i<3 && probe;i++){
+      var c=getComputedStyle(probe).backgroundColor;
+      if(c && c!=='transparent' && !/rgba\(0,\s*0,\s*0,\s*0\)/.test(c)){ bg=c; break; }
+      probe=probe.parentElement;
+    }
+    if(bg) holder.style.background=bg;
+    // Шапка повторяет соседние виллы: там она часть того же зеро-блока, что и виджет.
+    var head=document.createElement('div');
+    head.className='ava-stats-head';
+    head.innerHTML='<h2>Rental Performance</h2><p>Live figures from actual bookings</p>';
+    var box=document.createElement('div');
+    box.className='ava-stats'; box.setAttribute('data-villa',id);
+    var inner=document.createElement('div');
+    inner.className='ava-stats-inner';
+    inner.appendChild(head); inner.appendChild(box);
+    holder.appendChild(inner);
+    rec.parentNode.insertBefore(holder,rec);
+    if(!document.getElementById('ava-widget-js')){
+      var s=document.createElement('script');
+      s.id='ava-widget-js'; s.src=WIDGET_SRC; s.defer=true;
+      document.head.appendChild(s);                                      // widget.js сам найдёт .ava-stats
+    }
+  }
+
   /* ---------- запуск: Tilda рендерит карточки асинхронно → опрос + наблюдатель ---------- */
   // Инвест-блок на странице объекта ОТКЛЮЧЁН по умолчанию (решение дизайнера 15.07.2026): статистику на странице
   // показывает виджет widget.js (.ava-stats[data-villa]), а наши метрики живут в карточках каталога и «More ready villas».
@@ -180,7 +256,16 @@
   // FALLBACK_WHEN_NO_WIDGET: если на странице объекта НЕТ виджета статистики (.ava-stats[data-villa] — его ставит
   // сайт-разработчик в Tilda), а данные по вилле есть, показываем наш блок, чтобы страница не оставалась без цифр
   // (07.09.2026: Four Moons — виджета нет). Рядом с виджетом блок не ставится никогда. window.AVA_INSERT_DETAIL=false — выключить совсем.
-  function run(){ try{ decorateCards(); if(window.AVA_INSERT_DETAIL!==false && !document.querySelector('.ava-stats[data-villa]')) decorateProductPage(); }catch(e){} }
+  // 26.09.2026: на странице объекта без виджета монтируем настоящий виджет (mountWidget) —
+  // раньше здесь стоял наш собственный блок у цены, из-за чего на Four Moons статистика
+  // оказывалась справа, а не сверху. Старый блок остаётся доступен явным AVA_INSERT_DETAIL=true.
+  function run(){
+    try{
+      decorateCards();
+      if(window.AVA_INSERT_DETAIL===true) decorateProductPage();
+      else if(window.AVA_INSERT_DETAIL!==false) mountWidget();
+    }catch(e){}
+  }
   function boot(){
     injectCSS();
     fetch(DATA_URL,{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
