@@ -193,20 +193,60 @@
   function mountCSS(){
     if(document.getElementById('ava-stats-rec-css'))return;
     var s=document.createElement('style'); s.id='ava-stats-rec-css';
+    var F='Manrope,-apple-system,"Helvetica Neue",Arial,sans-serif';
+    // ВСЕ размеры ниже — в ПРОЕКТНЫХ единицах сетки 1200, как в зеро-блоке Tilda.
+    // Наружу их выводит один общий transform: scale() на .ava-stats-zero. Именно так
+    // устроены соседние виллы: на Axis при ширине 1440 высота букв заголовка 23 px
+    // при font-size 26 — то есть текст тоже отмасштабирован на 1,2, а не задан крупнее.
     s.textContent=
-      // Полоса на всю ширину несёт фон секции, содержимое внутри — по сетке 86,667 %.
-      '#ava-stats-rec{width:100%;padding:0 0 40px;box-sizing:border-box}'+
-      '#ava-stats-rec .ava-stats-inner{width:86.667%;margin:0 auto;box-sizing:border-box}'+
-      '#ava-stats-rec .ava-stats-box{max-width:none;width:100%}'+
-      '#ava-stats-rec .ava-stats-head{font-family:Manrope,-apple-system,Arial,sans-serif;margin:0 0 18px}'+
+      '#ava-stats-rec{width:100%;padding:0 0 50px;box-sizing:border-box}'+
+      '#ava-stats-rec .ava-stats-stage{position:relative;overflow:hidden}'+
+      '#ava-stats-rec .ava-stats-zero{transform-origin:top left;box-sizing:border-box}'+
+      '#ava-stats-rec .ava-stats-head{display:flex;align-items:center;justify-content:space-between;'+
+        'gap:20px;margin:0 0 20px;font-family:'+F+'}'+
       '#ava-stats-rec .ava-stats-head h2{font-family:inherit;font-size:26px;line-height:1.2;font-weight:600;'+
-        'color:#2C3638;margin:0 0 4px;letter-spacing:-.01em}'+
-      '#ava-stats-rec .ava-stats-head p{font-family:inherit;font-size:14px;line-height:1.4;color:#75878B;margin:0}'+
-      '@media screen and (max-width:960px){#ava-stats-rec .ava-stats-inner{width:95%}'+
-        '#ava-stats-rec .ava-stats-head h2{font-size:24px}}'+
-      '@media screen and (max-width:640px){#ava-stats-rec .ava-stats-inner{width:94%}'+
-        '#ava-stats-rec .ava-stats-head h2{font-size:20px}}';
+        'color:#2C3638;margin:0 0 11px;letter-spacing:-.5px}'+   // как у соседей, снято со стиля Axis
+      '#ava-stats-rec .ava-stats-head p{font-family:inherit;font-size:14px;line-height:1.3;font-weight:500;'+
+        'color:#2C3638;margin:0}'+
+      '#ava-stats-rec .ava-stats-cta{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;'+
+        'width:117px;height:40px;justify-content:center;background:#624E40;color:#fff;border-radius:25px;'+
+        'font-family:'+F+';font-size:12px;font-weight:700;text-decoration:none;white-space:nowrap}'+
+      '#ava-stats-rec .ava-stats-cta:hover{opacity:.9}'+
+      '#ava-stats-rec .ava-stats-cta i{width:17px;height:17px;border-radius:50%;background:#fff;'+
+        'display:inline-block;position:relative;flex:0 0 17px}'+
+      '#ava-stats-rec .ava-stats-cta i:before{content:"";position:absolute;left:5px;top:6px;width:6px;height:6px;'+
+        'border-top:1.5px solid #624E40;border-right:1.5px solid #624E40;transform:rotate(45deg)}';
     document.head.appendChild(s);
+  }
+
+  /* Сетка Tilda и множитель масштаба. Снято замерами живой страницы Axis на ширинах
+     500 / 800 / 1024 / 1100 / 1280 / 1440 / 1920 — панель там всегда равна
+     «проектная ширина × (ширина экрана / сетка)»: 1920→1664, 1440→1248, 1280→1110,
+     1100→1054, 1024→982, 800→750, 500→469. Отсюда и пороги ниже.
+     Важно: масштабируется вся панель целиком, поэтому у соседей KPI-плашки крупнее
+     (176×87 против 147×74 при простом растягивании рамки) — ради этого transform. */
+  function tildaGrid(){
+    var vw=document.documentElement.clientWidth||window.innerWidth;
+    if(vw>=1200) return {vw:vw, grid:1200, design:1040};
+    if(vw>=960)  return {vw:vw, grid:960,  design:920};
+    if(vw>=640)  return {vw:vw, grid:640,  design:600};
+    return {vw:vw, grid:320, design:300};
+  }
+  function fitWidget(){
+    var el=document.getElementById('ava-stats-rec'); if(!el)return;
+    var stage=el.querySelector('.ava-stats-stage'),
+        zero=el.querySelector('.ava-stats-zero'),
+        box=el.querySelector('.ava-stats');
+    if(!stage||!zero||!box)return;
+    var g=tildaGrid(), k=g.vw/g.grid;
+    zero.style.width=g.design+'px';
+    box.style.width=g.design+'px';
+    zero.style.transform='scale('+k+')';
+    // Центрируем так же, как зеро-блок: на 1440 это даёт левый край 96 = 80 × 1,2.
+    zero.style.marginLeft=Math.round((g.vw-g.design*k)/2)+'px';
+    // transform не влияет на поток, поэтому место под блок держим руками —
+    // иначе следующая секция наедет сверху.
+    stage.style.height=Math.round(zero.offsetHeight*k)+'px';
   }
 
   function mountWidget(){
@@ -234,13 +274,22 @@
     var head=document.createElement('div');
     head.className='ava-stats-head';
     head.innerHTML='<h2>Rental Performance</h2><p>Live figures from actual bookings</p>';
+    head.className='ava-stats-head';
+    head.innerHTML='<div><h2>Rental Performance</h2><p>Live figures from actual bookings</p></div>'+
+                   '<a class="ava-stats-cta" href="#form_villa">Get Details<i></i></a>';
     var box=document.createElement('div');
     box.className='ava-stats'; box.setAttribute('data-villa',id);
-    var inner=document.createElement('div');
-    inner.className='ava-stats-inner';
-    inner.appendChild(head); inner.appendChild(box);
-    holder.appendChild(inner);
+    var zero=document.createElement('div'); zero.className='ava-stats-zero';
+    zero.appendChild(head); zero.appendChild(box);
+    var stage=document.createElement('div'); stage.className='ava-stats-stage';
+    stage.appendChild(zero);
+    holder.appendChild(stage);
     rec.parentNode.insertBefore(holder,rec);
+    fitWidget();
+    // Панель дорисовывается асинхронно (виджет ждёт data.json), а высота сцены зависит
+    // от её содержимого — пересчитываем, пока размеры не устоятся, и при смене ширины окна.
+    var tries=0, iv=setInterval(function(){ fitWidget(); if(++tries>30) clearInterval(iv); },300);
+    window.addEventListener('resize',fitWidget);
     if(!document.getElementById('ava-widget-js')){
       var s=document.createElement('script');
       s.id='ava-widget-js'; s.src=WIDGET_SRC; s.defer=true;
