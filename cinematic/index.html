@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AVA · Остров в кадре</title>
+<meta name="description" content="Прототип кинематографичного сайта AVA Concierge: прокрутка управляет «фильмом».">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0b0c; --ink:#f4efe6; --muted:#b9b1a3; --gold:#c9a45c; --line:rgba(244,239,230,.14);
+    --serif:"Cormorant Garamond", "Times New Roman", serif;
+    --sans:Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{background:var(--bg)}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit}
+  html.lenis,html.lenis body{height:auto}
+  .lenis.lenis-smooth{scroll-behavior:auto!important}
+
+  /* шапка */
+  .top{position:fixed;inset:0 0 auto 0;z-index:20;display:flex;justify-content:space-between;align-items:center;
+       padding:18px clamp(16px,4vw,48px);mix-blend-mode:difference}
+  .logo{font-family:var(--serif);font-size:26px;letter-spacing:.32em;font-weight:600}
+  .top a.cta-mini{font-size:13px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;
+       border:1px solid currentColor;border-radius:999px;padding:9px 16px}
+
+  /* 1. Герой: прокрутка = кадры фильма */
+  #hero{position:relative;height:520vh}
+  .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+  #film{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .vignette{position:absolute;inset:0;pointer-events:none;
+       background:radial-gradient(120% 80% at 50% 45%,transparent 40%,rgba(0,0,0,.55) 100%),
+                  linear-gradient(to bottom,rgba(0,0,0,.35),transparent 22%,transparent 70%,rgba(0,0,0,.6))}
+  .chap{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;padding:0 16px;opacity:0}
+  .chap .kicker{font-size:12px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+  .chap h1,.chap h2{font-family:var(--serif);font-weight:500;line-height:.95;text-shadow:0 2px 40px rgba(0,0,0,.35)}
+  .chap h1{font-size:clamp(56px,13vw,190px);letter-spacing:-.01em}
+  .chap h2{font-size:clamp(40px,7.5vw,110px)}
+  .chap::before{content:"";position:absolute;left:50%;top:50%;width:min(1100px,140vw);height:150%;
+       transform:translate(-50%,-50%);z-index:-1;pointer-events:none;
+       background:radial-gradient(closest-side,rgba(0,0,0,.42),rgba(0,0,0,.18) 60%,transparent)}
+  .chap p{margin:22px auto 0;max-width:520px;color:#f4efe6;font-size:clamp(15px,1.6vw,18px);line-height:1.6;
+       text-shadow:0 1px 14px rgba(0,0,0,.6)}
+  .hint{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);font-size:11px;letter-spacing:.32em;
+       text-transform:uppercase;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:10px}
+  .hint i{width:1px;height:42px;background:linear-gradient(var(--ink),transparent);animation:drip 1.8s infinite}
+  @keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}
+                  51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+  .bar{position:absolute;left:clamp(16px,4vw,48px);right:clamp(16px,4vw,48px);bottom:16px;height:1px;background:var(--line)}
+  .bar b{display:block;height:100%;width:100%;background:var(--gold);transform-origin:left;transform:scaleX(0)}
+  .loading{position:absolute;right:clamp(16px,4vw,48px);top:72px;font-size:11px;letter-spacing:.2em;color:var(--muted)}
+
+  /* 2. Горизонтальная лента услуг */
+  #services{position:relative;height:340vh}
+  #services .stage{display:flex;flex-direction:column;justify-content:center;gap:clamp(20px,4vh,40px)}
+  .sec-head{padding:0 clamp(16px,4vw,48px);display:flex;justify-content:space-between;align-items:end;gap:16px}
+  .sec-head h2{font-family:var(--serif);font-weight:500;font-size:clamp(36px,6vw,84px);line-height:1}
+  .sec-head span{color:var(--muted);font-size:14px;max-width:280px}
+  .track{display:flex;gap:clamp(14px,2vw,28px);padding:0 clamp(16px,4vw,48px);will-change:transform;width:max-content}
+  .card{position:relative;width:clamp(240px,30vw,420px);aspect-ratio:3/4;border-radius:18px;overflow:hidden;flex:none;background:#1a1a1c}
+  .card img{position:absolute;inset:-6% -6%;width:112%;height:112%;object-fit:cover}
+  .card::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.72),transparent 55%)}
+  .card .cap{position:absolute;left:20px;right:20px;bottom:18px;z-index:1}
+  .card .num{font-size:11px;letter-spacing:.3em;color:var(--gold)}
+  .card h3{font-family:var(--serif);font-weight:500;font-size:clamp(26px,2.6vw,36px);margin-top:6px}
+
+  /* 3. Раскрытие кадра */
+  #reveal{position:relative;height:260vh}
+  .frame{position:absolute;inset:0;clip-path:inset(18% 22% 18% 22% round 28px)}
+  .frame img{width:100%;height:100%;object-fit:cover;transform:scale(1.25)}
+  .frame::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.32)}
+  .words{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 16px;z-index:2}
+  .words h2{font-family:var(--serif);font-weight:500;font-size:clamp(40px,8vw,120px);line-height:1}
+  .words h2 span{display:inline-block;opacity:0;transform:translateY(40px)}
+
+  /* 4. Финал */
+  #cta{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+       padding:120px 16px;gap:28px;border-top:1px solid var(--line)}
+  #cta h2{font-family:var(--serif);font-weight:500;font-size:clamp(40px,7vw,96px);line-height:1;max-width:14ch}
+  #cta p{color:var(--muted);max-width:460px;line-height:1.6}
+  .btn{display:inline-block;background:var(--gold);color:#16120a;text-decoration:none;font-weight:600;
+       letter-spacing:.06em;padding:18px 34px;border-radius:999px}
+  footer{padding:28px 16px;text-align:center;color:var(--muted);font-size:12px;letter-spacing:.08em}
+
+  @media (prefers-reduced-motion: reduce){
+    #hero,#services,#reveal{height:auto}
+    .stage{position:relative;height:auto;min-height:100vh}
+    .chap{position:relative;top:auto;transform:none;opacity:1;padding:18vh 16px}
+    .hint,.bar{display:none}
+    .track{flex-wrap:wrap;width:auto}
+    .frame{position:relative;height:100vh;clip-path:none}
+    .words{position:absolute}
+    .words h2 span{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="logo">AVA</div>
+  <a class="cta-mini" href="../concierge/">Консьерж</a>
+</header>
+
+<!-- 1. Герой -->
+<section id="hero" aria-label="Фильм об острове">
+  <div class="stage">
+    <canvas id="film" aria-hidden="true"></canvas>
+    <div class="vignette"></div>
+    <div class="chap" data-chap="0" style="opacity:1">
+      <div class="kicker">AVA Concierge · Koh Phangan</div>
+      <h1>Остров<br>в кадре</h1>
+    </div>
+    <div class="chap" data-chap="1"><div class="kicker">Утро</div><h2>Лодка ждёт<br>у вашего пляжа</h2>
+      <p>Скоростной катер, бирюзовая вода и острова, которые не видно с берега.</p></div>
+    <div class="chap" data-chap="2"><div class="kicker">День</div><h2>Скалы, лонгтейлы<br>и ни одной очереди</h2>
+      <p>Маршрут, гид и билеты собраны заранее. Вы просто приезжаете.</p></div>
+    <div class="chap" data-chap="3"><div class="kicker">Вечер</div><h2>И вечер,<br>когда никуда не надо</h2>
+      <p>Массаж на вилле, свечи, тишина. Остальное — наша забота.</p></div>
+    <div class="hint" id="hint">Листайте<i></i></div>
+    <div class="loading" id="loading">кадры 0%</div>
+    <div class="bar"><b id="bar"></b></div>
+  </div>
+</section>
+
+<!-- 2. Услуги -->
+<section id="services" aria-label="Услуги">
+  <div class="stage">
+    <div class="sec-head"><h2>Всё на острове —<br>одним сообщением</h2><span>Консьерж AVA собирает день под вас: от катера до няни.</span></div>
+    <div class="track" id="track">
+      <article class="card"><img src="../concierge/img/speedboat.jpg" alt="Скоростной катер у острова" loading="lazy"><div class="cap"><div class="num">01</div><h3>Катер на день</h3></div></article>
+      <article class="card"><img src="../concierge/img/excursions.jpg" alt="Лонгтейлы у скалы" loading="lazy"><div class="cap"><div class="num">02</div><h3>Экскурсии</h3></div></article>
+      <article class="card"><img src="../concierge/img/jetski.jpg" alt="Гидроцикл" loading="lazy"><div class="cap"><div class="num">03</div><h3>Гидроциклы</h3></div></article>
+      <article class="card"><img src="../concierge/img/massage.jpg" alt="Массаж" loading="lazy"><div class="cap"><div class="num">04</div><h3>Массаж на вилле</h3></div></article>
+      <article class="card"><img src="../concierge/img/yoga.jpg" alt="Йога" loading="lazy"><div class="cap"><div class="num">05</div><h3>Йога</h3></div></article>
+      <article class="card"><img src="../concierge/img/bikes_hero.jpg" alt="Байк" loading="lazy"><div class="cap"><div class="num">06</div><h3>Байки</h3></div></article>
+      <article class="card"><img src="../concierge/img/taxi.jpg" alt="Трансфер" loading="lazy"><div class="cap"><div class="num">07</div><h3>Трансферы</h3></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Раскрытие -->
+<section id="reveal" aria-label="Море">
+  <div class="stage">
+    <div class="frame" id="frame"><img src="../concierge/img/jetski.jpg" alt="Гидроцикл в море" loading="lazy"></div>
+    <div class="words"><h2 id="words"><span>Ваш</span> <span>остров</span><br><span>начинается</span> <span>здесь</span></h2></div>
+  </div>
+</section>
+
+<!-- 4. Финал -->
+<section id="cta">
+  <h2>Напишите — мы соберём ваш день</h2>
+  <p>Прототип кинематографичной страницы. В боевой версии вместо фото будет ИИ-ролик, а кнопка откроет чат консьержа.</p>
+  <a class="btn" href="../concierge/">Открыть консьерж</a>
+</section>
+<footer>AVA · прототип «cinematic» · кадры из собственных фото</footer>
+
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/lenis.min.js"></script>
+<script>
+(() => {
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const canvas = document.getElementById("film");
+  const ctx = canvas.getContext("2d");
+  const loading = document.getElementById("loading");
+  let COUNT = 152, frames = [], current = -1, wanted = 0, loaded = 0;
+
+  const pad = i => String(i).padStart(3, "0");
+  const src = i => `frames/f_${pad(i)}.webp`;
+
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(canvas.clientWidth * dpr);
+    canvas.height = Math.round(canvas.clientHeight * dpr);
+    current = -1; draw(wanted);
+  }
+
+  // ближайший загруженный кадр — пока грузится всё, листать можно сразу
+  function nearest(i) {
+    for (let d = 0; d < COUNT; d++) {
+      if (frames[i - d]?.complete && frames[i - d].naturalWidth) return i - d;
+      if (frames[i + d]?.complete && frames[i + d].naturalWidth) return i + d;
+    }
+    return -1;
+  }
+
+  function draw(i) {
+    wanted = i;
+    const k = nearest(i);
+    if (k < 0 || k === current) return;
+    current = k;
+    const img = frames[k], cw = canvas.width, ch = canvas.height;
+    const s = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);   // cover
+    const w = img.naturalWidth * s, h = img.naturalHeight * s;
+    ctx.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h);
+  }
+
+  // загрузка: сначала каждый 8-й кадр, затем 4-й, 2-й, остальные
+  function load() {
+    const order = [];
+    for (const step of [8, 4, 2, 1])
+      for (let i = 0; i < COUNT; i += step) if (!order.includes(i)) order.push(i);
+    let p = 0;
+    const next = () => {
+      if (p >= order.length) return;
+      const i = order[p++], img = new Image();
+      img.decoding = "async";
+      img.onload = img.onerror = () => {
+        loaded++;
+        loading.textContent = loaded < COUNT ? `кадры ${Math.round(loaded / COUNT * 100)}%` : "";
+        if (Math.abs(i - wanted) < 6 || current < 0) { current = -1; draw(wanted); }
+        next();
+      };
+      img.src = src(i);
+      frames[i] = img;
+    };
+    for (let n = 0; n < 6; n++) next();   // 6 параллельных загрузок
+  }
+
+  fetch("frames/manifest.json").then(r => r.json()).then(m => { COUNT = m.count; })
+    .catch(() => {}).finally(() => { load(); resize(); });
+  addEventListener("resize", resize);
+
+  if (reduce || !window.gsap) return;          // без анимаций: статичная страница
+
+  gsap.registerPlugin(ScrollTrigger);
+  const lenis = new Lenis({ lerp: 0.09 });
+  lenis.on("scroll", ScrollTrigger.update);
+  gsap.ticker.add(t => lenis.raf(t * 1000));
+  gsap.ticker.lagSmoothing(0);
+
+  // 1. Герой: прогресс прокрутки → номер кадра + главы текста
+  const chaps = gsap.utils.toArray(".chap");
+  const tl = gsap.timeline({ defaults: { ease: "none" },
+    scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom bottom", scrub: true,
+      onUpdate: self => {
+        draw(Math.min(COUNT - 1, Math.round(self.progress * (COUNT - 1))));
+        gsap.set("#bar", { scaleX: self.progress });
+        document.getElementById("hint").style.opacity = self.progress > 0.02 ? 0 : 1;
+      } } });
+  // окна глав на шкале 0…1 (совпадают с планами фильма)
+  const windows = [[0, .14], [.18, .38], [.44, .66], [.74, 1]];
+  chaps.forEach((el, k) => {
+    const [a, b] = windows[k];
+    if (k > 0) tl.fromTo(el, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: .06 }, a);
+    if (k < chaps.length - 1) tl.to(el, { opacity: 0, y: -40, duration: .06 }, b - .06);
+  });
+  tl.to({}, { duration: 0 }, 1);              // шкала строго 0…1
+
+  // 2. Горизонтальная лента
+  const track = document.getElementById("track");
+  const dist = () => Math.max(0, track.scrollWidth - innerWidth);
+  gsap.to(track, { x: () => -dist(), ease: "none",
+    scrollTrigger: { trigger: "#services", start: "top top", end: "bottom bottom", scrub: true,
+      invalidateOnRefresh: true } });
+  gsap.utils.toArray(".card img").forEach(img =>        // параллакс внутри карточек
+    gsap.fromTo(img, { xPercent: 5 }, { xPercent: -5, ease: "none",
+      scrollTrigger: { trigger: "#services", start: "top top", end: "bottom bottom", scrub: true } }));
+
+  // 3. Раскрытие кадра + слова
+  const rv = gsap.timeline({ scrollTrigger: { trigger: "#reveal", start: "top top", end: "bottom bottom", scrub: true } });
+  rv.to("#frame", { clipPath: "inset(0% 0% 0% 0% round 0px)", ease: "power2.inOut", duration: .6 }, 0)
+    .to("#frame img", { scale: 1, ease: "none", duration: 1 }, 0)
+    .to("#words span", { opacity: 1, y: 0, stagger: .08, duration: .2, ease: "power2.out" }, .45);
+})();
+</script>
+</body>
+</html>
